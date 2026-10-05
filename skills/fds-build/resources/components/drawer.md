@@ -53,15 +53,16 @@ const FilterDrawer = () => {
 
 ## Props
 
-| Prop             | Type              | Default | Description                                                                               |
-| ---------------- | ----------------- | ------- | ----------------------------------------------------------------------------------------- |
-| `children`       | `React.ReactNode` | —       | —                                                                                         |
-| `className`      | `string`          | —       | —                                                                                         |
-| `id`             | `string`          | —       | —                                                                                         |
-| `heading`        | `string`          | —       | Text rendered as the drawer title and used as the accessible label for the dialog.        |
-| `show`           | `boolean`         | —       | Controls whether the drawer is visible.                                                   |
-| `onClose`        | `(() => void)`    | —       | Called when the user requests to close the drawer via the close button or the Escape key. |
-| `onOverlayClick` | `(() => void)`    | —       | Called when the user clicks the background overlay.                                       |
+| Prop                 | Type              | Default | Description                                                                                                                                                                    |
+| -------------------- | ----------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `children`           | `React.ReactNode` | —       | —                                                                                                                                                                              |
+| `className`          | `string`          | —       | —                                                                                                                                                                              |
+| `id`                 | `string`          | —       | —                                                                                                                                                                              |
+| `heading`            | `string`          | —       | Text rendered as the drawer title and used as the accessible label for the dialog.                                                                                             |
+| `show`               | `boolean`         | —       | Controls whether the drawer is visible.                                                                                                                                        |
+| `onClose`            | `(() => void)`    | —       | Called when the user requests to close the drawer via the close button or the Escape key.                                                                                      |
+| `onOverlayClick`     | `(() => void)`    | —       | Called when the user clicks the background overlay.                                                                                                                            |
+| `customCallToAction` | `React.ReactNode` | —       | Optional element rendered in the header, e.g. a link or button. Sits beside the title on wider drawers, and wraps onto its own line below the title once the drawer is narrow. |
 
 ## Rules
 

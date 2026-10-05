@@ -22,17 +22,18 @@ Import: `import { FileDownload } from "@lifesg/react-design-system/file-download
 
 ## Props — `FileItemDownloadProps`
 
-| Prop                    | Type                        | Default | Description                                                                                                                           |
-| ----------------------- | --------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `id` \*                 | `string`                    | —       | —                                                                                                                                     |
-| `name` \*               | `string`                    | —       | The display name of the file.                                                                                                         |
-| `mimeType` \*           | `string`                    | —       | The MIME type of the file (e.g. `"application/pdf"`).                                                                                 |
-| `size`                  | `number`                    | —       | The size of the file in bytes. Displayed as formatted text when provided.                                                             |
-| `filePath` \*           | `string`                    | —       | The remote path or URL used to fetch the file for download.                                                                           |
-| `errorMessage`          | `string \| React.ReactNode` | —       | Error message shown on the file item to indicate a download failure. Accepts a plain string or a React node for richer error display. |
-| `thumbnailImageDataUrl` | `string`                    | —       | URL or data URL for a thumbnail image shown alongside the file entry.                                                                 |
-| `truncateText`          | `boolean`                   | true    | Truncates long file names with an ellipsis when `true`.                                                                               |
-| `ready`                 | `boolean`                   | true    | Indicates the file is available and ready to be downloaded.                                                                           |
+| Prop                    | Type                        | Default       | Description                                                                                                                           |
+| ----------------------- | --------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `id` \*                 | `string`                    | —             | —                                                                                                                                     |
+| `name` \*               | `string`                    | —             | The display name of the file.                                                                                                         |
+| `mimeType` \*           | `string`                    | —             | The MIME type of the file (e.g. `"application/pdf"`).                                                                                 |
+| `size`                  | `number`                    | —             | The size of the file in bytes. Displayed as formatted text when provided.                                                             |
+| `filePath` \*           | `string`                    | —             | The remote path or URL used to fetch the file for download.                                                                           |
+| `errorMessage`          | `string \| React.ReactNode` | —             | Error message shown on the file item to indicate a download failure. Accepts a plain string or a React node for richer error display. |
+| `thumbnailImageDataUrl` | `string`                    | —             | URL or data URL for a thumbnail image shown alongside the file entry.                                                                 |
+| `truncateText`          | `boolean`                   | true          | Truncates long file names with an ellipsis when `true`.                                                                               |
+| `ready`                 | `boolean`                   | true          | Indicates the file is available and ready to be downloaded.                                                                           |
+| `clickLabel`            | `string`                    | the file name | Name for the card, used when `FileDownload` is given an `onClick`.                                                                    |
 
 ## Props — `FileDownloadProps`
 
@@ -45,6 +46,7 @@ Import: `import { FileDownload } from "@lifesg/react-design-system/file-download
 | `className`     | `string`                                                 | —          | —                                                                                                                                                                                                                                                                                       |
 | `id`            | `string`                                                 | —          | —                                                                                                                                                                                                                                                                                       |
 | `onDownload` \* | `(file: FileItemDownloadProps) => void \| Promise<void>` | —          | Called when the user triggers a download for an individual file item. May return a `Promise` to handle async download logic; the component awaits resolution. If the callback throws or the promise rejects, the item is marked as failed and the error UI is shown for that file card. |
+| `onClick`       | `((file: FileItemDownloadProps) => void)`                | —          | Called when a file card itself is activated, as opposed to its download button. When omitted, activating the card triggers `onDownload` instead.                                                                                                                                        |
 
 ## Rules
 

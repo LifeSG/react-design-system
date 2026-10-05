@@ -51,12 +51,20 @@ const navItems = [
 />;
 ```
 
+## Props — `TitleAddonProps`
+
+| Prop    | Type          | Default | Description                                                             |
+| ------- | ------------- | ------- | ----------------------------------------------------------------------- |
+| `left`  | `JSX.Element` | —       | Element rendered immediately before the title.                          |
+| `right` | `JSX.Element` | —       | Element rendered after the title, flushed to the far right of the item. |
+
 ## Props — `LocalNavItemProps`
 
-| Prop       | Type                        | Default | Description |
-| ---------- | --------------------------- | ------- | ----------- |
-| `title` \* | `string \| React.ReactNode` | —       | —           |
-| `id`       | `string`                    | —       | —           |
+| Prop         | Type                        | Default | Description                                                                                                                                                 |
+| ------------ | --------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `title` \*   | `string \| React.ReactNode` | —       | —                                                                                                                                                           |
+| `id`         | `string`                    | —       | —                                                                                                                                                           |
+| `titleAddon` | `TitleAddonProps`           | —       | Optional addon element rendered alongside the item title. Ignored when a custom `renderItem` is provided, since the caller then controls the item's layout. |
 
 ## Props — `LocalNavMenuItemRenderProps`
 

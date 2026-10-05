@@ -33,14 +33,7 @@ import { Breadcrumb } from "@lifesg/react-design-system/breadcrumb";
 />;
 ```
 
-## Props — `FadeColorSet`
-
-| Prop    | Type       | Default | Description                                      |
-| ------- | ---------- | ------- | ------------------------------------------------ |
-| `left`  | `string[]` | —       | Gradient color stops for the left fade overlay.  |
-| `right` | `string[]` | —       | Gradient color stops for the right fade overlay. |
-
-## Props — `BreadcrumbProps`
+## Props
 
 | Prop             | Type                                              | Default      | Description                                                                                                                                                                                                                              |
 | ---------------- | ------------------------------------------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

@@ -52,11 +52,11 @@ import { Button } from "@lifesg/react-design-system/button";
 | ------------------ | -------------------------------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `menuContent` \*   | `FunctionComponentElement<MenuContentProps>` | —                  | The `Menu.Content` element to display inside the popover panel.                                                                                                                 |
 | `position`         | `PopoverPosition`                            | "bottom-start"     | Preferred placement of the popover relative to the trigger.                                                                                                                     |
-| `className`        | `string`                                     | —                  | —                                                                                                                                                                               |
-| `id`               | `string`                                     | —                  | —                                                                                                                                                                               |
 | `children` \*      | `React.ReactNode`                            | —                  | The trigger element rendered inside a focusable wrapper div.                                                                                                                    |
-| `zIndex`           | `number`                                     | —                  | Overrides the stacking context z-index for the floating popover layer. Falls back to the inherited floating context z-index when omitted.                                       |
 | `trigger`          | `PopoverTriggerType`                         | "click"            | Interaction that opens the popover.                                                                                                                                             |
+| `id`               | `string`                                     | —                  | —                                                                                                                                                                               |
+| `zIndex`           | `number`                                     | —                  | Overrides the stacking context z-index for the floating popover layer. Falls back to the inherited floating context z-index when omitted.                                       |
+| `className`        | `string`                                     | —                  | —                                                                                                                                                                               |
 | `rootNode`         | `RefObject<HTMLElement>`                     | document.body      | The root element that contains the popover element.                                                                                                                             |
 | `customOffset`     | `number`                                     | 16                 | Distance in pixels between the trigger element and the popover panel.                                                                                                           |
 | `delay`            | `\| { open?: number; close?: number }`       | —                  | Open and close delays in milliseconds. Only applies when `trigger` is `"hover"`.                                                                                                |
@@ -71,19 +71,20 @@ import { Button } from "@lifesg/react-design-system/button";
 
 ## Props — `MenuContentProps`
 
-| Prop          | Type                                                                        | Default | Description                                                      |
-| ------------- | --------------------------------------------------------------------------- | ------- | ---------------------------------------------------------------- |
-| `children` \* | `\| ReactElement<typeof MenuSection> \| ReactElement<typeof MenuSection>[]` | —       | One or more `Menu.Section` elements that make up the panel body. |
-| `overflow`    | `PopoverOverflowType`                                                       | —       | CSS `overflow` value applied to the popover card body.           |
-| `maxHeight`   | `number`                                                                    | —       | Maximum height of the popover card in pixels.                    |
+| Prop          | Type                                                                 | Default | Description                                                      |
+| ------------- | -------------------------------------------------------------------- | ------- | ---------------------------------------------------------------- |
+| `children` \* | `ReactElement<MenuSectionProps> \| ReactElement<MenuSectionProps>[]` | —       | One or more `Menu.Section` elements that make up the panel body. |
+| `overflow`    | `PopoverOverflowType`                                                | —       | CSS `overflow` value applied to the popover card body.           |
+| `maxHeight`   | `number`                                                             | —       | Maximum height of the popover card in pixels.                    |
 
 ## Props — `MenuSectionProps`
 
-| Prop          | Type                                   | Default | Description                                                                 |
-| ------------- | -------------------------------------- | ------- | --------------------------------------------------------------------------- |
-| `children` \* | `MenuSectionItem \| MenuSectionItem[]` | —       | One or more `Menu.Item` or `Menu.Link` elements within this section.        |
-| `showDivider` | `boolean`                              | true    | Whether to render a top divider separating this section from the one above. |
-| `label`       | `string`                               | —       | Accessible group label rendered above the section items.                    |
+| Prop          | Type                                   | Default | Description                                                                                                                                                                                                                                      |
+| ------------- | -------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `children` \* | `MenuSectionItem \| MenuSectionItem[]` | —       | One or more `Menu.Item` or `Menu.Link` elements within this section.                                                                                                                                                                             |
+| `showDivider` | `boolean`                              | true    | Whether to render a top divider separating this section from the one above.                                                                                                                                                                      |
+| `columns`     | `number`                               | —       | Renders section children in a grid with the given number of columns on desktop. Items flow vertically (top-to-bottom) within each column before wrapping to the next. Has no effect on mobile viewports, which always render as a single column. |
+| `label`       | `string`                               | —       | Accessible group label rendered above the section items.                                                                                                                                                                                         |
 
 ## Props — `MenuItemProps`
 

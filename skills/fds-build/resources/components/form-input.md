@@ -30,9 +30,9 @@ import { Form } from "@lifesg/react-design-system/form";
 
 | Prop           | Type                        | Default    | Description                                                                                                                                      |
 | -------------- | --------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `onClear`      | `() => void`                | —          | Called when the user activates the clear button. Use this to clear the controlled value.                                                         |
 | `spacing`      | `number`                    | —          | Inserts a space after every `spacing` characters in the displayed value. Only applies when `type` is `"tel"`.                                    |
 | `allowClear`   | `boolean`                   | false      | Shows a clear button when the field has a value and is neither disabled nor read-only.                                                           |
+| `onClear`      | `() => void`                | —          | Called when the user activates the clear button. Use this to clear the controlled value.                                                         |
 | `styleType`    | `InputStyleType`            | "bordered" | Visual style variant.                                                                                                                            |
 | `label`        | `FormLabelProps \| string`  | —          | Label rendered above the input. Accepts a plain string or a `FormLabelProps` object to provide additional configuration.                         |
 | `errorMessage` | `string \| React.ReactNode` | —          | Inline error text rendered below the input.                                                                                                      |

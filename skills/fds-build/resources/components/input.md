@@ -27,9 +27,9 @@ Use `Input` for standalone inputs that do not need a label or error message — 
 
 | Prop         | Type             | Default    | Description                                                                                                   |
 | ------------ | ---------------- | ---------- | ------------------------------------------------------------------------------------------------------------- |
-| `onClear`    | `() => void`     | —          | Called when the user activates the clear button. Use this to clear the controlled value.                      |
 | `spacing`    | `number`         | —          | Inserts a space after every `spacing` characters in the displayed value. Only applies when `type` is `"tel"`. |
 | `allowClear` | `boolean`        | false      | Shows a clear button when the field has a value and is neither disabled nor read-only.                        |
+| `onClear`    | `() => void`     | —          | Called when the user activates the clear button. Use this to clear the controlled value.                      |
 | `styleType`  | `InputStyleType` | "bordered" | Visual style variant.                                                                                         |
 
 ## Rules

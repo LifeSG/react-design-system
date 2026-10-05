@@ -76,46 +76,58 @@ const DocViewer = () => {
 | `goToPrevItem` \*     | `() => void`                         | —       | Navigates to the previous item, wrapping from the first item to the last. |
 | `goToNextItem` \*     | `() => void`                         | —       | Navigates to the next item, wrapping from the last item to the first.     |
 
+## Props — `FullscreenImageCarouselCustomAction`
+
+| Prop           | Type                                                              | Default | Description                              |
+| -------------- | ----------------------------------------------------------------- | ------- | ---------------------------------------- |
+| `icon` \*      | `JSX.Element`                                                     | —       | Icon element rendered inside the button. |
+| `ariaLabel` \* | `string`                                                          | —       | Accessible name for the button.          |
+| `onClick` \*   | `(item: FullscreenImageCarouselItemProps, index: number) => void` | —       | Called when the action is activated.     |
+
 ## Props — `FullscreenImageCarouselProps`
 
-| Prop                     | Type                                                                   | Default  | Description                                                                                                                    |
-| ------------------------ | ---------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `items` \*               | `FullscreenImageCarouselItemProps[]`                                   | —        | The list of items to display. Each item is either an image or a custom content item.                                           |
-| `initialActiveItemIndex` | `number`                                                               | 0        | Zero-based index of the item that is active when the carousel first opens.                                                     |
-| `hideThumbnail`          | `boolean`                                                              | false    | Hides the thumbnail strip below the main slide.                                                                                |
-| `hideNavigation`         | `boolean`                                                              | false    | Hides the previous and next arrow navigation buttons.                                                                          |
-| `hideCounter`            | `boolean`                                                              | false    | Hides the slide position counter chip (e.g. "2/5").                                                                            |
-| `hideMagnifier`          | `boolean`                                                              | false    | Hides the zoom in/out magnifier button. Has no effect on custom items, which never show the magnifier regardless of this prop. |
-| `onDelete`               | `\| ((item: FullscreenImageCarouselItemProps, index: number) => void)` | —        | Called when the delete button is activated for the current item.                                                               |
-| `onClose`                | `(() => void)`                                                         | —        | Called when the close button is activated or the Escape key is pressed.                                                        |
-| `insets`                 | `Insets`                                                               | —        | Additional pixel insets applied to keep content within a safe area of the viewport and avoid overlap with device UI elements.  |
-| `show` \*                | `boolean`                                                              | false    | Controls whether the modal is visible.                                                                                         |
-| `rootComponentId`        | `string`                                                               | —        | The `id` of the DOM element to portal the modal into.                                                                          |
-| `animationFrom`          | `ModalAnimationDirection`                                              | "bottom" | Direction from which the modal animates in and out.                                                                            |
-| `zIndex`                 | `number`                                                               | —        | The z-index applied to the overlay stack.                                                                                      |
+| Prop                     | Type                                                                   | Default  | Description                                                                                                                                                                    |
+| ------------------------ | ---------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `items` \*               | `FullscreenImageCarouselItemProps[]`                                   | —        | The list of items to display. Each item is either an image or a custom content item.                                                                                           |
+| `initialActiveItemIndex` | `number`                                                               | 0        | Zero-based index of the item that is active when the carousel first opens.                                                                                                     |
+| `hideThumbnail`          | `boolean`                                                              | false    | Hides the thumbnail strip below the main slide.                                                                                                                                |
+| `hideNavigation`         | `boolean`                                                              | false    | Hides the previous and next arrow navigation buttons.                                                                                                                          |
+| `hideCounter`            | `boolean`                                                              | false    | Hides the slide position counter chip (e.g. "2/5").                                                                                                                            |
+| `hideMagnifier`          | `boolean`                                                              | false    | Hides the zoom in/out magnifier button. Has no effect on custom items, which never show the magnifier regardless of this prop.                                                 |
+| `customActions`          | `FullscreenImageCarouselCustomAction[]`                                | —        | Additional icon buttons rendered in the top bar, positioned before the default buttons. Applies to every item. An item's own `customActions` replaces this list for that item. |
+| `onDelete`               | `\| ((item: FullscreenImageCarouselItemProps, index: number) => void)` | —        | Called when the delete button is activated for the current item.                                                                                                               |
+| `onClose`                | `(() => void)`                                                         | —        | Called when the close button is activated or the Escape key is pressed.                                                                                                        |
+| `insets`                 | `Insets`                                                               | —        | Additional pixel insets applied to keep content within a safe area of the viewport and avoid overlap with device UI elements.                                                  |
+| `topBarRef`              | `React.Ref<HTMLDivElement>`                                            | —        | Ref to the top bar element, which holds the file info and the action buttons.                                                                                                  |
+| `show` \*                | `boolean`                                                              | false    | Controls whether the modal is visible.                                                                                                                                         |
+| `rootComponentId`        | `string`                                                               | —        | The `id` of the DOM element to portal the modal into.                                                                                                                          |
+| `animationFrom`          | `ModalAnimationDirection`                                              | "bottom" | Direction from which the modal animates in and out.                                                                                                                            |
+| `zIndex`                 | `number`                                                               | —        | The z-index applied to the overlay stack.                                                                                                                                      |
 
 ## Props — `FullscreenImageCarouselImageItemProps`
 
-| Prop            | Type      | Default | Description                                                                              |
-| --------------- | --------- | ------- | ---------------------------------------------------------------------------------------- |
-| `type`          | `"image"` | —       | —                                                                                        |
-| `src` \*        | `string`  | —       | URL of the full-resolution image shown in the slide.                                     |
-| `alt`           | `string`  | —       | Accessible label for the image.                                                          |
-| `thumbnailSrc`  | `string`  | —       | URL of the image shown in the thumbnail strip. Falls back to `src` when omitted.         |
-| `renderContent` | `never`   | —       | —                                                                                        |
-| `fileName`      | `string`  | —       | Display name of the file shown in the top info bar.                                      |
-| `fileSize`      | `string`  | —       | Human-readable file size shown alongside `fileName` in the top info bar (e.g. "2.4 MB"). |
+| Prop            | Type                                    | Default | Description                                                                                                                                                                         |
+| --------------- | --------------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`          | `"image"`                               | —       | —                                                                                                                                                                                   |
+| `src` \*        | `string`                                | —       | URL of the full-resolution image shown in the slide.                                                                                                                                |
+| `alt`           | `string`                                | —       | Accessible label for the image.                                                                                                                                                     |
+| `thumbnailSrc`  | `string`                                | —       | URL of the image shown in the thumbnail strip. Falls back to `src` when omitted.                                                                                                    |
+| `renderContent` | `never`                                 | —       | —                                                                                                                                                                                   |
+| `fileName`      | `string`                                | —       | Display name of the file shown in the top info bar.                                                                                                                                 |
+| `fileSize`      | `string`                                | —       | Human-readable file size shown alongside `fileName` in the top info bar (e.g. "2.4 MB").                                                                                            |
+| `customActions` | `FullscreenImageCarouselCustomAction[]` | —       | Replaces the component-level `customActions` while this item is active. Leave `undefined` to inherit the component-level list. Pass `[]` to render no custom actions for this item. |
 
 ## Props — `FullscreenImageCarouselCustomItemProps`
 
-| Prop               | Type                    | Default | Description                                                                                                                          |
-| ------------------ | ----------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `type` \*          | `"custom"`              | —       | —                                                                                                                                    |
-| `thumbnailSrc`     | `string`                | —       | The thumbnail image src. If omitted, a placeholder is shown in the thumbnail strip.                                                  |
-| `itemLabel`        | `string`                | "image" | Label for this item used in aria-labels (e.g. "PDF").                                                                                |
-| `renderContent` \* | `() => React.ReactNode` | —       | Render prop for the full slide area. Consumer is responsible for the entire slide content (e.g. an iframe, embed, or custom viewer). |
-| `fileName`         | `string`                | —       | Display name of the file shown in the top info bar.                                                                                  |
-| `fileSize`         | `string`                | —       | Human-readable file size shown alongside `fileName` in the top info bar (e.g. "2.4 MB").                                             |
+| Prop               | Type                                    | Default | Description                                                                                                                                                                         |
+| ------------------ | --------------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type` \*          | `"custom"`                              | —       | —                                                                                                                                                                                   |
+| `thumbnailSrc`     | `string`                                | —       | The thumbnail image src. If omitted, a placeholder is shown in the thumbnail strip.                                                                                                 |
+| `itemLabel`        | `string`                                | "image" | Label for this item used in aria-labels (e.g. "PDF").                                                                                                                               |
+| `renderContent` \* | `() => React.ReactNode`                 | —       | Render prop for the full slide area. Consumer is responsible for the entire slide content (e.g. an iframe, embed, or custom viewer).                                                |
+| `fileName`         | `string`                                | —       | Display name of the file shown in the top info bar.                                                                                                                                 |
+| `fileSize`         | `string`                                | —       | Human-readable file size shown alongside `fileName` in the top info bar (e.g. "2.4 MB").                                                                                            |
+| `customActions`    | `FullscreenImageCarouselCustomAction[]` | —       | Replaces the component-level `customActions` while this item is active. Leave `undefined` to inherit the component-level list. Pass `[]` to render no custom actions for this item. |
 
 ## Props — `ImageDimension`
 
@@ -126,13 +138,14 @@ const DocViewer = () => {
 
 ## Props — `FullscreenImageCarouselItemProps`
 
-| Prop            | Type      | Default | Description                                                                              |
-| --------------- | --------- | ------- | ---------------------------------------------------------------------------------------- |
-| `type`          | `"image"` | —       | —                                                                                        |
-| `thumbnailSrc`  | `string`  | —       | URL of the image shown in the thumbnail strip. Falls back to `src` when omitted.         |
-| `renderContent` | `never`   | —       | —                                                                                        |
-| `fileName`      | `string`  | —       | Display name of the file shown in the top info bar.                                      |
-| `fileSize`      | `string`  | —       | Human-readable file size shown alongside `fileName` in the top info bar (e.g. "2.4 MB"). |
+| Prop            | Type                                    | Default | Description                                                                                                                                                                         |
+| --------------- | --------------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`          | `"image"`                               | —       | —                                                                                                                                                                                   |
+| `thumbnailSrc`  | `string`                                | —       | URL of the image shown in the thumbnail strip. Falls back to `src` when omitted.                                                                                                    |
+| `renderContent` | `never`                                 | —       | —                                                                                                                                                                                   |
+| `fileName`      | `string`                                | —       | Display name of the file shown in the top info bar.                                                                                                                                 |
+| `fileSize`      | `string`                                | —       | Human-readable file size shown alongside `fileName` in the top info bar (e.g. "2.4 MB").                                                                                            |
+| `customActions` | `FullscreenImageCarouselCustomAction[]` | —       | Replaces the component-level `customActions` while this item is active. Leave `undefined` to inherit the component-level list. Pass `[]` to render no custom actions for this item. |
 
 ## Rules
 

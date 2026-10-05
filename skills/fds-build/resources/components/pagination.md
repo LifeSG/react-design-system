@@ -68,12 +68,13 @@ const [pageSize, setPageSize] = useState(10);
 | --------------------- | -------------------------------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------- |
 | `id`                  | `string`                                     | —                   | —                                                                                                             |
 | `className`           | `string`                                     | —                   | —                                                                                                             |
+| `variant`             | `"default" \| "full" \| "compact"`           | "default"           | Controls whether the pagination follows the responsive layout or always renders the full or compact layout.   |
 | `pageSize`            | `number`                                     | 10                  | Number of items displayed per page.                                                                           |
 | `totalItems` \*       | `number`                                     | —                   | Total number of items across all pages. Used to compute the total page count.                                 |
 | `activePage` \*       | `number`                                     | —                   | The currently active 1-based page number. This is a controlled prop; update it in response to `onPageChange`. |
 | `pageSizeOptions`     | `PageSizeItemProps[]`                        | 10, 20, 30 per page | Options listed in the page-size changer dropdown. Only relevant when `showPageSizeChanger` is `true`.         |
 | `showFirstAndLastNav` | `boolean`                                    | —                   | When `true`, renders first-page and last-page navigation buttons alongside the previous/next buttons.         |
-| `showPageSizeChanger` | `boolean`                                    | false               | When `true`, renders a dropdown on desktop viewports to change the `pageSize`.                                |
+| `showPageSizeChanger` | `boolean`                                    | false               | When `true`, renders a dropdown in the full layout to change the `pageSize`.                                  |
 | `onPageChange`        | `((page: number) => void)`                   | —                   | Called when the user navigates to a different page.                                                           |
 | `onPageSizeChange`    | `((page: number, pageSize: number) => void)` | —                   | Called when the user selects a different page size from the dropdown and `showPageSizeChanger` is `true`.     |
 

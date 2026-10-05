@@ -87,35 +87,26 @@ const ConfirmDeleteModal = () => {
 </ModalV2>
 ```
 
-## Props — `ModalV2Props`
-
-| Prop                    | Type                      | Default       | Description                                                                                  |
-| ----------------------- | ------------------------- | ------------- | -------------------------------------------------------------------------------------------- |
-| `show` \*               | `boolean`                 | false         | Controls whether the modal is visible.                                                       |
-| `children` \*           | `React.JSX.Element`       | —             | The content of the modal. Must be a valid HTML element or a component that forwards a ref.   |
-| `animationFrom`         | `ModalAnimationDirection` | "bottom"      | Direction from which the modal animates in and out.                                          |
-| `enableOverlayClick`    | `boolean`                 | true          | Whether clicking the overlay backdrop triggers `onOverlayClick`.                             |
-| `rootComponentId`       | `string`                  | document.body | The `id` of the DOM element to portal the modal into.                                        |
-| `zIndex`                | `number`                  | —             | Z-index applied to the overlay stack.                                                        |
-| `onClose`               | `(() => void)`            | —             | Called when dismissed via the Escape key or close button.                                    |
-| `onOverlayClick`        | `(() => void)`            | —             | Called when the overlay backdrop is clicked and `enableOverlayClick` is `true`.              |
-| `dismissKeyboardOnShow` | `boolean`                 | true          | Blurs the focused element when the modal opens, dismissing the on-screen keyboard on mobile. |
-| `disableInitialFocus`   | `boolean`                 | false         | Disables automatic focus on the modal container when it opens.                               |
-
 ## Props — `ModalCardProps`
 
-| Prop          | Type                        | Default | Description                                                                                     |
-| ------------- | --------------------------- | ------- | ----------------------------------------------------------------------------------------------- |
-| `children` \* | `React.ReactNode`           | —       | Slot content — `ModalV2.Header`, `ModalV2.Content`, `ModalV2.Footer`, or `ModalV2.CloseButton`. |
-| `fullscreen`  | `boolean`                   | —       | Expands the card to fill the viewport with no border-radius, padding, or box-shadow.            |
-| `elementRef`  | `React.Ref<HTMLDivElement>` | —       | Ref to the card DOM element.                                                                    |
+| Prop          | Type                        | Default | Description                                                                                                                       |
+| ------------- | --------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `children` \* | `React.ReactNode`           | —       | —                                                                                                                                 |
+| `elementRef`  | `React.Ref<HTMLDivElement>` | —       | Ref to the modal card DOM element. When used within `Modal`, the default `ref` is not available and you can specify this instead. |
+| `fullscreen`  | `boolean`                   | —       | When `true`, the card expands to fill the viewport with no border-radius, padding, or box-shadow.                                 |
 
 ## Props — `ModalHeaderProps`
 
-| Prop                  | Type                | Default | Description                                        |
-| --------------------- | ------------------- | ------- | -------------------------------------------------- |
-| `title`               | `string`            | —       | Heading text. Omit for a close-button-only header. |
-| `closeButtonPosition` | `"left" \| "right"` | "right" | Which side the close button appears on.            |
+| Prop                  | Type                | Default | Description                                                                                                                    |
+| --------------------- | ------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `title`               | `string`            | —       | Heading text rendered in the header. Always centered regardless of `closeButtonPosition`. Omit for a close-button-only header. |
+| `closeButtonPosition` | `"left" \| "right"` | "right" | Which side of the header the close button is placed on. The title alignment adjusts automatically.                             |
+
+## Props — `ModalContentProps`
+
+| Prop          | Type              | Default | Description |
+| ------------- | ----------------- | ------- | ----------- |
+| `children` \* | `React.ReactNode` | —       | —           |
 
 ## Props — `ModalFooterProps`
 
@@ -123,6 +114,21 @@ const ConfirmDeleteModal = () => {
 | ----------------- | ----------------- | ------- | ----------------------------------------------- |
 | `primaryButton`   | `React.ReactNode` | —       | Node rendered in the primary action position.   |
 | `secondaryButton` | `React.ReactNode` | —       | Node rendered in the secondary action position. |
+
+## Props — `ModalV2Props`
+
+| Prop                    | Type                      | Default  | Description                                                                                                                                             |
+| ----------------------- | ------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `show` \*               | `boolean`                 | false    | Controls whether the modal is visible.                                                                                                                  |
+| `children` \*           | `React.JSX.Element`       | —        | The content of the modal. The parent element must be a valid HTML element or a component that forwards a ref to a valid HTML element.                   |
+| `animationFrom`         | `ModalAnimationDirection` | "bottom" | Direction from which the modal animates in and out.                                                                                                     |
+| `enableOverlayClick`    | `boolean`                 | true     | Whether clicking the overlay backdrop triggers `onOverlayClick`. The caller is responsible for dismissing the modal in the callback.                    |
+| `rootComponentId`       | `string`                  | —        | The `id` of the DOM element to portal the modal into.                                                                                                   |
+| `zIndex`                | `number`                  | —        | The z-index applied to the overlay stack.                                                                                                               |
+| `onClose`               | `(() => void)`            | —        | Called when the modal is dismissed via the Escape key and close button.                                                                                 |
+| `onOverlayClick`        | `(() => void)`            | —        | Called when the overlay backdrop is clicked and `enableOverlayClick` is `true`.                                                                         |
+| `dismissKeyboardOnShow` | `boolean`                 | true     | Blurs the currently focused element when the modal becomes visible, dismissing the on-screen keyboard on mobile to prevent it from obscuring the modal. |
+| `disableInitialFocus`   | `boolean`                 | false    | Disables automatic focus on the modal container when it opens. When `true`, the consumer is responsible for focusing an element within the modal.       |
 
 ## Rules
 

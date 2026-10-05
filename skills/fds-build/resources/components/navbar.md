@@ -89,15 +89,16 @@ Key points:
 
 ## Props — `NavItemLinkProps`
 
-| Prop             | Type                       | Default     | Description                                                                                                   |
-| ---------------- | -------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------- |
-| `itemType`       | `"link"`                   | —           | —                                                                                                             |
-| `subMenu`        | `NavItemCommonProps<T>[]`  | —           | —                                                                                                             |
-| `id` \*          | `string`                   | —           | —                                                                                                             |
-| `options`        | `T`                        | —           | Arbitrary data passed through to callback arguments such as `onItemClick`.                                    |
-| `weight`         | `TypographyWeight`         | "regular"   | Font weight of the link text.                                                                                 |
-| `external`       | `boolean`                  | —           | Appends an external-link icon after the link text to signal that the destination is outside the current site. |
-| `underlineStyle` | `TypographyUnderlineStyle` | "underline" | Text-decoration style for the link.                                                                           |
+| Prop             | Type                       | Default     | Description                                                                                                                                                                                                                                     |
+| ---------------- | -------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `itemType`       | `"link"`                   | —           | —                                                                                                                                                                                                                                               |
+| `subMenu`        | `NavItemCommonProps<T>[]`  | —           | —                                                                                                                                                                                                                                               |
+| `subMenuColumns` | `number`                   | —           | Renders `subMenu` as a multi-column layout on desktop. Items flow vertically (top-to-bottom) within each column before wrapping to the next. Has no effect on the mobile drawer, which always renders `subMenu` as an expandable vertical list. |
+| `id` \*          | `string`                   | —           | —                                                                                                                                                                                                                                               |
+| `options`        | `T`                        | —           | Arbitrary data passed through to callback arguments such as `onItemClick`.                                                                                                                                                                      |
+| `weight`         | `TypographyWeight`         | "regular"   | Font weight of the link text.                                                                                                                                                                                                                   |
+| `external`       | `boolean`                  | —           | Appends an external-link icon after the link text to signal that the destination is outside the current site.                                                                                                                                   |
+| `underlineStyle` | `TypographyUnderlineStyle` | "underline" | Text-decoration style for the link.                                                                                                                                                                                                             |
 
 ## Props — `NavItemComponentProps`
 
