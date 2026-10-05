@@ -1,4 +1,4 @@
-# Design Tokens — v4
+# Design Tokens
 
 All tokens are imported from `@lifesg/react-design-system/theme`.
 
@@ -11,7 +11,7 @@ import {
 } from "@lifesg/react-design-system/theme";
 ```
 
-In v4, tokens are **plain CSS variable strings** — use them directly in inline `style={{}}` props or as values in CSS Modules. They do not need to be called as functions and do not require `styled-components` or `useTheme`.
+Tokens are **plain CSS variable strings** scoped to `[data-fds-<theme>]` — use them directly in inline `style={{}}` props or as values in CSS Modules. They do not need to be called as functions and do not require `styled-components` or `useTheme`.
 
 ```tsx
 // Inline style
@@ -22,11 +22,12 @@ In v4, tokens are **plain CSS variable strings** — use them directly in inline
     }}
 />;
 
-// CSS Modules — assign to a variable then reference
-const bg = Colour["bg-stronger"]; // "var(--fds-colour-bg-stronger)"
+// CSS Modules
+.container {
+    background: var(--fds-colour-bg-stronger);
+    padding: var(--fds-spacing-16);
+}
 ```
-
-No `styled.d.ts` augmentation required. No `useTheme()` hook needed.
 
 ---
 
@@ -37,6 +38,41 @@ No `styled.d.ts` augmentation required. No `useTheme()` hook needed.
 | Using `Colour[...]` inside a `styled-components` template literal | `styled-components` is not installed in v4 | Use in `style={{}}` or CSS Modules        |
 | Hardcoding `var(--fds-*)` directly                                | FDS internal variable names may change     | Use `Colour[...]` / `Spacing[...]` tokens |
 | Hardcoding hex values                                             | Breaks theming                             | Always use a Colour token                 |
+
+---
+
+## Overriding
+
+### In CSS
+
+Override tokens by setting the same variables in your own CSS, scoped to the theme attribute:
+
+```css
+[data-fds-theme="lifesg"] {
+    --fds-colour-primary-50: #1768be;
+    --fds-colour-text-error: #a04747;
+}
+
+/* Dark mode overrides */
+[data-fds-theme="lifesg"][data-fds-theme-mode="dark"] {
+    --fds-colour-primary-50: #6cb4ff;
+}
+```
+
+Place overrides after the theme CSS import so they take precedence.
+
+### In JavaScript
+
+Override CSS variables dynamically via the `style` prop on `ThemeProvider`:
+
+```tsx
+<ThemeProvider
+    theme="lifesg"
+    style={{
+        "--fds-colour-bg-primary": "#1768be",
+    }}
+/>
+```
 
 ---
 
@@ -77,7 +113,7 @@ Single-word tokens use dot notation: `Colour.text`, `Colour.border`, `Colour.bg`
 
 Hyphenated tokens use bracket notation: `Colour["text-subtle"]`, `Colour["bg-hover"]`
 
-### Usage in v4
+### Usage
 
 ```tsx
 // Inline style — most common
@@ -250,33 +286,17 @@ All follow bracket notation: `Colour["bg-success"]`, `Colour["text-error"]`.
 | `focus-ring`         | Keyboard focus outline colour     |
 | `focus-ring-inverse` | Focus outline on dark backgrounds |
 
-### Overriding
-
-Pass a `colorScheme` override when creating a custom ThemeProvider theme:
-
-```tsx
-<ThemeProvider
-    theme="lifesg"
-    overrides={{
-        primitiveColour: { "primary-50": "#1768BE" },
-        semanticColour: { "text-error": "#A04747" },
-    }}
->
-```
-
-For dark mode overrides, use `primitiveColourDark` / `semanticColourDark`.
-
 ### Rules
 
 -   Never hardcode hex values — always use a Colour token
--   Use `hyperlink` for link text — not `text-primary`
+-   Use a token that most closely matches the semantics e.g. `hyperlink` for link text — not `text-primary`
 -   DS components (Button, Form.Input, Card, etc.) handle their own colour states — only apply Colour tokens to custom elements
 
 ---
 
 ## Spacing
 
-Base-4 system. Import: `Spacing["spacing-{n}"]` — returns a CSS variable string.
+Base-4 system
 
 ```tsx
 <div style={{ gap: Spacing["spacing-16"], padding: Spacing["spacing-24"] }} />
@@ -312,8 +332,6 @@ Never hardcode `px` values — always use a Spacing token.
 
 ## Radius
 
-`Radius.*` returns a CSS variable string. Use in `style={{ borderRadius: Radius.md }}`.
-
 | Token         | Value  | Use                                                  |
 | ------------- | ------ | ---------------------------------------------------- |
 | `Radius.none` | 0px    | Full-bleed, tables                                   |
@@ -331,7 +349,7 @@ DS components have radius baked in — do not override.
 
 ## Typography
 
-Use `Typography.*` components for all rendered text — same as v3.
+Use `Typography.*` components for all rendered text.
 
 | Component                | Default element | When to use                       |
 | ------------------------ | --------------- | --------------------------------- |
@@ -360,22 +378,24 @@ Heading levels must be sequential (h1 → h2 → h3) — never skip levels.
 -   Sentence case for all UI text — "Save changes" not "Save Changes"
 -   Heading level follows reading order, not visual size
 
-### Font tokens in v4
+### Font tokens
 
-In v4, `Font[...]` tokens return CSS variable strings for individual font properties. Use `Typography.*` components for all text content in JSX — only use `Font` tokens when you need to apply font styles to a non-text container element.
+`Font.Spec[...]` tokens return CSS variable strings for individual font properties. Use `Typography.*` components for all text content in JSX — only use `Font` tokens when you need to apply font styles to a non-text container element.
 
 ```tsx
 // Match an icon size to adjacent text — use Font.Spec for raw values
 <img style={{ height: Font.Spec["heading-size-xxl"] }} />
 ```
 
-There is no multi-property CSS block injection in v4 (that was styled-components only). Use `Typography.*` components instead.
-
 ---
 
 ## Breakpoints / Media Queries
 
-In v4 there is no `MediaQuery` helper for CSS-in-JS. Use standard CSS media queries in your CSS Modules files.
+`ThemeProvider` automatically adds `fds-breakpoint-*` classes to `<body>` based on the current viewport width. Use these classes in CSS to apply responsive styles:
+
+-   `body.fds-breakpoint-{tier}` — viewport is within that tier's range
+-   `body.fds-breakpoint-{tier}-min` — viewport is at or above the tier's minimum
+-   `body.fds-breakpoint-{tier}-max` — viewport is at or below the tier's maximum
 
 ```css
 /* Card.module.css */
@@ -384,14 +404,12 @@ In v4 there is no `MediaQuery` helper for CSS-in-JS. Use standard CSS media quer
     grid-template-columns: 1fr;
 }
 
-@media (min-width: 769px) {
-    .grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
+:global(body.fds-breakpoint-lg-min) .grid {
+    grid-template-columns: repeat(3, 1fr);
 }
 ```
 
-For JS conditional logic, use the v4 media query hooks instead of `window.innerWidth`:
+For JS conditional logic, use the media query hooks:
 
 ```tsx
 import {
@@ -434,12 +452,8 @@ const ExampleComponent = () => {
 
 ## Shadow Tokens
 
-`Shadow[...]` returns a CSS variable string. Use in `style={{ boxShadow: Shadow["sm-subtle"] }}`.
-
 ```tsx
-import { Shadow } from "@lifesg/react-design-system/theme";
-
-<div style={{ boxShadow: Shadow["sm-subtle"] }} />;
+<div style={{ boxShadow: Shadow["sm-subtle"] }} />
 ```
 
 | Token key         | Common use                            |
@@ -457,7 +471,7 @@ import { Shadow } from "@lifesg/react-design-system/theme";
 
 ## Border Tokens
 
-`Border` is a flat object of CSS variable strings.
+`Border` is a flat object of CSS variable strings. Compose border properties manually using the tokens.
 
 ```tsx
 import { Border } from "@lifesg/react-design-system/theme";
@@ -474,8 +488,6 @@ import { Border } from "@lifesg/react-design-system/theme";
 // Shorthand using template literal
 <div style={{ border: `${Border["width-010"]} ${Border.solid} ${Colour.border}` }} />
 ```
-
-There is no `Border.Util` in v4 — compose border properties manually using the tokens above.
 
 For dashed border styling, use the `DashedBorder` component instead:
 
@@ -506,16 +518,12 @@ import { Border, Colour, Radius } from "@lifesg/react-design-system/theme";
 
 ## Motion Tokens
 
-`Motion[...]` returns a CSS variable string. Use in `style={{ transition: ... }}` or in CSS Modules.
-
 ```tsx
-import { Motion } from "@lifesg/react-design-system/theme";
-
 <button
     style={{
         transition: `background ${Motion["duration-250"]} ${Motion["ease-default"]}`,
     }}
-/>;
+/>
 ```
 
 For elements with dynamic height or width (e.g. expandable panels), use `react-spring` instead — CSS transitions cannot handle layout animation with dynamic content.

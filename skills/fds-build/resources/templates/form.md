@@ -1,6 +1,6 @@
-# Form Template (v4)
+# Form Template
 
-Single or multi-step form page built with `@lifesg/react-design-system` v4.
+Single or multi-step form page.
 
 ## When to use
 
@@ -12,26 +12,24 @@ Single or multi-step form page built with `@lifesg/react-design-system` v4.
 ## Page anatomy
 
 ```
-┌──────────────────────────────────────────────────────────┐
-│ Header                                                   │
-├──────────────────────────────────────────────────────────┤
-│  <main>                                                  │
-│  └─ pageWrapper (padding: spacing-32 0; lg: spacing-64) │
-│     └─ Layout.Container type="grid"                     │
-│        ├─ Layout.ColDiv xxsCols={[1, -1]}               │
-│        │  └─ ProgressIndicator  (multi-step only)       │
-│        └─ Layout.ColDiv xxsCols={12} lgCols={8}         │
-│           │  flex column · gap: spacing-32               │
-│           ├─ pageHeadingBlock (flex column · gap: 16)   │
-│           │  ├─ h1                                       │
-│           │  └─ p (optional)                             │
-│           ├─ div (form content)                          │
-│           │  └─ Form fields (built-in margin-bottom: 32)│
-│           │     Non-form components → margin-bottom: 32 │
-│           └─ FormNav                                     │
-├──────────────────────────────────────────────────────────┤
-│ Footer                                                   │
-└──────────────────────────────────────────────────────────┘
+Navbar
+──────────────────────────────────────────────────────────
+<main>
+└─ pageWrapper (padding: spacing-32 0; lg: spacing-64)
+   └─ Layout.Container type="grid"
+      ├─ Layout.ColDiv xxsCols={[1, -1]}
+      │  └─ ProgressIndicator (multi-step only)
+      └─ Layout.ColDiv xxsCols={12} lgCols={8}
+         │  flex column · gap: spacing-32
+         ├─ pageHeadingBlock (flex column · gap: 16)
+         │  ├─ h1
+         │  └─ p (optional)
+         ├─ div (form content)
+         │  └─ Form fields (built-in margin-bottom: 32)
+         │     Non-form components → margin-bottom: 32
+         └─ FormNav
+──────────────────────────────────────────────────────────
+Footer
 ```
 
 ---
@@ -40,8 +38,8 @@ Single or multi-step form page built with `@lifesg/react-design-system` v4.
 
 |                          | Wrong                | Correct                                                                                                                                                                                  |
 | ------------------------ | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Column width             | `lgCols={12}`        | `xxsCols={12} lgCols={8}`                                                                                                                                                                |
-| Progress indicator       | Inside 8-col div     | Separate `lgCols={12}` ColDiv; `currentIndex` is zero-based                                                                                                                              |
+| Content column width     | `lgCols={12}`        | `xxsCols={12} lgCols={8}`                                                                                                                                                                |
+| Progress indicator       | Inside 8-col div     | Separate `lgCols={12}` ColDiv                                                                                                                                                            |
 | Page heading             | Static string        | Defaults to `{STEPS[step]}`; override per step as needed                                                                                                                                 |
 | Field spacing            | `gap` on wrapper div | Rely on component built-in `margin-bottom: 32`; add `margin-bottom: var(--fds-spacing-32)` via CSS Module class for components without it (BoxContainer, Toggle, FileUpload, ESignature) |
 | Constrained-width inputs | `width` on element   | `max-width` — works alongside internal `width: 100%`                                                                                                                                     |

@@ -1,4 +1,4 @@
-# Listing Template (v4)
+# Listing Template
 
 Pages whose primary goal is finding, scanning, or filtering a collection of records.
 
@@ -15,37 +15,29 @@ Do not use for:
 
 ---
 
-## Styling approach
-
-v4 uses **CSS Modules** — no `styled-components`.
-
--   Design tokens are plain CSS variable strings (`var(--fds-spacing-32)`, `var(--fds-colour-text)`, etc.)
--   Responsive styles use the breakpoint class selector: `:where(body.fds-breakpoint-lg-min) &`
--   `ThemeProvider` adds breakpoint classes to `document.body` at runtime
-
----
-
 ## Page anatomy
 
 ```
 Navbar
-main
-  pageWrapper (padding: spacing-32 0; lg: spacing-48)
-  └── Layout.Container type="grid"
-        └── Layout.ColDiv xsCols={8} lgCols={12}
-              searchRow (optional)
-              twoColumn
-                ├── filterSidebar (278px) — omit for search-only variant
-                │     Filter
-                └── resultsArea (flex-1)
-                      resultCountRow
-                      ErrorDisplay type="no-item-found"  ← empty state
-                      Card list / DataTable
-                      paginationWrapper (centred)
+──────────────────────────────────────────────────────────
+<main>
+└─ pageWrapper (padding: spacing-32 0; lg: spacing-48)
+└─ Layout.Container type="grid"
+    └─ Layout.ColDiv xxsCols={[1, -1]}
+    ├─ searchRow (optional)
+    └─ twoColumn
+        ├─ filterSidebar (278px) — omit for search-only variant
+        ├─ Filter
+        └─ resultsArea (flex 1)
+            ├─ resultCountRow
+            ├─ ErrorDisplay type="no-item-found" ← empty state
+            ├─ Card list / DataTable
+            └─ paginationWrapper (centred)
+──────────────────────────────────────────────────────────
 Footer
 ```
 
-On mobile the filter sidebar should be hidden behind a modal — `Filter` handles this automatically when `toggleFilterAtBreakpoint` is set.
+On mobile the `Filter` sidebar automatically collapses into a button that opens a modal.
 
 ---
 

@@ -1,6 +1,6 @@
 # App Setup — Flagship v4
 
-Full project setup for `@lifesg/react-design-system` v4. Work through all four steps before writing any component code.
+Full project setup for `@lifesg/react-design-system` v4. Work through all five steps before writing any component code.
 
 ---
 
@@ -14,11 +14,9 @@ Do NOT install `styled-components` — it is not used in v4.
 
 ---
 
-## Step 2 — CSS
+## Step 2 — CDN stylesheets
 
-### 2a — CDN stylesheet (index.html `<head>`)
-
-Add `main.css` from the v4 CDN. This handles fonts, base reset, and cascade layer ordering.
+Add these stylesheets to normalise browser styles and display fonts.
 
 ```html
 <link
@@ -26,58 +24,134 @@ Add `main.css` from the v4 CDN. This handles fonts, base reset, and cascade laye
     type="text/css"
     href="https://assets.life.gov.sg/react-design-system/v4/css/main.css"
 />
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="https://assets.life.gov.sg/react-design-system/v3/css/open-sans.css"
+/>
 ```
 
-For Next.js App Router, add it in `layout.tsx`:
+Or if you are importing to an existing CSS file:
 
-```tsx
-// src/app/layout.tsx
-export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
-    return (
-        <html lang="en">
-            <head>
-                <link
-                    rel="stylesheet"
-                    type="text/css"
-                    href="https://assets.life.gov.sg/react-design-system/v4/css/main.css"
-                />
-            </head>
-            <body>{children}</body>
-        </html>
-    );
-}
+```css
+@import url("https://assets.life.gov.sg/react-design-system/v4/css/main.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/open-sans.css");
 ```
 
-### 2b — Theme CSS (src/index.css)
+Replace `open-sans` with the font for your theme:
+
+| Theme                                    | Font CSS                           |
+| ---------------------------------------- | ---------------------------------- |
+| lifesg, ccube, mylegacy, oneservice, rbs | `open-sans`                        |
+| bookingsg, careercompass, smgs           | `plus-jakarta-sans`                |
+| spf, vica, websg, wise, wogaa            | `public-sans`                      |
+| sgw-digital-lobby, supportgowhere        | `libre-franklin`                   |
+| pa                                       | `lato`                             |
+| imda                                     | `montserrat`                       |
+| tote-board                               | `inter`                            |
+| a11y-playground                          | `atkinson-hyperlegible-next`       |
+| sportsg-orange                           | `apfel-grotezk` + `hanken-grotesk` |
+
+---
+
+## Step 3 — Theme stylesheet
+
+In your application's CSS entrypoint, import the theme stylesheet:
 
 ```css
 @import "@lifesg/react-design-system/theme/styles/lifesg.css";
 ```
 
-Replace `lifesg` with your chosen theme slug: `lifesg` · `bookingsg` · `ccube` · `mylegacy` · `oneservice` · `pa` · `supportgowhere` · `sgw-digital-lobby` · `careercompass` · `rbs` · `imda` · `spf` · `smgs` · `a11y-playground`
+> CSS `@import` from `node_modules` requires your framework or build tool to support it. Vite and Next.js resolve this automatically; other build tools may need a CSS resolver configured.
 
-> Vite resolves `node_modules` CSS `@import` automatically. Other build tools may need a CSS resolver configured.
+Or in your application's JavaScript entrypoint, import the theme stylesheet:
 
-### Next.js App Router adaptation
+```tsx
+import "@lifesg/react-design-system/theme/styles/lifesg.css";
+```
 
-Next.js App Router renders into `<body>` directly — there is no `#root`. Replace the `#root` rules with:
+Replace `lifesg` with your chosen theme slug: `a11y-playground` · `bookingsg` · `careercompass` · `ccube` · `imda` · `lifesg` · `mylegacy` · `oneservice` · `pa` · `rbs` · `sgw-digital-lobby` · `smgs` · `spf` · `sportsg-orange` · `supportgowhere` · `tote-board` · `vica` · `websg` · `wise` · `wogaa`
+
+---
+
+## Step 4 — ThemeProvider
+
+Wrap your app root in `ThemeProvider`. The `theme` prop is a string matching the slug used in Step 3.
+
+```tsx
+import { ThemeProvider } from "@lifesg/react-design-system/theme";
+
+const App = () => {
+    return (
+        <ThemeProvider theme="lifesg">
+            <Component />
+        </ThemeProvider>
+    );
+};
+```
+
+**Dark/light mode:** `mode` prop defaults to `"auto"` (OS preference).
+
+```tsx
+<ThemeProvider theme="lifesg" mode="light">  {/* force light */}
+<ThemeProvider theme="lifesg" mode="dark">   {/* force dark */}
+```
+
+---
+
+## Vite
+
+No special configuration needed for the design system. Standard React setup:
+
+```ts
+// vite.config.ts
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+    plugins: [react()],
+});
+```
+
+---
+
+## Next.js App Router
+
+No special `next.config.js` is needed. Suggested configuration below.
+
+### CSS
+
+Create a global CSS file with all three imports — CDN stylesheets and theme:
 
 ```css
-/* Next.js: body is the mount point, not #root */
-body > div {
+/* global.css */
+@import url("https://assets.life.gov.sg/react-design-system/v4/css/main.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/open-sans.css");
+@import "@lifesg/react-design-system/theme/styles/lifesg.css";
+```
+
+Wrap the app in a flex column layout so the footer stays pinned to the bottom on short pages:
+
+```css
+body {
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
+}
+
+main {
     flex: 1;
+}
+
+.theme-provider {
+    display: flex;
+    flex-direction: column;
 }
 ```
 
-And move `min-height: 100vh; display: flex; flex-direction: column` onto `body` (already shown above).
+### ThemeProvider
 
-For `ThemeProvider`, create a client component wrapper and use it in `layout.tsx`:
+`ThemeProvider` is a client component, so create a wrapper:
 
 ```tsx
 // src/app/providers.tsx
@@ -86,15 +160,20 @@ import { ThemeProvider } from "@lifesg/react-design-system/theme";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
     return (
-        <ThemeProvider theme="lifesg" mode="light">
+        <ThemeProvider theme="lifesg" className="theme-provider">
             {children}
         </ThemeProvider>
     );
 }
 ```
 
+### Root layout
+
+Import the global CSS and the providers wrapper in `layout.tsx`:
+
 ```tsx
 // src/app/layout.tsx
+import "./global.css";
 import Providers from "./providers";
 
 export default function RootLayout({
@@ -112,79 +191,12 @@ export default function RootLayout({
 }
 ```
 
-```tsx
-// src/app/page.tsx
-import { Navbar } from "@lifesg/react-design-system/navbar";
-import { Footer } from "@lifesg/react-design-system/footer";
-
-export default function Page() {
-    return (
-        <>
-            <Navbar masthead items={{ desktop: [] }} />
-            <main style={{ flex: 1 }}>{/* page content */}</main>
-            <Footer />
-        </>
-    );
-}
-```
-
----
-
-## Step 3 — ThemeProvider (src/App.tsx)
-
-Wrap your app root. Theme is a string matching the slug used in Step 2. Do NOT re-import the CSS here — it is already imported via `index.css`.
-
-```tsx
-// src/App.tsx
-import { ThemeProvider } from "@lifesg/react-design-system/theme";
-import { Navbar } from "@lifesg/react-design-system/navbar";
-import { Footer } from "@lifesg/react-design-system/footer";
-
-export default function App() {
-    return (
-        <ThemeProvider theme="lifesg" mode="light">
-            <Navbar
-                masthead
-                items={{
-                    desktop: [{ id: "home", children: "Home", href: "/" }],
-                }}
-            />
-            <main style={{ flex: 1 }}>{/* page content */}</main>
-            <Footer />
-        </ThemeProvider>
-    );
-}
-```
-
-**Dark/light mode:** `mode` prop defaults to `"auto"` (OS preference).
-
-```tsx
-<ThemeProvider theme="lifesg" mode="light">  {/* force light */}
-<ThemeProvider theme="lifesg" mode="dark">   {/* force dark */}
-```
-
----
-
-## Step 4 — Vite config
-
-No special configuration needed for the design system. Standard React setup:
-
-```ts
-// vite.config.ts
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-
-export default defineConfig({
-    plugins: [react()],
-});
-```
-
 ---
 
 ## Verification checklist
 
 -   [ ] `@lifesg/react-design-system`, `@lifesg/react-icons`, `@floating-ui/react` installed
 -   [ ] `styled-components` NOT installed
--   [ ] `main.css` CDN link in `index.html` (or `layout.tsx` for Next.js)
--   [ ] `@lifesg/react-design-system/theme/styles/{theme}.css` imported in `index.css`
+-   [ ] `main.css` and font CDN links imported in HTML doc or CSS file
+-   [ ] `@lifesg/react-design-system/theme/styles/{theme}.css` imported in entrypoint or CSS file
 -   [ ] `ThemeProvider` wraps app root with correct theme string
