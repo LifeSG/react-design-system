@@ -44,9 +44,9 @@ export const withNotificationBanner = (
                         const otherAttributes =
                             attribute.otherAttributes as ContentTextAttributes;
 
-                        const sanitizedContent = DOMPurify.sanitize(
-                            attribute.content
-                        );
+                        const sanitizedContent = DOMPurify.isSupported
+                            ? DOMPurify.sanitize(attribute.content)
+                            : "";
                         return (
                             <p
                                 key={index}
