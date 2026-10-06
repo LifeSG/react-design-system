@@ -18,6 +18,7 @@ interface LabelTextStyleProps {
     $disabled?: boolean;
     $truncateType?: TruncateType;
     $bold?: boolean;
+    $variant?: DropdownVariantType;
 }
 
 interface MatchedTextStyleProps {
@@ -77,6 +78,12 @@ export const SecondaryText = styled.div<LabelTextStyleProps>`
                 `;
         }
     }}
+
+    ${(props) =>
+        props.$variant === "small" &&
+        css`
+            ${Font["body-md-regular"]}
+        `}
 `;
 
 export const MatchedText = styled.span<MatchedTextStyleProps>`
