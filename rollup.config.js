@@ -113,9 +113,7 @@ const plugins = [
             main: "./cjs/index.js",
             module: "./index.js",
             types: "./index.d.ts",
-            bin: {
-                "lifesg-react-design-system": "./codemods/run-codemod.js",
-            },
+            bin: pkg.bin,
             exports: {
                 ".": {
                     types: "./index.d.ts",
@@ -306,7 +304,11 @@ const codemodBuildConfig = {
             tsconfig: "tsconfig.codemods.json",
         }),
         copy({
-            targets: [{ src: "codemods/**/*", dest: "dist/codemods" }],
+            targets: [
+                { src: "codemods/**/*", dest: "dist/codemods" },
+                { src: "scripts/cli.js", dest: "dist/scripts" },
+                { src: "skills/*", dest: "dist/skills" },
+            ],
         }),
     ],
 };
