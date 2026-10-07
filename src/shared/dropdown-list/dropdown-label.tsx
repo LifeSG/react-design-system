@@ -197,7 +197,8 @@ export const DropdownLabel = ({
                             styles.secondaryTextTruncateEnd,
                         displayType === "next-line"
                             ? styles.secondaryTextNextLine
-                            : styles.secondaryTextInline
+                            : styles.secondaryTextInline,
+                        variant === "small" && styles.secondaryTextSmall
                     )}
                 >
                     {truncationType === "middle" && shouldTruncateLabel

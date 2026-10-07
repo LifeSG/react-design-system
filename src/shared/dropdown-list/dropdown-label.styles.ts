@@ -74,6 +74,10 @@ export const secondaryTextTruncateEnd = css`
     ${lineClampDynamicCss(tokens.secondaryText.maxLines)}
 `;
 
+export const secondaryTextSmall = css`
+    ${Font["body-md-regular"]}
+`;
+
 // -----------------------------------------------------------------------------
 // MATCHED TEXT
 // -----------------------------------------------------------------------------
