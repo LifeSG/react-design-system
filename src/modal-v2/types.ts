@@ -22,6 +22,12 @@ export interface ModalCardProps extends React.HTMLAttributes<HTMLDivElement> {
      * padding, or box-shadow.
      */
     fullscreen?: boolean | undefined;
+    /**
+     * When `true`, the slot area stretches to absorb any leftover height of a
+     * size-constrained card. Use this when the card is given an explicit height
+     * and its content should fill it. Implied by `fullscreen`.
+     */
+    fillHeight?: boolean | undefined;
 }
 
 // @storybookSection ModalV2.CloseButton
