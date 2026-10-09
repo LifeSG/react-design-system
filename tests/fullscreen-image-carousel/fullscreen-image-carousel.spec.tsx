@@ -599,6 +599,44 @@ describe("Fullscreen Image Carousel", () => {
             ).not.toBeInTheDocument();
         });
 
+        it("should format a numeric fileSize", () => {
+            render(
+                <FullscreenImageCarousel
+                    items={[
+                        {
+                            src: "https://picsum.photos/id/157/1600/900",
+                            fileName: "photo-a.jpg",
+                            fileSize: 123456,
+                        },
+                    ]}
+                    show={true}
+                />
+            );
+
+            expect(screen.getByTestId("file-info-size")).toHaveTextContent(
+                "121 KB"
+            );
+        });
+
+        it("should render the file info bar when fileSize is 0", () => {
+            render(
+                <FullscreenImageCarousel
+                    items={[
+                        {
+                            src: "https://picsum.photos/id/157/1600/900",
+                            fileName: "empty.jpg",
+                            fileSize: 0,
+                        },
+                    ]}
+                    show={true}
+                />
+            );
+
+            expect(screen.getByTestId("file-info-size")).toHaveTextContent(
+                "0 KB"
+            );
+        });
+
         it("should update the file info bar when navigating to a different slide", () => {
             render(
                 <FullscreenImageCarousel

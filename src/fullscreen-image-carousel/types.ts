@@ -117,10 +117,12 @@ interface FullscreenImageCarouselBaseItemProps {
      */
     fileName?: string | undefined;
     /**
-     * Human-readable file size shown alongside `fileName` in the top
-     * info bar (e.g. "2.4 MB").
+     * File size shown alongside `fileName` in the top info bar.
+     *
+     * Pass a `string` for a pre-formatted label (e.g. `"2.4 MB"`) or a
+     * `number` of bytes to have it formatted automatically.
      */
-    fileSize?: string | undefined;
+    fileSize?: string | number | undefined;
     /**
      * Replaces the component-level `customActions` while this item is active.
      *
