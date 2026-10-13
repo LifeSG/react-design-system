@@ -61,7 +61,7 @@ export const secondaryTextNextLine = css`
 `;
 
 export const secondaryTextInline = css`
-    ${Font["body-baseline-regular"]}
+    font-weight: ${Font.Spec["weight-regular"]};
 `;
 
 export const secondaryTextLabelInline = css`
@@ -72,10 +72,6 @@ export const secondaryTextLabelInline = css`
 export const secondaryTextTruncateEnd = css`
     ${tokens.secondaryText.maxLines}: 2;
     ${lineClampDynamicCss(tokens.secondaryText.maxLines)}
-`;
-
-export const secondaryTextSmall = css`
-    ${Font["body-md-regular"]}
 `;
 
 // -----------------------------------------------------------------------------
