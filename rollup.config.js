@@ -16,11 +16,6 @@ import generatePackageJson from "rollup-plugin-generate-package-json";
 import { libStylePlugin } from "rollup-plugin-lib-style";
 import typescript from "rollup-plugin-typescript2";
 
-import { createFixCssImportPathsPlugin } from "./rollup/fix-css-import-paths-plugin.js";
-
-const fixCssImportPathsPlugin = createFixCssImportPathsPlugin({
-    outputDirs: ["dist", "dist/cjs"],
-});
 const dirsToIgnore = new Set(["custom-types", "shared", "util", "__mocks__"]);
 
 const srcDir = "src";
@@ -240,7 +235,6 @@ const plugins = [
         ],
         hook: "writeBundle",
     }),
-    fixCssImportPathsPlugin,
 ];
 
 const libraryBuildConfig = {
