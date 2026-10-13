@@ -24,7 +24,6 @@ import type {
 } from "react-zoom-pan-pinch";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 
-import { FileUploadHelper } from "../file-upload/helper";
 import { ModalV2 } from "../modal-v2";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { useStateCallback } from "../shared/hooks";
@@ -32,6 +31,7 @@ import { ImagePlaceholder } from "../shared/image-placeholder";
 import { formatUnitValue, useApplyStyle } from "../theme";
 import { Typography } from "../typography";
 import { mergeRefs, useEventListener } from "../util";
+import { FileHelper } from "../util/file-helper";
 import * as styles from "./fullscreen-image-carousel.styles";
 import { StatefulImage } from "./stateful-image";
 import type {
@@ -431,7 +431,7 @@ export const Component = (
     const renderFileInfo = () => {
         const { fileName, fileSize } = currentItem ?? {};
         const trimmedName = fileName?.trim();
-        const formattedSize = FileUploadHelper.formatFileSizeDisplay(fileSize);
+        const formattedSize = FileHelper.formatFileSizeDisplay(fileSize);
 
         return (
             <div

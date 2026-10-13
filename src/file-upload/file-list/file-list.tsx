@@ -26,11 +26,11 @@ import { useResizeDetector } from "react-resize-detector";
 
 import type { FormLabelProps } from "../../form/form-label/types";
 import { VisuallyHidden } from "../../shared/accessibility";
+import { FileHelper } from "../../util";
 import { FileUploadContext } from "../context";
 import { MouseSensor } from "../custom-sensors";
 import { FileListItem } from "../file-list-item";
 import type { FileItemMode } from "../file-list-item/types";
-import { FileUploadHelper } from "../helper";
 import type { FileItemProps } from "../types";
 import * as styles from "./file-list.styles";
 
@@ -272,10 +272,7 @@ function Component(
     // HELPER FUNCTIONS
     // =========================================================================
     const checkEditable = (item: FileItemProps) => {
-        return (
-            editableFileItems &&
-            FileUploadHelper.isSupportedImageType(item.type)
-        );
+        return editableFileItems && FileHelper.isSupportedImageType(item.type);
     };
 
     const areAllItemsInDisplayViews = () => {

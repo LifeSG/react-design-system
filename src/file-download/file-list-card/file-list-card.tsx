@@ -4,11 +4,10 @@ import clsx from "clsx";
 import { memo, useEffect, useRef, useState } from "react";
 
 import { Button } from "../../button";
-import { FileUploadHelper } from "../../file-upload/helper";
 import { VisuallyHidden } from "../../shared/accessibility";
 import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
 import { useMaxWidthMediaQuery } from "../../theme";
-import { StringHelper } from "../../util";
+import { FileHelper, StringHelper } from "../../util";
 import * as styles from "./file-list-card.styles";
 import type { FileListItemProps } from "./types";
 
@@ -31,8 +30,8 @@ const Component = ({ fileItem, onDownload, onClick }: FileListItemProps) => {
     // Local variables
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
-    const fileSize = FileUploadHelper.formatFileSizeDisplay(size, "0 KB");
-    const thumbnailDisplay = FileUploadHelper.resolveThumbnailDisplay(
+    const fileSize = FileHelper.formatFileSizeDisplay(size, "0 KB");
+    const thumbnailDisplay = FileHelper.resolveThumbnailDisplay(
         mimeType,
         thumbnailImageDataUrl
     );
@@ -156,7 +155,7 @@ const Component = ({ fileItem, onDownload, onClick }: FileListItemProps) => {
                     data-testid={`${id}-thumbnail-image`}
                     src={
                         isPdfBadge
-                            ? FileUploadHelper.PDF_ICON_URL
+                            ? FileHelper.PDF_ICON_URL
                             : thumbnailDisplay.src
                     }
                 />

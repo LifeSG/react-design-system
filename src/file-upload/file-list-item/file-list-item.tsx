@@ -5,8 +5,8 @@ import { memo, useContext, useEffect, useMemo, useRef, useState } from "react";
 
 import { Form } from "../../form";
 import { Typography } from "../../typography";
+import { FileHelper } from "../../util/file-helper";
 import { FileUploadContext } from "../context";
-import { FileUploadHelper } from "../helper";
 import { FileItemActions } from "./file-item-actions";
 import { FileItemDetails } from "./file-item-details";
 import * as styles from "./file-list-item.styles";
@@ -78,10 +78,9 @@ const Component = ({
     // DERIVED STATE
     // =========================================================================
     const isLoading = progress < 1;
-    const fileSize = FileUploadHelper.formatFileSizeDisplay(size, "0 KB");
+    const fileSize = FileHelper.formatFileSizeDisplay(size, "0 KB");
     const shouldShowThumbnail =
-        !!thumbnailImageDataUrl ||
-        fileItem.type === FileUploadHelper.PDF_MIME_TYPE;
+        !!thumbnailImageDataUrl || fileItem.type === FileHelper.PDF_MIME_TYPE;
 
     const hasInlineActions =
         currentMode === "display" && !!description && !!editable;
