@@ -1,0 +1,2 @@
+import{commonjsGlobal as e,getDefaultExportFromCjs as t}from"../../../_virtual/_commonjsHelpers.js";import{__module as s}from"../../../_virtual/isBetween.js";s.exports=function(e,t,s){t.prototype.isBetween=function(e,t,i,r){var o=s(e),f=s(t),h="("===(r=r||"()")[0],n=")"===r[1];return(h?this.isAfter(o,i):!this.isBefore(o,i))&&(n?this.isBefore(f,i):!this.isAfter(f,i))||(h?this.isBefore(o,i):!this.isAfter(o,i))&&(n?this.isAfter(f,i):!this.isBefore(f,i))}};var i=t(s.exports);export{i as default};
+//# sourceMappingURL=isBetween.js.map

@@ -1,0 +1,2 @@
+import{useRef as r,useEffect as t,useCallback as n}from"react";function e(e,u){const c=r(e),l=r(0),o=r(null);return t((()=>{c.current=e}),[e]),t((()=>()=>{null!==o.current&&clearTimeout(o.current)}),[]),n(((...r)=>{const t=Date.now(),n=t-l.current;null!==o.current&&(clearTimeout(o.current),o.current=null),n>=u?(l.current=t,c.current(...r)):o.current=setTimeout((()=>{l.current=Date.now(),o.current=null,c.current(...r)}),u-n)}),[u])}export{e as useThrottle};
+//# sourceMappingURL=use-throttle.js.map

@@ -1,0 +1,2 @@
+import{i as o}from"./isFunction.js";import{_ as r}from"./_isMasked.js";import{i as t}from"./isObject.js";import{_ as e}from"./_toSource.js";var s=o,i=r,p=t,a=e,n=/^\[object .+?Constructor\]$/,c=Function.prototype,m=Object.prototype,f=c.toString,j=m.hasOwnProperty,u=RegExp("^"+f.call(j).replace(/[\\^$.*+?()[\]{}|]/g,"\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g,"$1.*?")+"$");var $=function(o){return!(!p(o)||i(o))&&(s(o)?u:n).test(a(o))};export{$ as _};
+//# sourceMappingURL=_baseIsNative.js.map

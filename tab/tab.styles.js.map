@@ -1,0 +1,1 @@
+{"version":3,"file":"tab.styles.js","sources":["../../src/tab/tab.styles.ts"],"sourcesContent":["import { css } from \"@linaria/core\";\n\nexport const wrapper = css`\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n`;\n"],"names":["wrapper"],"mappings":"oDAEO,MAAMA,EAAO"}

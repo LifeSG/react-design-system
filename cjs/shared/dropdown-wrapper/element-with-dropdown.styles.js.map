@@ -1,0 +1,1 @@
+{"version":3,"file":"element-with-dropdown.styles.js","sources":["../../../../src/shared/dropdown-wrapper/element-with-dropdown.styles.ts"],"sourcesContent":["export const tokens = {\n    availableHeight: \"--fds-internal-dropdownWrapper-availableHeight\",\n};\n"],"names":["availableHeight"],"mappings":"4BAAsB,CAClBA,gBAAiB"}

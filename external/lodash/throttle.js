@@ -1,0 +1,2 @@
+import{getDefaultExportFromCjs as i}from"../../_virtual/_commonjsHelpers.js";import{d as r}from"./debounce.js";import{i as n}from"./isObject.js";var t=r,a=n;var e=i((function(i,r,n){var e=!0,o=!0;if("function"!=typeof i)throw new TypeError("Expected a function");return a(n)&&(e="leading"in n?!!n.leading:e,o="trailing"in n?!!n.trailing:o),t(i,r,{leading:e,maxWait:r,trailing:o})}));export{e as default};
+//# sourceMappingURL=throttle.js.map

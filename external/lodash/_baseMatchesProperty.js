@@ -1,0 +1,2 @@
+import{_ as r}from"./_baseIsEqual.js";import{g as o}from"./get.js";import{h as s}from"./hasIn.js";import{_ as a}from"./_isKey.js";import{_ as t}from"./_isStrictComparable.js";import{_ as m}from"./_matchesStrictComparable.js";import{_ as i}from"./_toKey.js";var _=r,e=o,p=s,f=a,j=t,n=m,c=i;var u=function(r,o){return f(r)&&j(o)?n(c(r),o):function(s){var a=e(s,r);return void 0===a&&a===o?p(s,r):_(o,a,3)}};export{u as _};
+//# sourceMappingURL=_baseMatchesProperty.js.map

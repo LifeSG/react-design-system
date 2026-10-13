@@ -1,0 +1,2 @@
+"use strict";var e=require("../_virtual/_tslib.js"),t=require("react/jsx-runtime"),r=require("clsx"),s=require("react"),a=require("./uneditable-section.styles.js");function i(e){return e&&"object"==typeof e&&"default"in e?e:{default:e}}var u=i(r);const c=(r,s)=>{var{stretch:i,className:c}=r,l=e.__rest(r,["stretch","className"]);return t.jsx("ul",Object.assign({ref:s,className:u.default(a.gridUl,i&&a.columnWidthStretch,c)},l))},l=i(s).default.forwardRef(c);exports.Component=c,exports.UneditableItemSection=l;
+//# sourceMappingURL=item-section.js.map

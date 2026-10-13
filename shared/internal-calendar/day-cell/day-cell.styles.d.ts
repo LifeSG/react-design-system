@@ -1,0 +1,10 @@
+export declare const cell: import("@linaria/core").LinariaClassName;
+export declare const half: string;
+export declare const leftHalf: import("@linaria/core").LinariaClassName;
+export declare const rightHalf: import("@linaria/core").LinariaClassName;
+export declare const circle: string;
+export declare const leftCircle: import("@linaria/core").LinariaClassName;
+export declare const rightCircle: import("@linaria/core").LinariaClassName;
+export declare const labelWrapper: import("@linaria/core").LinariaClassName;
+export declare const label: import("@linaria/core").LinariaClassName;
+export declare const indicator: import("@linaria/core").LinariaClassName;

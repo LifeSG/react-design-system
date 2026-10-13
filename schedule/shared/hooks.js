@@ -1,0 +1,2 @@
+import{useState as r,useEffect as n,useRef as t}from"react";import{calculateScrollPosition as o,getTimelineOffset as c}from"./utils.js";function e(t,o){const[e,u]=r(null);return n((()=>{function r(){u(c(t,o))}r();const n=setInterval(r,9e5);return()=>clearInterval(n)}),[t,o]),e}function u(r,c,e){const u=t(null);return n((()=>{if(!r&&u.current&&c){const r=o(c,e||c);null!==r&&u.current&&(u.current.scrollTop=r)}}),[c,r,e]),u}export{u as useInitialScroll,e as useTimelineOffset};
+//# sourceMappingURL=hooks.js.map

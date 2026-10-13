@@ -1,0 +1,2 @@
+"use strict";var e=require("react");exports.useEventListener=(t,r,n="window",s)=>{const u=e.useRef();e.useEffect((()=>{u.current=r}),[r]),e.useEffect((()=>{let e;switch(n){case"window":e=window;break;case"document":e=document;break;default:e=n}if(!e||!e.addEventListener)return;const r=e=>{var t;return null===(t=u.current)||void 0===t?void 0:t.call(u,e)};return e.addEventListener(t,r,s),()=>{null==e||e.removeEventListener(t,r,s)}}),[t,n])};
+//# sourceMappingURL=use-event-listener.js.map

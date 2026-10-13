@@ -1,0 +1,2 @@
+import{jsx as r}from"react/jsx-runtime";import{useRef as t,useEffect as a}from"react";import e from"./default.png.js";const o=({src:o,alt:n,className:s,"data-testid":c})=>{const l=t(null);a((()=>{const r=l.current;r&&r.complete&&0===r.naturalHeight&&0===r.naturalWidth&&(r.onerror=null,r.src=e)}),[o]);return r("img",{ref:l,src:o,alt:n||"",className:s,"data-testid":c,onError:r=>{const t=r.target;t.onerror=null,t.src=e}})};export{o as ImageWithFallback};
+//# sourceMappingURL=image-with-fallback.js.map
