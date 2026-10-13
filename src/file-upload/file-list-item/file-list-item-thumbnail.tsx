@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
 import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../../theme";
-import { FileUploadHelper } from "../helper";
+import { FileHelper } from "../../util";
 
 interface Props {
     thumbnailImageDataUrl?: string | undefined;
@@ -24,9 +24,9 @@ export const FileListItemThumbnail = ({
         }
     };
 
-    const isPdf = fileType === FileUploadHelper.PDF_MIME_TYPE;
+    const isPdf = fileType === FileHelper.PDF_MIME_TYPE;
     const displaySrc = isPdf
-        ? thumbnailImageDataUrl || FileUploadHelper.PDF_ICON_URL
+        ? thumbnailImageDataUrl || FileHelper.PDF_ICON_URL
         : thumbnailImageDataUrl || "";
 
     return (

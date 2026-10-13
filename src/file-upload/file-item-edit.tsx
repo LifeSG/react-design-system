@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Form } from "../form";
-import { StringHelper } from "../util";
+import { FormLabelProps } from "../form/types";
+import { FileHelper, StringHelper } from "../util";
 import {
     ActionButton,
     ActionButtonsSection,
@@ -12,9 +13,7 @@ import {
     NameSection,
 } from "./file-item-edit.styles";
 import { FileListItemThumbnail } from "./file-list-item/file-list-item-thumbnail";
-import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
-import { FormLabelProps } from "../form/types";
 
 interface Props {
     fileItem: FileItemProps;
@@ -113,7 +112,7 @@ export const FileItemEdit = ({
     };
 
     const shouldShowThumbnail =
-        !!thumbnailImageDataUrl || type === FileUploadHelper.PDF_MIME_TYPE;
+        !!thumbnailImageDataUrl || type === FileHelper.PDF_MIME_TYPE;
 
     // =========================================================================
     // RENDER FUNCTIONS
@@ -122,7 +121,7 @@ export const FileItemEdit = ({
         <NameSection ref={nameSectionRef}>
             <FileNameText weight="semibold">{formattedName}</FileNameText>
             <FileSizeText>
-                {FileUploadHelper.formatFileSizeDisplay(size, "0 KB")}
+                {FileHelper.formatFileSizeDisplay(size, "0 KB")}
             </FileSizeText>
         </NameSection>
     );

@@ -27,7 +27,7 @@ import { MouseSensor } from "./custom-sensors";
 import { FileItemEdit } from "./file-item-edit";
 import { FileListItem } from "./file-list-item";
 import { EditableItemsContainer, ListWrapper } from "./file-list.styles";
-import { FileUploadHelper } from "./helper";
+import { FileHelper } from "../util";
 import { FileItemProps } from "./types";
 import { FormLabelProps } from "../form/types";
 import { VisuallyHidden } from "../shared/accessibility";
@@ -305,10 +305,7 @@ function Component(
     // HELPER FUNCTIONS
     // =========================================================================
     const checkEditable = (item: FileItemProps) => {
-        return (
-            editableFileItems &&
-            FileUploadHelper.isSupportedImageType(item.type)
-        );
+        return editableFileItems && FileHelper.isSupportedImageType(item.type);
     };
 
     const shouldRenderEditMode = (item: FileItemProps) => {

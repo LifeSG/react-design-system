@@ -10,10 +10,10 @@ import {
     useRef,
     useState,
 } from "react";
+import { FormLabelProps } from "../../form/types";
 import { ProgressBar } from "../../shared/progress-bar";
-import { StringHelper } from "../../util";
+import { FileHelper, StringHelper } from "../../util";
 import { FileUploadContext } from "../context";
-import { FileUploadHelper } from "../helper";
 import { FileListItemThumbnail } from "./file-list-item-thumbnail";
 import {
     ActionContainer,
@@ -35,7 +35,6 @@ import {
     MobileErrorMessage,
     NameSection,
 } from "./file-list-item.styles";
-import { FormLabelProps } from "../../form/types";
 import { FileListItemProps } from "./types";
 
 interface Props extends FileListItemProps {
@@ -87,7 +86,7 @@ const Component = ({
 
     // Local variables
     const isLoading = progress < 1;
-    const fileSize = FileUploadHelper.formatFileSizeDisplay(size, "0 KB");
+    const fileSize = FileHelper.formatFileSizeDisplay(size, "0 KB");
     const hasInlineActions = !!description && !!editable;
     const focusType: ItemFocusType = activeId
         ? activeId === id
@@ -247,7 +246,7 @@ const Component = ({
     const renderFileContent = (thumbnailImageDataUrl?: string) => {
         const shouldShowThumbnail =
             !!thumbnailImageDataUrl ||
-            fileItem.type === FileUploadHelper.PDF_MIME_TYPE;
+            fileItem.type === FileHelper.PDF_MIME_TYPE;
 
         const thumbnail = shouldShowThumbnail ? (
             <FileListItemThumbnail
@@ -284,7 +283,7 @@ const Component = ({
     const renderContents = () => {
         const shouldShowThumbnail =
             !!thumbnailImageDataUrl ||
-            fileItem.type === FileUploadHelper.PDF_MIME_TYPE;
+            fileItem.type === FileHelper.PDF_MIME_TYPE;
 
         const content = errorMessage
             ? renderErrorState()

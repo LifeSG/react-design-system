@@ -23,7 +23,7 @@ import {
     TransformComponent,
     TransformWrapper,
 } from "react-zoom-pan-pinch";
-import { FileUploadHelper } from "../file-upload/helper";
+import { FileHelper } from "../util/file-helper";
 import { ModalV2 } from "../modal-v2";
 import { useStateCallback } from "../shared/hooks";
 import { useEventListener } from "../util";
@@ -381,7 +381,7 @@ export const Component = (
     const renderFileInfo = () => {
         const { fileName, fileSize } = currentItem ?? {};
         const trimmedName = fileName?.trim();
-        const formattedSize = FileUploadHelper.formatFileSizeDisplay(fileSize);
+        const formattedSize = FileHelper.formatFileSizeDisplay(fileSize);
 
         return (
             <FileInfoTextWrapper

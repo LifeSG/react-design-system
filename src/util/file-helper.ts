@@ -10,7 +10,7 @@ export type FileThumbnailDisplay =
     | { type: "pdf-icon" }
     | { type: "none" };
 
-export namespace FileUploadHelper {
+export namespace FileHelper {
     export const PDF_MIME_TYPE = "application/pdf";
     export const PDF_ICON_URL =
         "https://assets.life.gov.sg/react-design-system/img/upload/pdf.svg";
@@ -52,7 +52,7 @@ export namespace FileUploadHelper {
      * Decides how a file's thumbnail slot should render, given its MIME type
      * and any thumbnail the consumer supplied.
      *
-     * Lives on `FileUploadHelper` so `FileUpload` can adopt it later. Today
+     * Lives on `FileHelper` so `FileUpload` can adopt it later. Today
      * only `FileDownload` calls it: `FileUpload` still decides this inline in
      * `file-list-item-thumbnail.tsx`, and the two do NOT yet agree — for a
      * non-PDF with no thumbnail this returns `"none"` while `FileUpload`
