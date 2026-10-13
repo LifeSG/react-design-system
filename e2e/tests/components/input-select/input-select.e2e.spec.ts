@@ -440,23 +440,23 @@ test.describe("InputSelect", () => {
         });
     });
 
-    test.describe(() => {
+    test.describe("Secondary label", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("secondary-label");
         });
 
-        test("Secondary label", async ({ story }) => {
+        test("Default variant", async ({ story }) => {
             await story.openDropdown(story.locators.secondaryLabel.default);
-            await compareScreenshot(story, "open-default-variant", {
+            await compareScreenshot(story, "open", {
                 fullscreen: true,
             });
-            await story.closeDropdown();
+        });
 
+        test("Small variant", async ({ story }) => {
             await story.openDropdown(story.locators.secondaryLabel.small);
-            await compareScreenshot(story, "open-small-variant", {
+            await compareScreenshot(story, "open", {
                 fullscreen: true,
             });
-            await story.closeDropdown();
         });
     });
 
