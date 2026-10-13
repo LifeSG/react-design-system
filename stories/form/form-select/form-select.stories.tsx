@@ -283,7 +283,6 @@ export const LabelTruncation: StoryObj<Component> = {
                         title: item,
                         secondaryLabel: item,
                     })}
-                    variant="small"
                 />
                 <Form.Select
                     label="This has no truncation"
@@ -293,7 +292,6 @@ export const LabelTruncation: StoryObj<Component> = {
                         title: item,
                         secondaryLabel: item,
                     })}
-                    variant="small"
                 />
             </>
         );
@@ -377,7 +375,6 @@ export const SmallVariant: StoryObj<StandaloneComponent> = {
     render: (_args) => {
         return (
             <Form.Select
-                variant="small"
                 label="This is the small variant"
                 options={OPTIONS_DATA}
                 valueExtractor={(item) => item.value}
