@@ -78,7 +78,7 @@ const Component = ({
     // DERIVED STATE
     // =========================================================================
     const isLoading = progress < 1;
-    const fileSize = FileUploadHelper.formatFileSizeDisplay(size);
+    const fileSize = FileUploadHelper.formatFileSizeDisplay(size, "0 KB");
     const shouldShowThumbnail =
         !!thumbnailImageDataUrl ||
         fileItem.type === FileUploadHelper.PDF_MIME_TYPE;

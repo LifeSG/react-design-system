@@ -16,8 +16,13 @@ export class FileUploadHelper {
         "https://assets.life.gov.sg/react-design-system/img/upload/pdf.svg";
 
     // Adapted from https://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-size-to-kb-mb-gb-in-javascript
-    public static formatFileSizeDisplay(size?: number) {
-        if (!size || size === 0) return "0 KB";
+    public static formatFileSizeDisplay<T = undefined>(
+        size: string | number | undefined,
+        defaultValue: T = undefined as T
+    ) {
+        if (typeof size === "string") return size.trim();
+        if (size === 0) return "0 KB";
+        if (!size || size < 0) return defaultValue;
 
         const sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
 

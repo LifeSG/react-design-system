@@ -31,7 +31,7 @@ const Component = ({ fileItem, onDownload, onClick }: FileListItemProps) => {
     // Local variables
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
-    const fileSize = FileUploadHelper.formatFileSizeDisplay(size);
+    const fileSize = FileUploadHelper.formatFileSizeDisplay(size, "0 KB");
     const thumbnailDisplay = FileUploadHelper.resolveThumbnailDisplay(
         mimeType,
         thumbnailImageDataUrl
@@ -167,9 +167,7 @@ const Component = ({ fileItem, onDownload, onClick }: FileListItemProps) => {
     const renderNameSizeError = () => (
         <>
             <div className={styles.nameSection}>{renderNameDescription()}</div>
-            <div className={styles.fileSizeSection}>
-                {fileSize ? fileSize : "-"}
-            </div>
+            <div className={styles.fileSizeSection}>{fileSize}</div>
             {isError && (
                 <div className={styles.mobileErrorMessage}>
                     <ExclamationCircleFillIcon className={styles.errorIcon} />
