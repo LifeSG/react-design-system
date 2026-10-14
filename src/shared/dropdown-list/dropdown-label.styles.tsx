@@ -18,6 +18,7 @@ interface LabelTextStyleProps {
     $disabled?: boolean;
     $truncateType?: TruncateType;
     $bold?: boolean;
+    $variant?: DropdownVariantType;
 }
 
 interface MatchedTextStyleProps {
@@ -73,7 +74,9 @@ export const SecondaryText = styled.div<LabelTextStyleProps>`
             case "inline":
             default:
                 return css`
-                    ${Font["body-baseline-regular"]}
+                    ${props.$variant === "small"
+                        ? Font["body-md-regular"]
+                        : Font["body-baseline-regular"]}
                 `;
         }
     }}

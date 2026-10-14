@@ -150,6 +150,7 @@ export const DropdownLabel = ({
                     $maxLines={maxLines}
                     $truncateType={truncationType}
                     $labelDisplayType={displayType}
+                    $variant={variant}
                 >
                     {truncationType === "middle" && shouldTruncateLabel
                         ? renderTruncatedText(sublabel)

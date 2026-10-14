@@ -272,7 +272,6 @@ export const LabelTruncation: StoryObj<Component> = {
                         title: item,
                         secondaryLabel: item,
                     })}
-                    variant="small"
                 />
                 <Form.Select
                     label="This has truncation in the middle"
@@ -282,7 +281,6 @@ export const LabelTruncation: StoryObj<Component> = {
                         title: item,
                         secondaryLabel: item,
                     })}
-                    variant="small"
                 />
                 <Form.Select
                     label="This has no truncation"
@@ -292,7 +290,6 @@ export const LabelTruncation: StoryObj<Component> = {
                         title: item,
                         secondaryLabel: item,
                     })}
-                    variant="small"
                 />
             </>
         );
