@@ -155,7 +155,7 @@ export const WithFileInfo: StoryObj<Component> = {
                         {
                             src: "https://picsum.photos/id/157/1600/900",
                             fileName: "landscape-photo.jpg",
-                            fileSize: "1.2 MB",
+                            fileSize: 130000,
                         },
                         {
                             src: "https://picsum.photos/id/10/1600/900",
@@ -263,13 +263,13 @@ export const WithCustomActions: StoryObj<Component> = {
                             src: "https://picsum.photos/id/157/1600/900",
                             alt: "First image",
                             fileName: "image-1.jpg",
-                            fileSize: "1.2 MB",
+                            fileSize: 120000,
                         },
                         {
                             src: "https://picsum.photos/id/163/900/300",
                             alt: "Second image",
                             fileName: "image-2.jpg",
-                            fileSize: "2.5 MB",
+                            fileSize: 2500000,
                             // Overrides the component-level list for this slide
                             customActions: [],
                         },

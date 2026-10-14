@@ -1,7 +1,7 @@
 import clsx from "clsx";
 
 import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
-import { FileUploadHelper } from "../helper";
+import { FileHelper } from "../../util/file-helper";
 import * as styles from "./file-list-item-thumbnail.styles";
 
 interface Props {
@@ -25,9 +25,9 @@ export const FileListItemThumbnail = ({
         }
     };
 
-    const isPdf = fileType === FileUploadHelper.PDF_MIME_TYPE;
+    const isPdf = fileType === FileHelper.PDF_MIME_TYPE;
     const displaySrc = isPdf
-        ? thumbnailImageDataUrl || FileUploadHelper.PDF_ICON_URL
+        ? thumbnailImageDataUrl || FileHelper.PDF_ICON_URL
         : thumbnailImageDataUrl || "";
 
     return (
