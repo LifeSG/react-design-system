@@ -373,6 +373,7 @@ export const SmallVariant: StoryObj<StandaloneComponent> = {
     render: (_args) => {
         return (
             <Form.Select
+                variant="small"
                 label="This is the small variant"
                 options={OPTIONS_DATA}
                 valueExtractor={(item) => item.value}
