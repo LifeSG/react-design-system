@@ -74,16 +74,12 @@ export const SecondaryText = styled.div<LabelTextStyleProps>`
             case "inline":
             default:
                 return css`
-                    ${Font["body-baseline-regular"]}
+                    ${props.$variant === "small"
+                        ? Font["body-md-regular"]
+                        : Font["body-baseline-regular"]}
                 `;
         }
     }}
-
-    ${(props) =>
-        props.$variant === "small" &&
-        css`
-            ${Font["body-md-regular"]}
-        `}
 `;
 
 export const MatchedText = styled.span<MatchedTextStyleProps>`
