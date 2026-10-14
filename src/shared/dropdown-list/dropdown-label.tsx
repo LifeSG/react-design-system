@@ -100,10 +100,7 @@ export const DropdownLabel = ({
     // css cannot truncate inline elements so force the display to render
     // them separately
     const itemDisplayType =
-        truncationType === "middle" &&
-        (shouldTruncateTitle || shouldTruncateLabel)
-            ? "next-line"
-            : displayType;
+        shouldTruncateTitle || shouldTruncateLabel ? "next-line" : displayType;
 
     // =========================================================================
     // RENDER FUNCTIONS
@@ -176,9 +173,10 @@ export const DropdownLabel = ({
                     bold && styles.primaryTextBold,
                     disabled && styles.primaryTextDisabled,
                     !disabled && selected && styles.primaryTextSelected,
-                    itemDisplayType === "inline" &&
-                        styles.primaryTextLabelInline,
-                    truncationType === "end" && styles.primaryTextTruncateEnd
+                    itemDisplayType === "inline"
+                        ? styles.primaryTextLabelInline
+                        : truncationType === "end" &&
+                              styles.primaryTextTruncateEnd
                 )}
             >
                 {truncationType === "middle" && shouldTruncateTitle
@@ -191,13 +189,13 @@ export const DropdownLabel = ({
                     aria-label={sublabel}
                     className={clsx(
                         styles.secondaryText,
-                        itemDisplayType === "inline" &&
-                            styles.secondaryTextLabelInline,
-                        truncationType === "end" &&
-                            styles.secondaryTextTruncateEnd,
                         displayType === "next-line"
                             ? styles.secondaryTextNextLine
-                            : styles.secondaryTextInline
+                            : styles.secondaryTextInline,
+                        itemDisplayType === "inline"
+                            ? styles.secondaryTextLabelInline
+                            : truncationType === "end" &&
+                                  styles.secondaryTextTruncateEnd
                     )}
                 >
                     {truncationType === "middle" && shouldTruncateLabel

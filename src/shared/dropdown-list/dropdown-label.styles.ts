@@ -61,7 +61,7 @@ export const secondaryTextNextLine = css`
 `;
 
 export const secondaryTextInline = css`
-    ${Font["body-baseline-regular"]}
+    font-weight: ${Font.Spec["weight-regular"]};
 `;
 
 export const secondaryTextLabelInline = css`

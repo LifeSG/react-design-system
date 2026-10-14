@@ -36,6 +36,10 @@ class StoryPage extends AbstractStoryPage {
             default: Locator;
             withSearch: Locator;
         };
+        secondaryLabel: {
+            default: Locator;
+            small: Locator;
+        };
         dropdownWidth: {
             minWidth: Locator;
             customWidth: Locator;
@@ -84,6 +88,12 @@ class StoryPage extends AbstractStoryPage {
             variants: {
                 default: page.getByTestId("input-select-small-default"),
                 withSearch: page.getByTestId("input-select-small-search"),
+            },
+            secondaryLabel: {
+                default: page.getByTestId(
+                    "input-select-secondary-label-default"
+                ),
+                small: page.getByTestId("input-select-secondary-label-small"),
             },
             dropdownWidth: {
                 minWidth: page.getByTestId("input-select-min-width"),
@@ -425,6 +435,26 @@ test.describe("InputSelect", () => {
 
             await story.openDropdown(story.locators.variants.withSearch);
             await compareScreenshot(story, "open-with-search", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe("Secondary label", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("secondary-label");
+        });
+
+        test("Default variant", async ({ story }) => {
+            await story.openDropdown(story.locators.secondaryLabel.default);
+            await compareScreenshot(story, "open", {
+                fullscreen: true,
+            });
+        });
+
+        test("Small variant", async ({ story }) => {
+            await story.openDropdown(story.locators.secondaryLabel.small);
+            await compareScreenshot(story, "open", {
                 fullscreen: true,
             });
         });
