@@ -248,8 +248,6 @@ export const InputMultiSelect = <T, V>({
                     {placeholder}
                 </PlaceholderLabel>
             );
-        } else if (displayVariant === "tag") {
-            return renderTags();
         } else {
             return (
                 <ValueLabel
@@ -262,11 +260,20 @@ export const InputMultiSelect = <T, V>({
         }
     };
 
-    const renderSelectorContent = () => (
-        <LabelContainer disabled={disabled}>{renderLabel()}</LabelContainer>
-    );
-
     const isTagDisplay = displayVariant === "tag";
+
+    const renderSelectorContent = () => {
+        // LabelContainer cannot shrink below its content (min-width: auto),
+        // which prevents long tags from truncating, so the tags go without it.
+        // The tags have their own disabled styling
+        if (isTagDisplay && selected.length > 0) {
+            return renderTags();
+        }
+
+        return (
+            <LabelContainer disabled={disabled}>{renderLabel()}</LabelContainer>
+        );
+    };
 
     const renderElement = () => {
         return (
