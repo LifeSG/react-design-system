@@ -87,7 +87,7 @@ const Component = ({
 
     // Local variables
     const isLoading = progress < 1;
-    const fileSize = FileUploadHelper.formatFileSizeDisplay(size);
+    const fileSize = FileUploadHelper.formatFileSizeDisplay(size, "0 KB");
     const hasInlineActions = !!description && !!editable;
     const focusType: ItemFocusType = activeId
         ? activeId === id

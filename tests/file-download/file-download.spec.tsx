@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { FileDownload } from "src/file-download";
 
@@ -13,6 +13,116 @@ const MOCK_FILE_ITEM = {
 describe("FileDownload", () => {
     beforeEach(() => {
         jest.resetAllMocks();
+    });
+
+    it("should render file items", () => {
+        render(
+            <FileDownload
+                fileItems={[
+                    {
+                        id: "file-1",
+                        name: "sample.pdf",
+                        mimeType: "application/pdf",
+                        size: 1024,
+                        filePath: "/tmp/sample.pdf",
+                    },
+                    {
+                        id: "file-2",
+                        name: "report.png",
+                        mimeType: "image/png",
+                        size: 451,
+                        filePath: "/tmp/report.png",
+                    },
+                ]}
+                onDownload={jest.fn()}
+            />
+        );
+
+        const listItems = screen.getAllByRole("listitem");
+        expect(listItems).toHaveLength(2);
+
+        const item1 = within(listItems[0]);
+        const item2 = within(listItems[1]);
+
+        expect(item1.getByText("sample.pdf")).toBeInTheDocument();
+        expect(item1.getByText("1 KB")).toBeInTheDocument();
+        expect(item1.getByTestId("file-1-download-button")).toBeInTheDocument();
+
+        expect(item2.getByText("report.png")).toBeInTheDocument();
+        expect(item2.getByText("451 B")).toBeInTheDocument();
+        expect(item2.getByTestId("file-2-download-button")).toBeInTheDocument();
+    });
+
+    it("should render '0 KB' when size is not provided", () => {
+        render(
+            <FileDownload
+                fileItems={[
+                    {
+                        ...MOCK_FILE_ITEM,
+                        size: undefined,
+                    },
+                ]}
+                onDownload={jest.fn()}
+            />
+        );
+
+        expect(screen.getByText("0 KB")).toBeInTheDocument();
+    });
+
+    describe("title", () => {
+        it("should render a string title", () => {
+            render(
+                <FileDownload
+                    fileItems={[MOCK_FILE_ITEM]}
+                    title="Documents"
+                    onDownload={jest.fn()}
+                />
+            );
+
+            expect(screen.getByText("Documents")).toBeInTheDocument();
+        });
+
+        it("should render a JSX title", () => {
+            render(
+                <FileDownload
+                    fileItems={[MOCK_FILE_ITEM]}
+                    title={<span data-testid="custom-title">My title</span>}
+                    onDownload={jest.fn()}
+                />
+            );
+
+            expect(screen.getByTestId("custom-title")).toBeInTheDocument();
+        });
+    });
+
+    describe("description", () => {
+        it("should render a string description", () => {
+            render(
+                <FileDownload
+                    fileItems={[MOCK_FILE_ITEM]}
+                    description="Download your files here"
+                    onDownload={jest.fn()}
+                />
+            );
+
+            expect(
+                screen.getByText("Download your files here")
+            ).toBeInTheDocument();
+        });
+
+        it("should render a JSX description", () => {
+            render(
+                <FileDownload
+                    fileItems={[MOCK_FILE_ITEM]}
+                    description={
+                        <span data-testid="custom-desc">My description</span>
+                    }
+                    onDownload={jest.fn()}
+                />
+            );
+
+            expect(screen.getByTestId("custom-desc")).toBeInTheDocument();
+        });
     });
 
     describe("Thumbnail fallbacks", () => {
@@ -197,6 +307,71 @@ describe("FileDownload", () => {
             });
 
             expect(onDownload).toHaveBeenCalledWith(MOCK_FILE_ITEM);
+        });
+
+        it("should render loading spinner while download is in progress", () => {
+            const onDownload = jest.fn(
+                () => new Promise<void>(() => undefined)
+            );
+
+            render(
+                <FileDownload
+                    fileItems={[MOCK_FILE_ITEM]}
+                    onDownload={onDownload}
+                />
+            );
+
+            fireEvent.click(screen.getByTestId("file-1-download-button"));
+
+            expect(onDownload).toHaveBeenCalledWith(MOCK_FILE_ITEM);
+            expect(
+                screen.getByTestId("component-loading-spinner")
+            ).toBeInTheDocument();
+        });
+    });
+
+    describe("errorMessage", () => {
+        it("should show a default error message after a failed download", async () => {
+            const onDownload = jest.fn().mockRejectedValue(new Error("fail"));
+
+            render(
+                <FileDownload
+                    fileItems={[MOCK_FILE_ITEM]}
+                    onDownload={onDownload}
+                />
+            );
+
+            await act(async () => {
+                fireEvent.click(screen.getByTestId("file-1-download-button"));
+            });
+
+            expect(
+                screen.getAllByText("Something went wrong").length
+            ).toBeGreaterThanOrEqual(1);
+        });
+
+        it("should show a custom error message after a failed download", async () => {
+            const onDownload = jest.fn().mockRejectedValue(new Error("fail"));
+
+            render(
+                <FileDownload
+                    fileItems={[
+                        {
+                            ...MOCK_FILE_ITEM,
+                            errorMessage: "Download failed",
+                        },
+                    ]}
+                    onDownload={onDownload}
+                />
+            );
+
+            await act(async () => {
+                fireEvent.click(screen.getByTestId("file-1-download-button"));
+            });
+
+            expect(
+                screen.getAllByText("Download failed").length
+            ).toBeGreaterThanOrEqual(1);
         });
     });
 

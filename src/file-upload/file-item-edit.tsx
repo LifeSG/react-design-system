@@ -122,7 +122,7 @@ export const FileItemEdit = ({
         <NameSection ref={nameSectionRef}>
             <FileNameText weight="semibold">{formattedName}</FileNameText>
             <FileSizeText>
-                {FileUploadHelper.formatFileSizeDisplay(size)}
+                {FileUploadHelper.formatFileSizeDisplay(size, "0 KB")}
             </FileSizeText>
         </NameSection>
     );
