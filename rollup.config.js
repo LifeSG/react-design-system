@@ -16,6 +16,7 @@ import generatePackageJson from "rollup-plugin-generate-package-json";
 import { libStylePlugin } from "rollup-plugin-lib-style";
 import typescript from "rollup-plugin-typescript2";
 
+import { getCssLayer } from "./rollup/add-css-layer-plugin.js";
 import { createFixCssImportPathsPlugin } from "./rollup/fix-css-import-paths-plugin.js";
 
 const fixCssImportPathsPlugin = createFixCssImportPathsPlugin({
@@ -158,14 +159,28 @@ const plugins = [
             // Inject `@layer fds` into the generated CSS files
             {
                 postcssPlugin: "postcss-layer",
-                Once(root, { postcss }) {
-                    const layer = postcss.atRule({
+                Once(root, com) {
+                    const { postcss } = com;
+                    const file = root.source.input.file;
+                    const relative = path.relative(process.cwd(), file);
+                    const folder = path
+                        .dirname(relative)
+                        .replace("src/", "")
+                        .split("/")[0];
+                    const layer1 = postcss.atRule({
+                        name: "layer",
+                        params: folder,
+                        nodes: root.nodes,
+                    });
+                    root.removeAll();
+                    root.append(layer1);
+                    const layer2 = postcss.atRule({
                         name: "layer",
                         params: "fds",
                         nodes: root.nodes,
                     });
                     root.removeAll();
-                    root.append(layer);
+                    root.append(layer2);
                 },
             },
         ],
@@ -222,6 +237,8 @@ const plugins = [
                             ),
                         }),
                     ]).process(contents, { from });
+                    const layer = await getCssLayer();
+
                     // Inject `@layer fds` into the output CSS, ensuring
                     // that imports are hoisted to the top
                     const lines = result.css.split("\n");
@@ -234,7 +251,7 @@ const plugins = [
                     const cssLines = lines
                         .slice(lastImportLineIndex + 1)
                         .join("\n");
-                    return `${importLines}\n@layer fds {\n${cssLines}\n}`;
+                    return `${importLines}\n${layer}\n@layer fds {\n${cssLines}\n}`;
                 },
             },
         ],
