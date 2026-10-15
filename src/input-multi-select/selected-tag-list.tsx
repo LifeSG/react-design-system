@@ -1,4 +1,5 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
+import clsx from "clsx";
 import { useRef, useState } from "react";
 
 import { useIsomorphicLayoutEffect } from "../util";
@@ -105,7 +106,13 @@ export const SelectedTagList = ({
     return (
         <div ref={containerRef} className={styles.container}>
             {visibleItems.map(({ key, label, onRemove }) => (
-                <div key={key} className={styles.tag}>
+                <div
+                    key={key}
+                    className={clsx(
+                        styles.tag,
+                        !removable && styles.tagInactive
+                    )}
+                >
                     <span className={styles.tagLabel} aria-hidden>
                         {label}
                     </span>

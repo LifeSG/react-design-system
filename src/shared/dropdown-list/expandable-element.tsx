@@ -27,6 +27,11 @@ export interface ExpandableElementProps
      * semantics and focus are moved to a visually hidden button.
      */
     nestedInteractive?: boolean | undefined;
+    /**
+     * Text exposed to assistive technologies through the hidden button when
+     * `nestedInteractive` is set, for example the current value
+     */
+    hiddenLabel?: string | undefined;
 }
 
 export const Component = (
@@ -40,6 +45,7 @@ export const Component = (
         readOnly,
         variant,
         nestedInteractive,
+        hiddenLabel,
         ...otherProps
     }: ExpandableElementProps,
     ref: Ref<HTMLButtonElement>
@@ -81,7 +87,9 @@ export const Component = (
                         aria-disabled={disabled}
                         aria-readonly={readOnly}
                         {...otherProps}
-                    />
+                    >
+                        {hiddenLabel}
+                    </button>
                 </VisuallyHidden>
                 {children}
                 {icon}

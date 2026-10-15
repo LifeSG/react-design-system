@@ -11,7 +11,7 @@ export const container = css`
     flex-wrap: wrap;
     flex: 1;
     min-width: 0;
-    gap: ${Spacing["spacing-4"]};
+    gap: ${Spacing["spacing-8"]};
 `;
 
 export const tag = css`
@@ -27,6 +27,13 @@ export const tag = css`
     background: ${Colour["bg-primary-subtlest"]};
     color: ${Colour["text-primary"]};
     ${Font["body-xs-semibold"]}
+`;
+
+// shown when the tags cannot be removed, i.e. the field is disabled or read-only
+export const tagInactive = css`
+    color: ${Colour["text-subtle"]};
+    border-color: ${Colour["border-strong"]};
+    background: ${Colour["bg-hover-neutral-strong"]};
 `;
 
 export const tagLabel = css`
@@ -61,4 +68,6 @@ export const removeButton = css`
 
 export const moreEllipsis = css`
     flex-shrink: 0;
+    line-height: 1;
+    transform: translateY(-0.25em);
 `;
