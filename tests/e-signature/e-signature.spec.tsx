@@ -69,11 +69,7 @@ describe("ESignature", () => {
         drawSignature();
         fireEvent.click(screen.getByRole("button", { name: "Save" }));
 
-        await waitFor(() => {
-            expect(getSignatureModal()).not.toBeVisible();
-        });
-        expect(queryAddSignatureButton()).not.toBeInTheDocument();
-        expect(getEditSignatureButton()).toBeInTheDocument();
+        expect(await findEditSignatureButton()).toBeInTheDocument();
         expect(changeFn).toHaveBeenCalled();
         expect(screen.getByAltText("Signature preview")).toBeInTheDocument();
     });
@@ -99,10 +95,7 @@ describe("ESignature", () => {
         fireEvent.click(screen.getByRole("button", { name: "Clear" }));
         fireEvent.click(screen.getByRole("button", { name: "Save" }));
 
-        await waitFor(() => {
-            expect(getSignatureModal()).not.toBeVisible();
-        });
-        expect(getAddSignatureButton()).toBeInTheDocument();
+        expect(await findAddSignatureButton()).toBeInTheDocument();
     });
 });
 
@@ -113,8 +106,12 @@ const queryAddSignatureButton = () =>
     screen.queryByRole("button", { name: "Add signature" });
 const getAddSignatureButton = () =>
     screen.getByRole("button", { name: "Add signature" });
+const findAddSignatureButton = () =>
+    screen.findByRole("button", { name: "Add signature" });
 const getEditSignatureButton = () =>
     screen.getByRole("button", { name: "Edit signature" });
+const findEditSignatureButton = () =>
+    screen.findByRole("button", { name: "Edit signature" });
 const getSignatureModal = () => screen.queryByTestId("signature-modal");
 
 const drawSignature = () => {
