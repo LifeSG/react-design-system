@@ -330,6 +330,53 @@ describe("FileDownload", () => {
         });
     });
 
+    describe("description", () => {
+        it("should render the description with the default label", () => {
+            render(
+                <FileDownload
+                    fileItems={[
+                        { ...MOCK_FILE_ITEM, description: "A signed form" },
+                    ]}
+                    onDownload={jest.fn()}
+                />
+            );
+
+            expect(screen.getByText("Photo description")).toBeInTheDocument();
+            expect(screen.getByText("A signed form")).toBeInTheDocument();
+        });
+
+        it("should render a custom description label", () => {
+            render(
+                <FileDownload
+                    fileItems={[
+                        { ...MOCK_FILE_ITEM, description: "A signed form" },
+                    ]}
+                    descriptionLabel="File description"
+                    onDownload={jest.fn()}
+                />
+            );
+
+            expect(screen.getByText("File description")).toBeInTheDocument();
+            expect(
+                screen.queryByText("Photo description")
+            ).not.toBeInTheDocument();
+        });
+
+        it("should not render the label when there is no description", () => {
+            render(
+                <FileDownload
+                    fileItems={[MOCK_FILE_ITEM]}
+                    descriptionLabel="File description"
+                    onDownload={jest.fn()}
+                />
+            );
+
+            expect(
+                screen.queryByText("File description")
+            ).not.toBeInTheDocument();
+        });
+    });
+
     describe("errorMessage", () => {
         it("should show a default error message after a failed download", async () => {
             const onDownload = jest.fn().mockRejectedValue(new Error("fail"));
