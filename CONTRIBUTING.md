@@ -177,13 +177,17 @@ When the NextJS app is running, components can be accessed at http://localhost:3
 Dev mode has hot reload for faster feedback during test implementation.
 Changes made in both the design system and in the NextJS app are picked up immediately.
 
-Run:
+Run the tests in headless mode:
 
 ```bash
 npm run test-e2e
 ```
 
-This opens the Playwright dashboard where you can individually run and debug tests, as well as update screenshots.
+To open the Playwright dashboard for the full debugging experience and preview changes before updating screenshots:
+
+```bash
+npm run test-e2e-ui
+```
 
 #### CI mode
 
