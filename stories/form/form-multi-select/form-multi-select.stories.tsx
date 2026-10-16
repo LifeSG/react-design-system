@@ -26,7 +26,7 @@ const OPTIONS_DATA = [
     { value: "D", label: "Option D" },
 ];
 
-const MANY_OPTIONS_DATA = new Array(30).map((_, i) => ({
+const MANY_OPTIONS_DATA = Array.from({ length: 30 }, (_, i) => ({
     value: i + 1,
     label: `Option ${i + 1}`,
 }));
@@ -39,7 +39,7 @@ const LONG_OPTIONS_DATA = [
     { value: "short", label: "Short" },
 ];
 
-const LARGE_OPTIONS_DATA = [...Array(50000)].map((_, i) => ({
+const LARGE_OPTIONS_DATA = Array.from({ length: 5000 }).map((_, i) => ({
     value: i + 1,
     label: `Option ${i + 1}`,
 }));
@@ -232,17 +232,17 @@ export const TagDisplayVariant: StoryObj<Component> = {
             <>
                 <Form.MultiSelect
                     displayVariant="tag"
-                    label="Tags can be removed with the x or by unchecking the option"
+                    label="This is the tag display variant"
                     options={OPTIONS_DATA}
-                    selectedOptions={selected}
-                    onSelectOptions={setSelected}
                     valueExtractor={(item) => item.value}
                     listExtractor={(item) => item.label}
                 />
                 <Form.MultiSelect
                     displayVariant="tag"
-                    label="The placeholder is shown when nothing is selected"
+                    label="Tags can be removed with the x or by unchecking the option"
                     options={OPTIONS_DATA}
+                    selectedOptions={selected}
+                    onSelectOptions={setSelected}
                     valueExtractor={(item) => item.value}
                     listExtractor={(item) => item.label}
                 />
