@@ -302,6 +302,42 @@ export const CustomCardAction: StoryObj<Component> = {
     },
 };
 
+export const WithDescription: StoryObj<Component> = {
+    render: (_args) => {
+        const [fileItems] = useState<FileItemDownloadProps[]>([
+            {
+                id: "1",
+                name: "lorem.jpeg",
+                mimeType: "image/jpeg",
+                size: 6000,
+                filePath: "https://picsum.photos/200",
+                thumbnailImageDataUrl:
+                    "https://picsum.photos/seed/picsum/200/300",
+                description: "A misty mountain range at sunrise.",
+            },
+            {
+                id: "2",
+                name: "lorem.pdf",
+                mimeType: "application/pdf",
+                size: 150000,
+                filePath:
+                    "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                description: "Signed tenancy agreement.",
+            },
+        ]);
+
+        return (
+            <FileDownload
+                fileItems={fileItems}
+                onDownload={handleDemoDownload}
+                descriptionLabel="File description"
+                title="With description"
+                description="Each item can show a description under its name."
+            />
+        );
+    },
+};
+
 // The following code is meant for simulation purposes and is not intended for production
 
 const handleDemoDownload = async (file: FileItemDownloadProps) => {
