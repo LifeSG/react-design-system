@@ -75,21 +75,73 @@ e.g. `.${link}:hover &` in `navbar-items.styles.ts`. Most look intra-folder
 only the **cross-folder** ones; those are the edges where layer order changes
 the outcome.
 
+### F5. E0: the order statement works when its file loads first (Measured, narrow)
+
+Reproduce: `RUNS=5 docs/spike/experiments/e0/run.sh` (Next 16.3.6, node 25.6.1,
+headless Chromium; build output was not committed). Each scenario below gave the
+same result on all 5 rebuilds of each bundler, with an identical CSS load order
+every time. Two files each set
+`.target`'s background in a different layer, with `fds.top` meant to win.
+`top.css` is imported before `base.css`, the reverse of the wanted priority.
+The order statement `@layer fds.base, fds.top;` lives in `order.css`.
+
+| Scenario            | Where `order.css` is                                                                | webpack              | Turbopack |
+| ------------------- | ----------------------------------------------------------------------------------- | -------------------- | --------- |
+| with-order          | imported by the route's layout (loads first)                                        | green (fds.top wins) | green     |
+| no-order            | not imported                                                                        | red (fds.base wins)  | red       |
+| order-late          | imported last, after the layered files                                              | red                  | red       |
+| no-layers (control) | n/a, plain CSS in the same import order                                             | red                  | red       |
+| nested-with-order   | as with-order, but rules use the `rl/css-layers` shape `@layer fds { @layer x {} }` | green                | green     |
+| nested-no-order     | as no-order, nested shape                                                           | red                  | red       |
+| nested-order-late   | as order-late, nested shape                                                         | red                  | red       |
+
+The nested rows keep the statement as `@layer fds.base, fds.top;` (dotted
+names) while the rules are written as nested blocks; the dotted and nested
+forms address the same layers.
+
+What it shows:
+
+-   Both bundlers emit the statement unchanged. It does not need to be hoisted
+    by us: the browser takes layer priority from the **first** appearance of each
+    layer name in the final CSS, so the statement works only if it is earlier
+    than any rule that mentions the layer. `order-late` fails for that reason.
+-   The statement's file has to load before every layered file. In this test the
+    layout-level import did that, on both bundlers.
+-   Layers are not a free fix for source order: without a statement (`no-order`)
+    the result is still decided by import order, same as the unlayered control.
+
+What it does **not** show (so the charter's riskiest assumption is only half
+tested):
+
+-   The original bug was not reproduced. Both bundlers loaded files in import
+    order every time. I did not force a reordering, so "forced chunk reversal"
+    in the E0 row was not done. Whether Turbopack can load the statement's
+    file after layered files in a real app is E2's job.
+-   One page, two tiny files, no shared chunks. Real routes share CSS across
+    chunks, which is where reordering is reported.
+-   Only prod builds were measured. Five rebuilds each is enough to see build-to-build
+    noise on these tiny inputs, not enough to rule out rare reordering.
+-   Nested layers were tested with two sibling layers under one `fds` parent. The
+    branch's real output has up to ~85 folder layers plus component CSS wrapped
+    in `fds`; not tested at that size.
+-   Running the servers and Chromium needed the sandbox lifted (port binding,
+    Mach port); the numbers come from that unsandboxed run.
+
 ## Planned experiments
 
 Ordered by risk, riskiest first (see the charter's riskiest assumptions).
 
-| ID  | Experiment                                                                                                                                                                                                                                               | Output                           | State |
-| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | ----- |
-| E0  | Does Next 16 (Turbopack and webpack) preserve a `@layer a, b;` order statement from an imported CSS file in a prod build? Minimal app, 2 components, forced chunk reversal                                                                               | Pass/fail per bundler            | Todo  |
-| E5a | One real parent/child variant pair (pick from the E1 cross-folder list, or by hand) under per-folder layers: does the parent's variant styling survive? Try (a) collapsed layer, (b) specificity bump in the parent's layer, (c) per-edge `@layer` order | Table of options and which works | Todo  |
-| E1  | Extract **style-only** edges (cross-folder class refs, composed classes) instead of JS imports; compare to the madge order                                                                                                                               | Edge list, cycle list            | Todo  |
-| E2  | Reproduce the failure: Next 16 prod build, Turbopack, `cssChunking: "strict"` vs `"graph"`, in `e2e/nextjs-app` (see `BOOKINGSG-9316`)                                                                                                                   | Repro + screenshots              | Todo  |
-| E3  | Same app with the branch's layered build; does order stay stable across 5+ builds and across entry points?                                                                                                                                               | Pass/fail per build              | Todo  |
-| E4  | Granularity: 3 tiers (`base`, `components`, `overrides`) vs per-folder; count how many visual diffs each produces (Playwright screenshots)                                                                                                               | Diff counts                      | Todo  |
-| E5b | Extend E5a to every cross-folder edge from E1                                                                                                                                                                                                            | Full edge table                  | Todo  |
-| E6  | Consumer overrides: consumer unlayered CSS and consumer `@layer main, fds` ordering still win/lose as documented                                                                                                                                         | Pass/fail                        | Todo  |
-| E7  | Migration: what must consumers add? Is the `default.css` order statement mandatory, what if it loads late or not at all                                                                                                                                  | Checklist                        | Todo  |
+| ID  | Experiment                                                                                                                                                                                                                                               | Output                           | State                                                                                            |
+| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------ |
+| E0  | Does Next 16 (Turbopack and webpack) preserve a `@layer a, b;` order statement from an imported CSS file in a prod build? Minimal app, 2 components, forced chunk reversal                                                                               | Pass/fail per bundler            | In progress: nested layers and repeat runs done (F5); forced reordering and dev mode moved to E2 |
+| E5a | One real parent/child variant pair (pick from the E1 cross-folder list, or by hand) under per-folder layers: does the parent's variant styling survive? Try (a) collapsed layer, (b) specificity bump in the parent's layer, (c) per-edge `@layer` order | Table of options and which works | Todo                                                                                             |
+| E1  | Extract **style-only** edges (cross-folder class refs, composed classes) instead of JS imports; compare to the madge order                                                                                                                               | Edge list, cycle list            | Todo                                                                                             |
+| E2  | Reproduce the failure: Next 16 prod build, Turbopack, `cssChunking: "strict"` vs `"graph"`, in `e2e/nextjs-app` (see `BOOKINGSG-9316`)                                                                                                                   | Repro + screenshots              | Todo                                                                                             |
+| E3  | Same app with the branch's layered build; does order stay stable across 5+ builds and across entry points?                                                                                                                                               | Pass/fail per build              | Todo                                                                                             |
+| E4  | Granularity: 3 tiers (`base`, `components`, `overrides`) vs per-folder; count how many visual diffs each produces (Playwright screenshots)                                                                                                               | Diff counts                      | Todo                                                                                             |
+| E5b | Extend E5a to every cross-folder edge from E1                                                                                                                                                                                                            | Full edge table                  | Todo                                                                                             |
+| E6  | Consumer overrides: consumer unlayered CSS and consumer `@layer main, fds` ordering still win/lose as documented                                                                                                                                         | Pass/fail                        | Todo                                                                                             |
+| E7  | Migration: what must consumers add? Is the `default.css` order statement mandatory, what if it loads late or not at all                                                                                                                                  | Checklist                        | Todo                                                                                             |
 
 ## Granularity hypothesis (to test in E4, not yet a finding)
 

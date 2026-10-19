@@ -1,0 +1,8 @@
+{
+    "name": "spike-e0",
+    "private": true,
+    "scripts": {
+        "build:turbo": "DIST=.next-turbo next build",
+        "build:webpack": "DIST=.next-webpack next build --webpack"
+    }
+}

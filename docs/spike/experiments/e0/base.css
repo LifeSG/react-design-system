@@ -1,0 +1,5 @@
+@layer fds.base {
+    .target {
+        background: rgb(255 0 0);
+    }
+}
