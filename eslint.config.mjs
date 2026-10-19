@@ -112,6 +112,9 @@ export default defineConfig([
             // e2e playwright tests are not linted
             "e2e/tests/**",
             "e2e/screenshot-manifest-reporter.ts",
+
+            // throwaway spike experiments have their own installs and configs
+            "docs/spike/experiments/**",
         ],
     },
     js.configs.recommended,

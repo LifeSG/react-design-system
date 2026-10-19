@@ -127,6 +127,54 @@ tested):
 -   Running the servers and Chromium needed the sandbox lifted (port binding,
     Mach port); the numbers come from that unsandboxed run.
 
+### F6. E2 (partial): bundlers order library CSS differently, but the one override pair probed was never wrong (Measured)
+
+Reproduce: `RUNS=2 docs/spike/experiments/e2/run.sh` (published
+`@lifesg/react-design-system` 4.0.0-alpha.3, Next 16.3.6, prod builds, headless
+Chromium; 64 measurements in `e2/results/published.jsonl`). One static route per
+story, so each page bundles only its own CSS. For each route the script records
+the order in which library components' rules appear in `document.styleSheets`,
+and for the error-display routes a computed-style probe.
+
+**Combinations.** Next rejects `strict` under Turbopack and `graph` under webpack
+(each is "only supported with" the other bundler), so the matrix is Turbopack
+default, Turbopack `graph`, webpack default and webpack `strict`. The option the
+two teams used, `graph`, exists only on Turbopack.
+
+**Override probe.** `ErrorDisplay` passes `Typography.HeadingMD` a class with
+`margin: 32px 0 16px`; Typography's own class sets `margin-bottom: 0`. The
+parent is meant to win (16px). Result: **16px in all 4 combinations, both
+rebuilds, both error-display routes.**
+
+**CSS order differs by bundler, same on both rebuilds of each:**
+
+| Route               | Turbopack default                                      | Turbopack `graph`                                      | webpack default                                                   | webpack `strict`          |
+| ------------------- | ------------------------------------------------------ | ------------------------------------------------------ | ----------------------------------------------------------------- | ------------------------- |
+| error-display       | `shared>button>markup>shared>typography>error-display` | `shared>button>markup>typography>error-display>shared` | `shared>button>markup>typography>shared>typography>error-display` | same as Turbopack `graph` |
+| alert/type-variants | `markup>shared>typography>alert`                       | `markup>typography>shared>alert`                       | `markup>typography>shared>typography>alert`                       | same as Turbopack default |
+
+Other routes (tab, badge, button, tag) gave one order across all four.
+
+What it shows:
+
+-   The bundlers do not agree on component CSS order, and the order depends on
+    the route, so ordering is bundler-dependent. That is the precondition for the
+    reported bug.
+-   Webpack default lists `typography` twice (before and after `shared`), so its
+    CSS is split across sheets. In Turbopack `graph`, `shared` moves after
+    `error-display`.
+-   On the probed pair `typography` always comes before `error-display`, so the
+    parent wins in every combination. This pair cannot show the bug.
+
+What it does **not** show:
+
+-   **The bug is not reproduced.** No computed style was wrong in any run. The
+    teams' symptom needs an override pair whose order actually flips.
+-   One probe pair. The same-order result on it says nothing about other pairs.
+-   An earlier run with a dynamic-import route showed identical order on every
+    page; that was an artefact of bundling all stories together and is withdrawn.
+-   Published build only (no layers). `LIB=local` is untested.
+
 ## Planned experiments
 
 Ordered by risk, riskiest first (see the charter's riskiest assumptions).
@@ -136,7 +184,7 @@ Ordered by risk, riskiest first (see the charter's riskiest assumptions).
 | E0  | Does Next 16 (Turbopack and webpack) preserve a `@layer a, b;` order statement from an imported CSS file in a prod build? Minimal app, 2 components, forced chunk reversal                                                                               | Pass/fail per bundler            | In progress: nested layers and repeat runs done (F5); forced reordering and dev mode moved to E2 |
 | E5a | One real parent/child variant pair (pick from the E1 cross-folder list, or by hand) under per-folder layers: does the parent's variant styling survive? Try (a) collapsed layer, (b) specificity bump in the parent's layer, (c) per-edge `@layer` order | Table of options and which works | Todo                                                                                             |
 | E1  | Extract **style-only** edges (cross-folder class refs, composed classes) instead of JS imports; compare to the madge order                                                                                                                               | Edge list, cycle list            | Todo                                                                                             |
-| E2  | Reproduce the failure: Next 16 prod build, Turbopack, `cssChunking: "strict"` vs `"graph"`, in `e2e/nextjs-app` (see `BOOKINGSG-9316`)                                                                                                                   | Repro + screenshots              | Todo                                                                                             |
+| E2  | Reproduce the failure: Next 16 prod build, Turbopack, `cssChunking: "strict"` vs `"graph"`, in `e2e/nextjs-app` (see `BOOKINGSG-9316`)                                                                                                                   | Repro + screenshots              | In progress: CSS order measured (F6); no wrong computed style reproduced yet                     |
 | E3  | Same app with the branch's layered build; does order stay stable across 5+ builds and across entry points?                                                                                                                                               | Pass/fail per build              | Todo                                                                                             |
 | E4  | Granularity: 3 tiers (`base`, `components`, `overrides`) vs per-folder; count how many visual diffs each produces (Playwright screenshots)                                                                                                               | Diff counts                      | Todo                                                                                             |
 | E5b | Extend E5a to every cross-folder edge from E1                                                                                                                                                                                                            | Full edge table                  | Todo                                                                                             |

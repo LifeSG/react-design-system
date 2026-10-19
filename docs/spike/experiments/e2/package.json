@@ -1,0 +1,16 @@
+{
+    "name": "spike-e2",
+    "private": true,
+    "description": "Spike 01 / E2: reproduce CSS ordering in Next 16. Own install, pinned to the versions the e2e app uses.",
+    "scripts": {
+        "build": "next build"
+    },
+    "dependencies": {
+        "@floating-ui/react": "0.27.19",
+        "@lifesg/react-design-system": "4.0.0-alpha.3",
+        "@lifesg/react-icons": "1.18.0",
+        "next": "16.3.6",
+        "react": "19.2.3",
+        "react-dom": "19.2.3"
+    }
+}
