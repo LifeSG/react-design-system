@@ -48,8 +48,8 @@ const probes = {
     // MenuSection label: parent colour text-subtler (neutral-50) vs Typography colour text (neutral-20)
     "menu/grid-layout-with-label": [
         {
-            selector:
-                '[data-testid="menu-section"] p, [data-testid="menu-section"] span',
+            selector: '[data-testid="menu-section"]',
+            labelOf: true,
             property: "color",
             intendedVar: "--fds-colour-text-subtler",
         },
@@ -111,6 +111,12 @@ for (const route of routes) {
         const r = await page.$eval(
             probe.selector,
             (el, p) => {
+                // alpha.3 nested the label inside the list; alpha.14 renders it as a
+                // sibling referenced by aria-labelledby, so resolve it by id
+                if (p.labelOf)
+                    el = document.getElementById(
+                        el.getAttribute("aria-labelledby")
+                    );
                 const value = getComputedStyle(el)[p.property];
                 let intended = p.intended;
                 if (p.intendedVar) {

@@ -15,7 +15,9 @@ LIBDIR="node_modules/@lifesg/react-design-system"
 [ -d node_modules ] || npm ci --no-audit --no-fund >/dev/null
 mkdir -p results
 OUT="results/$LIB.jsonl"
+NAVOUT="results/$LIB-nav.jsonl"
 : >"$OUT"
+: >"$NAVOUT"
 node class-map.mjs "$LIBDIR" >results/class-map.json
 
 for run in $(seq 1 "$RUNS"); do
@@ -34,6 +36,7 @@ for run in $(seq 1 "$RUNS"); do
             trap 'lsof -ti tcp:4200 | xargs kill 2>/dev/null || true' EXIT
             sleep 4
             node measure.mjs 4200 "$LIB $bundler $chunking run$run" results/class-map.json >>"$OUT"
+            node measure-nav.mjs 4200 "$LIB $bundler $chunking run$run" results/class-map.json >>"$NAVOUT"
             lsof -ti tcp:4200 | xargs kill 2>/dev/null || true
             wait $PID 2>/dev/null || true
         done
@@ -70,3 +73,20 @@ for (const [route, orders] of Object.entries(by)) {
         console.log("  " + order + "\n    <- " + labels.length + " runs: " + [...new Set(labels.map((l) => l.replace(/ run\d+$/, "")))].join(", "));
 }
 ' "$OUT"
+
+echo
+echo "== navigation test: wrong probes by mode (hard load vs client navigation) =="
+node -e '
+const rows = require("fs").readFileSync(process.argv[1], "utf8").trim().split("\n").map(JSON.parse);
+const tally = {};
+for (const r of rows) {
+    const combo = r.label.replace(/ run\d+$/, "").split(" ").slice(1).join(" ");
+    for (const p of r.probes) {
+        const t = (tally[combo + " | " + r.mode] ??= { ok: 0, wrong: 0, examples: new Set() });
+        if (p.ok) t.ok++; else { t.wrong++; t.examples.add(p.id + " on " + (r.from ? r.from + "->" : "") + r.to); }
+    }
+}
+for (const [k, t] of Object.entries(tally)) {
+    console.log(k.padEnd(28), "ok", String(t.ok).padStart(4), " WRONG", String(t.wrong).padStart(3), t.wrong ? "e.g. " + [...t.examples].slice(0, 3).join("; ") : "");
+}
+' "$NAVOUT"

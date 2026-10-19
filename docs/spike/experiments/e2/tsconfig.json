@@ -21,23 +21,17 @@
     },
     "include": [
         "next-env.d.ts",
-        ".next-published-turbo/types/**/*.ts",
-        ".next-published-turbo/dev/types/**/*.ts",
+        ".next-turbopack-default/types/**/*.ts",
+        ".next-turbopack-default/dev/types/**/*.ts",
         "**/*.mts",
         "**/*.ts",
         "**/*.tsx",
-        ".next-t-default/types/**/*.ts",
-        ".next-t-default/dev/types/**/*.ts",
-        ".next-turbopack-default/types/**/*.ts",
-        ".next-turbopack-default/dev/types/**/*.ts",
         ".next-turbopack-graph/types/**/*.ts",
         ".next-turbopack-graph/dev/types/**/*.ts",
         ".next-webpack-default/types/**/*.ts",
         ".next-webpack-default/dev/types/**/*.ts",
         ".next-webpack-strict/types/**/*.ts",
-        ".next-webpack-strict/dev/types/**/*.ts",
-        ".next-probe/types/**/*.ts",
-        ".next-probe/dev/types/**/*.ts"
+        ".next-webpack-strict/dev/types/**/*.ts"
     ],
     "exclude": ["node_modules"]
 }

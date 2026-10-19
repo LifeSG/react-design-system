@@ -201,6 +201,16 @@ The component CSS order did differ between bundlers on some routes (menu: `marku
 and `typography` swap; toast: Turbopack `graph` adds a second `shared`), but on
 every probed route `typography` still came **before** the parent component.
 
+**Re-run on alpha.14.** `4.0.0-alpha.14` is the current `latest`, so the same
+matrix was re-run against it (`e2/results/published.jsonl`; the alpha.3 numbers
+are kept in `published-alpha3.jsonl`). All six probes were again correct in every
+combination. The component CSS order matched alpha.3 in 47 of 48
+route-and-combination pairs; the one difference was `card` moving ahead of
+`markup` on the menu route under Turbopack `graph`. alpha.14 is still a single
+`@layer fds` with no per-folder layers. One probe needed a change: alpha.14
+renders the menu section label as a sibling of the list, so the probe now finds
+it through `aria-labelledby`.
+
 What it shows:
 
 -   On these pairs the parent wins everywhere, so the cascade is not what breaks
@@ -218,6 +228,81 @@ What it does **not** show (so E2 is "not reproduced", not "bug disproved"):
 -   Published build, prod mode only. Dev, where the teams say it works, was not
     compared. `LIB=local` is untested.
 
+### F8. E2 reproduced: a parent-overrides-child style is wrong on Turbopack default and webpack default, never on `graph` or `strict` (Measured)
+
+Reproduce: `RUNS=2 docs/spike/experiments/e2/run.sh`, then
+`docs/spike/experiments/e2/ab.sh` (published `4.0.0-alpha.14`, Next 16.3.6, prod
+builds, headless Chromium, 1280px viewport). Context: the Next.js docs say CSS
+order follows import order, that stylesheets are not removed on client
+navigation, and that prod splits CSS into many files; this is why F6 and F7,
+which used single-route pages, could not fail. E2 now also builds `/nav/*`, a
+second route group with a shared layout, 8 routes importing the same stories in
+different combinations (`combo-a`, `combo-b`), and links for client-side
+navigation. `measure-nav.mjs` hard-loads every route and navigates between every
+ordered pair (56), probing the pair on arrival (`probes.mjs`).
+
+**Result.** One probe is wrong: `timeline title` computes `margin-bottom: 0px`
+where the parent's class sets `1rem` (16px). A second, `footer download label`
+(`margin-bottom` 0px vs 16px), is wrong on webpack default only. 352 probe
+results per combination, identical across both rebuilds (0 of 352 cells differ).
+
+| Bundler / `cssChunking` | Hard loads: ok / wrong | Client navigation: ok / wrong |
+| ----------------------- | ---------------------- | ----------------------------- |
+| Turbopack default       | 20 / 2                 | 150 / 4                       |
+| Turbopack `graph`       | 22 / 0                 | 154 / 0                       |
+| webpack default         | 16 / 6                 | 144 / 10                      |
+| webpack `strict`        | 22 / 0                 | 154 / 0                       |
+
+-   The teams' fix, `graph` (Turbopack), had no wrong result here and the default
+    did, which is consistent with their report. `strict` (webpack) also had none,
+    but it was not a reported fix; I added it to the matrix. Neither is proven safe
+    for other pairs.
+-   The failure is not caused by navigation: hard loads are wrong too. It depends
+    on the build's route set.
+
+**A/B: adding routes changes an existing page.** The static page
+`/components/timeline/default` is identical in both builds, and Turbopack default
+gives:
+
+| Build                 | `timeline title` margin-bottom | Component CSS order on that page  |
+| --------------------- | ------------------------------ | --------------------------------- |
+| without `/nav` routes | 16px (correct)                 | `pill>shared>typography>timeline` |
+| with `/nav` routes    | **0px (wrong)**                | `pill>timeline>shared>typography` |
+
+In the wrong build the child's (`typography`) rules come after the parent's
+(`timeline`), so the child wins. This is the reported symptom. Why the bundler
+moves `typography` is not traced (see below). Next.js issue #11448 describes a
+related chunk-order problem, but that is a 2020 report on a different Next
+version that I only saw as a summary, so I am not treating it as an explanation.
+
+What it shows:
+
+-   A minimal, deterministic reproduction exists: take the A build, add routes
+    that import `Timeline` alongside other stories, and the title margin changes.
+-   It is order-dependent and invisible on the component's own page; the break
+    appears because of other routes.
+-   `graph` and `strict` only order differently; the Next.js docs do not
+    guarantee import order under `graph` either.
+
+**Dev mode (`run-dev.sh`).** Matching the report that it works in dev: with the
+same routes, `next dev` on Turbopack and on webpack gave 0 wrong of 13 probes
+each (10 pages hard-loaded: the 8 `/nav` routes plus the static timeline and
+footer pages). On those pages the order is `pill>shared>typography>timeline`,
+the same as the correct production build without `/nav`, so in dev the child
+stays before the parent. The prod builds with the same `/nav` routes put
+`typography` after `timeline`. Dev was a single run per bundler.
+
+What it does **not** show:
+
+-   Why Turbopack and webpack default place `typography` after `timeline` here. I
+    did not trace the chunk graph.
+-   Only 2 of 6 probed pairs break (timeline title, footer label). `error-display`,
+    menu, toast and the Button child (banner) were correct everywhere.
+-   The `/nav` pages are synthetic combinations of stories, not a real app.
+-   Published build, no layers. This is the baseline E3 must fix.
+-   Dev mode: one run per bundler, hard loads only (dev compiles routes on demand,
+    so client navigation was skipped).
+
 ## Planned experiments
 
 Ordered by risk, riskiest first (see the charter's riskiest assumptions).
@@ -227,7 +312,7 @@ Ordered by risk, riskiest first (see the charter's riskiest assumptions).
 | E0  | Does Next 16 (Turbopack and webpack) preserve a `@layer a, b;` order statement from an imported CSS file in a prod build? Minimal app, 2 components, forced chunk reversal                                                                               | Pass/fail per bundler            | In progress: nested layers and repeat runs done (F5); forced reordering and dev mode moved to E2 |
 | E5a | One real parent/child variant pair (pick from the E1 cross-folder list, or by hand) under per-folder layers: does the parent's variant styling survive? Try (a) collapsed layer, (b) specificity bump in the parent's layer, (c) per-edge `@layer` order | Table of options and which works | Todo                                                                                             |
 | E1  | Extract **style-only** edges (cross-folder class refs, composed classes) instead of JS imports; compare to the madge order                                                                                                                               | Edge list, cycle list            | Todo                                                                                             |
-| E2  | Reproduce the failure: Next 16 prod build, Turbopack, `cssChunking: "strict"` vs `"graph"`, in `e2e/nextjs-app` (see `BOOKINGSG-9316`)                                                                                                                   | Repro + screenshots              | Not reproduced at the cap (F6, F7); needs a decision                                             |
+| E2  | Reproduce the failure: Next 16 prod build, Turbopack, `cssChunking: "strict"` vs `"graph"`, in `e2e/nextjs-app` (see `BOOKINGSG-9316`)                                                                                                                   | Repro + screenshots              | Reproduced in prod, not in dev (F8)                                                              |
 | E3  | Same app with the branch's layered build; does order stay stable across 5+ builds and across entry points?                                                                                                                                               | Pass/fail per build              | Todo                                                                                             |
 | E4  | Granularity: 3 tiers (`base`, `components`, `overrides`) vs per-folder; count how many visual diffs each produces (Playwright screenshots)                                                                                                               | Diff counts                      | Todo                                                                                             |
 | E5b | Extend E5a to every cross-folder edge from E1                                                                                                                                                                                                            | Full edge table                  | Todo                                                                                             |
