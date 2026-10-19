@@ -1,10 +1,12 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
+import { THEME_TYPES } from "../../../../src/theme/types";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "theme";
 
     public readonly locators: {
+        colourSwatch: Locator;
         colourMain: Locator;
         breakpointMain: Locator;
         colourNested: Locator;
@@ -15,6 +17,7 @@ class StoryPage extends AbstractStoryPage {
         super(page);
 
         this.locators = {
+            colourSwatch: page.getByTestId("colour-swatch"),
             colourMain: page.getByTestId("main").getByTestId("colour"),
             breakpointMain: page.getByTestId("main").getByTestId("breakpoint"),
             colourNested: page.getByTestId("nested").getByTestId("colour"),
@@ -33,25 +36,31 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("Theme", () => {
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("theme-provider");
+    for (const theme of THEME_TYPES) {
+        test.describe("Colour", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("theme-provider", { theme });
+            });
+
+            test(`${theme} theme`, async ({ story }) => {
+                await compareScreenshot(story, "mount", {
+                    locator: story.locators.colourSwatch,
+                });
+            });
         });
 
-        test("Themes are loaded correctly", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
+        test.describe("Colour (dark mode)", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("theme-provider", { theme, mode: "dark" });
+            });
 
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("theme-provider", { mode: "dark" });
+            test(`${theme} theme`, async ({ story }) => {
+                await compareScreenshot(story, "mount", {
+                    locator: story.locators.colourSwatch,
+                });
+            });
         });
-
-        test("Themes are loaded correctly (dark mode)", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
+    }
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
