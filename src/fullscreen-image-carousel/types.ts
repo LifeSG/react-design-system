@@ -44,7 +44,13 @@ export interface FullscreenImageCarouselProps
 
 interface FullscreenImageCarouselBaseItemProps {
     fileName?: string | undefined;
-    fileSize?: string | undefined;
+    /**
+     * File size shown alongside `fileName` in the top info bar.
+     *
+     * Pass a `string` for a pre-formatted label (e.g. `"2.4 MB"`) or a
+     * `number` of bytes to have it formatted automatically.
+     */
+    fileSize?: string | number | undefined;
     /** Replaces the component-level `customActions` while this item is active. Leave `undefined` to inherit the component-level list; pass `[]` to render none */
     customActions?: FullscreenImageCarouselCustomAction[] | undefined;
 }

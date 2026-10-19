@@ -10,14 +10,19 @@ export type FileThumbnailDisplay =
     | { type: "pdf-icon" }
     | { type: "none" };
 
-export namespace FileUploadHelper {
+export namespace FileHelper {
     export const PDF_MIME_TYPE = "application/pdf";
     export const PDF_ICON_URL =
         "https://assets.life.gov.sg/react-design-system/img/upload/pdf.svg";
 
     // Adapted from https://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-size-to-kb-mb-gb-in-javascript
-    export const formatFileSizeDisplay = (size?: number) => {
-        if (!size || size === 0) return "0 KB";
+    export const formatFileSizeDisplay = <T = undefined>(
+        size: string | number | undefined,
+        defaultValue: T = undefined as T
+    ) => {
+        if (typeof size === "string") return size.trim();
+        if (size === 0) return "0 KB";
+        if (!size || size < 0) return defaultValue;
 
         const sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
 
@@ -47,7 +52,7 @@ export namespace FileUploadHelper {
      * Decides how a file's thumbnail slot should render, given its MIME type
      * and any thumbnail the consumer supplied.
      *
-     * Lives on `FileUploadHelper` so `FileUpload` can adopt it later. Today
+     * Lives on `FileHelper` so `FileUpload` can adopt it later. Today
      * only `FileDownload` calls it: `FileUpload` still decides this inline in
      * `file-list-item-thumbnail.tsx`, and the two do NOT yet agree — for a
      * non-PDF with no thumbnail this returns `"none"` while `FileUpload`

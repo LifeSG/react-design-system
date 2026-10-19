@@ -2,10 +2,9 @@ import { DownloadIcon } from "@lifesg/react-icons";
 import { memo, useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
-import { FileUploadHelper } from "../../file-upload/helper";
 import { VisuallyHidden } from "../../shared/accessibility";
 import { Breakpoint } from "../../theme";
-import { StringHelper } from "../../util";
+import { FileHelper, StringHelper } from "../../util";
 import {
     ActionContainer,
     Box,
@@ -46,8 +45,8 @@ const Component = ({ fileItem, onDownload, onClick }: FileListItemProps) => {
     // Local variables
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
-    const fileSize = FileUploadHelper.formatFileSizeDisplay(size);
-    const thumbnailDisplay = FileUploadHelper.resolveThumbnailDisplay(
+    const fileSize = FileHelper.formatFileSizeDisplay(size, "0 KB");
+    const thumbnailDisplay = FileHelper.resolveThumbnailDisplay(
         mimeType,
         thumbnailImageDataUrl
     );
@@ -158,7 +157,7 @@ const Component = ({ fileItem, onDownload, onClick }: FileListItemProps) => {
                 {thumbnailDisplay.type === "pdf-icon" ? (
                     <PdfThumbnail
                         data-testid={`${id}-thumbnail-image`}
-                        src={FileUploadHelper.PDF_ICON_URL}
+                        src={FileHelper.PDF_ICON_URL}
                     />
                 ) : (
                     <Thumbnail
@@ -173,7 +172,7 @@ const Component = ({ fileItem, onDownload, onClick }: FileListItemProps) => {
     const renderNameSizeError = () => (
         <>
             <NameSection>{renderNameDescription()}</NameSection>
-            <FileSizeSection>{fileSize ? fileSize : "-"}</FileSizeSection>
+            <FileSizeSection>{fileSize}</FileSizeSection>
             {isError && (
                 <MobileErrorMessage>
                     <ErrorIcon aria-hidden />
