@@ -175,6 +175,49 @@ What it does **not** show:
     page; that was an artefact of bundling all stories together and is withdrawn.
 -   Published build only (no layers). `LIB=local` is untested.
 
+### F7. E2 (cap reached): none of 6 parent-overrides-Typography pairs was wrong (Measured)
+
+Reproduce: `RUNS=2 docs/spike/experiments/e2/run.sh` (same setup as F6; 96
+measurements in `e2/results/published.jsonl`). Candidates came from
+`node docs/spike/scripts/typography-overrides.mjs`, which lists 48 places where
+a component passes a `className` to `Typography.*` and that class sets a
+property Typography's own classes also set (regex scan, same-folder style files
+only). I probed one per area, up to the agreed cap of five new pairs plus the
+earlier error-display pair.
+
+| Pair (parent class on `Typography.*`) | Property      | Parent's value                   | Wrong in any combination? |
+| ------------------------------------- | ------------- | -------------------------------- | ------------------------- |
+| error-display title                   | margin-bottom | 16px                             | No                        |
+| menu section label                    | color         | `text-subtler` (rgb 104,104,104) | No                        |
+| timeline title                        | margin-bottom | 16px                             | No                        |
+| toast description                     | color         | inherit (rgb 28,90,52)           | No                        |
+| footer download label                 | margin-bottom | 16px                             | No                        |
+
+Each was checked on Turbopack default, Turbopack `graph`, webpack default and
+webpack `strict`, 2 rebuilds each (8 builds per pair), against the value the
+parent's class sets.
+
+The component CSS order did differ between bundlers on some routes (menu: `markup`
+and `typography` swap; toast: Turbopack `graph` adds a second `shared`), but on
+every probed route `typography` still came **before** the parent component.
+
+What it shows:
+
+-   On these pairs the parent wins everywhere, so the cascade is not what breaks
+    here. This does not match the teams' report.
+-   Order differences between bundlers exist (F6), but they did not move the
+    child's CSS after its parent's on any of these routes.
+
+What it does **not** show (so E2 is "not reproduced", not "bug disproved"):
+
+-   5 of 48 candidate pairs, all `Typography` as the child. Other children
+    (`Button`, `Tag`, `Badge`, `shared` input wrappers) are untested.
+-   Each route is a single story with a trimmed layout and one theme. The report
+    came from real apps with many routes sharing chunks, where a child's CSS can
+    be pulled in by an earlier route. Static single-route pages cannot do that.
+-   Published build, prod mode only. Dev, where the teams say it works, was not
+    compared. `LIB=local` is untested.
+
 ## Planned experiments
 
 Ordered by risk, riskiest first (see the charter's riskiest assumptions).
@@ -184,7 +227,7 @@ Ordered by risk, riskiest first (see the charter's riskiest assumptions).
 | E0  | Does Next 16 (Turbopack and webpack) preserve a `@layer a, b;` order statement from an imported CSS file in a prod build? Minimal app, 2 components, forced chunk reversal                                                                               | Pass/fail per bundler            | In progress: nested layers and repeat runs done (F5); forced reordering and dev mode moved to E2 |
 | E5a | One real parent/child variant pair (pick from the E1 cross-folder list, or by hand) under per-folder layers: does the parent's variant styling survive? Try (a) collapsed layer, (b) specificity bump in the parent's layer, (c) per-edge `@layer` order | Table of options and which works | Todo                                                                                             |
 | E1  | Extract **style-only** edges (cross-folder class refs, composed classes) instead of JS imports; compare to the madge order                                                                                                                               | Edge list, cycle list            | Todo                                                                                             |
-| E2  | Reproduce the failure: Next 16 prod build, Turbopack, `cssChunking: "strict"` vs `"graph"`, in `e2e/nextjs-app` (see `BOOKINGSG-9316`)                                                                                                                   | Repro + screenshots              | In progress: CSS order measured (F6); no wrong computed style reproduced yet                     |
+| E2  | Reproduce the failure: Next 16 prod build, Turbopack, `cssChunking: "strict"` vs `"graph"`, in `e2e/nextjs-app` (see `BOOKINGSG-9316`)                                                                                                                   | Repro + screenshots              | Not reproduced at the cap (F6, F7); needs a decision                                             |
 | E3  | Same app with the branch's layered build; does order stay stable across 5+ builds and across entry points?                                                                                                                                               | Pass/fail per build              | Todo                                                                                             |
 | E4  | Granularity: 3 tiers (`base`, `components`, `overrides`) vs per-folder; count how many visual diffs each produces (Playwright screenshots)                                                                                                               | Diff counts                      | Todo                                                                                             |
 | E5b | Extend E5a to every cross-folder edge from E1                                                                                                                                                                                                            | Full edge table                  | Todo                                                                                             |

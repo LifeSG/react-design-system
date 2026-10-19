@@ -40,15 +40,18 @@ for run in $(seq 1 "$RUNS"); do
     done
 done
 
-echo "== override probes (error-display title margin-bottom, intended 16px) =="
+echo "== override probes: computed value vs the parent's intended value (ok = parent won) =="
 node -e '
-const rows = require("fs").readFileSync(process.argv[1], "utf8").trim().split("\n").map(JSON.parse).filter((r) => r.probe !== undefined);
+const rows = require("fs").readFileSync(process.argv[1], "utf8").trim().split("\n").map(JSON.parse).filter((r) => r.probes);
 const by = {};
 for (const r of rows) {
-    const k = r.label.replace(/ run\d+$/, "").split(" ").slice(1).join(" ") + " | " + r.route;
-    (by[k] ??= []).push(r.probe);
+    const combo = r.label.replace(/ run\d+$/, "").split(" ").slice(1).join(" ");
+    for (const p of r.probes) ((by[r.route + " " + p.property] ??= {})[combo] ??= []).push(p.ok ? "ok" : "WRONG(" + p.value + " vs " + p.intended + ")");
 }
-for (const [k, v] of Object.entries(by)) console.log(k.padEnd(52), v.join(", "));
+for (const [k, combos] of Object.entries(by)) {
+    console.log(k);
+    for (const [c, v] of Object.entries(combos)) console.log("   " + c.padEnd(20) + v.join(", "));
+}
 ' "$OUT"
 echo
 echo "== distinct component CSS orders per route (rows = routes) =="

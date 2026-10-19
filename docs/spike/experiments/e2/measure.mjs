@@ -19,6 +19,10 @@ const routes = [
     "tag/basic",
     "error-display/default",
     "error-display/with-action-button",
+    "menu/grid-layout-with-label",
+    "timeline/default",
+    "toast/with-sublabel",
+    "footer/download-addon-variant",
 ];
 
 // Override pairs: a parent passes a class to a child whose own class sets the
@@ -27,16 +31,53 @@ const routes = [
 //   (styles.title); Typography's own class sets `margin-bottom: 0`.
 //   Intended result: margin-bottom 16px. If typography's rule comes later: 0px.
 const probes = {
-    "error-display/default": {
-        selector: '[data-testid="error-display--title"]',
-        property: "marginBottom",
-        intended: "16px",
-    },
-    "error-display/with-action-button": {
-        selector: '[data-testid="error-display--title"]',
-        property: "marginBottom",
-        intended: "16px",
-    },
+    "error-display/default": [
+        {
+            selector: '[data-testid="error-display--title"]',
+            property: "marginBottom",
+            intended: "16px",
+        },
+    ],
+    "error-display/with-action-button": [
+        {
+            selector: '[data-testid="error-display--title"]',
+            property: "marginBottom",
+            intended: "16px",
+        },
+    ],
+    // MenuSection label: parent colour text-subtler (neutral-50) vs Typography colour text (neutral-20)
+    "menu/grid-layout-with-label": [
+        {
+            selector:
+                '[data-testid="menu-section"] p, [data-testid="menu-section"] span',
+            property: "color",
+            intendedVar: "--fds-colour-text-subtler",
+        },
+    ],
+    // Timeline title: parent margin-bottom 1rem vs Typography heading margin-bottom 0
+    "timeline/default": [
+        {
+            selector: '[data-testid="timeline-title"]',
+            property: "marginBottom",
+            intended: "16px",
+        },
+    ],
+    // Toast description: parent `color: inherit` vs Typography colour text
+    "toast/with-sublabel": [
+        {
+            selector: '[data-testid="toast-success"] p',
+            property: "color",
+            intendedInherit: true,
+        },
+    ],
+    // Footer download label: parent margin-bottom 16px vs Typography margin-bottom 0
+    "footer/download-addon-variant": [
+        {
+            selector: '[data-testid="download-app-section"] > :first-child',
+            property: "marginBottom",
+            intended: "16px",
+        },
+    ],
 };
 
 const browser = await chromium.launch();
@@ -65,16 +106,34 @@ for (const route of routes) {
         }
         return { sheets: sheets.length, order: seq.join(">") };
     }, classMap);
-    const probe = probes[route];
-    if (probe) {
-        result.probe = await page.$eval(
+    const results = [];
+    for (const probe of probes[route] ?? []) {
+        const r = await page.$eval(
             probe.selector,
-            (el, p) => getComputedStyle(el)[p],
-            probe.property
+            (el, p) => {
+                const value = getComputedStyle(el)[p.property];
+                let intended = p.intended;
+                if (p.intendedVar) {
+                    // resolve the design token to a computed colour
+                    const t = document.createElement("span");
+                    t.style.color = `var(${p.intendedVar})`;
+                    el.parentElement.appendChild(t);
+                    intended = getComputedStyle(t).color;
+                    t.remove();
+                } else if (p.intendedInherit) {
+                    intended = getComputedStyle(el.parentElement)[p.property];
+                }
+                return { value, intended };
+            },
+            probe
         );
-        result.intended = probe.intended;
-        result.ok = result.probe === probe.intended;
+        results.push({
+            property: probe.property,
+            ...r,
+            ok: r.value === r.intended,
+        });
     }
+    if (results.length) result.probes = results;
     console.log(JSON.stringify({ label, route, ...result }));
 }
 await browser.close();
