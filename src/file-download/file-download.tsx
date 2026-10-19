@@ -15,6 +15,7 @@ export const FileDownload = ({
     fileItems,
     title,
     description,
+    descriptionLabel,
     onDownload,
     onClick,
     "data-testid": testId,
@@ -77,6 +78,7 @@ export const FileDownload = ({
                         <FileListCard
                             key={item.id}
                             fileItem={item}
+                            descriptionLabel={descriptionLabel}
                             onDownload={handleDownloadItem}
                             onClick={onClick}
                         />

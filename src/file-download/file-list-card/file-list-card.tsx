@@ -10,6 +10,8 @@ import {
     Box,
     CardButton,
     ContentSection,
+    DescriptionLabel,
+    DescriptionText,
     DesktopErrorMessage,
     ErrorIcon,
     ExtendedNameSection,
@@ -26,7 +28,12 @@ import {
 } from "./file-list-card.styles";
 import { FileListItemProps } from "./types";
 
-const Component = ({ fileItem, onDownload, onClick }: FileListItemProps) => {
+const Component = ({
+    fileItem,
+    descriptionLabel = "Photo description",
+    onDownload,
+    onClick,
+}: FileListItemProps) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
@@ -35,6 +42,7 @@ const Component = ({ fileItem, onDownload, onClick }: FileListItemProps) => {
         name,
         mimeType,
         size,
+        description,
         errorMessage,
         thumbnailImageDataUrl,
         truncateText = true,
@@ -138,6 +146,12 @@ const Component = ({ fileItem, onDownload, onClick }: FileListItemProps) => {
     const renderNameDescription = () => (
         <>
             <ItemNameText ref={containerRef}>{displayText}</ItemNameText>
+            {description && (
+                <>
+                    <DescriptionLabel>{descriptionLabel}</DescriptionLabel>
+                    <DescriptionText>{description}</DescriptionText>
+                </>
+            )}
             {isError && (
                 <DesktopErrorMessage>
                     <ErrorIcon aria-hidden />

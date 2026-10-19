@@ -6,6 +6,8 @@ export interface FileItemDownloadProps {
     mimeType: string;
     /** The size of the file in bytes */
     size?: number | undefined;
+    /** The alt text or description of the file. Displayed under the file name when provided. */
+    description?: string | undefined;
     /** The remote path of the file */
     filePath: string;
     /** A custom error message to display when file download fails */
@@ -27,6 +29,8 @@ export interface FileDownloadProps {
     title?: string | JSX.Element | undefined;
     description?: string | JSX.Element | undefined;
     fileItems: FileItemDownloadProps[];
+    /** The label shown above each file item's `description`. Defaults to "Photo description" */
+    descriptionLabel?: string | undefined;
     /** The style type for the component. Values "bordered" | "no-border" */
     styleType?: FileDownloadStyle | undefined;
     className?: string | undefined;
