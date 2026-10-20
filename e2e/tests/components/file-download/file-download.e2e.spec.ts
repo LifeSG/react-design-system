@@ -184,57 +184,59 @@ test.describe("File Download", () => {
         });
     });
 
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("with-description");
+    test.describe("Item description", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("with-description");
+            });
+
+            test("With description", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
         });
 
-        test("With description", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("with-description", { size: "mobile" });
+            });
 
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("with-description", { size: "mobile" });
-        });
-
-        test("With description (mobile)", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("with-description", { mode: "dark" });
+            test("With description (mobile)", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
         });
 
-        test("With description (dark mode)", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("with-description", { mode: "dark" });
+            });
 
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("with-description-error");
-        });
-
-        test("With description error", async ({ story }) => {
-            await story.locators.downloadButton("document.pdf").click();
-            await story.locators.downloadButton("report.docx").click();
-            await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("with-description-error", { size: "mobile" });
+            test("With description (dark mode)", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
         });
 
-        test("With description error (mobile)", async ({ story }) => {
-            await story.locators.downloadButton("document.pdf").click();
-            await story.locators.downloadButton("report.docx").click();
-            await compareScreenshot(story, "mount");
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("with-description-error");
+            });
+
+            test("With description error", async ({ story }) => {
+                await story.locators.downloadButton("document.pdf").click();
+                await story.locators.downloadButton("report.docx").click();
+                await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("with-description-error", { size: "mobile" });
+            });
+
+            test("With description error (mobile)", async ({ story }) => {
+                await story.locators.downloadButton("document.pdf").click();
+                await story.locators.downloadButton("report.docx").click();
+                await compareScreenshot(story, "mount");
+            });
         });
     });
 
