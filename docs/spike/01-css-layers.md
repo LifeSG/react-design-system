@@ -423,6 +423,58 @@ wrapper (the story's `data-testid` is on the `<textarea>`), which has no
 `margin-top` rule. The probe now resolves the error through `aria-describedby`;
 the results above are from the corrected probe.
 
+### F11. E5b: an explicit order for the cycle fixes F10 and keeps F9, with 0 wrong on all 7 probes (Measured)
+
+Reproduce: `node docs/spike/scripts/layer-inversions.mjs <cycle members>` to list
+the overrides inside each F1 cycle, then
+`node docs/spike/scripts/reorder-layers.mjs form input-textarea` (rewrites the
+order statement in the 20 built `dist/theme/styles/*.css`; undo by rebuilding), then
+`TAG=e5b LIB=local RUNS=2 docs/spike/experiments/e2/run.sh` (results in
+`e2/results/local-e5b*.jsonl`, log in `run-e5b.log`).
+
+**Can an order satisfy the cycles at all?** Only if no two members override each
+other in opposite directions. Listing every override among each cycle's members:
+
+| Cycle                                                       | Overrides among members                                          | Direction conflicts                                                             |
+| ----------------------------------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `form, input-textarea, otp-verification, time-range-picker` | 1: `input-textarea -> form`                                      | None: one direction, so `form` before `input-textarea` satisfies it             |
+| `alert, button, shared, toggle, typography`                 | 10, all satisfied by the current order except `shared -> button` | None real: `shared -> button` is the F10 false positive (no colliding property) |
+
+So both cycles are satisfiable. The import graph just does not tell the DFS which
+direction the styling goes, so it guessed, and guessed wrong once.
+
+**Result.** With `fds.form` moved from position 54 to 44 (before
+`fds.input-textarea`, now 45) and nothing else changed, the layered build gave
+**0 wrong of 832 probe results** across all four combinations, hard loads and
+client navigation:
+
+| Probe                               | Value in every combination | Before the reorder |
+| ----------------------------------- | -------------------------- | ------------------ |
+| textarea error message margin-top   | 0px (correct)              | 8px (F10)          |
+| timeline title margin-bottom        | 16px (correct)             | 16px (F9)          |
+| footer download label margin-bottom | 16px (correct)             | 16px (F9)          |
+| the other 4 probes                  | correct                    | correct            |
+
+What it shows:
+
+-   The spec's "declare custom orders per variant relationship, layer management
+    hell" option is not hell here: the whole fix was one move, because there is one
+    real inverted pair. The cost is not hand-ordering 83 layers; it is making the
+    generator order by **style** edges (who passes a class to whom) instead of JS
+    imports, and failing the build on a real cycle.
+-   A per-folder layer order can satisfy every measured parent-overrides-child pair
+    in this library at the same time.
+
+What it does **not** show:
+
+-   That the generator can be fixed: this was a hand edit of built CSS, standing in
+    for a change to `rollup/add-css-layer-plugin.js`. Ordering from style edges (E1)
+    is still to build.
+-   That the order stays correct as the code changes. A new override against the
+    order reintroduces F10 silently, so a production version needs a check (the
+    scan, or a build-time error), not just a better order.
+-   Coverage beyond the scan's lower bound (F10's regex limits) and the 7 probes.
+
 ## Planned experiments
 
 Ordered by risk, riskiest first (see the charter's riskiest assumptions).
@@ -435,7 +487,7 @@ Ordered by risk, riskiest first (see the charter's riskiest assumptions).
 | E2  | Reproduce the failure: Next 16 prod build, Turbopack, `cssChunking: "strict"` vs `"graph"`, in `e2e/nextjs-app` (see `BOOKINGSG-9316`)                                                                                                                   | Repro + screenshots              | Reproduced in prod, not in dev (F8)                                                              |
 | E3  | Same app with the branch's layered build; does order stay stable across 5+ builds and across entry points?                                                                                                                                               | Pass/fail per build              | Done for 6 pairs (F9): 0 wrong; cycles and consumer side untested                                |
 | E4  | Granularity: 3 tiers (`base`, `components`, `overrides`) vs per-folder; count how many visual diffs each produces (Playwright screenshots)                                                                                                               | Diff counts                      | Todo                                                                                             |
-| E5b | Extend E5a to every cross-folder edge from E1                                                                                                                                                                                                            | Full edge table                  | Todo                                                                                             |
+| E5b | Extend E5a to every cross-folder edge from E1                                                                                                                                                                                                            | Full edge table                  | Done (F11): one reorder fixes F10, keeps F9; generator change not built                          |
 | E6  | Consumer overrides: consumer unlayered CSS and consumer `@layer main, fds` ordering still win/lose as documented                                                                                                                                         | Pass/fail                        | Todo                                                                                             |
 | E7  | Migration: what must consumers add? Is the `default.css` order statement mandatory, what if it loads late or not at all                                                                                                                                  | Checklist                        | Todo                                                                                             |
 

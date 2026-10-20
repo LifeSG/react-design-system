@@ -4,7 +4,9 @@
 // parent's folder comes BEFORE the child's in the generated order statement, the
 // child's own rules beat the parent's override on every colliding property.
 // Reads the order statement from dist/theme/styles/lifesg.css (run `npm run build`).
-// Run from anywhere: node docs/spike/scripts/layer-inversions.mjs
+// Run from anywhere: node docs/spike/scripts/layer-inversions.mjs [folder ...]
+// With folder names, also lists every override between those folders in both
+// directions, so you can see whether any single order satisfies them.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -148,3 +150,17 @@ for (const r of inverted.sort((a, b) => a.parent.localeCompare(b.parent)))
     );
 const pairs = new Set(inverted.map((r) => r.parent + "->" + r.child));
 console.log(`\ninverted folder pairs: ${[...pairs].join("  ")}`);
+
+const only = process.argv.slice(2);
+if (only.length) {
+    const among = rows.filter(
+        (r) => only.includes(r.parent) && only.includes(r.child)
+    );
+    console.log(`\noverrides among ${only.join(", ")}: ${among.length}`);
+    for (const r of among)
+        console.log(
+            `  ${r.parent}(${r.parentPos}) -> ${r.child}(${r.childPos})  ${
+                r.inverted ? "INVERTED" : "ok      "
+            }  ${r.file}  <${r.tag} .${r.cls}>  on: ${r.collide}`
+        );
+}
