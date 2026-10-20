@@ -172,7 +172,7 @@ export const DescriptionLabel = styled.div`
 export const DescriptionText = styled.div`
     ${Font["body-md-regular"]}
     color: ${Colour["text"]};
-    margin-top: ${Spacing["spacing-4"]};
+    margin-top: ${Spacing["spacing-8"]};
     word-break: normal;
     overflow-wrap: anywhere;
 `;
