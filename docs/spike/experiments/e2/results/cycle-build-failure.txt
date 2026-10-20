@@ -1,0 +1,12 @@
+# Spike 01 / F13: npm run build with NOT_COLLIDING = [] in rollup/add-css-layer-plugin.js (restored afterwards).
+# Captured 2026-10-20. Rollup error excerpt; the full log is ~200 lines of build output.
+[!] (plugin copy) Error: CSS layer order: style edges form a cycle among shared, button. No layer order lets every parent override its child. Edges:
+  button -> shared  button/button.tsx  <ComponentLoadingSpinner .spinner>  on: flex-shrink
+  button -> shared  button/button.tsx  <ComponentLoadingSpinner .spinnerHasChildren>  on: margin-right
+  shared -> button  shared/timepicker-dropdown/timepicker-dropdown.tsx  <Button .controlButton>  on: width
+  shared -> button  shared/timepicker-dropdown/timepicker-dropdown.tsx  <Button .controlButton>  on: width
+    at orderByStyleEdges (file:///Users/tsp-idn-ghazwan/projects/react-design-system/rollup/style-edges.js:200:15)
+    at getCssLayerOrder (file:///Users/tsp-idn-ghazwan/projects/react-design-system/rollup/add-css-layer-plugin.js:80:41)
+    at getCssLayer (file:///Users/tsp-idn-ghazwan/projects/react-design-system/rollup/add-css-layer-plugin.js:84:23)
+    at transform (file:///Users/tsp-idn-ghazwan/projects/react-design-system/rollup.config.js:240:35)
+exit 1

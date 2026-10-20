@@ -1,0 +1,136 @@
+LIB=local  RUNS=2  steps=8  (each step: build, serve, static probes, navigation probes)
+[1/8] turbopack/default run1       building                 elapsed 0m00s
+[1/8] turbopack/default run1       static probes (8 routes) elapsed 0m07s
+[1/8] turbopack/default run1       navigation (8 hard + 56 nav) elapsed 0m10s
+[2/8] turbopack/graph run1         building                 elapsed 1m21s | ~9m27s left
+[2/8] turbopack/graph run1         static probes (8 routes) elapsed 1m28s | ~10m16s left
+[2/8] turbopack/graph run1         navigation (8 hard + 56 nav) elapsed 1m31s | ~10m37s left
+[3/8] webpack/default run1         building                 elapsed 2m41s | ~8m00s left
+[3/8] webpack/default run1         static probes (8 routes) elapsed 2m53s | ~8m36s left
+[3/8] webpack/default run1         navigation (8 hard + 56 nav) elapsed 2m54s | ~8m42s left
+[4/8] webpack/strict run1          building                 elapsed 4m04s | ~6m45s left
+[4/8] webpack/strict run1          static probes (8 routes) elapsed 4m16s | ~7m05s left
+[4/8] webpack/strict run1          navigation (8 hard + 56 nav) elapsed 4m17s | ~7m05s left
+[5/8] turbopack/default run2       building                 elapsed 5m28s | ~5m28s left
+[5/8] turbopack/default run2       static probes (8 routes) elapsed 5m35s | ~5m32s left
+[5/8] turbopack/default run2       navigation (8 hard + 56 nav) elapsed 5m37s | ~5m36s left
+[6/8] turbopack/graph run2         building                 elapsed 6m48s | ~4m03s left
+[6/8] turbopack/graph run2         static probes (8 routes) elapsed 6m55s | ~4m09s left
+[6/8] turbopack/graph run2         navigation (8 hard + 56 nav) elapsed 6m56s | ~4m09s left
+[7/8] webpack/default run2         building                 elapsed 8m07s | ~2m42s left
+[7/8] webpack/default run2         static probes (8 routes) elapsed 8m18s | ~2m46s left
+[7/8] webpack/default run2         navigation (8 hard + 56 nav) elapsed 8m20s | ~2m46s left
+[8/8] webpack/strict run2          building                 elapsed 9m30s | ~1m21s left
+[8/8] webpack/strict run2          static probes (8 routes) elapsed 9m41s | ~1m23s left
+[8/8] webpack/strict run2          navigation (8 hard + 56 nav) elapsed 9m42s | ~1m23s left
+all 8 steps done in 10m53s
+== override probes: computed value vs the parent's intended value (ok = parent won) ==
+error-display/default marginBottom
+   turbopack default   ok, ok
+   turbopack graph     ok, ok
+   webpack default     ok, ok
+   webpack strict      ok, ok
+error-display/with-action-button marginBottom
+   turbopack default   ok, ok
+   turbopack graph     ok, ok
+   webpack default     ok, ok
+   webpack strict      ok, ok
+menu/grid-layout-with-label color
+   turbopack default   ok, ok
+   turbopack graph     ok, ok
+   webpack default     ok, ok
+   webpack strict      ok, ok
+timeline/default marginBottom
+   turbopack default   ok, ok
+   turbopack graph     ok, ok
+   webpack default     ok, ok
+   webpack strict      ok, ok
+toast/with-sublabel color
+   turbopack default   ok, ok
+   turbopack graph     ok, ok
+   webpack default     ok, ok
+   webpack strict      ok, ok
+footer/download-addon-variant marginBottom
+   turbopack default   ok, ok
+   turbopack graph     ok, ok
+   webpack default     ok, ok
+   webpack strict      ok, ok
+
+== distinct component CSS orders per route (rows = routes) ==
+
+tab/default: 1 distinct order(s)
+  tab>shared>tab
+    <- 8 runs: turbopack default, turbopack graph, webpack default, webpack strict
+
+tab/title-addon: 1 distinct order(s)
+  badge>tab>shared>tab
+    <- 8 runs: turbopack default, turbopack graph, webpack default, webpack strict
+
+badge/variants: 1 distinct order(s)
+  badge
+    <- 8 runs: turbopack default, turbopack graph, webpack default, webpack strict
+
+alert/type-variants: 2 distinct order(s)
+  markup>shared>typography>alert
+    <- 6 runs: turbopack default, webpack default, webpack strict
+  markup>typography>shared>alert
+    <- 2 runs: turbopack graph
+
+button/base-variants: 1 distinct order(s)
+  shared>button
+    <- 8 runs: turbopack default, turbopack graph, webpack default, webpack strict
+
+tag/basic: 1 distinct order(s)
+  tag
+    <- 8 runs: turbopack default, turbopack graph, webpack default, webpack strict
+
+error-display/default: 1 distinct order(s)
+  shared>button>markup>typography>error-display>shared
+    <- 8 runs: turbopack default, turbopack graph, webpack default, webpack strict
+
+error-display/with-action-button: 1 distinct order(s)
+  shared>button>markup>typography>error-display>shared
+    <- 8 runs: turbopack default, turbopack graph, webpack default, webpack strict
+
+menu/grid-layout-with-label: 3 distinct order(s)
+  typography>card>overlay>modal-v2>markup>shared>modal-v2>popover>menu
+    <- 4 runs: turbopack default, webpack default
+  markup>typography>card>overlay>modal-v2>shared>modal-v2>popover>menu
+    <- 2 runs: turbopack graph
+  typography>card>markup>overlay>modal-v2>shared>modal-v2>popover>menu
+    <- 2 runs: webpack strict
+
+timeline/default: 3 distinct order(s)
+  pill>timeline>shared>typography
+    <- 4 runs: turbopack default, webpack default
+  typography>shared>pill>timeline
+    <- 2 runs: turbopack graph
+  pill>shared>typography>timeline
+    <- 2 runs: webpack strict
+
+toast/with-sublabel: 2 distinct order(s)
+  shared>button>shared>typography>toast
+    <- 6 runs: turbopack default, webpack default, webpack strict
+  shared>button>typography>shared>toast
+    <- 2 runs: turbopack graph
+
+footer/download-addon-variant: 2 distinct order(s)
+  layout>divider>layout>typography>footer
+    <- 6 runs: turbopack default, turbopack graph, webpack strict
+  layout>divider>layout>footer>typography
+    <- 2 runs: webpack default
+
+input-textarea/standalone-error-message: 1 distinct order(s)
+  markup>form>typography>card>overlay>modal-v2>shared>modal-v2>popover>form>shared>input-textarea
+    <- 8 runs: turbopack default, turbopack graph, webpack default, webpack strict
+
+== navigation test: wrong probes by mode (hard load vs client navigation) ==
+turbopack default | hard     ok   24  WRONG   0 
+turbopack default | nav      ok  192  WRONG   0 
+turbopack graph | hard       ok   24  WRONG   0 
+turbopack graph | nav        ok  192  WRONG   0 
+webpack default | hard       ok   24  WRONG   0 
+webpack default | nav        ok  192  WRONG   0 
+webpack strict | hard        ok   24  WRONG   0 
+webpack strict | nav         ok  192  WRONG   0 
+exit 0

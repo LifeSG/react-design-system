@@ -445,8 +445,9 @@ direction the styling goes, so it guessed, and guessed wrong once.
 
 **Result.** With `fds.form` moved from position 54 to 44 (before
 `fds.input-textarea`, now 45) and nothing else changed, the layered build gave
-**0 wrong of 832 probe results** across all four combinations, hard loads and
-client navigation:
+**0 wrong of 912 probe results** (48 static, 864 navigation) across all four
+combinations, hard loads and client navigation. An earlier version of this finding
+said 832; re-tallying `local-e5b*.jsonl` gives 912.
 
 | Probe                               | Value in every combination | Before the reorder |
 | ----------------------------------- | -------------------------- | ------------------ |
@@ -533,21 +534,95 @@ What it does **not** show:
     runtime, or a CDN-loaded theme (the e2e app loads some CSS from `/cdn`).
 -   More than these two pairs per scenario, or Next dev mode.
 
+### F13. E1: the generator can order layers from style edges and fail the build on a style cycle; 0 wrong of 912 (Measured)
+
+Reproduce: `node docs/spike/scripts/style-order.mjs` from the repo root (output in
+`e2/results/style-order.txt`), then `npm run build` and
+`TAG=e1 LIB=local RUNS=2 docs/spike/experiments/e2/run.sh` (results in
+`e2/results/local-e1*.jsonl`, log in `run-e1.log`). The generator change is in
+`rollup/add-css-layer-plugin.js` and `rollup/style-edges.js`.
+
+**What the generator does now.** It collects style edges between `src/` folders: a
+component passing `className={styles.x}` to another folder's component where both
+set the same property (the F10 scan rule), plus a style file using another folder's
+class in a selector (`.${iconContainer}`). Each edge puts the child's layer before
+the parent's. Folders with no edge between them keep their import-graph position,
+so the result changes the F9 order only where an edge forces it. If the edges form
+a cycle, the build fails and prints the edges.
+
+**Edges.** 207 (206 className, 1 selector), 95 distinct folder pairs. The import
+order violated 10 of them. The style-edge order violates none.
+
+**Order change against the F9 order (83 names, now 85):**
+
+-   `input-textarea` moves from 44 to 54, after `form` (53). This is the F11 fix,
+    reached by the generator instead of a hand edit. Nine folders between them
+    each move up one.
+-   `schedule` and `local-nav` are new at 84 and 85. **The branch's generator never
+    declared them**: madge walks from `src/index.ts`, and both are subpath-only
+    exports. Their layers ranked by where their CSS first appeared, which is the
+    load-order fallback F12 describes, even with the theme loaded first. 9 of the 10
+    violated edges were theirs (`schedule -> typography, button, popover`,
+    `local-nav -> typography`). The F10 scan skipped them for the same reason, so
+    its 197 overrides are 206 with them included.
+
+**Cycle check.** At folder level the edges contain one cycle: `button -> shared`
+(Button styles `ComponentLoadingSpinner`, `flex-shrink`, `margin-right`) and
+`shared -> button` (the timepicker styles `Button`, `width`). The second is the
+F10 false positive: it collides only with Button's icon-only `width` rule. The
+generator lists it in `NOT_COLLIDING` with that reason. With the list emptied,
+`npm run build` exits 1 with
+`CSS layer order: style edges form a cycle among shared, button` and the four
+edges (Measured, one build; excerpt in `e2/results/cycle-build-failure.txt`). The
+failed build also leaves `dist/` partly written, because the build script removes
+`dist/` first: rebuild before testing against it.
+
+**Result.** 0 wrong of 912 probe results (48 static, 864 navigation), all four
+combinations, both rebuilds. That is the same count as F11, including
+textarea error message 0px (F10 pair), timeline title 16px and footer label 16px
+(F8 pairs). Source order still varies by bundler (timeline page: 3 distinct orders
+across the 4 combinations); the cascade does not.
+
+What it shows:
+
+-   Verdict condition 1 (order from style edges) works in the real generator, not
+    just as a hand edit. Condition 2 (fail on a real inversion) works as a build
+    failure, because once the order is generated from the edges an inversion can
+    only come from a cycle.
+-   The import-graph generator had a second defect besides cycle direction: folders
+    outside `src/index.ts` got no declared layer.
+-   Folder granularity makes the scan coarse. The one cycle is a false positive
+    because "the child's folder sets this property" stands in for "the child's
+    element gets this property". `shared` is a grab-bag folder, so it produces the
+    most false edges.
+
+What it does **not** show:
+
+-   The edges are still the F10 regex scan, so 207 is a lower bound. A missed edge
+    leaves the import-order tiebreak in place, which is what F9 measured, not a
+    guarantee.
+-   The exemption list is hand-maintained. Every entry is a claim about runtime
+    classes that the scan cannot check.
+-   No probe covers `schedule` or `local-nav`; their new positions are read from the
+    statement, not measured in a page.
+-   2 rebuilds per combination, 7 probes, synthetic routes: exit criterion 2 still
+    needs the 5-build and screenshot run.
+
 ## Planned experiments
 
 Ordered by risk, riskiest first (see the charter's riskiest assumptions).
 
-| ID  | Experiment                                                                                                                                                                                                                                               | Output                           | State                                                                                            |
-| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------ |
-| E0  | Does Next 16 (Turbopack and webpack) preserve a `@layer a, b;` order statement from an imported CSS file in a prod build? Minimal app, 2 components, forced chunk reversal                                                                               | Pass/fail per bundler            | In progress: nested layers and repeat runs done (F5); forced reordering and dev mode moved to E2 |
-| E5a | One real parent/child variant pair (pick from the E1 cross-folder list, or by hand) under per-folder layers: does the parent's variant styling survive? Try (a) collapsed layer, (b) specificity bump in the parent's layer, (c) per-edge `@layer` order | Table of options and which works | Done (F10): 1 real inverted pair breaks under layers; mitigations not tried                      |
-| E1  | Extract **style-only** edges (cross-folder class refs, composed classes) instead of JS imports; compare to the madge order                                                                                                                               | Edge list, cycle list            | Todo                                                                                             |
-| E2  | Reproduce the failure: Next 16 prod build, Turbopack, `cssChunking: "strict"` vs `"graph"`, in `e2e/nextjs-app` (see `BOOKINGSG-9316`)                                                                                                                   | Repro + screenshots              | Reproduced in prod, not in dev (F8)                                                              |
-| E3  | Same app with the branch's layered build; does order stay stable across 5+ builds and across entry points?                                                                                                                                               | Pass/fail per build              | Done for 6 pairs (F9): 0 wrong; cycles and consumer side untested                                |
-| E4  | Granularity: 3 tiers (`base`, `components`, `overrides`) vs per-folder; count how many visual diffs each produces (Playwright screenshots)                                                                                                               | Diff counts                      | Todo                                                                                             |
-| E5b | Mitigation for E5a: explicit order for the cycle members (`form` before `input-textarea`), rerun the matrix. The original plan here (probe every cross-folder edge from E1) is replaced by the E5a scan                                                  | Full edge table                  | Done (F11): one reorder fixes F10, keeps F9; generator change not built                          |
-| E6  | Consumer overrides: consumer unlayered CSS and consumer `@layer main, fds` ordering still win/lose as documented                                                                                                                                         | Pass/fail                        | Done (F12): overrides behave as today; unlayered wins, `@layer main` loses on both builds        |
-| E7  | Migration: what must consumers add? Is the `default.css` order statement mandatory, what if it loads late or not at all                                                                                                                                  | Checklist                        | Done (F12): order statement must load first, else it falls back to load order                    |
+| ID  | Experiment                                                                                                                                                                                                                                               | Output                           | State                                                                                                                                                                      |
+| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| E0  | Does Next 16 (Turbopack and webpack) preserve a `@layer a, b;` order statement from an imported CSS file in a prod build? Minimal app, 2 components, forced chunk reversal                                                                               | Pass/fail per bundler            | In progress: nested layers and repeat runs done (F5); forced reordering and dev mode moved to E2                                                                           |
+| E5a | One real parent/child variant pair (pick from the E1 cross-folder list, or by hand) under per-folder layers: does the parent's variant styling survive? Try (a) collapsed layer, (b) specificity bump in the parent's layer, (c) per-edge `@layer` order | Table of options and which works | Done (F10): 1 real inverted pair breaks under layers. Option (c), explicit order, fixes it (F11, generated in F13); (a) collapsed layer and (b) specificity bump not tried |
+| E1  | Extract **style-only** edges (cross-folder class refs, composed classes) instead of JS imports; compare to the madge order                                                                                                                               | Edge list, cycle list            | Done (F13): generator orders by style edges, 0 wrong of 912; one false-positive cycle exempted                                                                             |
+| E2  | Reproduce the failure: Next 16 prod build, Turbopack, `cssChunking: "strict"` vs `"graph"`, in `e2e/nextjs-app` (see `BOOKINGSG-9316`)                                                                                                                   | Repro + screenshots              | Reproduced in prod, not in dev (F8)                                                                                                                                        |
+| E3  | Same app with the branch's layered build; does order stay stable across 5+ builds and across entry points?                                                                                                                                               | Pass/fail per build              | Done for 6 pairs (F9): 0 wrong; cycles and consumer side untested                                                                                                          |
+| E4  | Granularity: 3 tiers (`base`, `components`, `overrides`) vs per-folder; count how many visual diffs each produces (Playwright screenshots)                                                                                                               | Diff counts                      | Todo                                                                                                                                                                       |
+| E5b | Mitigation for E5a: explicit order for the cycle members (`form` before `input-textarea`), rerun the matrix. The original plan here (probe every cross-folder edge from E1) is replaced by the E5a scan                                                  | Full edge table                  | Done (F11): one reorder fixes F10, keeps F9; generator change not built                                                                                                    |
+| E6  | Consumer overrides: consumer unlayered CSS and consumer `@layer main, fds` ordering still win/lose as documented                                                                                                                                         | Pass/fail                        | Done (F12): overrides behave as today; unlayered wins, `@layer main` loses on both builds                                                                                  |
+| E7  | Migration: what must consumers add? Is the `default.css` order statement mandatory, what if it loads late or not at all                                                                                                                                  | Checklist                        | Done (F12): order statement must load first, else it falls back to load order                                                                                              |
 
 ## Granularity hypothesis (to test in E4, not yet a finding)
 
@@ -568,28 +643,31 @@ See [02-alternative-paths.md](02-alternative-paths.md).
 
 ## Verdict
 
-**Draft (2026-10-20): Adopt for subset, with conditions.** Not final: the
-generator change (ordering from style edges) is untested, and it can change this.
-The consumer side (E6, E7) is now measured (F12).
+**Draft (2026-10-20): Adopt for subset, with conditions.** Not final: granularity
+(E4) and exit criterion 2 (5 builds, screenshots) are still open. The generator
+change (ordering from style edges) is now built and measured (F13), and the
+consumer side (E6, E7) is measured (F12).
 
 Per-folder layers solve the reported problem and their known blocker is
 fixable, on the evidence so far:
 
-| Spec requirement                 | Answer so far                                                                                                                                                                                                                             | Evidence            |
-| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| Deterministic style order        | **Yes, for every measured pair.** Layers make source order irrelevant: F8's broken source order is still there on the layered build, but the parent wins                                                                                  | F8, F9              |
-| Parent/child variant inheritance | **Blocker is real but narrow and fixable.** Layers break a parent's override wherever the order puts the child later (F10). 1 real case in 197 cross-folder overrides, inside an import cycle; one explicit reorder fixes it and keeps F9 | F10, F11            |
-| Granularity                      | **Per-folder works; coarse tiers untested.** The 83-layer order caused no problem except the inverted pair                                                                                                                                | F9, F11; E4 not run |
-| Consumer migration path          | **One requirement, already the documented setup.** Import the theme stylesheet at the root, before any component; otherwise the per-folder order silently falls back to load order. App overrides behave exactly as today                 | F5, F12             |
+| Spec requirement                 | Answer so far                                                                                                                                                                                                                                                   | Evidence            |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| Deterministic style order        | **Yes, for every measured pair.** Layers make source order irrelevant: F8's broken source order is still there on the layered build, but the parent wins                                                                                                        | F8, F9              |
+| Parent/child variant inheritance | **Blocker is real but narrow and fixable.** Layers break a parent's override wherever the order puts the child later (F10). 1 real case in 206 cross-folder overrides, inside an import cycle. Ordering from style edges fixes it in the generator and keeps F9 | F10, F11, F13       |
+| Granularity                      | **Per-folder works; coarse tiers untested.** The 83-layer import order caused no problem except the inverted pair (F9, F10); the 85-layer style-edge order (F13) caused none                                                                                    | F9, F11; E4 not run |
+| Consumer migration path          | **One requirement, already the documented setup.** Import the theme stylesheet at the root, before any component; otherwise the per-folder order silently falls back to load order. App overrides behave exactly as today                                       | F5, F12             |
 
 Conditions for adopting:
 
 1. **Order from style edges, not JS imports.** The generator must order by who
    passes a class to whom, so cycle members are ordered by styling direction
-   (F10, F11). The JS import graph guessed one of two cycle directions wrong.
-2. **Fail the build on a real inversion.** A new override against the order
-   reintroduces F10 silently; a scan like `layer-inversions.mjs` must run in CI
-   or at build time.
+   (F10, F11), and it must declare every styled folder, not only those reachable
+   from `src/index.ts` (F13). Built and measured in the spike generator (F13).
+2. **Fail the build on a style cycle.** With the order generated from the edges, a
+   new override can only break it by closing a cycle. The spike generator fails the
+   build then (F13). The production version needs a reviewed exemption list for
+   false positives, since the scan works at folder level.
 3. **The order statement must load first** in consumer apps (E0, F12). This is
    the documented setup already; the migration step is to state it as a hard
    requirement and, ideally, detect it (for example a dev-mode warning when a
@@ -615,4 +693,6 @@ Rejected alternatives to this verdict:
 ## Follow-up tickets
 
 TBD after the verdict. Production work is a rewrite, not a promotion of the
-`rl/css-layers` spike code.
+`rl/css-layers` spike code. That includes the spike generator in
+`rollup/add-css-layer-plugin.js` and `rollup/style-edges.js` on `gz/css-layers`
+(F13): it is evidence that the approach works, not code to merge as is.

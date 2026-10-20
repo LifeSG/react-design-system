@@ -1,0 +1,36 @@
+207 style edges (206 className, 1 selector), 2 exempted, 95 distinct folder pairs
+
+import order: 10 edges violated (child after parent)
+  input-textarea(44) -> form(54)  input-textarea/textarea.tsx  <FormErrorMessage .errorMessage>
+  local-nav(0) -> typography(4)  local-nav/local-nav-menu/local-nav-menu.tsx  <Typography .textLabel>
+  schedule(0) -> button(9)  schedule/schedule-day-view/schedule-day-view.tsx  <Button .arrowButton>
+  schedule(0) -> typography(4)  schedule/schedule-day-view/schedule-day-view.tsx  <Typography .title>
+  schedule(0) -> typography(4)  schedule/schedule-day-view/schedule-day-view.tsx  <Typography .description>
+  schedule(0) -> button(9)  schedule/schedule-day-view/schedule-day-view.tsx  <Button .arrowButton>
+  schedule(0) -> button(9)  schedule/schedule-header/schedule-header.tsx  <Button .button>
+  schedule(0) -> typography(4)  schedule/schedule-header/schedule-header.tsx  <Typography .text>
+  schedule(0) -> popover(48)  schedule/shared/with-optional-popover.tsx  <PopoverTrigger .popoverTrigger>
+  schedule(0) -> typography(4)  schedule/time-indicator/time-indicator.tsx  <Typography .timeLabel>
+style-edge order: 0 edges violated (must be 0)
+
+85 layers (import order had 83), 13 moved or added (0 = undeclared before)
+  masked-input: 45 -> 44
+  phone-number-input: 46 -> 45
+  otp-verification: 47 -> 46
+  popover: 48 -> 47
+  predictive-text-input: 49 -> 48
+  select-histogram: 50 -> 49
+  time-range-picker: 51 -> 50
+  timepicker: 52 -> 51
+  unit-number: 53 -> 52
+  form: 54 -> 53
+  input-textarea: 44 -> 54
+  local-nav: 0 -> 84
+  schedule: 0 -> 85
+
+without the NOT_COLLIDING exemptions:
+  CSS layer order: style edges form a cycle among shared, button. No layer order lets every parent override its child. Edges:
+    button -> shared  button/button.tsx  <ComponentLoadingSpinner .spinner>  on: flex-shrink
+    button -> shared  button/button.tsx  <ComponentLoadingSpinner .spinnerHasChildren>  on: margin-right
+    shared -> button  shared/timepicker-dropdown/timepicker-dropdown.tsx  <Button .controlButton>  on: width
+    shared -> button  shared/timepicker-dropdown/timepicker-dropdown.tsx  <Button .controlButton>  on: width
