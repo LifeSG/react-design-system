@@ -304,7 +304,7 @@ export const CustomCardAction: StoryObj<Component> = {
     },
 };
 
-export const WithDescription: StoryObj<Component> = {
+export const ItemDescription: StoryObj<Component> = {
     render: (_args) => {
         const [fileItems] = useState<FileItemDownloadProps[]>([
             {
