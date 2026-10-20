@@ -154,7 +154,7 @@ export const descriptionLabel = css`
 export const descriptionText = css`
     ${Font["body-md-regular"]}
     color: ${Colour["text"]};
-    margin-top: ${Spacing["spacing-4"]};
+    margin-top: ${Spacing["spacing-8"]};
     word-break: normal;
     overflow-wrap: anywhere;
 `;
