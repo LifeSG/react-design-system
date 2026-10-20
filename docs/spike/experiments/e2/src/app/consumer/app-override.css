@@ -1,0 +1,4 @@
+/* E6: an app styling a library element, as in the troubleshooting docs */
+.consumer-timeline [data-testid="timeline-title"] {
+    margin-bottom: 40px;
+}

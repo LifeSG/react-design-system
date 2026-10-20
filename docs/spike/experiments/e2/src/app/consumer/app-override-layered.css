@@ -1,0 +1,6 @@
+/* E6: the same override inside the app's `main` layer */
+@layer main {
+    .consumer-timeline [data-testid="timeline-title"] {
+        margin-bottom: 40px;
+    }
+}

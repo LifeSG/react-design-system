@@ -55,10 +55,10 @@ condition below is hit:
 
 ## Spikes
 
-| #   | Spike                                                             | Doc                                                | Status      | Verdict |
-| --- | ----------------------------------------------------------------- | -------------------------------------------------- | ----------- | ------- |
-| 01  | Native CSS layers (granularity, parent/child variants, migration) | [01-css-layers.md](01-css-layers.md)               | In progress | TBD     |
-| 02  | Alternative paths (shortlist and ordering)                        | [02-alternative-paths.md](02-alternative-paths.md) | Proposed    | TBD     |
+| #   | Spike                                                             | Doc                                                | Status      | Verdict                                                              |
+| --- | ----------------------------------------------------------------- | -------------------------------------------------- | ----------- | -------------------------------------------------------------------- |
+| 01  | Native CSS layers (granularity, parent/child variants, migration) | [01-css-layers.md](01-css-layers.md)               | In progress | Draft: Adopt for subset, with conditions (generator change untested) |
+| 02  | Alternative paths (shortlist and ordering)                        | [02-alternative-paths.md](02-alternative-paths.md) | Proposed    | TBD                                                                  |
 
 ## Conventions
 

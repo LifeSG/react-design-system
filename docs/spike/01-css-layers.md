@@ -475,6 +475,64 @@ What it does **not** show:
     scan, or a build-time error), not just a better order.
 -   Coverage beyond the scan's lower bound (F10's regex limits) and the 7 probes.
 
+### F12. E6, E7: the layer order only applies if the theme stylesheet loads first; otherwise it falls back to load order (Measured)
+
+Reproduce: `LIB=local RUNS=2` and `LIB=published RUNS=2`
+`docs/spike/experiments/e2/run-consumer.sh` (results in
+`e2/results/{local,published}-consumer.jsonl`, log in `run-consumer.log`). `dist/`
+was rebuilt to the branch's generated order first (no F11 reorder), so this is what
+the branch would ship. Five `/consumer/*` routes each render the timeline pair
+(parent's layer later in the order) and the textarea pair (parent's layer earlier,
+F10). Turbopack default and webpack default, 2 rebuilds; every value was the same
+across bundlers and rebuilds. `measure-consumer.mjs` also records where each
+`fds.<folder>` name **first appears** in the page's CSS, which is what decides its
+priority.
+
+| Scenario (consumer app does)                                        | Order statement first? | Timeline title (16px) | Textarea error (0px) | App override (40px)                 |
+| ------------------------------------------------------------------- | ---------------------- | --------------------- | -------------------- | ----------------------------------- |
+| **Layered build**                                                   |                        |                       |                      |                                     |
+| `theme-first`: theme stylesheet, then components (documented setup) | yes                    | 16px                  | **8px (F10)**        | n/a                                 |
+| `theme-late`: components, then theme stylesheet                     | **no**                 | 16px                  | 0px                  | n/a                                 |
+| `no-theme`: never imports a theme stylesheet                        | **no**                 | 16px                  | 0px                  | n/a                                 |
+| `app-unlayered`: theme first + unlayered app rule                   | yes                    | 40px (app wins)       | 8px                  | yes                                 |
+| `app-layered`: theme first + app rule in `@layer main`              | yes                    | **16px (app loses)**  | 8px                  | **no**                              |
+| **Published alpha.14 (single `@layer fds`)**                        |                        |                       |                      |                                     |
+| all five                                                            | no statement exists    | 16px                  | 0px                  | unlayered wins, `@layer main` loses |
+
+What it shows:
+
+-   **E7, load order matters.** The order statement only takes effect if the
+    theme stylesheet reaches the page before any component CSS. In `theme-late` and
+    `no-theme` the statement is not first, so each `fds.<folder>` layer ranks by
+    where its rules first appear: the per-folder order silently degrades to
+    load order, which is the bundler-dependent order the layers were meant to
+    remove. The textarea is _correct_ there only because this load order happens to
+    put `input-textarea` after `form`; on routes with a different chunk order it
+    could go either way. Consumers would need a rule: "import the theme stylesheet
+    in the root layout, before anything else".
+-   **E7, no-theme also loses the design tokens**; the scenario rendered because
+    the probed properties do not depend on tokens. It is not a supported setup.
+-   **E6, consumer overrides behave the same as today.** An unlayered app rule
+    beats the library on both builds. An app rule inside `@layer main` loses on
+    both builds: `@layer main, fds;` (the troubleshooting doc and the e2e app's
+    `globals.css`) makes `fds` the later, stronger layer. That matches the doc's
+    stated purpose, "styles from main.css take precedence over component styles"
+    being the problem it solves, so it is intended, not a layers regression.
+    Per-folder layers sit inside `fds` and do not change this.
+
+Correction to my earlier read of the smoke test: I called the `app-layered`
+result "the doc's advice inverts the consumer's expectation". The published
+build behaves identically, and the doc says this ordering is intended to let the
+library win over `main`, so that was wrong.
+
+What it does **not** show:
+
+-   Whether `theme-late` can happen in a real app. It needs the theme stylesheet
+    imported below components in the module graph; the documented setup imports it
+    at the root, which loads first in these builds. Not tested: themes switched at
+    runtime, or a CDN-loaded theme (the e2e app loads some CSS from `/cdn`).
+-   More than these two pairs per scenario, or Next dev mode.
+
 ## Planned experiments
 
 Ordered by risk, riskiest first (see the charter's riskiest assumptions).
@@ -487,9 +545,9 @@ Ordered by risk, riskiest first (see the charter's riskiest assumptions).
 | E2  | Reproduce the failure: Next 16 prod build, Turbopack, `cssChunking: "strict"` vs `"graph"`, in `e2e/nextjs-app` (see `BOOKINGSG-9316`)                                                                                                                   | Repro + screenshots              | Reproduced in prod, not in dev (F8)                                                              |
 | E3  | Same app with the branch's layered build; does order stay stable across 5+ builds and across entry points?                                                                                                                                               | Pass/fail per build              | Done for 6 pairs (F9): 0 wrong; cycles and consumer side untested                                |
 | E4  | Granularity: 3 tiers (`base`, `components`, `overrides`) vs per-folder; count how many visual diffs each produces (Playwright screenshots)                                                                                                               | Diff counts                      | Todo                                                                                             |
-| E5b | Extend E5a to every cross-folder edge from E1                                                                                                                                                                                                            | Full edge table                  | Done (F11): one reorder fixes F10, keeps F9; generator change not built                          |
-| E6  | Consumer overrides: consumer unlayered CSS and consumer `@layer main, fds` ordering still win/lose as documented                                                                                                                                         | Pass/fail                        | Todo                                                                                             |
-| E7  | Migration: what must consumers add? Is the `default.css` order statement mandatory, what if it loads late or not at all                                                                                                                                  | Checklist                        | Todo                                                                                             |
+| E5b | Mitigation for E5a: explicit order for the cycle members (`form` before `input-textarea`), rerun the matrix. The original plan here (probe every cross-folder edge from E1) is replaced by the E5a scan                                                  | Full edge table                  | Done (F11): one reorder fixes F10, keeps F9; generator change not built                          |
+| E6  | Consumer overrides: consumer unlayered CSS and consumer `@layer main, fds` ordering still win/lose as documented                                                                                                                                         | Pass/fail                        | Done (F12): overrides behave as today; unlayered wins, `@layer main` loses on both builds        |
+| E7  | Migration: what must consumers add? Is the `default.css` order statement mandatory, what if it loads late or not at all                                                                                                                                  | Checklist                        | Done (F12): order statement must load first, else it falls back to load order                    |
 
 ## Granularity hypothesis (to test in E4, not yet a finding)
 
@@ -510,8 +568,41 @@ See [02-alternative-paths.md](02-alternative-paths.md).
 
 ## Verdict
 
-TBD. Do not adopt until E2 reproduces the bug and E3 shows the layered build
-fixes it.
+**Draft (2026-10-20): Adopt for subset, with conditions.** Not final: the
+generator change (ordering from style edges) is untested, and it can change this.
+The consumer side (E6, E7) is now measured (F12).
+
+Per-folder layers solve the reported problem and their known blocker is
+fixable, on the evidence so far:
+
+| Spec requirement                 | Answer so far                                                                                                                                                                                                                             | Evidence            |
+| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| Deterministic style order        | **Yes, for every measured pair.** Layers make source order irrelevant: F8's broken source order is still there on the layered build, but the parent wins                                                                                  | F8, F9              |
+| Parent/child variant inheritance | **Blocker is real but narrow and fixable.** Layers break a parent's override wherever the order puts the child later (F10). 1 real case in 197 cross-folder overrides, inside an import cycle; one explicit reorder fixes it and keeps F9 | F10, F11            |
+| Granularity                      | **Per-folder works; coarse tiers untested.** The 83-layer order caused no problem except the inverted pair                                                                                                                                | F9, F11; E4 not run |
+| Consumer migration path          | **One requirement, already the documented setup.** Import the theme stylesheet at the root, before any component; otherwise the per-folder order silently falls back to load order. App overrides behave exactly as today                 | F5, F12             |
+
+Conditions for adopting:
+
+1. **Order from style edges, not JS imports.** The generator must order by who
+   passes a class to whom, so cycle members are ordered by styling direction
+   (F10, F11). The JS import graph guessed one of two cycle directions wrong.
+2. **Fail the build on a real inversion.** A new override against the order
+   reintroduces F10 silently; a scan like `layer-inversions.mjs` must run in CI
+   or at build time.
+3. **The order statement must load first** in consumer apps (E0, F12). This is
+   the documented setup already; the migration step is to state it as a hard
+   requirement and, ideally, detect it (for example a dev-mode warning when a
+   component layer appears before the statement).
+
+Rejected alternatives to this verdict:
+
+-   _Redeclare variants in every child_ (spec option 1): not needed; the blocker
+    is one ordering decision, not per-variant styling.
+-   _Hand-ordered layers per variant_ (spec option 3): not needed either; one move
+    fixed the only real case. The generator does the ordering.
+-   _Rely on `cssChunking: "graph"`_: fixed F8 here, but by reordering, with no
+    guarantee (F8). Keep it as a workaround, not the fix.
 
 ## Open questions
 

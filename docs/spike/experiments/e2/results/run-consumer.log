@@ -1,0 +1,34 @@
+##### LIB=local
+[1/4] turbopack run1  elapsed 0s
+[2/4] webpack run1  elapsed 12s
+[3/4] turbopack run2  elapsed 28s
+[4/4] webpack run2  elapsed 40s
+done in 56s
+theme-first    turbopack statementFirst=true  timeline=16px (parent layer later: true)  textarea=8px (parent layer later: false)
+theme-late     turbopack statementFirst=false  timeline=16px (parent layer later: true)  textarea=0px (parent layer later: true)
+no-theme       turbopack statementFirst=false  timeline=16px (parent layer later: true)  textarea=0px (parent layer later: true)
+app-unlayered  turbopack statementFirst=true  timeline=40px (parent layer later: true)  textarea=8px (parent layer later: false)
+app-layered    turbopack statementFirst=true  timeline=16px (parent layer later: true)  textarea=8px (parent layer later: false)
+theme-first    webpack   statementFirst=true  timeline=16px (parent layer later: true)  textarea=8px (parent layer later: false)
+theme-late     webpack   statementFirst=false  timeline=16px (parent layer later: true)  textarea=0px (parent layer later: true)
+no-theme       webpack   statementFirst=false  timeline=16px (parent layer later: true)  textarea=0px (parent layer later: true)
+app-unlayered  webpack   statementFirst=true  timeline=40px (parent layer later: true)  textarea=8px (parent layer later: false)
+app-layered    webpack   statementFirst=true  timeline=16px (parent layer later: true)  textarea=8px (parent layer later: false)
+exit 0
+##### LIB=published
+[1/4] turbopack run1  elapsed 0s
+[2/4] webpack run1  elapsed 12s
+[3/4] turbopack run2  elapsed 28s
+[4/4] webpack run2  elapsed 39s
+done in 55s
+theme-first    turbopack statementFirst=false  timeline=16px (parent layer later: false)  textarea=0px (parent layer later: false)
+theme-late     turbopack statementFirst=false  timeline=16px (parent layer later: false)  textarea=0px (parent layer later: false)
+no-theme       turbopack statementFirst=false  timeline=16px (parent layer later: false)  textarea=0px (parent layer later: false)
+app-unlayered  turbopack statementFirst=false  timeline=40px (parent layer later: false)  textarea=0px (parent layer later: false)
+app-layered    turbopack statementFirst=false  timeline=16px (parent layer later: false)  textarea=0px (parent layer later: false)
+theme-first    webpack   statementFirst=false  timeline=16px (parent layer later: false)  textarea=0px (parent layer later: false)
+theme-late     webpack   statementFirst=false  timeline=16px (parent layer later: false)  textarea=0px (parent layer later: false)
+no-theme       webpack   statementFirst=false  timeline=16px (parent layer later: false)  textarea=0px (parent layer later: false)
+app-unlayered  webpack   statementFirst=false  timeline=40px (parent layer later: false)  textarea=0px (parent layer later: false)
+app-layered    webpack   statementFirst=false  timeline=16px (parent layer later: false)  textarea=0px (parent layer later: false)
+exit 0
