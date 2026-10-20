@@ -5,11 +5,13 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.join(here, "../../../..");
 
 // LIB=published (default): the npm install in this folder.
-// LIB=local: the repo's dist/ (run `npm run build` at the repo root first),
-//   with React and friends pinned to this folder so dist/ does not pick up the
-//   repo root's React 17.
+// LIB=local: run.sh symlinks node_modules/@lifesg/react-design-system to the repo's
+//   dist/ (run `npm run build` at the repo root first). A Turbopack alias on the
+//   package name does NOT apply to its subpath imports and silently builds the
+//   published copy, so the symlink is what swaps the library, not this config.
+//   React and friends are pinned here because dist/ would otherwise resolve them
+//   from the repo root (React 17).
 const useLocal = process.env.LIB === "local";
-const lib = path.join(repoRoot, "dist");
 const pinned = [
     "react",
     "react-dom",
@@ -17,6 +19,8 @@ const pinned = [
     "@lifesg/react-icons",
 ];
 const pin = (name) => path.join(here, "node_modules", name);
+// Turbopack alias targets must be relative to `root`, not absolute
+const rel = (abs) => "./" + path.relative(repoRoot, abs);
 
 // CSS_CHUNKING: unset (Next default), "strict", "loose" or "graph".
 const cssChunking = process.env.CSS_CHUNKING || undefined;
@@ -29,16 +33,15 @@ export default {
     turbopack: {
         root: repoRoot,
         resolveAlias: useLocal
-            ? {
-                  "@lifesg/react-design-system": lib,
-                  ...Object.fromEntries(pinned.map((n) => [n, pin(n)])),
-              }
+            ? Object.fromEntries(pinned.map((n) => [n, rel(pin(n))]))
             : {},
     },
     webpack(config) {
         if (useLocal) {
-            config.resolve.alias["@lifesg/react-design-system"] = lib;
-            for (const n of pinned) config.resolve.alias[n] = pin(n);
+            // Not react / react-dom: Next aliases those to its own compiled copies for
+            // the app router, and replacing them yields two Reacts ("useContext of null").
+            for (const n of pinned.filter((n) => !n.startsWith("react")))
+                config.resolve.alias[n] = pin(n);
         }
         return config;
     },

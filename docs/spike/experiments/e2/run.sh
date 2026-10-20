@@ -9,10 +9,27 @@ set -euo pipefail
 export NEXT_TELEMETRY_DISABLED=1
 export LIB="${LIB:-published}"
 RUNS="${RUNS:-2}"
-LIBDIR="node_modules/@lifesg/react-design-system"
-[ "$LIB" = local ] && LIBDIR="../../../../dist"
+PKG="node_modules/@lifesg/react-design-system"
+LIBDIR="$PKG"
 
 [ -d node_modules ] || npm ci --no-audit --no-fund >/dev/null
+
+if [ "$LIB" = local ]; then
+    # Swap the library by symlinking the package to the repo's dist/ (see next.config.mjs).
+    # Restored on exit, including on failure.
+    [ -d ../../../../dist/timeline ] || { echo "dist/ missing: run 'npm run build' at the repo root"; exit 1; }
+    BACKUP="$(mktemp -d)"
+    mv "$PKG" "$BACKUP/pkg"
+    ln -s "$(cd ../../../../dist && pwd)" "$PKG"
+fi
+cleanup() {
+    lsof -ti tcp:4200 | xargs kill 2>/dev/null || true
+    if [ "$LIB" = local ] && [ -n "${BACKUP:-}" ] && [ -d "$BACKUP/pkg" ]; then
+        rm -f "$PKG"
+        mv "$BACKUP/pkg" "$PKG"
+    fi
+}
+trap cleanup EXIT
 mkdir -p results
 OUT="results/$LIB.jsonl"
 NAVOUT="results/$LIB-nav.jsonl"
@@ -20,28 +37,51 @@ NAVOUT="results/$LIB-nav.jsonl"
 : >"$NAVOUT"
 node class-map.mjs "$LIBDIR" >results/class-map.json
 
+# Progress: one step per bundler x chunking x run. Prints [step/total], the phase
+# and elapsed time, plus a rough ETA from the average step so far.
+COMBOS_PER_RUN=4   # turbopack default/graph, webpack default/strict
+TOTAL=$((RUNS * COMBOS_PER_RUN))
+STEP=0
+T0=$(date +%s)
+fmt() { printf '%dm%02ds' $(($1 / 60)) $(($1 % 60)); }
+say() { # say <phase>
+    local now elapsed eta=""
+    now=$(date +%s); elapsed=$((now - T0))
+    if [ "$STEP" -gt 1 ]; then eta=" | ~$(fmt $((elapsed / (STEP - 1) * (TOTAL - STEP + 1)))) left"; fi
+    printf '[%d/%d] %-28s %-24s elapsed %s%s\n' "$STEP" "$TOTAL" "$LABEL" "$1" "$(fmt $elapsed)" "$eta"
+}
+echo "LIB=$LIB  RUNS=$RUNS  steps=$TOTAL  (each step: build, serve, static probes, navigation probes)"
+
 for run in $(seq 1 "$RUNS"); do
     for bundler in turbopack webpack; do
         for chunking in default strict graph; do
             # Next rejects "strict" under Turbopack and "graph" under webpack
             [ "$bundler" = turbopack ] && [ "$chunking" = strict ] && continue
             [ "$bundler" = webpack ] && [ "$chunking" = graph ] && continue
+            STEP=$((STEP + 1)); LABEL="$bundler/$chunking run$run"
             flag=""; [ "$bundler" = webpack ] && flag="--webpack"
             export CSS_CHUNKING=""; [ "$chunking" != default ] && export CSS_CHUNKING="$chunking"
             export DIST=".next-$bundler-$chunking"
             rm -rf "$DIST"
+            say "building"
             npx next build $flag >/dev/null 2>&1 || { echo "build failed: $bundler/$chunking"; exit 1; }
+            if [ "$LIB" = local ]; then
+                LAYERS=$(find "$DIST/static" -name '*.css' -exec cat {} + | grep -oE '@layer [a-z0-9-]+\{' | sort -u | wc -l)
+                [ "$LAYERS" -gt 5 ] || { echo "guard: $bundler/$chunking built only $LAYERS distinct layers, so the local library was not used"; exit 1; }
+            fi
             npx next start -p 4200 >/dev/null 2>&1 & PID=$!
-            # next start forks next-server; kill by port so a failed run leaves nothing behind
-            trap 'lsof -ti tcp:4200 | xargs kill 2>/dev/null || true' EXIT
+            # next start forks next-server, so cleanup() kills by port
             sleep 4
+            say "static probes (8 routes)"
             node measure.mjs 4200 "$LIB $bundler $chunking run$run" results/class-map.json >>"$OUT"
+            say "navigation (8 hard + 56 nav)"
             node measure-nav.mjs 4200 "$LIB $bundler $chunking run$run" results/class-map.json >>"$NAVOUT"
             lsof -ti tcp:4200 | xargs kill 2>/dev/null || true
             wait $PID 2>/dev/null || true
         done
     done
 done
+echo "all $TOTAL steps done in $(fmt $(( $(date +%s) - T0 )))"
 
 echo "== override probes: computed value vs the parent's intended value (ok = parent won) =="
 node -e '

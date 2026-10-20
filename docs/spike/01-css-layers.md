@@ -303,6 +303,63 @@ What it does **not** show:
 -   Dev mode: one run per bundler, hard loads only (dev compiles routes on demand,
     so client navigation was skipped).
 
+### F9. E3: the per-folder layered build gives the parent's style on every probe, including the pair that broke in F8 (Measured)
+
+Reproduce: at the repo root `npm run build` on `gz/css-layers` (the
+`rl/css-layers` layer plugin, 83-name order statement in
+`dist/theme/styles/*.css`), then `LIB=local RUNS=2 docs/spike/experiments/e2/run.sh`
+(results in `e2/results/local.jsonl` and `local-nav.jsonl`). Same app, routes,
+probes and matrix as F8; only the library differs. `run.sh` swaps the library by
+symlinking `node_modules/@lifesg/react-design-system` to `dist/`, and refuses to
+continue if a build has fewer than 6 distinct layer names in its CSS.
+
+**Result: 0 wrong of 704 probe results (352 per run, 2 runs), in all four
+combinations, hard loads and client navigation.** The F8 failures (timeline title
+on Turbopack and webpack default, footer label on webpack default) are correct.
+
+**Source order did not change; the layers made it irrelevant.** On the timeline
+page the component CSS still arrives in the broken order on the defaults:
+
+| Bundler / `cssChunking`              | Source order, published (F8)      | Source order, layered | Timeline title |
+| ------------------------------------ | --------------------------------- | --------------------- | -------------- |
+| Turbopack default                    | `pill>timeline>shared>typography` | same                  | 16px (was 0px) |
+| webpack default                      | `pill>timeline>shared>typography` | same                  | 16px (was 0px) |
+| Turbopack `graph` / webpack `strict` | `pill>shared>typography>timeline` | same                  | 16px           |
+
+`typography`'s rules still come after `timeline`'s, but `fds.typography` is
+position 4 and `fds.timeline` position 80 in the order statement, so the parent's
+layer wins regardless of where its rules appear. This is the mechanism the spike
+was asking about.
+
+Why it works here, and what it depends on:
+
+-   The order statement lives in the theme stylesheet, which the story layout
+    imports, so it reaches the page before the component CSS. E0 (F5) showed the
+    statement has no effect if it loads after the layered rules.
+-   For every probed pair the parent's folder is later in the generated order than
+    the child's (`typography` 4, `button` 9 vs error-display 21, footer 57, menu 63,
+    smart-app-banner 73, timeline 80, toast 82). The order comes from the JS import
+    graph, where parents import children, so this holds for these pairs. It would
+    not hold for a pair inside a cycle (F1: `alert, button, shared, toggle,
+typography`), which was not probed.
+
+Setup problem found on the way (recorded so it is not repeated): a Turbopack
+`resolveAlias` on the package name does **not** apply to its subpath imports
+(`@lifesg/react-design-system/timeline`) and silently builds the installed
+package instead. An earlier E3 attempt measured the published build on Turbopack
+for that reason; it is discarded. The symlink plus the layer guard replace the
+alias.
+
+What it does **not** show:
+
+-   Pairs inside the F1 cycles, and the other 42 of the 48 Typography override
+    candidates.
+-   The consumer side: an app that imports the theme stylesheet late, not at all,
+    or declares its own `@layer` order first (E6, E7).
+-   Granularity: per-folder vs coarse tiers (E4).
+-   Only 2 rebuilds per combination, the synthetic `/nav` routes, one theme, one
+    viewport. Dev mode not re-run on the layered build.
+
 ## Planned experiments
 
 Ordered by risk, riskiest first (see the charter's riskiest assumptions).
@@ -313,7 +370,7 @@ Ordered by risk, riskiest first (see the charter's riskiest assumptions).
 | E5a | One real parent/child variant pair (pick from the E1 cross-folder list, or by hand) under per-folder layers: does the parent's variant styling survive? Try (a) collapsed layer, (b) specificity bump in the parent's layer, (c) per-edge `@layer` order | Table of options and which works | Todo                                                                                             |
 | E1  | Extract **style-only** edges (cross-folder class refs, composed classes) instead of JS imports; compare to the madge order                                                                                                                               | Edge list, cycle list            | Todo                                                                                             |
 | E2  | Reproduce the failure: Next 16 prod build, Turbopack, `cssChunking: "strict"` vs `"graph"`, in `e2e/nextjs-app` (see `BOOKINGSG-9316`)                                                                                                                   | Repro + screenshots              | Reproduced in prod, not in dev (F8)                                                              |
-| E3  | Same app with the branch's layered build; does order stay stable across 5+ builds and across entry points?                                                                                                                                               | Pass/fail per build              | Todo                                                                                             |
+| E3  | Same app with the branch's layered build; does order stay stable across 5+ builds and across entry points?                                                                                                                                               | Pass/fail per build              | Done for 6 pairs (F9): 0 wrong; cycles and consumer side untested                                |
 | E4  | Granularity: 3 tiers (`base`, `components`, `overrides`) vs per-folder; count how many visual diffs each produces (Playwright screenshots)                                                                                                               | Diff counts                      | Todo                                                                                             |
 | E5b | Extend E5a to every cross-folder edge from E1                                                                                                                                                                                                            | Full edge table                  | Todo                                                                                             |
 | E6  | Consumer overrides: consumer unlayered CSS and consumer `@layer main, fds` ordering still win/lose as documented                                                                                                                                         | Pass/fail                        | Todo                                                                                             |
