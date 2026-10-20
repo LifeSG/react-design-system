@@ -7,6 +7,7 @@ export const THEME_TYPE_TO_KEY_MAPPING: Record<ThemeType, string> = {
     ccube: "CCube",
     imda: "IMDA",
     lifesg: "LifeSG",
+    lta: "LTA",
     mylegacy: "MyLegacy",
     oneservice: "OneService",
     pa: "PA",
