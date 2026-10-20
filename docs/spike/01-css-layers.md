@@ -360,6 +360,69 @@ What it does **not** show:
 -   Only 2 rebuilds per combination, the synthetic `/nav` routes, one theme, one
     viewport. Dev mode not re-run on the layered build.
 
+### F10. E5a: per-folder layers break a parent's override where the generated order is inverted, in every combination (Measured)
+
+Reproduce: `node docs/spike/scripts/layer-inversions.mjs` (needs the layered
+`dist/`), then `TAG=e5a LIB=published RUNS=2` and `TAG=e5a LIB=local RUNS=2`
+`docs/spike/experiments/e2/run.sh` (results in `e2/results/*-e5a*.jsonl`, log in
+`run-e5a.log`). `e2/probe-one.mjs` traces one probe: every rule setting the
+property on the element, with its layer path.
+
+**Scan.** `layer-inversions.mjs` lists every place a component passes
+`className={styles.x}` to a component from another `src/` folder where both set
+the same property: 197 such overrides. Under per-folder layers the later layer
+wins, so an override is at risk when the parent's folder comes _before_ the
+child's in the generated order. 2 folder pairs are:
+
+| Parent (order position) -> child     | Where                                                                  | Property                          | Real?                                                                                                                                            |
+| ------------------------------------ | ---------------------------------------------------------------------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `input-textarea` (44) -> `form` (54) | `textarea.tsx`, `<FormErrorMessage className={styles.errorMessage}>`   | `margin-top`: parent 0, child 8px | **Yes, measured below**                                                                                                                          |
+| `shared` (8) -> `button` (9)         | `timepicker-dropdown.tsx`, `<Button className={styles.controlButton}>` | `width`                           | No: Button's only own `width` rules are icon-only (`width: auto`) and `min-width`; the timepicker buttons are not icon-only, so nothing collides |
+
+Both pairs are inside the F1 cycles (`form, input-textarea, ...` and
+`alert, button, shared, ...`): `form` imports `Textarea` and `input-textarea`
+imports `FormErrorMessage`; `shared` and `button` import each other. The DFS in
+`rl/css-layers` breaks the cycle in an arbitrary direction, and here it chose the
+direction against the override.
+
+**Result.** Textarea error message `margin-top`, 72 measurements per library
+(hard loads and client navigation, 4 combinations, 2 rebuilds):
+
+| Library                                  | All four combinations      | Rules on the error wrapper (traced)                                                    |
+| ---------------------------------------- | -------------------------- | -------------------------------------------------------------------------------------- |
+| Published alpha.14 (single `@layer fds`) | **0px, correct**           | `fds .e1g4xpi9 8px` and `fds .e1mvywhi 0px`: same layer, parent's rule later in source |
+| Layered (`fds.<folder>`)                 | **8px, wrong, every time** | `fds.form .e1g4xpi9 8px` beats `fds.input-textarea .e1mvywhi 0px`                      |
+
+The F8 pairs stayed correct on the layered build in the same run (timeline title
+16px and footer label 16px everywhere), so the layered build fixes F8 and breaks
+this pair at the same time.
+
+What it shows:
+
+-   The spec's blocker is real and measurable: a per-folder layer order silently
+    overrides a parent's styling of a child whenever the order puts the child later.
+    Unlike F8 it is not intermittent: it is wrong on every bundler and chunking mode,
+    hard load or navigation, which makes it easy to catch but certain to ship if
+    not checked.
+-   It is rare in the current code: 1 real case out of 197 cross-folder overrides,
+    and it sits exactly where the import graph has a cycle. A cycle-free order
+    computed from style edges (E1), or an explicit order for the cycle members,
+    would avoid this case.
+
+What it does **not** show:
+
+-   The scan is a regex over same-folder style files. It misses overrides built
+    with `clsx(...)` expressions spread across lines, classes passed through props,
+    and `cx` in non-tsx files, so 197 and "1 real" are lower bounds, not counts.
+-   Specificity bumps or a collapsed layer for the cycle (E5 options b and c) were
+    not tried.
+
+Correction to an earlier run: a first run of this probe reported the textarea
+pair as correct on the layered build. The probe was reading the textarea's
+wrapper (the story's `data-testid` is on the `<textarea>`), which has no
+`margin-top` rule. The probe now resolves the error through `aria-describedby`;
+the results above are from the corrected probe.
+
 ## Planned experiments
 
 Ordered by risk, riskiest first (see the charter's riskiest assumptions).
@@ -367,7 +430,7 @@ Ordered by risk, riskiest first (see the charter's riskiest assumptions).
 | ID  | Experiment                                                                                                                                                                                                                                               | Output                           | State                                                                                            |
 | --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------ |
 | E0  | Does Next 16 (Turbopack and webpack) preserve a `@layer a, b;` order statement from an imported CSS file in a prod build? Minimal app, 2 components, forced chunk reversal                                                                               | Pass/fail per bundler            | In progress: nested layers and repeat runs done (F5); forced reordering and dev mode moved to E2 |
-| E5a | One real parent/child variant pair (pick from the E1 cross-folder list, or by hand) under per-folder layers: does the parent's variant styling survive? Try (a) collapsed layer, (b) specificity bump in the parent's layer, (c) per-edge `@layer` order | Table of options and which works | Todo                                                                                             |
+| E5a | One real parent/child variant pair (pick from the E1 cross-folder list, or by hand) under per-folder layers: does the parent's variant styling survive? Try (a) collapsed layer, (b) specificity bump in the parent's layer, (c) per-edge `@layer` order | Table of options and which works | Done (F10): 1 real inverted pair breaks under layers; mitigations not tried                      |
 | E1  | Extract **style-only** edges (cross-folder class refs, composed classes) instead of JS imports; compare to the madge order                                                                                                                               | Edge list, cycle list            | Todo                                                                                             |
 | E2  | Reproduce the failure: Next 16 prod build, Turbopack, `cssChunking: "strict"` vs `"graph"`, in `e2e/nextjs-app` (see `BOOKINGSG-9316`)                                                                                                                   | Repro + screenshots              | Reproduced in prod, not in dev (F8)                                                              |
 | E3  | Same app with the branch's layered build; does order stay stable across 5+ builds and across entry points?                                                                                                                                               | Pass/fail per build              | Done for 6 pairs (F9): 0 wrong; cycles and consumer side untested                                |

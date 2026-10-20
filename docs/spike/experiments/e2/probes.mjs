@@ -46,6 +46,18 @@ export const PROBES = [
         property: "paddingLeft",
         intended: "8px",
     },
+    // Textarea -> FormErrorMessage (form/): parent margin-top 0, child margin-top 8px.
+    // The only cross-folder override where the parent's layer (input-textarea) comes
+    // BEFORE the child's (form) in the generated order, so layers should make it wrong.
+    {
+        id: "textarea error message",
+        // The story's data-testid is on the <textarea> itself; the error is a sibling,
+        // so locate it through the textarea's aria-describedby (the error <p>).
+        selector: 'textarea[data-testid="textarea-error-message"]',
+        describedBy: true,
+        property: "marginTop",
+        intended: "0px",
+    },
 ];
 
 // Returns [{ id, value, intended, ok }] for the probes present on the page.
@@ -57,6 +69,11 @@ export async function runProbes(page) {
             probe.selector,
             (el, p) => {
                 // alpha.14 renders the menu label as a sibling referenced by aria-labelledby
+                // the parent's class is on the div wrapping the described-by <p>
+                if (p.describedBy)
+                    el = document.getElementById(
+                        el.getAttribute("aria-describedby").split(" ").pop()
+                    ).parentElement;
                 if (p.labelOf)
                     el = document.getElementById(
                         el.getAttribute("aria-labelledby")

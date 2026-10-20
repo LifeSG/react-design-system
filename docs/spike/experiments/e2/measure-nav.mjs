@@ -16,6 +16,7 @@ const ROUTES = [
     "toast",
     "footer",
     "banner",
+    "textarea",
     "combo-a",
     "combo-b",
 ];

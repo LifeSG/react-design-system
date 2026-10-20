@@ -31,8 +31,11 @@ cleanup() {
 }
 trap cleanup EXIT
 mkdir -p results
-OUT="results/$LIB.jsonl"
-NAVOUT="results/$LIB-nav.jsonl"
+# TAG names the output so a new experiment does not overwrite an earlier finding's
+# evidence: results/<lib>[-<tag>].jsonl and results/<lib>[-<tag>]-nav.jsonl
+SUFFIX="${TAG:+-$TAG}"
+OUT="results/$LIB$SUFFIX.jsonl"
+NAVOUT="results/$LIB$SUFFIX-nav.jsonl"
 : >"$OUT"
 : >"$NAVOUT"
 node class-map.mjs "$LIBDIR" >results/class-map.json

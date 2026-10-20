@@ -23,6 +23,7 @@ const routes = [
     "timeline/default",
     "toast/with-sublabel",
     "footer/download-addon-variant",
+    "input-textarea/standalone-error-message",
 ];
 
 // Override pairs: a parent passes a class to a child whose own class sets the
