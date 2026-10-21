@@ -315,22 +315,12 @@ export const ItemDescription: StoryObj<Component> = {
                     "https://picsum.photos/seed/picsum/200/300",
                 description: "A misty mountain range at sunrise.",
             },
-            {
-                id: "2",
-                name: "lorem.pdf",
-                mimeType: "application/pdf",
-                size: 150000,
-                filePath:
-                    "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-                description: "Signed tenancy agreement.",
-            },
         ]);
 
         return (
             <FileDownload
                 fileItems={fileItems}
                 onDownload={handleDemoDownload}
-                descriptionLabel="File description"
                 title="With description"
                 description="Each item can show a description under its name."
             />
