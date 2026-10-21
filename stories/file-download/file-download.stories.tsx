@@ -302,6 +302,32 @@ export const CustomCardAction: StoryObj<Component> = {
     },
 };
 
+export const ItemDescription: StoryObj<Component> = {
+    render: (_args) => {
+        const [fileItems] = useState<FileItemDownloadProps[]>([
+            {
+                id: "1",
+                name: "lorem.jpeg",
+                mimeType: "image/jpeg",
+                size: 6000,
+                filePath: "https://picsum.photos/200",
+                thumbnailImageDataUrl:
+                    "https://picsum.photos/seed/picsum/200/300",
+                description: "A misty mountain range at sunrise.",
+            },
+        ]);
+
+        return (
+            <FileDownload
+                fileItems={fileItems}
+                onDownload={handleDemoDownload}
+                title="With description"
+                description="Each item can show a description under its name."
+            />
+        );
+    },
+};
+
 // The following code is meant for simulation purposes and is not intended for production
 
 const handleDemoDownload = async (file: FileItemDownloadProps) => {

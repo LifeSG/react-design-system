@@ -138,7 +138,7 @@ export const FileSizeSection = styled.div`
     margin-left: ${Spacing["spacing-8"]};
 
     ${Font["body-md-regular"]}
-    color: ${Colour["text"]};
+    color: ${Colour["text-subtler"]};
 
     ${MediaQuery.MaxWidth.lg} {
         justify-content: flex-start;
@@ -160,9 +160,21 @@ export const ItemNameText = styled.div`
     }
 `;
 
-export const ItemDescriptionText = styled(ItemNameText)`
+export const DescriptionLabel = styled.div`
+    ${Font["form-label"]}
+    font-weight: ${Font.Spec["weight-semibold"]};
+    color: ${Colour["text-subtle"]};
+    margin-top: ${Spacing["spacing-16"]};
+    word-break: normal;
+    overflow-wrap: anywhere;
+`;
+
+export const DescriptionText = styled.div`
     ${Font["body-md-regular"]}
-    margin-top: ${Spacing["spacing-4"]};
+    color: ${Colour["text"]};
+    margin-top: ${Spacing["spacing-8"]};
+    word-break: normal;
+    overflow-wrap: anywhere;
 `;
 
 export const ErrorIcon = styled(ExclamationCircleFillIcon)`

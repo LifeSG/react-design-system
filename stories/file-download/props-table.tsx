@@ -19,6 +19,17 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string", "JSX.Element"],
             },
             {
+                name: "descriptionLabel",
+                description: (
+                    <>
+                        The label shown above each file item&apos;s{" "}
+                        <code>description</code>
+                    </>
+                ),
+                propTypes: ["string"],
+                defaultValue: `"Photo description"`,
+            },
+            {
                 name: "fileItems",
                 description: "The files to be rendered",
                 mandatory: true,
@@ -81,6 +92,12 @@ const DATA: ApiTableSectionProps[] = [
                 name: "size",
                 description: "The size of the file in bytes",
                 propTypes: ["number"],
+            },
+            {
+                name: "description",
+                description:
+                    "The alt text or description of the file. Displayed under the file name when provided",
+                propTypes: ["string"],
             },
             {
                 name: "filePath",
