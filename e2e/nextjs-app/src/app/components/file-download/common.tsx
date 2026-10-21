@@ -3,6 +3,7 @@ type FileItemOverride = {
     errorMessage?: string;
     thumbnailImageDataUrl?: string;
     clickLabel?: string;
+    description?: string;
 };
 
 const BASE_FILE_ITEMS = [

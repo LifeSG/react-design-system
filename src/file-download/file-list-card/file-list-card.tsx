@@ -11,7 +11,12 @@ import { FileHelper, StringHelper } from "../../util";
 import * as styles from "./file-list-card.styles";
 import type { FileListItemProps } from "./types";
 
-const Component = ({ fileItem, onDownload, onClick }: FileListItemProps) => {
+const Component = ({
+    fileItem,
+    descriptionLabel = "Photo description",
+    onDownload,
+    onClick,
+}: FileListItemProps) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
@@ -20,6 +25,7 @@ const Component = ({ fileItem, onDownload, onClick }: FileListItemProps) => {
         name,
         mimeType,
         size,
+        description,
         errorMessage,
         thumbnailImageDataUrl,
         truncateText = true,
@@ -126,6 +132,14 @@ const Component = ({ fileItem, onDownload, onClick }: FileListItemProps) => {
             <div className={styles.itemNameText} ref={containerRef}>
                 {displayText}
             </div>
+            {description && (
+                <>
+                    <div className={styles.descriptionLabel}>
+                        {descriptionLabel}
+                    </div>
+                    <div className={styles.descriptionText}>{description}</div>
+                </>
+            )}
             {isError && (
                 <div className={styles.desktopErrorMessage}>
                     <ExclamationCircleFillIcon className={styles.errorIcon} />

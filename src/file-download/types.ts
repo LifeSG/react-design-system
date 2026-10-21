@@ -9,6 +9,8 @@ export interface FileItemDownloadProps {
     mimeType: string;
     /** The size of the file in bytes. Displayed as formatted text when provided. */
     size?: number | undefined;
+    /** The alt text or description of the file. Displayed under the file name when provided. */
+    description?: string | undefined;
     /** The remote path or URL used to fetch the file for download. */
     filePath: string;
     /**
@@ -57,6 +59,12 @@ export interface FileDownloadProps {
     description?: string | JSX.Element | undefined;
     /** The list of file items to display. When empty, no file cards are rendered. */
     fileItems: FileItemDownloadProps[];
+    /**
+     * The label shown above each file item's `description`.
+     *
+     * @default "Photo description"
+     */
+    descriptionLabel?: string | undefined;
     /**
      * Controls whether the component is wrapped in a dashed border.
      *
