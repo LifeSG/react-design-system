@@ -145,7 +145,7 @@ export const FileSizeSection = styled.div`
 
         width: 100%;
         margin-left: 0;
-        margin-top: ${Spacing["spacing-8"]};
+        margin-top: ${Spacing["spacing-16"]};
 
         ${lineClampCss(2)}
     }
