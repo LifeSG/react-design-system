@@ -34,17 +34,17 @@
     --fds-colour-primary-100: #F3F9F9;
 
     /* secondary — accent dark */
-    --fds-colour-secondary-10: #0E1723;
-    --fds-colour-secondary-20: #18293D;
-    --fds-colour-secondary-30: #233A57;
-    --fds-colour-secondary-40: #305078;
-    --fds-colour-secondary-50: #4B6A8F;
-    --fds-colour-secondary-60: #7B91A9;
-    --fds-colour-secondary-70: #A1B1C3;
-    --fds-colour-secondary-80: #C1CBD7;
-    --fds-colour-secondary-90: #DBE1E8;
-    --fds-colour-secondary-95: #EBEFF2;
-    --fds-colour-secondary-100: #F7F8FA;
+    --fds-colour-secondary-10: #001828;
+    --fds-colour-secondary-20: #002A45;
+    --fds-colour-secondary-30: #003C61;
+    --fds-colour-secondary-40: #005479;
+    --fds-colour-secondary-50: #007092;
+    --fds-colour-secondary-60: #019CB9;
+    --fds-colour-secondary-70: #30BFD5;
+    --fds-colour-secondary-80: #7DD7E5;
+    --fds-colour-secondary-90: #B4E8F0;
+    --fds-colour-secondary-95: #DCF4F8;
+    --fds-colour-secondary-100: #F2FBFC;
 
     /* neutral */
     --fds-colour-neutral-10: #161616;
