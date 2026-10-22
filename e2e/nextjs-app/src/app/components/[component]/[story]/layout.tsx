@@ -5,6 +5,7 @@ import "@lifesg/react-design-system/theme/styles/careercompass.css";
 import "@lifesg/react-design-system/theme/styles/ccube.css";
 import "@lifesg/react-design-system/theme/styles/imda.css";
 import "@lifesg/react-design-system/theme/styles/lifesg.css";
+import "@lifesg/react-design-system/theme/styles/lta.css";
 import "@lifesg/react-design-system/theme/styles/mylegacy.css";
 import "@lifesg/react-design-system/theme/styles/oneservice.css";
 import "@lifesg/react-design-system/theme/styles/pa.css";

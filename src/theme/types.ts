@@ -20,6 +20,7 @@ export const THEME_TYPES = [
     "ccube",
     "imda",
     "lifesg",
+    "lta",
     "mylegacy",
     "oneservice",
     "pa",
