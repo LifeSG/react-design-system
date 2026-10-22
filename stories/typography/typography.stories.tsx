@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Typography } from "src/typography";
 import {
     GridDecorator,
+    StackDecorator,
     toStoryArgTypes,
     toStoryIncludedProps,
 } from "stories/storybook-common";
@@ -57,6 +58,28 @@ export const PlaygroundLink: StoryObj = {
             dog
         </div>
     ),
+};
+
+export const TypographySet: StoryObj = {
+    render: (_args) => (
+        <>
+            <Typography.HeadingXXL>
+                HeadingXXL: Lorem ipsum
+            </Typography.HeadingXXL>
+            <Typography.HeadingXL>HeadingXL: Lorem ipsum</Typography.HeadingXL>
+            <Typography.HeadingLG>HeadingLG: Lorem ipsum</Typography.HeadingLG>
+            <Typography.HeadingMD>HeadingMD: Lorem ipsum</Typography.HeadingMD>
+            <Typography.HeadingSM>HeadingSM: Lorem ipsum</Typography.HeadingSM>
+            <Typography.HeadingXS>HeadingXS: Lorem ipsum</Typography.HeadingXS>
+            <Typography.BodyBL>BodyBL: Lorem ipsum</Typography.BodyBL>
+            <Typography.BodyMD>BodyMD: Lorem ipsum</Typography.BodyMD>
+            <Typography.BodySM>BodySM: Lorem ipsum</Typography.BodySM>
+            <Typography.LinkBL>LinkBL: Lorem ipsum</Typography.LinkBL>
+            <Typography.LinkMD>LinkMD: Lorem ipsum</Typography.LinkMD>
+            <Typography.LinkSM>LinkSM: Lorem ipsum</Typography.LinkSM>
+        </>
+    ),
+    decorators: [StackDecorator()],
 };
 
 export const InlineText: StoryObj = {
@@ -149,34 +172,5 @@ export const ExternalLink: StoryObj = {
             </Typography.LinkBL>{" "}
             the lazy dog
         </Typography.BodyBL>
-    ),
-};
-
-export const TypographySet: StoryObj = {
-    decorators: [
-        (Story) => (
-            <div style={{ display: "flex", flexDirection: "column" }}>
-                <Story />
-            </div>
-        ),
-    ],
-    tags: ["pattern"],
-    render: (_args) => (
-        <>
-            <Typography.HeadingXXL>
-                HeadingXXL: Lorem ipsum
-            </Typography.HeadingXXL>
-            <Typography.HeadingXL>HeadingXL: Lorem ipsum</Typography.HeadingXL>
-            <Typography.HeadingLG>HeadingLG: Lorem ipsum</Typography.HeadingLG>
-            <Typography.HeadingMD>HeadingMD: Lorem ipsum</Typography.HeadingMD>
-            <Typography.HeadingSM>HeadingSM: Lorem ipsum</Typography.HeadingSM>
-            <Typography.HeadingXS>HeadingXS: Lorem ipsum</Typography.HeadingXS>
-            <Typography.BodyBL>BodyBL: Lorem ipsum</Typography.BodyBL>
-            <Typography.BodyMD>BodyMD: Lorem ipsum</Typography.BodyMD>
-            <Typography.BodySM>BodySM: Lorem ipsum</Typography.BodySM>
-            <Typography.LinkBL>LinkBL: Lorem ipsum</Typography.LinkBL>
-            <Typography.LinkMD>LinkMD: Lorem ipsum</Typography.LinkMD>
-            <Typography.LinkSM>LinkSM: Lorem ipsum</Typography.LinkSM>
-        </>
     ),
 };

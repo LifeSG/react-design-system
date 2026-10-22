@@ -26,7 +26,6 @@ const allColourLabels = Object.fromEntries([
 const meta: Meta<Component> = {
     title: "Internal/DashedBorder",
     component: DashedBorder,
-    tags: ["pattern"],
     args: {
         enabled: true,
         thickness: Border["width-010"],
