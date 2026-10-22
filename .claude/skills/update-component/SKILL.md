@@ -80,7 +80,7 @@ All coding conventions (code structure, styling, types, JSDoc, imports) are docu
 Attempt each verification command. If a command fails due to sandbox restrictions or environment issues, report it to the user so they can run it manually.
 
 1. Run `npm run lint` — fix any lint errors
-2. Run `npm run test -- --testPathPattern="<component-name>"` — verify unit tests pass
+2. Run `npm run test -- --testPathPatterns="<component-name>"` — verify unit tests pass
 3. If E2E tests exist, run `npm run test-e2e -- <component-name>.e2e.spec.ts` to check for regressions. Update screenshots if the visual change is intentional
 4. Run `npm run build` — verify the build succeeds
 

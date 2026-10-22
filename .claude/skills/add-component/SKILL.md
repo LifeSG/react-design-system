@@ -258,7 +258,6 @@ Attempt each verification command. If a command fails due to sandbox restriction
 1. Run `npm run lint` to check for lint errors
 2. Run `npm test -- --testPathPatterns="<component-name>"` to verify unit tests pass
 3. Run `npm run test-e2e -- <component-name>.e2e.spec.ts` to verify E2E tests pass
-4. Run `npx ts-node scripts/generate-component-catalog.ts` to verify catalog entries parse correctly
-5. Run `npm run build` to verify the component compiles
+4. Run `npm run build` to verify the component compiles
 
 Do **not** start Storybook yourself. Remind the user to run `npm run storybook` and verify stories and props render correctly.

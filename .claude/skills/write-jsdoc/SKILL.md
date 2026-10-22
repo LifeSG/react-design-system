@@ -12,7 +12,7 @@ argument-hint: >-
 
 You are tasked with adding or improving JSDoc for a single component's public API in `src/<component-name>/`.
 
-The source of truth for writing style, tag usage, examples, and decisions is `JSDOC_CONVENTIONS.md` at `../../JSDOC_CONVENTIONS.md`. If this skill and that file ever disagree, follow `JSDOC_CONVENTIONS.md`.
+The source of truth for writing style, tag usage, examples, and decisions is `JSDOC_CONVENTIONS.md` at `../../../JSDOC_CONVENTIONS.md`. If this skill and that file ever disagree, follow `JSDOC_CONVENTIONS.md`.
 
 ## Input requirements
 
@@ -68,10 +68,6 @@ Do not read or modify:
 7. Re-read your edits and remove filler language
 
 ## Verification checklist
-
-Attempt each verification command. If a command fails due to sandbox restrictions or environment issues, report the command to the user so they can run it manually.
-
-1. Run `npx ts-node scripts/generate-component-catalog.ts` to verify catalog entries parse correctly (if `// @catalog` was added/changed)
 
 Do **not** start Storybook yourself. Remind the user to run `npm run storybook` and verify props are reflected correctly in Storybook.
 
