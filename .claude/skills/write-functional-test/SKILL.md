@@ -1,11 +1,20 @@
 ---
-name: "test-component-functional"
-description: "Creates functional test specs for the specified component"
+name: write-functional-test
+description: >-
+    Creates functional test specs (Playwright E2E tests) for a specified
+    design system component. Suggests test scenarios, then iteratively
+    builds stories and test files one at a time. Use when writing
+    functional tests for a component.
+argument-hint: >-
+    Provide the component name or path to the component folder
+    (e.g. "button", "src/input-select").
 ---
+
+# Functional test spec creation
 
 You are tasked with writing functional test specs for a design system component.
 
-## Input Requirements
+## Input requirements
 
 The user must provide:
 
@@ -13,7 +22,7 @@ The user must provide:
     - Path to the component folder, OR
     - Main folder of the current open file
 
-## Your Responsibilities
+## Your responsibilities
 
 Create isolated component examples (stories) and write Playwright test cases that run against each story.
 
@@ -34,8 +43,6 @@ First, suggest a list of possible test specs for the component, e.g.
 -   "Keyboard navigation"
 
 Next, prompt the user to provide a description of a test spec, and based on the input, create the functional test for the component using the existing Playwright setup.
-
-Do this one at a time until the user indicates they are done.
 
 ### Structure of the test file
 
@@ -157,3 +164,11 @@ Refer to the `Locating elements` section in https://playwright.dev/docs/locators
 
 -   Prefer using `getByRole` for locating elements
 -   Use `getByTestId` if there are no suitable locators, and add a `data-testid` attribute to the relevant element in the story
+
+## Verification checklist
+
+Attempt each verification command. If a command fails due to sandbox restrictions or environment issues, report it to the user so they can run it manually.
+
+1. Run `npm run test-e2e -- <component-name>.e2e.spec.ts` to execute the E2E tests
+2. Verify all tests pass and screenshots are generated
+3. Run `npm run lint` to verify the test and story files pass linting

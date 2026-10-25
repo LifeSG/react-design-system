@@ -401,8 +401,8 @@ Use `@default` for:
 
 -   A default value assigned in the destructuring or function body
 -   A direct/simple fallback: a literal value (`200`, `"border"`), a named
-    token (`Colour["border"]`), or a simple computation (`50% of container
-height`)
+    token (`Colour["border"]`), a `@lifesg/react-icons` JSX element (`<ArrowRightIcon />`), or a
+    simple computation (`50% of container height`)
 
 ```tsx
 export interface ExampleProps {
@@ -419,6 +419,13 @@ export interface ExampleProps {
      * @default Colour["border"]
      */
     colour?: string | undefined;
+
+    /**
+     * The icon for the component.
+     *
+     * @default <ArrowRightIcon />
+     */
+    icon?: JSX.Element | undefined;
 }
 ```
 
