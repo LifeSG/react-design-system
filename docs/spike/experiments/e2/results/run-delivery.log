@@ -1,0 +1,34 @@
+##### LIB=local
+[1/4] turbopack run1  elapsed 0s
+[2/4] webpack run1  elapsed 12s
+[3/4] turbopack run2  elapsed 27s
+[4/4] webpack run2  elapsed 39s
+done in 55s
+cdn-link load                 turbopack  statementFirst=false (component:markup) statements=1 drift=10/55  timeline=16px textarea=0px (parent layer later: true)  theme=lifesg swatch=null
+many-themes load              turbopack  statementFirst=true (statement) statements=20 drift=0/55  timeline=16px textarea=0px (parent layer later: true)  theme=lifesg swatch=null
+runtime-switch load           turbopack  statementFirst=true (statement) statements=2 drift=0/55  timeline=16px textarea=0px (parent layer later: true)  theme=lifesg swatch=rgb(23, 104, 190)
+runtime-switch after switch   turbopack  statementFirst=true (statement) statements=2 drift=0/55  timeline=16px textarea=0px (parent layer later: true)  theme=bookingsg swatch=rgb(118, 84, 188)
+nested-layout/inner load      turbopack  statementFirst=false (component:layout) statements=1 drift=10/78  timeline=16px textarea=0px (parent layer later: true)  theme=lifesg swatch=null
+cdn-link load                 webpack    statementFirst=false (component:markup) statements=1 drift=10/55  timeline=16px textarea=0px (parent layer later: true)  theme=lifesg swatch=null
+many-themes load              webpack    statementFirst=true (statement) statements=20 drift=0/55  timeline=16px textarea=0px (parent layer later: true)  theme=lifesg swatch=null
+runtime-switch load           webpack    statementFirst=true (statement) statements=2 drift=0/55  timeline=16px textarea=0px (parent layer later: true)  theme=lifesg swatch=rgb(23, 104, 190)
+runtime-switch after switch   webpack    statementFirst=true (statement) statements=2 drift=0/55  timeline=16px textarea=0px (parent layer later: true)  theme=bookingsg swatch=rgb(118, 84, 188)
+nested-layout/inner load      webpack    statementFirst=false (component:layout) statements=1 drift=10/78  timeline=16px textarea=0px (parent layer later: true)  theme=lifesg swatch=null
+exit 0
+##### LIB=published
+[1/4] turbopack run1  elapsed 0s
+[2/4] webpack run1  elapsed 12s
+[3/4] turbopack run2  elapsed 28s
+[4/4] webpack run2  elapsed 39s
+done in 55s
+cdn-link load                 turbopack  statementFirst=false (null) statements=0 drift=no statement  timeline=16px textarea=0px (parent layer later: false)  theme=lifesg swatch=null
+many-themes load              turbopack  statementFirst=false (null) statements=0 drift=no statement  timeline=16px textarea=0px (parent layer later: false)  theme=lifesg swatch=null
+runtime-switch load           turbopack  statementFirst=false (null) statements=0 drift=no statement  timeline=16px textarea=0px (parent layer later: false)  theme=lifesg swatch=rgb(23, 104, 190)
+runtime-switch after switch   turbopack  statementFirst=false (null) statements=0 drift=no statement  timeline=16px textarea=0px (parent layer later: false)  theme=bookingsg swatch=rgb(118, 84, 188)
+nested-layout/inner load      turbopack  statementFirst=false (null) statements=0 drift=no statement  timeline=16px textarea=0px (parent layer later: false)  theme=lifesg swatch=null
+cdn-link load                 webpack    statementFirst=false (null) statements=0 drift=no statement  timeline=16px textarea=0px (parent layer later: false)  theme=lifesg swatch=null
+many-themes load              webpack    statementFirst=false (null) statements=0 drift=no statement  timeline=16px textarea=0px (parent layer later: false)  theme=lifesg swatch=null
+runtime-switch load           webpack    statementFirst=false (null) statements=0 drift=no statement  timeline=16px textarea=0px (parent layer later: false)  theme=lifesg swatch=rgb(23, 104, 190)
+runtime-switch after switch   webpack    statementFirst=false (null) statements=0 drift=no statement  timeline=16px textarea=0px (parent layer later: false)  theme=bookingsg swatch=rgb(118, 84, 188)
+nested-layout/inner load      webpack    statementFirst=false (null) statements=0 drift=no statement  timeline=16px textarea=0px (parent layer later: false)  theme=lifesg swatch=null
+exit 0

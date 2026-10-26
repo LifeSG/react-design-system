@@ -684,6 +684,61 @@ four builds. The page had no theme stylesheet, so the child's
 imports the theme. The same artefact affects F12's `no-theme` textarea value, now
 corrected there.
 
+### F15. Theme delivery: a CDN `<link>` and a theme imported below a component-rendering layout both lose the declared order; many themes and runtime switching do not (Measured)
+
+Reproduce: `LIB=local RUNS=2` and `LIB=published RUNS=2`
+`docs/spike/experiments/e2/run-delivery.sh` (results in
+`e2/results/{local,published}-delivery.jsonl`, log in `run-delivery.log`); the
+drifted pairs come from `e2/drift-pairs.mjs` against a served build, with style-edge
+pairs written to `e2/results/style-edge-pairs.json` from the F13 generator. Library:
+the F13 style-edge build. Turbopack default and webpack default, 2 rebuilds; every
+value matched across bundlers and rebuilds.
+
+Four `/delivery/*` routes render the timeline and textarea pairs and differ only in how
+the theme stylesheet reaches the page. **Drift** counts the pairs of `fds.<folder>` layers
+on the page whose effective rank differs from the declared order statement: 0 means the
+page gets exactly the declared order.
+
+| Route: how the theme arrives                                                                               | Statement first?        | Drift                     | Probes                                                             |
+| ---------------------------------------------------------------------------------------------------------- | ----------------------- | ------------------------- | ------------------------------------------------------------------ |
+| `cdn-link`: `<link rel="stylesheet" precedence>` to a static copy, as the e2e app loads its `/cdn` CSS     | **no** (`markup` first) | **10 of 55**              | correct                                                            |
+| `many-themes`: all 20 theme stylesheets imported, as the e2e story layout does                             | yes (20 statements)     | 0 of 55                   | correct                                                            |
+| `runtime-switch`: lifesg and bookingsg loaded, `ThemeProvider` theme toggled                               | yes, before and after   | 0 of 55, before and after | correct; primary colour changed rgb(23,104,190) to rgb(118,84,188) |
+| `nested-layout`: the route group's outer layout renders a `Divider`, the theme is imported one layout down | **no** (`layout` first) | **10 of 78**              | correct                                                            |
+
+The published build has no order statement on any route, so drift does not apply
+there; its probes gave the same values.
+
+What it shows:
+
+-   **A CDN `<link>` is the F12 failure.** React puts the `<link>` after Next's bundled
+    CSS, so every component layer is already ranked when the statement arrives. The
+    order falls back to load order. A theme served from a CDN cannot carry the order
+    statement for bundled components.
+-   **A theme imported in a nested layout is the F12 failure too**, as soon as an outer
+    layout renders a library component. This is the realistic shape of F12's
+    `theme-late`. The migration rule is therefore "import the theme stylesheet in the
+    outermost layout that renders any library component", not just "at the root".
+-   **Repeated statements are harmless.** Twenty copies of the same statement, and
+    switching themes at runtime, left the declared order intact.
+
+What it does **not** show:
+
+-   **That the drift breaks a style here.** None of the 20 drifted pairs is a scanned style
+    edge (`form` over `typography`, `layout` over `markup`, and so on): those layers do not
+    style each other, so their relative rank does not matter today. The probes stayed
+    correct for that reason, not because the order held. Any pair that is a style edge
+    and lands on such a page would be exposed.
+-   A real CDN (a different origin, caching, `crossorigin`), or a `<link>` without
+    `precedence`, which React leaves in place instead of hoisting.
+-   Dev mode, and other theme stylesheets than lifesg and bookingsg.
+
+Correction made while doing this: the first `drift-pairs.mjs` run reported 0 drift
+for `cdn-link` because `public/spike-cdn/lifesg.css` held the published theme from
+an earlier run, which has no statement. `run-delivery.sh` copies the theme under
+test before each build; `drift-pairs.mjs` does not, so copy
+`<library>/theme/styles/lifesg.css` to `public/spike-cdn/` before running it.
+
 ## Planned experiments
 
 Ordered by risk, riskiest first (see the charter's riskiest assumptions).
@@ -733,11 +788,9 @@ verdict carries.
 
 **Planned before the spike ends**
 
--   **Theme delivery.** A theme loaded by a CDN `<link>` (the e2e app does this), several
-    theme stylesheets on one page (the e2e story layout imports 20), switching the
-    `ThemeProvider` theme at runtime, and the theme imported in a nested layout under a
-    root layout that renders library components (the likely real-app form of F12's
-    `theme-late`).
+-   ~~Theme delivery~~: done (F15). Left open from it: a real cross-origin CDN, a
+    `<link>` without `precedence`, and whether the 20 drifted layer pairs it found ever
+    include a style edge.
 -   **Exit criterion 2.** 5 or more builds per combination with Playwright
     screenshots; every run so far used 2 rebuilds and computed-style probes.
 
@@ -796,20 +849,20 @@ See [02-alternative-paths.md](02-alternative-paths.md).
 ## Verdict
 
 **Draft (2026-10-26): Adopt for subset, with conditions.** Not final: exit
-criterion 2 (5 builds, screenshots) and theme delivery are still open. Granularity
-(E4) is measured (F14). The generator
+criterion 2 (5 builds, screenshots) is still open. Granularity (E4, F14) and theme
+delivery (F15) are measured. The generator
 change (ordering from style edges) is now built and measured (F13), and the
 consumer side (E6, E7) is measured (F12).
 
 Per-folder layers solve the reported problem and their known blocker is
 fixable, on the evidence so far:
 
-| Spec requirement                 | Answer so far                                                                                                                                                                                                                                                   | Evidence      |
-| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| Deterministic style order        | **Yes, for every measured pair.** Layers make source order irrelevant: F8's broken source order is still there on the layered build, but the parent wins                                                                                                        | F8, F9        |
-| Parent/child variant inheritance | **Blocker is real but narrow and fixable.** Layers break a parent's override wherever the order puts the child later (F10). 1 real case in 206 cross-folder overrides, inside an import cycle. Ordering from style edges fixes it in the generator and keeps F9 | F10, F11, F13 |
-| Granularity                      | **Per-folder is not required.** 4 tiers derived from style-edge depth match it on every scanned edge; a hand-picked base/components split leaves 61 edges to source order and fails a hostile order                                                             | F14           |
-| Consumer migration path          | **One requirement, already the documented setup.** Import the theme stylesheet at the root, before any component; otherwise the per-folder order silently falls back to load order. App overrides behave exactly as today                                       | F5, F12       |
+| Spec requirement                 | Answer so far                                                                                                                                                                                                                                                                                                                               | Evidence      |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| Deterministic style order        | **Yes, for every measured pair.** Layers make source order irrelevant: F8's broken source order is still there on the layered build, but the parent wins                                                                                                                                                                                    | F8, F9        |
+| Parent/child variant inheritance | **Blocker is real but narrow and fixable.** Layers break a parent's override wherever the order puts the child later (F10). 1 real case in 206 cross-folder overrides, inside an import cycle. Ordering from style edges fixes it in the generator and keeps F9                                                                             | F10, F11, F13 |
+| Granularity                      | **Per-folder is not required.** 4 tiers derived from style-edge depth match it on every scanned edge; a hand-picked base/components split leaves 61 edges to source order and fails a hostile order                                                                                                                                         | F14           |
+| Consumer migration path          | **One requirement, stricter than the documented setup.** Import the theme stylesheet as a bundled import in the outermost layout that renders any library component. A nested-layout import or a CDN `<link>` silently falls back to load order (F15). Several themes and runtime switching are fine. App overrides behave exactly as today | F5, F12       |
 
 Conditions for adopting:
 
@@ -821,10 +874,13 @@ Conditions for adopting:
    new override can only break it by closing a cycle. The spike generator fails the
    build then (F13). The production version needs a reviewed exemption list for
    false positives, since the scan works at folder level.
-3. **The order statement must load first** in consumer apps (E0, F12). This is
-   the documented setup already; the migration step is to state it as a hard
-   requirement and, ideally, detect it (for example a dev-mode warning when a
-   component layer appears before the statement).
+3. **The order statement must load first** in consumer apps (E0, F12, F15). The
+   documented setup is not enough on its own: the theme has to be a bundled import
+   in the outermost layout that renders library components, and a CDN `<link>`
+   cannot carry the order. The migration step is to state this as a hard
+   requirement and detect it (for example a dev-mode warning when a component
+   layer appears before the statement), or to move the order statement out of the
+   theme stylesheet into something every component loads first.
 
 Rejected alternatives to this verdict:
 
@@ -856,8 +912,9 @@ Still open:
     `next-with-linaria`? Untested: every run used the prebuilt `dist/` CSS. Only
     matters for this repo's own e2e app, which compiles `src/` in dev; consumers use
     `dist/`.
--   Can `theme-late` (F12) happen in a real app? Covered by the theme-delivery
-    experiment.
+-   ~~Can `theme-late` (F12) happen in a real app?~~ Yes (F15): a theme imported in a
+    nested layout under a layout that renders a library component, and a theme
+    loaded by a CDN `<link>`, both put component layers before the statement.
 -   Why does the default chunking move `typography` after `timeline` (F8)? Not
     needed for the verdict, since layers make the order irrelevant, but it would
     say which pairs the published build breaks.

@@ -12,3 +12,6 @@ CLAUDE.md
 .dist-ref
 # generated per library build by make-adversarial.mjs
 src/app/adversarial/textarea-child-last/forced.css
+
+# theme-delivery cdn-link: copy of the theme stylesheet under test
+public/spike-cdn/
