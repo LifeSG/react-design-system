@@ -1,0 +1,22 @@
+@layer fds{.idyldum{color:var(--fds-colour-icon);height:1rem;width:1rem;}
+.islfrvo{-webkit-transition:-webkit-transform 250ms ease-in-out;transition:transform 250ms ease-in-out;margin-left:0.5rem;}
+.i9mhzaa{-webkit-transform:rotate(180deg);-moz-transform:rotate(180deg);-ms-transform:rotate(180deg);transform:rotate(180deg);}
+.c1pjct36{position:relative;width:100%;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;padding-top:var(--fds-internal-calendarDropdown-verticalInset);padding-bottom:var(--fds-internal-calendarDropdown-verticalInset);}
+.tnbj4wx{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex:1;-ms-flex:1;flex:1;position:relative;overflow-y:scroll;}
+.d1wdaxlf{isolation:isolate;width:100%;padding-left:var(--fds-internal-calendarDropdown-horizontalInset);padding-right:var(--fds-internal-calendarDropdown-horizontalInset);}
+.o9us63x{position:absolute;top:0;left:0;height:100%;width:100%;background:var(--fds-colour-bg);padding-left:var(--fds-internal-calendarDropdown-horizontalInset);padding-right:var(--fds-internal-calendarDropdown-horizontalInset);}
+.h1vuzb9k{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:space-between;-webkit-justify-content:space-between;justify-content:space-between;padding-left:var(
+        --fds-internal-calendarDropdown-horizontalInset,
+        var(--fds-internal-calendarDropdown-horizontalInset)
+    );padding-right:var(
+        --fds-internal-calendarDropdown-horizontalInset,
+        var(--fds-internal-calendarDropdown-horizontalInset)
+    );padding-bottom:var(--fds-internal-calendarDropdown-headerBottomSpacing);}
+.hwdoiu6{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;}
+.d11dpfam{border:none;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding:0.5rem;background:transparent;cursor:pointer;}
+.d14qnn0y{font-family:var(--fds-font-family-body);font-variant:var(--fds-font-variant);font-size:var(--fds-font-body-size-md);font-weight:var(--fds-font-weight-regular);line-height:var(--fds-font-body-lh-md);letter-spacing:var(--fds-font-body-ls-md);color:var(--fds-colour-text);}
+.h6pztie{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;}
+.h1g80qmc{margin:auto 0;padding:0.75rem;}.h1g80qmc:disabled{cursor:not-allowed;}
+.h1eddcvs{display:none;}
+.ah8v88g{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;gap:0.5rem;margin-top:1.5rem;padding-left:var(--fds-internal-calendarDropdown-horizontalInset);padding-right:var(--fds-internal-calendarDropdown-horizontalInset);}
+.am01jhq{-webkit-flex:1;-ms-flex:1;flex:1;}}

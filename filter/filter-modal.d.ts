@@ -1,0 +1,5 @@
+import type { FilterModalProps } from "./types";
+export declare const FilterModal: {
+    ({ customLabels, onClear, onDone, onDismiss, onModalOpen, toggleFilterButtonStyle, clearButtonDisabled, insets, count, children, toggleFilterButtonLabel: _toggleFilterButtonLabel, headerTitle: _headerTitle, doneButtonLabel: _doneButtonLabel, className, ...otherProps }: FilterModalProps): import("react/jsx-runtime").JSX.Element;
+    displayName: string;
+};

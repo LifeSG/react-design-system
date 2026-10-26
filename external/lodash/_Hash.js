@@ -1,0 +1,2 @@
+import{_ as t}from"./_hashClear.js";import{_ as r}from"./_hashDelete.js";import{_ as o}from"./_hashGet.js";import{_ as s}from"./_hashHas.js";import{_ as e}from"./_hashSet.js";var a=t,p=r,h=o,_=s,m=e;function i(t){var r=-1,o=null==t?0:t.length;for(this.clear();++r<o;){var s=t[r];this.set(s[0],s[1])}}i.prototype.clear=a,i.prototype.delete=p,i.prototype.get=h,i.prototype.has=_,i.prototype.set=m;var l=i;export{l as _};
+//# sourceMappingURL=_Hash.js.map

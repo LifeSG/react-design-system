@@ -1,0 +1,2 @@
+"use strict";require("./countdown-timer.styles_ipn1b0.css");exports.countdown="c1ji5mw9",exports.countdownFixed="c1ehax2j",exports.countdownHidden="csdqyky",exports.countdownInline="cibq1kp",exports.timeLeft="t6f42l5",exports.timer="t19x1azi",exports.timerIcon="t1pvvziw",exports.tokens={fixedCountdown:{top:"--fds-internal-countdownTimer-fixedCountdown-top",left:"--fds-internal-countdownTimer-fixedCountdown-left",right:"--fds-internal-countdownTimer-fixedCountdown-right"}},exports.wrapper="wav7a6b";
+//# sourceMappingURL=countdown-timer.styles.js.map
