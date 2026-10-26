@@ -107,6 +107,18 @@ const MODAL_DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
                 defaultValue: "true",
             },
+            {
+                name: "disableScrollRestore",
+                description: (
+                    <>
+                        Prevents restoring the page&apos;s scroll position when
+                        the modal closes. Passed to <code>Overlay</code>, only
+                        has an effect on iOS currently
+                    </>
+                ),
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
         ],
     },
 ];

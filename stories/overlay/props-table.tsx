@@ -100,6 +100,19 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: ["React.RefObject<HTMLElement>"],
             },
+            {
+                name: "disableScrollRestore",
+                description: (
+                    <>
+                        Prevents restoring the page&apos;s scroll position when
+                        the <code>Overlay</code> closes. Only has an effect on
+                        iOS currently. Uses the value from the last render while{" "}
+                        <code>show</code> is <code>true</code>
+                    </>
+                ),
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
         ],
     },
 ];

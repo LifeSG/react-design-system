@@ -42,4 +42,7 @@ export interface ModalV2Props extends React.HTMLAttributes<HTMLDivElement> {
     dismissKeyboardOnShow?: boolean | undefined;
     /** Disable initial focus on the modal when it is shown */
     disableInitialFocus?: boolean | undefined;
+    /** Prevents restoring the page's scroll position when the modal closes. Passed to
+     * `Overlay`, only has an effect on iOS currently */
+    disableScrollRestore?: boolean | undefined;
 }

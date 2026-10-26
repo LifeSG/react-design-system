@@ -3,6 +3,25 @@ import { Overlay } from "../../src/overlay";
 import { SimpleIdGenerator } from "../../src/util";
 
 // =============================================================================
+// CONSTANTS
+// =============================================================================
+const SCROLL_POSITION_VAR = "--lifesg-ds-overlay-scroll-y";
+
+// =============================================================================
+// HELPER FUNCTIONS
+// =============================================================================
+const setScrollY = (value: number) => {
+    Object.defineProperty(window, "scrollY", {
+        value,
+        writable: true,
+        configurable: true,
+    });
+};
+
+const waitForAnimationFrame = () =>
+    new Promise((resolve) => requestAnimationFrame(resolve));
+
+// =============================================================================
 // UNIT TESTS
 // =============================================================================
 describe("Overlay", () => {
@@ -96,6 +115,29 @@ describe("Overlay", () => {
                 expect(document.body.dataset.lifesgDsOverlayOrder).toEqual("");
             });
         });
+
+        it("should not restore scroll position regardless of disableScrollRestore", async () => {
+            setScrollY(500);
+
+            const { rerender } = render(
+                <Overlay show disableScrollRestore={false}>
+                    <div data-testid="test-content" />
+                </Overlay>
+            );
+
+            rerender(
+                <Overlay show={false} disableScrollRestore={false}>
+                    <div data-testid="test-content" />
+                </Overlay>
+            );
+
+            await waitFor(async () => {
+                expect([...document.body.classList.values()]).toEqual([]);
+            });
+            await waitForAnimationFrame();
+
+            expect(window.scrollTo).not.toHaveBeenCalled();
+        });
     });
 
     describe("scroll lock for iOS devices", () => {
@@ -184,6 +226,97 @@ describe("Overlay", () => {
                 expect([...document.body.classList.values()]).toEqual([]);
                 expect(document.body.dataset.lifesgDsOverlayOrder).toEqual("");
             });
+        });
+
+        it("should restore scroll position on close by default", async () => {
+            setScrollY(500);
+
+            const { rerender } = render(
+                <Overlay show>
+                    <div data-testid="test-content" />
+                </Overlay>
+            );
+
+            rerender(
+                <Overlay show={false}>
+                    <div data-testid="test-content" />
+                </Overlay>
+            );
+
+            await waitFor(async () => {
+                expect(window.scrollTo).toHaveBeenCalledWith({ top: 500 });
+            });
+            expect(
+                document.body.style.getPropertyValue(SCROLL_POSITION_VAR)
+            ).toEqual("");
+        });
+
+        it("should not restore scroll position on close if disableScrollRestore is set", async () => {
+            setScrollY(500);
+
+            const { rerender } = render(
+                <Overlay show disableScrollRestore>
+                    <div data-testid="test-content" />
+                </Overlay>
+            );
+
+            rerender(
+                <Overlay show={false} disableScrollRestore>
+                    <div data-testid="test-content" />
+                </Overlay>
+            );
+
+            await waitFor(async () => {
+                expect([...document.body.classList.values()]).toEqual([]);
+            });
+            await waitForAnimationFrame();
+
+            expect(window.scrollTo).not.toHaveBeenCalled();
+            expect(
+                document.body.style.getPropertyValue(SCROLL_POSITION_VAR)
+            ).toEqual("");
+        });
+
+        it("should use the disableScrollRestore value from the last render while shown", async () => {
+            setScrollY(500);
+
+            const { rerender } = render(
+                <Overlay show disableScrollRestore={false}>
+                    <div data-testid="test-content" />
+                </Overlay>
+            );
+
+            rerender(
+                <Overlay show disableScrollRestore>
+                    <div data-testid="test-content" />
+                </Overlay>
+            );
+
+            rerender(
+                <Overlay show={false} disableScrollRestore={false}>
+                    <div data-testid="test-content" />
+                </Overlay>
+            );
+
+            await waitFor(async () => {
+                expect([...document.body.classList.values()]).toEqual([]);
+            });
+            await waitForAnimationFrame();
+
+            expect(window.scrollTo).not.toHaveBeenCalled();
+        });
+
+        it("should not restore scroll position when unmounting an overlay that was never shown", async () => {
+            const { rerender } = render(
+                <Overlay show={false}>
+                    <div data-testid="test-content" />
+                </Overlay>
+            );
+
+            rerender(<></>);
+            await waitForAnimationFrame();
+
+            expect(window.scrollTo).not.toHaveBeenCalled();
         });
     });
 
