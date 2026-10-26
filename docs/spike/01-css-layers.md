@@ -700,18 +700,94 @@ Ordered by risk, riskiest first (see the charter's riskiest assumptions).
 | E6  | Consumer overrides: consumer unlayered CSS and consumer `@layer main, fds` ordering still win/lose as documented                                                                                                                                         | Pass/fail                        | Done (F12): overrides behave as today; unlayered wins, `@layer main` loses on both builds                                                                                  |
 | E7  | Migration: what must consumers add? Is the `default.css` order statement mandatory, what if it loads late or not at all                                                                                                                                  | Checklist                        | Done (F12): order statement must load first, else it falls back to load order                                                                                              |
 
-## Granularity hypothesis (to test in E4, not yet a finding)
+## Granularity hypothesis (resolved by E4, F14)
 
-Coarse tiers avoid most cycle problems because only the tier order must be
-acyclic: `fds.theme < fds.base(shared, typography) < fds.components < fds.composites(form, schedule, ...)`.
-Cost: within a tier, order is source order again, so the original bug
-survives for same-tier overrides. Per-folder fixes that but exposes F1/F2.
-A hybrid (tiers plus per-folder layers only for known same-tier edges) is the
-likely answer.
+The hypothesis was that coarse tiers avoid cycle problems but leave same-tier
+overrides to source order, and that a hybrid would be needed. F14 measured it: a
+tiering is safe exactly when no style edge falls inside one tier. Tiers derived from
+style-edge depth need 4 layers and leave none; a hand-picked base/components split
+leaves 61 and fails a hostile order. No hybrid was needed for the scanned edges.
 
 ## What didn't work
 
-Nothing recorded yet. Add dead ends here as they happen.
+Dead ends and broken tests, so nobody repeats them. Each was caught and the
+affected finding corrected.
+
+| What                                                             | Why it failed                                                                                                                                                              | Where corrected          |
+| ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| Reproducing the bug with one story per route (dynamic or static) | A page that bundles only its own CSS cannot get another route's chunk order. Every probe passed; the bug needs a build with overlapping routes                             | F6, F7; reproduced in F8 |
+| A Turbopack `resolveAlias` to swap in the local library          | The alias does not apply to subpath imports (`@lifesg/react-design-system/timeline`), so the build silently used the installed package. Replaced by symlinking the package | F9                       |
+| A layer-count guard in `run.sh` (more than 5 distinct layers)    | Rejected the 2-tier and 4-tier builds as "not local". Replaced by checking for the order statement                                                                         | F14                      |
+| Then `cat \| grep -q` for that check                             | Under `set -o pipefail`, `grep -q` exits early, `cat` gets SIGPIPE, and the pipeline fails even on a match. Replaced by `grep -r`                                          | F14                      |
+| The textarea probe reading the story's `data-testid`             | The testid is on the `<textarea>`, not the error; the probe read a wrapper with no `margin-top` rule and passed on every build. Now resolved through `aria-describedby`    | F10                      |
+| Hostile-order and `no-theme` pages without a theme stylesheet    | `var(--fds-spacing-8)` was undefined, so the child's rule computed to 0 whatever won the cascade: a false "correct"                                                        | F12, F14                 |
+| The banner probe (`smart-app-banner -> button`)                  | No conflicting rule matches its element, so it has never tested a collision on any build. It still counts in every total                                                   | F14                      |
+| A failed `npm run build` leaves `dist/` half-written             | The build script runs `rm -rf dist` first. Rebuild before testing against `dist/`                                                                                          | F13                      |
+
+## Untested and caveats
+
+Everything the spike has not measured, in one place. Each finding has its own
+"What it does not show" list; this is the merged version, grouped by what it would
+affect. **Planned** items are the remaining experiments; the rest are known gaps the
+verdict carries.
+
+**Planned before the spike ends**
+
+-   **Theme delivery.** A theme loaded by a CDN `<link>` (the e2e app does this), several
+    theme stylesheets on one page (the e2e story layout imports 20), switching the
+    `ThemeProvider` theme at runtime, and the theme imported in a nested layout under a
+    root layout that renders library components (the likely real-app form of F12's
+    `theme-late`).
+-   **Exit criterion 2.** 5 or more builds per combination with Playwright
+    screenshots; every run so far used 2 rebuilds and computed-style probes.
+
+**Coverage of the override scan**
+
+-   The style-edge scan is a regex, so 205 edges is a lower bound. Known miss:
+    `error-display -> typography`, because the tag regex stops at the `>` inside
+    `` `${testId}--title` ``. Not scanned at all: multi-line `clsx(...)`, classes passed
+    through props, overrides in non-`.tsx` files.
+-   The exemption list (`NOT_COLLIDING`) is hand-maintained; each entry is a claim about
+    runtime classes the scan cannot check.
+-   The cross-class selector edges (F4: 69 interpolations, 1 counted as a selector edge)
+    were not probed in a page.
+
+**Probe coverage**
+
+-   7 probes, of which 6 test a real collision (the banner probe does not). 6 of the 48
+    Typography candidates; no `Tag`, `Badge`, `Pill` or input-wrapper child.
+-   Only one pair (F10) was tested in hostile source order.
+-   One property per probe, not the full computed style; no visual diff.
+-   No probe covers `schedule` or `local-nav`, whose layers were added in F13.
+
+**Environment**
+
+-   Synthetic routes (`/nav`, `/consumer`, `/adversarial`), not a real consumer app.
+-   Headless Chromium only, one viewport (1280px), one theme (lifesg).
+-   Next 16.3.6 only. A blog post on the issue (trysmudford.com, Read only as a
+    fetch summary) names 14.0.2 to 14.2.0 for a related
+    ordering change; other Next versions are untested.
+-   Dev mode was compared only on the published build (F8). The layered build was never
+    run under `next dev`, and Linaria extraction in dev (`next-with-linaria`) is
+    untested.
+-   Servers and Chromium ran outside the sandbox (port binding, Mach ports).
+
+**Mechanism**
+
+-   Why the default chunking moves `typography` after `timeline` (F8) is not traced, so
+    which pairs break cannot be predicted, only probed.
+-   Specificity bumps and a collapsed cycle layer (E5 options a and b) were not tried;
+    only the explicit order (option c) was.
+-   Debuggability: depth tiers show `fds.t2` in devtools, not `fds.button`. Not looked at.
+
+**Production readiness**
+
+-   The generator change lives in spike code (`rollup/style-edges.js`); it was measured,
+    not reviewed or hardened.
+-   No dev-mode warning exists for the F12 failure (component CSS before the order
+    statement); it is only proposed.
+-   Rare reordering: 2 rebuilds show build-to-build noise, they cannot rule out a
+    reordering that happens one build in many.
 
 ## Alternatives considered
 
@@ -761,11 +837,30 @@ Rejected alternatives to this verdict:
 
 ## Open questions
 
--   Does Next/Turbopack hoist or reorder a leading `@layer a, b;` statement when
-    it lives in an imported CSS file, or only layers' _contents_? (E0)
--   Browser support floor for nested `@layer fds { @layer x {} }` in our
-    supported matrix.
--   Does Linaria extraction keep `@layer` blocks intact in dev (`next-with-linaria`)?
+Resolved:
+
+-   ~~Does Next/Turbopack hoist or reorder a leading `@layer a, b;` statement when it
+    lives in an imported CSS file?~~ No. Both bundlers emit the statement unchanged
+    and in the file's place (F5); it takes effect only if that file loads first, which
+    is the consumer requirement in F12.
+-   ~~Browser support floor for nested `@layer fds { @layer x {} }`.~~ Cascade layers,
+    including nesting and dotted names, ship in Chrome 99, Firefox 97 and Safari 15.4
+    (Read: MDN browser-compat-data, `css/at-rules/layer.json`), and MDN marks `@layer`
+    Baseline widely available since March 2022. The library declares no browser
+    matrix (no `browserslist` in the repo), but it already ships `@layer fds` on
+    every stylesheet, so per-folder layers raise no new floor.
+
+Still open:
+
+-   Does Linaria extraction keep `@layer` blocks intact in dev with
+    `next-with-linaria`? Untested: every run used the prebuilt `dist/` CSS. Only
+    matters for this repo's own e2e app, which compiles `src/` in dev; consumers use
+    `dist/`.
+-   Can `theme-late` (F12) happen in a real app? Covered by the theme-delivery
+    experiment.
+-   Why does the default chunking move `typography` after `timeline` (F8)? Not
+    needed for the verdict, since layers make the order irrelevant, but it would
+    say which pairs the published build breaks.
 
 ## Follow-up tickets
 
