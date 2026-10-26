@@ -16,6 +16,9 @@ export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
     onOverlayClick?: (() => void) | undefined;
     /** Dismiss keyboard to keep modal in fullscreen */
     dismissKeyboardOnShow?: boolean | undefined;
+    /** Prevents restoring the page's scroll position when the modal closes. Passed to
+     * `Overlay`, only has an effect on iOS currently */
+    disableScrollRestore?: boolean | undefined;
 }
 
 export interface ModalBoxProps extends React.HTMLAttributes<HTMLDivElement> {

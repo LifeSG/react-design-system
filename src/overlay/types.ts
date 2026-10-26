@@ -13,6 +13,9 @@ export interface OverlayProps {
     id?: string | undefined;
     /** The container that defines the boundaries for overlay click detection */
     containerRef?: React.RefObject<HTMLElement> | undefined;
+    /** Prevents restoring the page's scroll position when the overlay closes. Only has an effect
+     * on iOS currently. Uses the value from the last render while `show` is `true` */
+    disableScrollRestore?: boolean | undefined;
 }
 
 /**

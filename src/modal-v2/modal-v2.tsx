@@ -29,6 +29,7 @@ export const ModalV2 = ({
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
     disableInitialFocus = false,
+    disableScrollRestore,
     ...otherProps
 }: ModalV2Props): JSX.Element => {
     // =========================================================================
@@ -81,6 +82,7 @@ export const ModalV2 = ({
             rootId={rootComponentId}
             containerRef={childRef}
             zIndex={zIndex}
+            disableScrollRestore={disableScrollRestore}
         >
             <Container
                 $animationFrom={animationFrom}
