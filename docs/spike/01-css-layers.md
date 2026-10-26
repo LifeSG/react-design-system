@@ -489,16 +489,16 @@ across bundlers and rebuilds. `measure-consumer.mjs` also records where each
 `fds.<folder>` name **first appears** in the page's CSS, which is what decides its
 priority.
 
-| Scenario (consumer app does)                                        | Order statement first? | Timeline title (16px) | Textarea error (0px) | App override (40px)                 |
-| ------------------------------------------------------------------- | ---------------------- | --------------------- | -------------------- | ----------------------------------- |
-| **Layered build**                                                   |                        |                       |                      |                                     |
-| `theme-first`: theme stylesheet, then components (documented setup) | yes                    | 16px                  | **8px (F10)**        | n/a                                 |
-| `theme-late`: components, then theme stylesheet                     | **no**                 | 16px                  | 0px                  | n/a                                 |
-| `no-theme`: never imports a theme stylesheet                        | **no**                 | 16px                  | 0px                  | n/a                                 |
-| `app-unlayered`: theme first + unlayered app rule                   | yes                    | 40px (app wins)       | 8px                  | yes                                 |
-| `app-layered`: theme first + app rule in `@layer main`              | yes                    | **16px (app loses)**  | 8px                  | **no**                              |
-| **Published alpha.14 (single `@layer fds`)**                        |                        |                       |                      |                                     |
-| all five                                                            | no statement exists    | 16px                  | 0px                  | unlayered wins, `@layer main` loses |
+| Scenario (consumer app does)                                        | Order statement first? | Timeline title (16px) | Textarea error (0px)                                 | App override (40px)                 |
+| ------------------------------------------------------------------- | ---------------------- | --------------------- | ---------------------------------------------------- | ----------------------------------- |
+| **Layered build**                                                   |                        |                       |                                                      |                                     |
+| `theme-first`: theme stylesheet, then components (documented setup) | yes                    | 16px                  | **8px (F10)**                                        | n/a                                 |
+| `theme-late`: components, then theme stylesheet                     | **no**                 | 16px                  | 0px                                                  | n/a                                 |
+| `no-theme`: never imports a theme stylesheet                        | **no**                 | 16px                  | 0px, **not a cascade result** (see correction below) | n/a                                 |
+| `app-unlayered`: theme first + unlayered app rule                   | yes                    | 40px (app wins)       | 8px                                                  | yes                                 |
+| `app-layered`: theme first + app rule in `@layer main`              | yes                    | **16px (app loses)**  | 8px                                                  | **no**                              |
+| **Published alpha.14 (single `@layer fds`)**                        |                        |                       |                                                      |                                     |
+| all five                                                            | no statement exists    | 16px                  | 0px                                                  | unlayered wins, `@layer main` loses |
 
 What it shows:
 
@@ -507,12 +507,17 @@ What it shows:
     `no-theme` the statement is not first, so each `fds.<folder>` layer ranks by
     where its rules first appear: the per-folder order silently degrades to
     load order, which is the bundler-dependent order the layers were meant to
-    remove. The textarea is _correct_ there only because this load order happens to
-    put `input-textarea` after `form`; on routes with a different chunk order it
-    could go either way. Consumers would need a rule: "import the theme stylesheet
+    remove. In `theme-late` the textarea is _correct_ only because this load order
+    happens to put `input-textarea` after `form`; on routes with a different chunk
+    order it could go either way. Consumers would need a rule: "import the theme stylesheet
     in the root layout, before anything else".
--   **E7, no-theme also loses the design tokens**; the scenario rendered because
-    the probed properties do not depend on tokens. It is not a supported setup.
+-   **E7, no-theme also loses the design tokens.** It is not a supported setup.
+    **Correction (found in E4, F14):** the `no-theme` textarea value is not a
+    cascade result. The child's rule is `margin-top: var(--fds-spacing-8)`, and with
+    no theme stylesheet `--fds-spacing-8` is undefined, so whichever rule wins, the
+    value computes to 0px. An earlier version of this bullet said the probed
+    properties do not depend on tokens; for the textarea that was wrong. The timeline
+    values are genuine (its rules are literal `1rem` and `0`).
 -   **E6, consumer overrides behave the same as today.** An unlayered app rule
     beats the library on both builds. An app rule inside `@layer main` loses on
     both builds: `@layer main, fds;` (the troubleshooting doc and the e2e app's
@@ -608,6 +613,77 @@ What it does **not** show:
 -   2 rebuilds per combination, 7 probes, synthetic routes: exit criterion 2 still
     needs the 5-build and screenshot run.
 
+### F14. E4: coarse tiers work only if no style edge falls inside one tier; tiers by style-edge depth need 4 layers, a hand-picked split does not hold (Measured)
+
+Reproduce: `node docs/spike/scripts/tier-layers.mjs report` for the analysis;
+`node docs/spike/scripts/tier-layers.mjs naive|depth` rewrites the built `dist/`
+(undo: `npm run build`), then `TAG=e4-naive` or `TAG=e4-depth LIB=local RUNS=2
+docs/spike/experiments/e2/run.sh` (results in `e2/results/local-e4-*`); the hostile
+order check is `docs/spike/experiments/e2/run-adversarial.sh` (results in
+`e2/results/adversarial.jsonl`). All on the F13 style-edge build.
+
+**Why granularity matters.** A layer only decides between rules in _different_
+layers. Two rules in one tier fall back to source order, which is the
+bundler-dependent order behind the original bug. So a tiering is only as good as
+the number of style edges it leaves inside one tier.
+
+| Tiering                                                                                                                                     | Layers                         | Style edges inside one tier (of 205)                                         | Inverted |
+| ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ---------------------------------------------------------------------------- | -------- |
+| Per-folder (F13)                                                                                                                            | 85                             | 0                                                                            | 0        |
+| **Depth**: a folder's tier is the longest chain of styled children below it, so a parent is always one tier deeper than any child it styles | **4** (36, 10, 20, 19 folders) | **0**                                                                        | 0        |
+| **Naive**: `base` = theme, markup, typography, shared, layout; `components` = the rest (the spec's example shape)                           | 2                              | **61** (37 folder pairs, e.g. `accordion -> button`, `file-upload -> alert`) | 2        |
+
+**The matrix cannot tell them apart.** Naive tiers and depth tiers both gave
+**0 wrong of 912**, every combination, 2 rebuilds. Tracing the two probes that share
+a naive tier showed why: the textarea pair is correct by load order (the parent's rule
+loads later on these pages, as on the published build), and the banner probe has
+**no conflicting rule on its element at all**, so it never tested a collision on any
+build (Button's small size sets `padding` through a rule that does not match here).
+Passing the matrix is not evidence that a tiering is safe.
+
+**A hostile order separates them.** `run-adversarial.sh` renders the real Textarea
+and adds the F10 pair's two real rules again in the hostile source order (parent's
+`margin-top: 0` first, child's `margin-top: 8px` last), each wrapped in the layer it
+has in that build:
+
+| Build              | Layers of the two rules                     | Turbopack default | webpack default |
+| ------------------ | ------------------------------------------- | ----------------- | --------------- |
+| Published alpha.14 | `fds` / `fds`                               | **8px, wrong**    | **8px, wrong**  |
+| Per-folder         | `fds.input-textarea` (54) / `fds.form` (53) | 0px               | 0px             |
+| Naive tiers        | `fds.components` / `fds.components`         | **8px, wrong**    | **8px, wrong**  |
+| Depth tiers        | `fds.t1` / `fds.t0`                         | 0px               | 0px             |
+
+What it shows:
+
+-   **Granularity answer:** per-folder layers are not necessary. Four layers, derived
+    from the style edges, give the same guarantee for every scanned edge. A
+    hand-picked base/components split does not: it leaves 61 edges to source order,
+    and a hostile order breaks one of them on both bundlers.
+-   The tiers have to come from the same style-edge data as the per-folder order.
+    Depth tiers change whenever an edge is added, so they are generated, not
+    declared.
+-   The hostile-order check is the test that would have caught a bad tiering; the
+    route matrix is not.
+
+What it does **not** show:
+
+-   Depth tiers inherit the edge scan's blind spots. The scan misses at least one
+    real override: `error-display -> typography` (`Typography.HeadingMD
+className={styles.title}`), because the tag regex stops at the `>` inside
+    `` `${testId}--title` ``. Under per-folder layers a missed edge is still ordered by
+    the import-graph tiebreak; under depth tiers it falls into whatever tiers the two
+    folders got. Here `error-display` (t3) is above `typography` (t0) anyway, so the
+    F7 probe passes, but that is luck, not a guarantee.
+-   Only one pair was tested in hostile order. Fewer layers means more edges per
+    layer boundary, which is not a risk by itself, but it is untested beyond F10.
+-   Debuggability: devtools shows `fds.t2`, not `fds.button`. Not measured.
+
+Correction made while doing this: the first hostile-order run reported 0px on all
+four builds. The page had no theme stylesheet, so the child's
+`var(--fds-spacing-8)` was undefined and computed to 0 whatever won. The page now
+imports the theme. The same artefact affects F12's `no-theme` textarea value, now
+corrected there.
+
 ## Planned experiments
 
 Ordered by risk, riskiest first (see the charter's riskiest assumptions).
@@ -619,7 +695,7 @@ Ordered by risk, riskiest first (see the charter's riskiest assumptions).
 | E1  | Extract **style-only** edges (cross-folder class refs, composed classes) instead of JS imports; compare to the madge order                                                                                                                               | Edge list, cycle list            | Done (F13): generator orders by style edges, 0 wrong of 912; one false-positive cycle exempted                                                                             |
 | E2  | Reproduce the failure: Next 16 prod build, Turbopack, `cssChunking: "strict"` vs `"graph"`, in `e2e/nextjs-app` (see `BOOKINGSG-9316`)                                                                                                                   | Repro + screenshots              | Reproduced in prod, not in dev (F8)                                                                                                                                        |
 | E3  | Same app with the branch's layered build; does order stay stable across 5+ builds and across entry points?                                                                                                                                               | Pass/fail per build              | Done for 6 pairs (F9): 0 wrong; cycles and consumer side untested                                                                                                          |
-| E4  | Granularity: 3 tiers (`base`, `components`, `overrides`) vs per-folder; count how many visual diffs each produces (Playwright screenshots)                                                                                                               | Diff counts                      | Todo                                                                                                                                                                       |
+| E4  | Granularity: 3 tiers (`base`, `components`, `overrides`) vs per-folder; count how many visual diffs each produces (Playwright screenshots)                                                                                                               | Diff counts                      | Done (F14): 4 depth tiers match per-folder; a hand-picked 2-tier split fails a hostile order                                                                               |
 | E5b | Mitigation for E5a: explicit order for the cycle members (`form` before `input-textarea`), rerun the matrix. The original plan here (probe every cross-folder edge from E1) is replaced by the E5a scan                                                  | Full edge table                  | Done (F11): one reorder fixes F10, keeps F9; generator change not built                                                                                                    |
 | E6  | Consumer overrides: consumer unlayered CSS and consumer `@layer main, fds` ordering still win/lose as documented                                                                                                                                         | Pass/fail                        | Done (F12): overrides behave as today; unlayered wins, `@layer main` loses on both builds                                                                                  |
 | E7  | Migration: what must consumers add? Is the `default.css` order statement mandatory, what if it loads late or not at all                                                                                                                                  | Checklist                        | Done (F12): order statement must load first, else it falls back to load order                                                                                              |
@@ -643,20 +719,21 @@ See [02-alternative-paths.md](02-alternative-paths.md).
 
 ## Verdict
 
-**Draft (2026-10-20): Adopt for subset, with conditions.** Not final: granularity
-(E4) and exit criterion 2 (5 builds, screenshots) are still open. The generator
+**Draft (2026-10-26): Adopt for subset, with conditions.** Not final: exit
+criterion 2 (5 builds, screenshots) and theme delivery are still open. Granularity
+(E4) is measured (F14). The generator
 change (ordering from style edges) is now built and measured (F13), and the
 consumer side (E6, E7) is measured (F12).
 
 Per-folder layers solve the reported problem and their known blocker is
 fixable, on the evidence so far:
 
-| Spec requirement                 | Answer so far                                                                                                                                                                                                                                                   | Evidence            |
-| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| Deterministic style order        | **Yes, for every measured pair.** Layers make source order irrelevant: F8's broken source order is still there on the layered build, but the parent wins                                                                                                        | F8, F9              |
-| Parent/child variant inheritance | **Blocker is real but narrow and fixable.** Layers break a parent's override wherever the order puts the child later (F10). 1 real case in 206 cross-folder overrides, inside an import cycle. Ordering from style edges fixes it in the generator and keeps F9 | F10, F11, F13       |
-| Granularity                      | **Per-folder works; coarse tiers untested.** The 83-layer import order caused no problem except the inverted pair (F9, F10); the 85-layer style-edge order (F13) caused none                                                                                    | F9, F11; E4 not run |
-| Consumer migration path          | **One requirement, already the documented setup.** Import the theme stylesheet at the root, before any component; otherwise the per-folder order silently falls back to load order. App overrides behave exactly as today                                       | F5, F12             |
+| Spec requirement                 | Answer so far                                                                                                                                                                                                                                                   | Evidence      |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| Deterministic style order        | **Yes, for every measured pair.** Layers make source order irrelevant: F8's broken source order is still there on the layered build, but the parent wins                                                                                                        | F8, F9        |
+| Parent/child variant inheritance | **Blocker is real but narrow and fixable.** Layers break a parent's override wherever the order puts the child later (F10). 1 real case in 206 cross-folder overrides, inside an import cycle. Ordering from style edges fixes it in the generator and keeps F9 | F10, F11, F13 |
+| Granularity                      | **Per-folder is not required.** 4 tiers derived from style-edge depth match it on every scanned edge; a hand-picked base/components split leaves 61 edges to source order and fails a hostile order                                                             | F14           |
+| Consumer migration path          | **One requirement, already the documented setup.** Import the theme stylesheet at the root, before any component; otherwise the per-folder order silently falls back to load order. App overrides behave exactly as today                                       | F5, F12       |
 
 Conditions for adopting:
 

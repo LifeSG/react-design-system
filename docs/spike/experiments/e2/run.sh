@@ -69,8 +69,13 @@ for run in $(seq 1 "$RUNS"); do
             say "building"
             npx next build $flag >/dev/null 2>&1 || { echo "build failed: $bundler/$chunking"; exit 1; }
             if [ "$LIB" = local ]; then
-                LAYERS=$(find "$DIST/static" -name '*.css' -exec cat {} + | grep -oE '@layer [a-z0-9-]+\{' | sort -u | wc -l)
-                [ "$LAYERS" -gt 5 ] || { echo "guard: $bundler/$chunking built only $LAYERS distinct layers, so the local library was not used"; exit 1; }
+                # The local library declares its layer order in the theme stylesheet
+                # (`@layer fds.<name>,...;`); the published one has no such statement.
+                # Checking the statement, not a layer count, also accepts tier builds (E4).
+                # grep -r, not `cat | grep -q`: under pipefail, grep -q exiting early makes
+                # cat die of SIGPIPE and the pipeline report failure even on a match.
+                grep -rqE '@layer fds\.[a-z0-9-]+,' --include='*.css' "$DIST/static" \
+                    || { echo "guard: $bundler/$chunking has no fds.* order statement, so the local library was not used"; exit 1; }
             fi
             npx next start -p 4200 >/dev/null 2>&1 & PID=$!
             # next start forks next-server, so cleanup() kills by port

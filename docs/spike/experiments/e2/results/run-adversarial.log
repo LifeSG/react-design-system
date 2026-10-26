@@ -1,0 +1,19 @@
+building the library (npm run build at the repo root)
+[1/8] published  turbopack elapsed 0s
+[2/8] published  webpack   elapsed 9s
+[3/8] perfolder  turbopack elapsed 23s
+[4/8] perfolder  webpack   elapsed 31s
+[5/8] naive      turbopack elapsed 46s
+[6/8] naive      webpack   elapsed 54s
+[7/8] depth      turbopack elapsed 69s
+[8/8] depth      webpack   elapsed 78s
+done in 90s
+published  turbopack 8px  WRONG  rules in source order: fds  .e1g4xpi9  margin-top: var(--fds-spacing-8)  |  fds  .e1mvywhi  margin-top: 0px  |  fds  .e1mvywhi  margin-top: 0px  |  fds  .e1g4xpi9  margin-top: var(--fds-spacing-8)
+published  webpack   8px  WRONG  rules in source order: fds  .e1g4xpi9  margin-top: var(--fds-spacing-8)  |  fds  .e1mvywhi  margin-top: 0px  |  fds  .e1mvywhi  margin-top: 0px  |  fds  .e1g4xpi9  margin-top: var(--fds-spacing-8)
+perfolder  turbopack 0px  ok     rules in source order: fds.form  .e1g4xpi9  margin-top: var(--fds-spacing-8)  |  fds.input-textarea  .e1mvywhi  margin-top: 0px  |  fds.input-textarea  .e1mvywhi  margin-top: 0px  |  fds.form  .e1g4xpi9  margin-top: var(--fds-spacing-8)
+perfolder  webpack   0px  ok     rules in source order: fds.form  .e1g4xpi9  margin-top: var(--fds-spacing-8)  |  fds.input-textarea  .e1mvywhi  margin-top: 0px  |  fds.input-textarea  .e1mvywhi  margin-top: 0px  |  fds.form  .e1g4xpi9  margin-top: var(--fds-spacing-8)
+naive      turbopack 8px  WRONG  rules in source order: fds.components  .e1g4xpi9  margin-top: var(--fds-spacing-8)  |  fds.components  .e1mvywhi  margin-top: 0px  |  fds.components  .e1mvywhi  margin-top: 0px  |  fds.components  .e1g4xpi9  margin-top: var(--fds-spacing-8)
+naive      webpack   8px  WRONG  rules in source order: fds.components  .e1g4xpi9  margin-top: var(--fds-spacing-8)  |  fds.components  .e1mvywhi  margin-top: 0px  |  fds.components  .e1mvywhi  margin-top: 0px  |  fds.components  .e1g4xpi9  margin-top: var(--fds-spacing-8)
+depth      turbopack 0px  ok     rules in source order: fds.t0  .e1g4xpi9  margin-top: var(--fds-spacing-8)  |  fds.t1  .e1mvywhi  margin-top: 0px  |  fds.t1  .e1mvywhi  margin-top: 0px  |  fds.t0  .e1g4xpi9  margin-top: var(--fds-spacing-8)
+depth      webpack   0px  ok     rules in source order: fds.t0  .e1g4xpi9  margin-top: var(--fds-spacing-8)  |  fds.t1  .e1mvywhi  margin-top: 0px  |  fds.t1  .e1mvywhi  margin-top: 0px  |  fds.t0  .e1g4xpi9  margin-top: var(--fds-spacing-8)
+exit 0
