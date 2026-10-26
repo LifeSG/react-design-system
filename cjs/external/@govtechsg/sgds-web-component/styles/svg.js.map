@@ -1,0 +1,1 @@
+{"version":3,"file":"svg.js","sources":["../../../../../../node_modules/@govtechsg/sgds-web-component/styles/svg.js"],"sourcesContent":["import { css } from 'lit';\n\nvar css_248z = css`svg{vertical-align:middle}`;\n\nexport { css_248z as default };\n//# sourceMappingURL=svg.js.map\n"],"names":["css_248z","css"],"mappings":"8NAEIA,uDAAWC,GAAG","x_google_ignoreList":[0]}

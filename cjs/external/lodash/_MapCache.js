@@ -1,0 +1,2 @@
+"use strict";var e=require("./_mapCacheClear.js"),a=require("./_mapCacheDelete.js"),t=require("./_mapCacheGet.js"),r=require("./_mapCacheHas.js"),p=require("./_mapCacheSet.js"),c=e._mapCacheClear,h=a._mapCacheDelete,s=t._mapCacheGet,o=r._mapCacheHas,C=p._mapCacheSet;function _(e){var a=-1,t=null==e?0:e.length;for(this.clear();++a<t;){var r=e[a];this.set(r[0],r[1])}}_.prototype.clear=c,_.prototype.delete=h,_.prototype.get=s,_.prototype.has=o,_.prototype.set=C;var l=_;exports._MapCache=l;
+//# sourceMappingURL=_MapCache.js.map

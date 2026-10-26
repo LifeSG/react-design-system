@@ -1,0 +1,2 @@
+"use strict";var r=require("./_castPath.js"),e=require("./isArguments.js"),s=require("./isArray.js"),t=require("./_isIndex.js"),i=require("./isLength.js"),a=require("./_toKey.js"),n=r._castPath,u=e.isArguments_1,_=s.isArray_1,h=t._isIndex,g=i.isLength_1,j=a._toKey;var l=function(r,e,s){for(var t=-1,i=(e=n(e,r)).length,a=!1;++t<i;){var l=j(e[t]);if(!(a=null!=r&&s(r,l)))break;r=r[l]}return a||++t!=i?a:!!(i=null==r?0:r.length)&&g(i)&&h(l,i)&&(_(r)||u(r))};exports._hasPath=l;
+//# sourceMappingURL=_hasPath.js.map
