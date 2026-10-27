@@ -11,6 +11,8 @@ class StoryPage extends AbstractStoryPage {
         modalContentSecond: Locator;
         toggleOverlayButton: Locator;
         dismissCount: Locator;
+        nextPageButton: Locator;
+        disableScrollRestoreCheckbox: Locator;
     };
 
     constructor(page: Page) {
@@ -25,9 +27,16 @@ class StoryPage extends AbstractStoryPage {
             ),
             toggleOverlayButton: page.getByTestId("toggle-overlay-button"),
             dismissCount: page.getByTestId("dismiss-count"),
+            nextPageButton: page.getByTestId("next-page-button"),
+            disableScrollRestoreCheckbox: page.getByTestId(
+                "disable-scroll-restore-checkbox"
+            ),
         };
     }
 }
+
+const IOS_USER_AGENT =
+    "Mozilla/5.0 (iPhone17,3; CPU iPhone OS 18_3_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 FireKeepers/1.6.1";
 
 const test = base.extend<{ story: StoryPage }>({
     story: async ({ page }, use) => {
@@ -74,8 +83,7 @@ test.describe("Overlay", () => {
         {
             name: "iOS",
             size: "mobile" as const,
-            userAgent:
-                "Mozilla/5.0 (iPhone17,3; CPU iPhone OS 18_3_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 FireKeepers/1.6.1",
+            userAgent: IOS_USER_AGENT,
         },
         {
             name: "desktop",
@@ -146,6 +154,67 @@ test.describe("Overlay", () => {
 
                 await test.step("Verify that page is on original scroll position", async () => {
                     expect(afterOpen).toEqual(beforeOpen);
+                });
+            });
+        });
+    });
+
+    test.describe("Scroll restoration (iOS)", () => {
+        test.use({ userAgent: IOS_USER_AGENT });
+
+        test.beforeEach(async ({ story }) => {
+            await story.init("scroll-restore", { size: "mobile" });
+        });
+
+        const scrollRestoreScenarios = [
+            {
+                name: "Restores scroll position after the consumer scrolls to top",
+                disableScrollRestore: false,
+            },
+            {
+                name: "Keeps the consumer's scroll position if disableScrollRestore is set",
+                disableScrollRestore: true,
+            },
+        ];
+
+        scrollRestoreScenarios.forEach(({ name, disableScrollRestore }) => {
+            test(name, async ({ story }) => {
+                const getScrollY = () =>
+                    story.page.evaluate(() => window.scrollY);
+
+                await test.step("Set disableScrollRestore", async () => {
+                    await story.locators.disableScrollRestoreCheckbox.setChecked(
+                        disableScrollRestore
+                    );
+                });
+
+                await test.step("Scroll to end of page", async () => {
+                    const pageHeight = await story.page.evaluate(
+                        () => document.body.scrollHeight
+                    );
+                    await story.page.mouse.wheel(0, pageHeight);
+                    await story.page.waitForTimeout(500); // Wait for scroll to complete
+
+                    await expect(
+                        story.locators.nextPageButton
+                    ).toBeInViewport();
+                });
+
+                const scrollYBeforeOpen = await getScrollY();
+                expect(scrollYBeforeOpen).toBeGreaterThan(0);
+
+                await test.step("Open and close the overlay, scrolling to top on close", async () => {
+                    await story.locators.nextPageButton.click();
+                    await expect(story.locators.modalContent).toBeVisible();
+                    await expect(story.locators.modalContent).not.toBeVisible();
+                    // Wait past the overlay's restore frame so a late restore is not missed
+                    await story.page.waitForTimeout(500);
+                });
+
+                await test.step("Verify the final scroll position", async () => {
+                    expect(await getScrollY()).toBe(
+                        disableScrollRestore ? 0 : scrollYBeforeOpen
+                    );
                 });
             });
         });
