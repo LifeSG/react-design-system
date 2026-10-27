@@ -33,6 +33,7 @@ export const Modal = ({
     zIndex,
     onOverlayClick,
     dismissKeyboardOnShow = true,
+    disableScrollRestore,
     className,
     ...otherProps
 }: ModalProps): JSX.Element => {
@@ -71,6 +72,7 @@ export const Modal = ({
             rootId={rootComponentId}
             containerRef={childRef}
             zIndex={zIndex}
+            disableScrollRestore={disableScrollRestore}
         >
             <div
                 ref={containerRef}

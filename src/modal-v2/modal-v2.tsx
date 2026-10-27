@@ -33,6 +33,7 @@ const Base = ({
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
     disableInitialFocus = false,
+    disableScrollRestore,
     className,
     ...otherProps
 }: ModalV2Props): JSX.Element => {
@@ -92,6 +93,7 @@ const Base = ({
             rootId={rootComponentId}
             containerRef={childRef}
             zIndex={zIndex}
+            disableScrollRestore={disableScrollRestore}
         >
             <div
                 ref={containerRef}

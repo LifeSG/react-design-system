@@ -25,6 +25,7 @@ const OverlayComponent = ({
     zIndex: customZIndex,
     id,
     containerRef,
+    disableScrollRestore = false,
 }: OverlayProps): JSX.Element | null => {
     // =============================================================================
     // CONST, STATE, REF
@@ -39,6 +40,8 @@ const OverlayComponent = ({
     const mouseDownInsideModalRef = useRef(false);
     const rootRef = useRef<HTMLDivElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
+    // Value from the last render while shown, as consumers may reset it on close
+    const disableScrollRestoreRef = useRef(disableScrollRestore);
 
     const overlayRootId = id
         ? `lifesg-ds-overlay-root-${id}`
@@ -71,6 +74,13 @@ const OverlayComponent = ({
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    // Declared before the [show] effect so the ref is up to date when it runs
+    useEffect(() => {
+        if (show) {
+            disableScrollRestoreRef.current = disableScrollRestore;
+        }
+    }, [show, disableScrollRestore]);
 
     useEffect(() => {
         if (show) {
@@ -241,6 +251,12 @@ const OverlayComponent = ({
         const scrollY = document.body.style.getPropertyValue(
             styles.tokens.global.scrollY
         );
+        document.body.style.removeProperty(styles.tokens.global.scrollY);
+
+        if (!scrollY || disableScrollRestoreRef.current) {
+            return;
+        }
+
         requestAnimationFrame(() => {
             window.scrollTo({
                 top: parseFloat(scrollY),

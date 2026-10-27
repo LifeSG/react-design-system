@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { ModalV2 } from "src/modal-v2";
 
 // =============================================================================
@@ -88,5 +88,62 @@ describe("ModalV2", () => {
 
         expect(mockClose).toHaveBeenCalled();
         expect(mockOverlayClick).not.toHaveBeenCalled();
+    });
+
+    describe("scroll restoration for iOS devices", () => {
+        beforeEach(() => {
+            Object.defineProperty(window, "scrollTo", {
+                value: jest.fn(),
+                writable: true,
+            });
+            Object.defineProperty(window, "scrollY", {
+                value: 500,
+                writable: true,
+                configurable: true,
+            });
+            jest.spyOn(window.navigator, "userAgent", "get").mockReturnValue(
+                "iPhone"
+            );
+        });
+
+        afterEach(() => {
+            jest.restoreAllMocks();
+        });
+
+        it("should restore scroll position on close by default", async () => {
+            const { rerender } = render(
+                <ModalV2 show>
+                    <div data-testid="test-content" />
+                </ModalV2>
+            );
+
+            rerender(
+                <ModalV2 show={false}>
+                    <div data-testid="test-content" />
+                </ModalV2>
+            );
+
+            await waitFor(() => {
+                expect(window.scrollTo).toHaveBeenCalledWith({ top: 500 });
+            });
+        });
+
+        it("should not restore scroll position on close if disableScrollRestore is set", async () => {
+            const { rerender } = render(
+                <ModalV2 show disableScrollRestore>
+                    <div data-testid="test-content" />
+                </ModalV2>
+            );
+
+            rerender(
+                <ModalV2 show={false} disableScrollRestore>
+                    <div data-testid="test-content" />
+                </ModalV2>
+            );
+
+            await new Promise((resolve) => requestAnimationFrame(resolve));
+
+            expect(window.scrollTo).not.toHaveBeenCalled();
+        });
     });
 });

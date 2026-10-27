@@ -66,4 +66,16 @@ export interface OverlayProps {
      * @remarks Falls back to the internal wrapper element when omitted.
      */
     containerRef?: React.RefObject<HTMLElement> | undefined;
+    /**
+     * Prevents the overlay from restoring the page's scroll position when it
+     * closes. Useful when the page navigates or scrolls programmatically while
+     * the overlay is open, e.g. a loading modal between pages.
+     *
+     * @remarks
+     * - Only has an effect on iOS currently.
+     * - The value from the last render while `show` is `true` is used.
+     *
+     * @default false
+     */
+    disableScrollRestore?: boolean | undefined;
 }
