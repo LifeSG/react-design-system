@@ -25,6 +25,17 @@ A `containerRef` can be provided to define the visual container.
 
 <Canvas of={OverlayStories.OverlayClick} />
 
+## Scroll restoration
+
+On iOS, the page's scroll position is locked while the overlay is open, and
+restored when the last overlay closes.
+
+If your content scrolls or navigates while the overlay is open (e.g. moving to
+a new page behind a loading modal), set `disableScrollRestore` so the restore
+does not override your scroll position.
+
+<Canvas of={OverlayStories.ScrollRestore} />
+
 ## Component API
 
 <AutoArgTypesTabs of={OverlayStories} />

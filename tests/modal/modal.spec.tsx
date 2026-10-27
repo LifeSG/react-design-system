@@ -98,4 +98,61 @@ describe("Modal", () => {
 
         expect(screen.queryByTestId("close-button")).not.toBeInTheDocument();
     });
+
+    describe("scroll restoration for iOS devices", () => {
+        beforeEach(() => {
+            Object.defineProperty(window, "scrollTo", {
+                value: jest.fn(),
+                writable: true,
+            });
+            Object.defineProperty(window, "scrollY", {
+                value: 500,
+                writable: true,
+                configurable: true,
+            });
+            jest.spyOn(window.navigator, "userAgent", "get").mockReturnValue(
+                "iPhone"
+            );
+        });
+
+        afterEach(() => {
+            jest.restoreAllMocks();
+        });
+
+        it("should restore scroll position on close by default", async () => {
+            const { rerender } = render(
+                <Modal show>
+                    <div data-testid="test-content" />
+                </Modal>
+            );
+
+            rerender(
+                <Modal show={false}>
+                    <div data-testid="test-content" />
+                </Modal>
+            );
+
+            await waitFor(() => {
+                expect(window.scrollTo).toHaveBeenCalledWith({ top: 500 });
+            });
+        });
+
+        it("should not restore scroll position on close if disableScrollRestore is set", async () => {
+            const { rerender } = render(
+                <Modal show disableScrollRestore>
+                    <div data-testid="test-content" />
+                </Modal>
+            );
+
+            rerender(
+                <Modal show={false} disableScrollRestore>
+                    <div data-testid="test-content" />
+                </Modal>
+            );
+
+            await new Promise((resolve) => requestAnimationFrame(resolve));
+
+            expect(window.scrollTo).not.toHaveBeenCalled();
+        });
+    });
 });

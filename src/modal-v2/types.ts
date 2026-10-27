@@ -159,4 +159,17 @@ export interface ModalV2Props extends React.HTMLAttributes<HTMLDivElement> {
      * @default false
      */
     disableInitialFocus?: boolean | undefined;
+    /**
+     * Prevents the page's scroll position from being restored when the modal
+     * closes. Useful when the page navigates or scrolls programmatically while
+     * the modal is open, e.g. a loading modal between pages.
+     *
+     * @remarks
+     * - Passed to `Overlay`. Only has an effect where the overlay restores
+     * scroll, currently iOS.
+     * - The value from the last render while `show` is `true` is used.
+     *
+     * @default false
+     */
+    disableScrollRestore?: boolean | undefined;
 }
