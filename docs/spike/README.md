@@ -4,7 +4,7 @@ Problem: Next.js production builds load component CSS in a non-deterministic
 order, so source-order-dependent overrides break in prod but not in dev.
 Source spec: [`../css-layer-specs.md`](../css-layer-specs.md). Branch: `rl/css-layers`.
 
-Last updated: 2026-10-26
+Last updated: 2026-10-27
 
 ## Charter (applies to the whole effort)
 
@@ -55,10 +55,10 @@ condition below is hit:
 
 ## Spikes
 
-| #   | Spike                                                             | Doc                                                | Status      | Verdict                                                     |
-| --- | ----------------------------------------------------------------- | -------------------------------------------------- | ----------- | ----------------------------------------------------------- |
-| 01  | Native CSS layers (granularity, parent/child variants, migration) | [01-css-layers.md](01-css-layers.md)               | In progress | Draft: Adopt for subset, with conditions (5-build run open) |
-| 02  | Alternative paths (shortlist and ordering)                        | [02-alternative-paths.md](02-alternative-paths.md) | Proposed    | TBD                                                         |
+| #   | Spike                                                             | Doc                                                | Status      | Verdict                                                                          |
+| --- | ----------------------------------------------------------------- | -------------------------------------------------- | ----------- | -------------------------------------------------------------------------------- |
+| 01  | Native CSS layers (granularity, parent/child variants, migration) | [01-css-layers.md](01-css-layers.md)               | In progress | Draft: Adopt for subset, with conditions (visual sweep and production work open) |
+| 02  | Alternative paths (shortlist and ordering)                        | [02-alternative-paths.md](02-alternative-paths.md) | Proposed    | TBD                                                                              |
 
 ## Conventions
 

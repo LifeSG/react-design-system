@@ -739,6 +739,99 @@ an earlier run, which has no statement. `run-delivery.sh` copies the theme under
 test before each build; `drift-pairs.mjs` does not, so copy
 `<library>/theme/styles/lifesg.css` to `public/spike-cdn/` before running it.
 
+### F16. Exit criterion 2: 5 builds, 7 libraries; the layered candidates are correct and stable, and layering changes pixels in one place beyond the fixes (Measured)
+
+Reproduce: `docs/spike/experiments/final/prepare-libs.sh` (builds the variants into
+`final/libs/`), then `docs/spike/experiments/final/run-final.sh` (140 steps, 3h53m,
+resumable; log in `results-run.log`), then `node analyse-probes.mjs` and
+`node analyse-shots.mjs > results/shots.jsonl`. 7 libraries x 4 combinations
+(Turbopack default and `graph`, webpack default and `strict`) x 5 rebuilds. Each step
+runs the 13 static and 9 `/nav` probe pages plus the navigation test, and takes a
+full-page 1280px screenshot of 22 pages (3,080 images).
+
+Libraries: `published` alpha.14; `flat` (the F13 source in one layer: same component
+code as the others, no per-folder ordering, the control); `importorder` (the original
+`rl/css-layers` generator, 83 layers); `reordered` (that plus the F11 hand fix);
+`styleedge` (F13, 85 layers); `depth` (4 tiers, F14); `naive` (2 tiers, F14).
+
+**Probes: wrong / results per combination (570 per cell)**
+
+| Library                                    | Turbopack default | Turbopack `graph` | webpack default | webpack `strict` |
+| ------------------------------------------ | ----------------- | ----------------- | --------------- | ---------------- |
+| `published`                                | **20**            | 0                 | **50**          | 0                |
+| `flat`                                     | **20**            | 0                 | **50**          | 0                |
+| `importorder`                              | **45**            | **45**            | **45**          | **45**           |
+| `reordered`, `styleedge`, `depth`, `naive` | 0                 | 0                 | 0               | 0                |
+
+-   **Stable:** for every library, 0 of 456 probe cells (combination, mode, route pair,
+    probe) gave a different answer on any of the 5 builds.
+-   `flat` fails exactly where `published` fails (timeline title; footer label on webpack
+    default). So the F8 bug comes from the cascade, not from alpha.14's component code,
+    and `flat` is a valid control.
+-   `importorder` fails only the textarea error margin (F10), in all four combinations.
+-   `naive` is clean here for the reason F14 gave: its same-tier pairs load in a favourable
+    order on these routes. The hostile-order check, not this table, is what rejects it.
+
+**Screenshots, stability.** Each library's builds 2 to 5 against its own build 1: 2,464
+comparisons, 70 differ, **all on `toast/with-sublabel`, at most 62 pixels, none changes
+the page size**. Toast animates with a JS spring that the screenshot cannot fully
+settle; it is also the only difference between `published` build 1 and build 5. Every
+other image was pixel-identical across 5 builds, in every library.
+
+**Screenshots, against `flat`** (528 comparisons; toast excluded). `published` is
+identical to `flat` on every image, which confirms again that the alpha.14 code and the
+branch's code render the same under a single layer. The layered libraries differ on:
+
+| Page                                                | Libraries that differ from `flat`                         | Cause                                                                                                                                                                                       |
+| --------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| timeline (2 pages), footer (2 pages), `nav/combo-a` | `styleedge`, `depth`, `naive`, `reordered`, `importorder` | The F8 fix: `flat` has the bug on these pages (a wrong probe on each), the layered libraries do not. 7 of the 7 differing pages match a wrong `flat` probe on the same page and combination |
+| textarea (2 pages)                                  | `importorder` only                                        | F10: the error margin is wrong, so the page is 16px taller                                                                                                                                  |
+| `nav/banner`                                        | all five layered libraries, all four combinations         | **Not explained by a probe**; see below                                                                                                                                                     |
+
+**The banner difference is real and is not a bug fix.** The smart-app-banner's dismiss
+icon is 20px (`1.25rem`) in every layered build and 18px (`1.125rem`) in `flat` and
+`published`. Tracing the rules on the icon:
+
+```
+flat      fds.all               .m18ljjag svg  width: 1.125rem   (ClickableIcon)
+          fds.all               .cp9l7rn       width: 1.25rem    (SmartAppBanner)
+styleedge fds.shared            .m18ljjag svg  width: 1.125rem
+          fds.smart-app-banner  .cp9l7rn       width: 1.25rem
+```
+
+In one layer the descendant selector `.m18ljjag svg` (specificity 0,1,1) beats the
+parent's `.cp9l7rn` (0,1,0), so the icon is 18px. With per-folder layers the parent's
+layer ranks later, layer order beats specificity, and the icon is 20px: the size the
+component's own style file asks for (`cross { width: 1.25rem }`). So layers did not just
+fix an order-dependent bug; they changed a specificity-dependent result for a pair the
+scan does not model. Anyone who shipped against 18px sees the icon grow by 2px.
+
+What it shows:
+
+-   **Exit criterion 2 is met for the layered candidates.** `styleedge`, `depth` and
+    `reordered` are correct on every probe in every combination, stable across 5 builds,
+    and visually identical to each other.
+-   The bug is reproduced 70 times in `published` and `flat` and never in a candidate.
+-   `depth` and `styleedge` are indistinguishable on all 22 pages here, so the choice
+    between 85 layers and 4 is not decided by this data (F14 decides it on the edge
+    guarantee).
+-   **Layering is not visually neutral.** Rules that previously won on specificity can
+    lose to a parent's layer. The banner is the only visible case among 22 pages, but
+    the 22 pages cover a small share of the library.
+
+What it does **not** show:
+
+-   Other specificity flips. The scan models class-name overrides, not descendant
+    selectors (`.a svg`) against a parent class; the banner is one case that surfaced
+    because a screenshot was taken, not because anything flagged it. A visual sweep of
+    the full e2e suite against `flat` would find the rest.
+-   The pixel threshold is pixelmatch's 0.1 with anti-aliasing excluded; sub-threshold
+    colour shifts would not show.
+-   Dev mode, other viewports and themes, the dark colour mode, and a real app: all
+    unchanged from F9 and F15.
+-   Toast is excluded from the diffs rather than fixed; a real toast regression would
+    be hidden.
+
 ## Planned experiments
 
 Ordered by risk, riskiest first (see the charter's riskiest assumptions).
@@ -791,8 +884,8 @@ verdict carries.
 -   ~~Theme delivery~~: done (F15). Left open from it: a real cross-origin CDN, a
     `<link>` without `precedence`, and whether the 20 drifted layer pairs it found ever
     include a style edge.
--   **Exit criterion 2.** 5 or more builds per combination with Playwright
-    screenshots; every run so far used 2 rebuilds and computed-style probes.
+-   ~~Exit criterion 2~~: done (F16). Left open from it: toast screenshots are excluded
+    (JS animation), and the visual sweep covers 22 pages, not the full e2e suite.
 
 **Coverage of the override scan**
 
@@ -848,11 +941,11 @@ See [02-alternative-paths.md](02-alternative-paths.md).
 
 ## Verdict
 
-**Draft (2026-10-26): Adopt for subset, with conditions.** Not final: exit
-criterion 2 (5 builds, screenshots) is still open. Granularity (E4, F14) and theme
-delivery (F15) are measured. The generator
-change (ordering from style edges) is now built and measured (F13), and the
-consumer side (E6, E7) is measured (F12).
+**Draft (2026-10-27): Adopt for subset, with conditions.** All three exit criteria
+are met on the evidence below (F8 reproduced, F16 fix verified over 5 builds, spec
+answered). What is left is checking that layering does not change visuals elsewhere
+(F16's banner icon) and the production work, not another unknown about the approach.
+Granularity (F14), theme delivery (F15) and the generator (F13) are measured.
 
 Per-folder layers solve the reported problem and their known blocker is
 fixable, on the evidence so far:
@@ -881,6 +974,10 @@ Conditions for adopting:
    requirement and detect it (for example a dev-mode warning when a component
    layer appears before the statement), or to move the order statement out of the
    theme stylesheet into something every component loads first.
+4. **Review the visual change before shipping.** Layering resolves specificity
+   differently from one layer: the smart-app-banner's dismiss icon grows from 18px
+   to 20px (F16). A visual sweep of the full e2e suite against a single-layer build is
+   needed, and any change it finds is either intended or fixed in the component.
 
 Rejected alternatives to this verdict:
 

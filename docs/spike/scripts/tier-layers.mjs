@@ -3,7 +3,8 @@
 // Usage (repo root, after `npm run build`):
 //   node docs/spike/scripts/tier-layers.mjs depth   4 tiers by style-edge depth
 //   node docs/spike/scripts/tier-layers.mjs naive   2 hand-picked tiers (base, components)
-//   node docs/spike/scripts/tier-layers.mjs report  print both mappings, change nothing
+//   node docs/spike/scripts/tier-layers.mjs flat    1 layer: no per-folder ordering (control)
+//   node docs/spike/scripts/tier-layers.mjs report  print the mappings, change nothing
 // depth: a folder's tier is the longest chain of style edges below it (a folder that
 //   styles nothing is 0; a parent is always deeper than its child), so no edge can sit
 //   inside one tier.
@@ -22,8 +23,8 @@ const root = path.resolve(
     "../../.."
 );
 const mode = process.argv[2];
-if (!["depth", "naive", "report"].includes(mode))
-    throw new Error("usage: tier-layers.mjs depth|naive|report");
+if (!["depth", "naive", "flat", "report"].includes(mode))
+    throw new Error("usage: tier-layers.mjs depth|naive|flat|report");
 
 const { order, edges } = await getCssLayerOrder();
 const kids = new Map(order.map((f) => [f, new Set()]));
@@ -47,6 +48,9 @@ const NAIVE_BASE = new Set([
 const mappings = {
     depth: (f) => `t${depth.get(f)}`,
     naive: (f) => (NAIVE_BASE.has(f) ? "base" : "components"),
+    // flat: every folder in one layer, so the cascade falls back to source order like
+    // the published package, but with the branch's component source (screenshot control)
+    flat: () => "all",
 };
 
 const describe = (name, tierOf) => {
