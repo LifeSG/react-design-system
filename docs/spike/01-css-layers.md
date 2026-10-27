@@ -823,14 +823,140 @@ What it does **not** show:
 
 -   Other specificity flips. The scan models class-name overrides, not descendant
     selectors (`.a svg`) against a parent class; the banner is one case that surfaced
-    because a screenshot was taken, not because anything flagged it. A visual sweep of
-    the full e2e suite against `flat` would find the rest.
+    because a screenshot was taken, not because anything flagged it. The sweep and the e2e
+    suite in F17 found the rest: four components under `styleedge` (five counting the
+    `depth`-only modal).
 -   The pixel threshold is pixelmatch's 0.1 with anti-aliasing excluded; sub-threshold
     colour shifts would not show.
 -   Dev mode, other viewports and themes, the dark colour mode, and a real app: all
     unchanged from F9 and F15.
 -   Toast is excluded from the diffs rather than fixed; a real toast regression would
     be hidden.
+
+### F17. Visual sweep and e2e suite: layering changes 94 of 2,076 story renders and fails 38 e2e tests, all in 4 components; per-folder and 4-tier layers disagree on the modal (Measured)
+
+Reproduce: `docs/spike/experiments/sweep/prepare-app.sh` (a private copy of
+`e2e/nextjs-app`), then `LIBS="flat styleedge depth" SCHEMES="light dark"
+VIEWPORTS="desktop mobile" docs/spike/experiments/sweep/run-sweep.sh` (38 min; log in
+`run-sweep.log`), then `node diff-sweep.mjs <ref> <lib>` for each pair (results in
+`sweep/results-*.jsonl`), `style-dump.sh` and `style-compare.mjs` for computed styles,
+and `TRACE_OUT=traces-f17.txt trace-run.sh` / `rule-trace.mjs` for the competing
+rules (saved in `sweep/traces-f17.txt`). The 18 renders not traced by rule are checked
+for noise by `repeat-check.sh` (`sweep/untraced-verdict.md`). Interaction states come
+from the repo's own Playwright suite: `sweep/run-e2e.sh` runs `e2e/tests` unchanged
+against the sweep app built with each library (summary in `sweep/e2e-summary.txt`,
+reports in `sweep/e2e-results/`).
+
+**Scope.** (The computed-style dumps behind the traces below walk `<body>`, because modals, popovers and toasts render in portals outside the story layout; an earlier version walked only the layout and missed the modal.) All 519 story pages of the e2e app (85 components), with the date pinned as
+the specs pin it, in light and dark colour schemes at 1280px and 375px: 2,076 renders
+per library, 6,228 comparisons. Libraries: `flat` (the control, single layer),
+`styleedge` (85 layers, the F13 generator), `depth` (4 tiers). All 12 library and mode
+combinations rendered all 519 pages with 0 failures.
+
+| Comparison             | Renders that differ                                            | Of    |
+| ---------------------- | -------------------------------------------------------------- | ----- |
+| `flat` vs `styleedge`  | **112** (94 from layering; 12 toast animation; 6 render noise) | 2,076 |
+| `flat` vs `depth`      | **156**                                                        | 2,076 |
+| `styleedge` vs `depth` | **64**                                                         | 2,076 |
+
+**By component** (renders that differ, any mode):
+
+| Component                                              | `flat` vs `styleedge` | `flat` vs `depth` | `styleedge` vs `depth` | Largest diff (px) |
+| ------------------------------------------------------ | --------------------- | ----------------- | ---------------------- | ----------------- |
+| modal-v2                                               | 0                     | **44**            | **44**                 | 58,615            |
+| navbar                                                 | 34                    | 34                | 0                      | 456               |
+| otp-verification                                       | 24                    | 24                | 0                      | 22,309            |
+| smart-app-banner                                       | 24                    | 24                | 0                      | 1,410             |
+| toast                                                  | 12                    | 12                | 12                     | 38,946            |
+| unit-number                                            | 12                    | 12                | 0                      | 334               |
+| timetable                                              | 3                     | 3                 | 4                      | 1,237             |
+| countdown-timer, fullscreen-image-carousel, animations | 1 each                | 0 to 2            | 1 to 2                 | 44,748            |
+
+**What the differences are**, traced to the rules for one page per component:
+
+| Component                               | Change in a layered build                           | Why                                                                                                                                                                                                                                                                                                                                                                                                            |
+| --------------------------------------- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| smart-app-banner                        | dismiss icon 18px to 20px (F16)                     | `ClickableIcon`'s `.x svg` (0,1,1) beat the banner's `.cross` (0,1,0) in one layer; the banner's layer is later, so layers give it 20px, the size its style file asks for                                                                                                                                                                                                                                      |
+| navbar (34 renders)                     | `ClickableIcon` icon 18px to 24px                   | Same mechanism: `.m18ljjag svg { 1.125rem }` against the navbar's `.m11vsg37 { 1.5rem }`. The scan has `navbar -> shared` edges, but only for the class on the button, not the descendant `svg`                                                                                                                                                                                                                |
+| otp-verification (24)                   | read-only input gains 16px left and right padding   | In one layer `.afvd13[data-no-border], [data-read-only] { padding: 0 }` (0,2,0) beat `.pqn3wrd { padding: 0 16px }` (0,1,0). Layered, `fds.otp-verification` ranks after `fds.input-group`, so the 16px wins: the read-only state loses its zero padding. The scan has `otp-verification -> input-group` edges                                                                                                 |
+| unit-number (12)                        | read-only `margin-right` 4px to 8px                 | `.l1s6ick6[data-read-only] { 4px }` (0,2,0) beat `.h1ujh1ah { 0.5rem }` (0,1,0); layered, `fds.unit-number` ranks after `fds.input-group`. The scan has **no** `unit-number -> input-group` edge                                                                                                                                                                                                               |
+| modal-v2 (44, only in `depth`)          | close button 32px to 66px square, modal 34px taller | `ClickableIcon` sets `padding: 24px` and the modal's `slot-styles.ts` overrides it with `padding: 0`. That file is not named `*.style(s).ts`, so the edge scan skips it and the `modal-v2 -> shared` edge is missing. `depth` puts `shared` in `t1` and `modal-v2` in `t0`, so `shared`'s 24px wins. `styleedge` ranks `modal-v2` (29) after `shared` (8) through the import-graph tiebreak and matches `flat` |
+| toast (12), countdown-timer, animations | up to 38,946 px                                     | Toast animates with a JS spring; the rest is animation timing. Not layering                                                                                                                                                                                                                                                                                                                                    |
+
+**The renders not traced by rule are render noise.** Of the 112, 94 are the four traced
+components and 12 are toast (its JS spring). The other 6 (`timetable` 3,
+`countdown-timer`, `fullscreen-image-carousel`, the dots spinner: 1 each; 18 renders
+across all three comparisons) were checked by `repeat-check.sh`, which renders each story
+twice per library, in a fresh browser, and diffs the library against itself.
+`timetable/loading`, `countdown-timer/*` and the dots spinner differ from themselves on
+the same library, `flat` included (up to 44,748 px: a running timer). The two
+`fullscreen-image-carousel` renders are a single 225px line that appears in one render of
+six and in neither repeat of the same library and mode. So layering causes **94** of the
+112 differing renders (navbar 34, otp-verification 24, smart-app-banner 24,
+unit-number 12).
+
+**The e2e suite covers interaction states**, which the sweep cannot reach: 92 specs,
+1,106 tests, 1,387 baseline screenshots taken after clicks, hovers, focus and key
+presses. Its baselines come from the branch's component source, so `flat` should pass.
+
+| Library     | Passed | Failed | Flaky                                           | Skipped |
+| ----------- | ------ | ------ | ----------------------------------------------- | ------- |
+| `flat`      | 1,105  | **0**  | 1 (`schedule` custom popover)                   | 1       |
+| `styleedge` | 1,066  | **38** | 2 (`phone-number-input` hover, `sidenav` click) | 1       |
+
+`flat` passing confirms the baselines are single-layer renders of the same code, so the
+38 `styleedge` failures are layering. All 38 are screenshot mismatches, none a functional
+assertion, and **every one is in a component the sweep already found**:
+otp-verification 14, navbar 10, smart-app-banner 7, unit-number 7. Several capture
+interaction states the sweep does not reach (navbar submenu open, hamburger focus
+highlight, unit-number focus, the OTP verification flow), and each shows the same rule
+change as its page-load render. The 3 flaky tests each failed once and passed on retry,
+and none of their components differs in the sweep, so they are not counted as layering.
+`depth` was not run: F17 already makes `styleedge` the safer default.
+
+**Traced rules** (`sweep/traces-f17.txt`, `flat` then `styleedge`, light desktop):
+
+| Element                                              | `flat` | `styleedge` | Rules                                                                                                                      |
+| ---------------------------------------------------- | ------ | ----------- | -------------------------------------------------------------------------------------------------------------------------- |
+| smart-app-banner dismiss icon width                  | 18px   | 20px        | `shared .m18ljjag svg` 1.125rem vs `smart-app-banner .cp9l7rn` 1.25rem                                                     |
+| navbar icon width                                    | 18px   | 24px        | `shared .m18ljjag svg` 1.125rem vs `navbar .m11vsg37` 1.5rem                                                               |
+| read-only OTP input `padding-left` (email and phone) | 0px    | 16px        | `input-group .nx53mj4[data-read-only]` / `.afvd13[data-read-only]` 0 vs `otp-verification .e1ik236m` / `.pqn3wrd` `0 16px` |
+| read-only unit-number divider `margin-right`         | 4px    | 8px         | `input-group .l1s6ick6[data-read-only]` 4px vs `unit-number .h1ujh1ah` 0.5rem                                              |
+
+What it shows:
+
+-   **The change is real and not rare.** 4.5% of renders (94 of 2,076) differ between
+    `flat` and the recommended per-folder build because of layering, across 4
+    components, deterministically; the e2e suite fails 38 tests in the same 4. In every traced case a descendant or attribute selector (higher
+    specificity) used to beat a parent's single class, and layer order now overrides
+    specificity. In each, the layered result is the one the parent's own style
+    file asks for.
+-   **The edge scan is not a sufficient guard.** It missed three of the five causes: a
+    style file it does not read (`slot-styles.ts`), a pair with no edge
+    (`unit-number -> input-group`), and descendant selectors against a parent class
+    (`svg`). F13 said the scan was a lower bound; here the misses are visible.
+-   **`depth` is less safe than F14 suggested.** F14 found 0 edges inside one tier among
+    the _scanned_ edges. The one unscanned edge (`modal-v2 -> shared`) breaks `depth`
+    on 44 renders and does not break `styleedge`, because `styleedge` falls back to the
+    import graph for unscanned pairs. So `depth` needs a complete scan; `styleedge`
+    degrades more gracefully.
+-   Earlier I wrote that layer-versus-specificity flips were a single case (F16). They
+    are four components under `styleedge`, five counting the `depth`-only modal.
+-   **The sweep and the e2e suite agree.** The suite reaches interaction states the
+    sweep cannot and found no further component, so the four are the full set the
+    repo's own tests can see.
+
+What it does **not** show:
+
+-   Whether each change is _wanted_. I traced the rules, not the design intent. The
+    16px OTP read-only padding and the 8px unit-number margin may be bugs that layers fix, or
+    visual regressions for consumers who relied on the single-layer result. That needs
+    a designer or the component owners.
+-   States neither the stories nor the e2e specs reach, and any real app. The e2e
+    suite covers the states its specs script, not every reachable state.
+-   `depth` against the e2e suite (not run).
+-   A fix: none was tried. Options are a specificity bump on the parent's rule, deleting
+    the now-redundant override, or leaving the layered result.
 
 ## Planned experiments
 
@@ -885,7 +1011,7 @@ verdict carries.
     `<link>` without `precedence`, and whether the 20 drifted layer pairs it found ever
     include a style edge.
 -   ~~Exit criterion 2~~: done (F16). Left open from it: toast screenshots are excluded
-    (JS animation), and the visual sweep covers 22 pages, not the full e2e suite.
+    (JS animation). The full-story sweep is F17.
 
 **Coverage of the override scan**
 
@@ -950,12 +1076,12 @@ Granularity (F14), theme delivery (F15) and the generator (F13) are measured.
 Per-folder layers solve the reported problem and their known blocker is
 fixable, on the evidence so far:
 
-| Spec requirement                 | Answer so far                                                                                                                                                                                                                                                                                                                               | Evidence      |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| Deterministic style order        | **Yes, for every measured pair.** Layers make source order irrelevant: F8's broken source order is still there on the layered build, but the parent wins                                                                                                                                                                                    | F8, F9        |
-| Parent/child variant inheritance | **Blocker is real but narrow and fixable.** Layers break a parent's override wherever the order puts the child later (F10). 1 real case in 206 cross-folder overrides, inside an import cycle. Ordering from style edges fixes it in the generator and keeps F9                                                                             | F10, F11, F13 |
-| Granularity                      | **Per-folder is not required.** 4 tiers derived from style-edge depth match it on every scanned edge; a hand-picked base/components split leaves 61 edges to source order and fails a hostile order                                                                                                                                         | F14           |
-| Consumer migration path          | **One requirement, stricter than the documented setup.** Import the theme stylesheet as a bundled import in the outermost layout that renders any library component. A nested-layout import or a CDN `<link>` silently falls back to load order (F15). Several themes and runtime switching are fine. App overrides behave exactly as today | F5, F12       |
+| Spec requirement                 | Answer so far                                                                                                                                                                                                                                                                                                                                                                                            | Evidence      |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| Deterministic style order        | **Yes, for every measured pair.** Layers make source order irrelevant: F8's broken source order is still there on the layered build, but the parent wins                                                                                                                                                                                                                                                 | F8, F9        |
+| Parent/child variant inheritance | **Blocker is real but narrow and fixable.** Layers break a parent's override wherever the order puts the child later (F10). 1 real case in 206 cross-folder overrides, inside an import cycle. Ordering from style edges fixes it in the generator and keeps F9                                                                                                                                          | F10, F11, F13 |
+| Granularity                      | **Per-folder is not required for the scanned edges, but the scan is incomplete.** 4 tiers derived from style-edge depth match it on every scanned edge; a hand-picked base/components split leaves 61 edges to source order and fails a hostile order. On the full e2e stories `depth` breaks the modal close button on 44 renders where `styleedge` does not (F17), so `styleedge` is the safer default | F14           |
+| Consumer migration path          | **One requirement, stricter than the documented setup.** Import the theme stylesheet as a bundled import in the outermost layout that renders any library component. A nested-layout import or a CDN `<link>` silently falls back to load order (F15). Several themes and runtime switching are fine. App overrides behave exactly as today                                                              | F5, F12       |
 
 Conditions for adopting:
 
@@ -975,9 +1101,12 @@ Conditions for adopting:
    layer appears before the statement), or to move the order statement out of the
    theme stylesheet into something every component loads first.
 4. **Review the visual change before shipping.** Layering resolves specificity
-   differently from one layer: the smart-app-banner's dismiss icon grows from 18px
-   to 20px (F16). A visual sweep of the full e2e suite against a single-layer build is
-   needed, and any change it finds is either intended or fixed in the component.
+   differently from one layer. Against a single-layer build, 94 of 2,076 e2e story
+   renders change from layering and 38 e2e tests fail (F17): the banner and navbar
+   icons grow, the OTP and unit-number read-only inputs gain padding or margin, and `depth` additionally breaks the modal
+   close button where the edge scan is incomplete. Each change is either intended or
+   fixed in the component, and the edge scan must read every style file and
+   descendant selectors (F17) before `depth` can be trusted.
 
 Rejected alternatives to this verdict:
 

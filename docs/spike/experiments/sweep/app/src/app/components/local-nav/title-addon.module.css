@@ -1,0 +1,14 @@
+.container {
+    max-width: 320px;
+}
+
+.icon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.right-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--fds-colour-icon-error);
+}

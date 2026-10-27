@@ -1,0 +1,8 @@
+[flat] building (0h00m elapsed)
+[flat] playwright (0h00m elapsed)
+[flat] playwright exit 0;  1 skipped  1105 passed (3.5m) 
+[styleedge] building (0h03m elapsed)
+[styleedge] playwright (0h03m elapsed)
+[styleedge] playwright exit 1;  2 flaky  1 skipped  1066 passed (3.7m) 
+done in 0h07m
+exit 0

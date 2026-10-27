@@ -1,0 +1,50 @@
+== flat: 1 not passing (0 failed, 1 flaky)
+  schedule (1)
+     [flaky] Custom popover - Day View  |  screenshot, 10678/10678/10678 px
+== styleedge: 40 not passing (38 failed, 2 flaky)
+  otp-verification (14)
+     Form variants  |  screenshot, 12294/12294/12294/12294/12294/12294 px
+     Form variants (dark mode)  |  screenshot, 12323/12323/12323/12323/12323/12323 px
+     Form variants (mobile)  |  screenshot, 4732/4732/4732/4732/4732/4732 px
+     OTP states  |  screenshot, 27927/27927/27927/27927/27927/27927 px
+     OTP states (dark mode)  |  screenshot, 28017/28017/28017/28017/28017/28017 px
+     OTP states (mobile)  |  screenshot, 5348/5348/5348/5348/5348/5348 px
+     OTP verification flow  |  screenshot, 3698/3698/3698/4050/4050/4050/4081/4081/4081/4081/4081/4081/4078/4078/4078/4277/4277/4277/3699/3699/3699/4051/4051/4051/4081/4081/4081/4081/4081/4081/4078/4078/4078/4277/4277/4277 px
+     Form variants  |  screenshot, 1805/1805/1805/1805/1805/1805 px
+     Form variants (dark mode)  |  screenshot, 1801/1801/1801/1801/1801/1801 px
+     Form variants (mobile)  |  screenshot, 1799/1799/1799/1799/1799/1799 px
+     OTP states  |  screenshot, 3979/3979/3979/3979/3979/3979 px
+     OTP states (dark mode)  |  screenshot, 4110/4110/4110/4110/4110/4110 px
+     OTP states (mobile)  |  screenshot, 3878/3878/3878/3878/3878/3878 px
+     OTP verification flow  |  screenshot, 981/981/981/981/981/981/981/981/981/979/979/979/981/981/981/979/979/979/981/981/981/981/981/981/981/981/981/979/979/979/981/981/981/979/979/979 px
+  navbar (10)
+     Mobile  |  screenshot, 7374/7374/7374/7374/7374/7374 px
+     Collapsed  |  screenshot, 96/96/96/96/96/96 px
+     Collapsed (dark mode)  |  screenshot, 96/96/96/96/96/96 px
+     Secondary brand  |  screenshot, 97/97/97/97/97/97 px
+     Custom action button  |  screenshot, 646/646/646/646/646/646 px
+     Submenu  |  screenshot, 7914/7914/7914/9303/9303/9303/7914/7914/7914/9303/9303/9303 px
+     Submenu (selected item)  |  screenshot, 9287/9287/9287/7939/7939/7939/9287/9287/9287/7939/7939/7939 px
+     Submenu (dark mode)  |  screenshot, 8174/8174/8174/9564/9564/9564/8174/8174/8174/9564/9564/9564 px
+     Uncollapsible action buttons  |  screenshot, 611/611/611/611/611/611 px
+     Hamburger button shows focus highlight  |  screenshot, 432/432/432/432/432/432 px
+  smart-app-banner (7)
+     Default appearance  |  screenshot, 1645/1645/1645/1645/1645/1645 px
+     Default appearance (dark mode)  |  screenshot, 1816/1816/1816/1816/1816/1816 px
+     No message  |  screenshot, 920/920/920/920/920/920 px
+     All stars filled  |  screenshot, 1600/1600/1600/1600/1600/1600 px
+     Partial stars with half star  |  screenshot, 1714/1714/1714/1714/1714/1714 px
+     Zero stars (all empty)  |  screenshot, 1945/1945/1945/1945/1945/1945 px
+     No rating shown for invalid value  |  screenshot, 1445/1445/1445/1445/1445/1445 px
+  unit-number (7)
+     Visual  |  screenshot, 671/671/671/671/671/671 px
+     Focus  |  screenshot, 663/663/663/663/663/663 px
+     Visual dark mode  |  screenshot, 669/669/669/669/669/669 px
+     Focus dark mode  |  screenshot, 669/669/669/669/669/669 px
+     Mobile  |  screenshot, 663/663/663/663/663/663 px
+     Prefilled  |  screenshot, 239/239/239/247/247/247 px
+     Standalone variants  |  screenshot, 663/663/663/663/663/663 px
+  phone-number-input (1)
+     [flaky] Hover states  |  screenshot, 6330/6330/6330/81907/81907/81907 px
+  sidenav (1)
+     [flaky] Click interaction  |  screenshot, 174956/174956/174956 px

@@ -1,0 +1,15 @@
+.custom {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    color: black;
+    background: yellow;
+}
+
+.sticky {
+    height: 200vh;
+    background-color: teal;
+    border: solid 10px crimson;
+}

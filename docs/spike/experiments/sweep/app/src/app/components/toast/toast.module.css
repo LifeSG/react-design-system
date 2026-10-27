@@ -1,0 +1,5 @@
+.page-content-scrollable {
+    height: 400vh;
+    background-color: teal;
+    border: solid 10px crimson;
+}

@@ -1,0 +1,25 @@
+.page-content {
+    margin: auto;
+    text-align: center;
+    background: pink;
+}
+
+.page-content-scrollable {
+    height: 200vh;
+    background-color: pink;
+}
+
+.overlay-modal-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 150px;
+    background: white;
+    border: 5px solid red;
+}
+
+.overlay-modal-content-large {
+    width: 200px;
+    height: 200px;
+}

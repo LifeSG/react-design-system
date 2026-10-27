@@ -1,0 +1,10 @@
+.custom-element {
+    padding: 0.25rem;
+    border: 1px solid red;
+}
+
+.timetable-fixed-height {
+    [data-id="timetable-container"] {
+        height: 400px;
+    }
+}

@@ -1,0 +1,16 @@
+72 self-comparisons, 14 differ from themselves
+   flat       dark-desktop   countdown-timer__left-aligned.png 44748
+   flat       dark-desktop   timetable__loading.png 8
+   flat       dark-mobile    timetable__loading.png 404
+   flat       light-desktop  animations__loading-dots-spinner-custom-colour.png 16
+   styleedge  dark-desktop   countdown-timer__left-aligned.png 44748
+   styleedge  dark-desktop   timetable__loading.png 1196
+   styleedge  dark-mobile    timetable__loading.png 399
+   styleedge  light-desktop  animations__loading-dots-spinner-custom-colour.png 29
+   styleedge  light-desktop  countdown-timer__left-aligned.png 5525
+   styleedge  light-mobile   timetable__loading.png 1
+   depth      dark-mobile    timetable__loading.png 8
+   depth      light-desktop  animations__loading-dots-spinner-custom-colour.png 24
+   depth      light-desktop  timetable__loading.png 146
+   depth      light-mobile   timetable__loading.png 463
+exit 0

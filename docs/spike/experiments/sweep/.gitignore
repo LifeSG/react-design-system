@@ -1,0 +1,11 @@
+# Build output and generated artefacts only. The app source under app/ is committed so
+# the sweep is reproducible from the repo; prepare-app.sh can also regenerate it from
+# e2e/nextjs-app.
+builds/
+shots/
+styles/
+app/.next*/
+app/next-env.d.ts
+e2e-results/*-test-results/
+app/.next-e2e/
+.repeat-stories
