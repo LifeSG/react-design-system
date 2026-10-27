@@ -25,9 +25,30 @@ export const selector = css`
     }
 `;
 
+export const selectorNested = css`
+    position: relative;
+    height: auto;
+    min-height: calc(3rem - 2px);
+    cursor: pointer;
+
+    &:focus-within {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: -2px;
+    }
+`;
+
 export const selectorVariantSmall = css`
     ${Font["body-md-regular"]}
     height: calc(2.5rem - 2px);
+
+    &.${selectorNested} {
+        height: auto;
+        min-height: calc(2.5rem - 2px);
+    }
+`;
+
+export const selectorNestedDisabled = css`
+    cursor: not-allowed;
 `;
 
 export const selectorEditable = css`

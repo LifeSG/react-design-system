@@ -41,6 +41,28 @@ column props to span across the specified columns in grid layouts.
 
 <Canvas of={FormMultiSelectStories.SmallVariant} />
 
+## Tag display variant
+
+Set `displayVariant="tag"` to show each selected option as a tag in the field
+instead of the "x selected" label. Each tag has an x button to deselect the
+option, and clicking elsewhere on the field still opens the dropdown. The
+label of a tag matches the option in the dropdown.
+
+<Canvas of={FormMultiSelectStories.TagDisplayVariant} />
+
+### Overflowing tags
+
+Tags wrap onto new lines. After 4 lines, the remaining tags collapse into an
+"and X more" tag. A tag that is wider than the field is truncated to one line.
+
+<Canvas of={FormMultiSelectStories.TagOverflow} />
+
+### Tag states
+
+In the disabled and read-only states, the tags have no x button.
+
+<Canvas of={FormMultiSelectStories.TagStates} />
+
 ## Z-index conflicts
 
 The dropdown uses z-index to display above elements. It is `Modal` and

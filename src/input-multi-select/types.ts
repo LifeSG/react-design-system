@@ -13,6 +13,13 @@ import type {
 import type { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 /**
+ * How the selected options are shown in the trigger.
+ * - `"count"`: a summary such as "3 selected".
+ * - `"tag"`: one tag per selected option.
+ */
+export type InputMultiSelectDisplayVariantType = "count" | "tag";
+
+/**
  * Props for the `InputMultiSelect` component.
  *
  * `T` is the option item type. `V` is the extracted value type used for
@@ -44,6 +51,12 @@ export interface InputMultiSelectProps<T, V>
      * @default "default"
      */
     variant?: DropdownVariantType | undefined;
+    /**
+     * How the selected options are shown in the trigger.
+     *
+     * @default "count"
+     */
+    displayVariant?: InputMultiSelectDisplayVariantType | undefined;
     /** Aligns the dropdown relative to the trigger element. */
     alignment?: DropdownAlignmentType | undefined;
     /** CSS `z-index` applied to the dropdown overlay. */
