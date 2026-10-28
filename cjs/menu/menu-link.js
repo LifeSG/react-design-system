@@ -1,0 +1,2 @@
+"use strict";var e=require("../_virtual/_tslib.js"),i=require("react/jsx-runtime"),n=require("./menu-link.styles.js");const t=t=>{var{children:r,"data-testid":s="menu-link"}=t,a=e.__rest(t,["children","data-testid"]);return i.jsx(n.MenuLinkDiv,{children:i.jsx(n.Link,Object.assign({"data-testid":s,underlineStyle:"none"},a,{children:r}))})};t.displayName="Menu.Link",exports.MenuLink=t;
+//# sourceMappingURL=menu-link.js.map

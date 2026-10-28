@@ -1,0 +1,16 @@
+import React, { Dispatch, SetStateAction } from "react";
+import { TabItemProps } from "./types";
+export type TabLinkProps = Pick<TabItemProps, "title" | "width" | "titleAddon">;
+interface TabContextProps {
+    instanceId: string;
+    currentActiveIndex: number;
+    tabLinks: TabLinkProps[];
+    setCurrentActiveIndex: Dispatch<SetStateAction<number>>;
+    setTabLinks: (links: TabLinkProps[]) => void;
+    controlledMode: boolean;
+    onTabClick?: ((title: string, index: number) => void) | undefined;
+    isContextProvided: boolean;
+}
+export declare const noop: () => void;
+export declare const TabContext: React.Context<TabContextProps>;
+export {};
