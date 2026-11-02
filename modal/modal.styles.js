@@ -1,0 +1,2 @@
+import"./modal.styles_1lbblx6.css";const c={container:{verticalHeight:"--fds-internal-modal-container-verticalHeight"}},t="czahu6t",o="c16tlthj",e="c19r0uwy",r="c11f2a4r",a="ck9rog9",i="c140nooo",l="c1d9ucpb",n="c1jimj00",s="c16qcfjk",d="cgnow3g",g="c14dyqe6";export{t as container,e as containerFromBottom,s as containerFromBottomShow,r as containerFromLeft,d as containerFromLeftShow,a as containerFromRight,g as containerFromRightShow,o as containerFromTop,n as containerFromTopShow,l as containerHide,i as containerShow,c as tokens};
+//# sourceMappingURL=modal.styles.js.map

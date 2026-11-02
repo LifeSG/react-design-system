@@ -1,9 +1,0 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-npx concurrently --kill-others-on-fail --group --timings \
-  --names "test+build,e2e" \
-  --prefix "[{name}]" \
-  --prefix-colors "blue,magenta" \
-  "npm run test && npm run build" \
-  "./scripts/e2e/pre-push.sh"

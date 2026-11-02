@@ -1,0 +1,2 @@
+import{__rest as t}from"../_virtual/_tslib.js";import{jsx as e}from"react/jsx-runtime";import{useContext as r}from"react";import{TabContext as i}from"./tab-context.js";const n=n=>{var{index:a,children:d,titleAddon:l}=n,o=t(n,["index","children","titleAddon"]);const{currentActiveIndex:c,instanceId:m}=r(i);return c===a?e("div",Object.assign({role:"tabpanel","aria-labelledby":`${m}-tab-${a}`,tabIndex:0},o,{children:d})):null};n.displayName="Tab.Item";export{n as TabItem};
+//# sourceMappingURL=tab-item.js.map

@@ -1,0 +1,2 @@
+"use strict";var t=require("../../_virtual/_tslib.js"),e=require("react/jsx-runtime"),r=require("react");const s=r.forwardRef(((r,s)=>{const{context:i}=r,o=t.__rest(r,["context"]);return e.jsx("div",Object.assign({ref:s},null==i?void 0:i.listProps,o))})),i=r.forwardRef(((r,s)=>{const{context:i,item:o}=r,n=t.__rest(r,["context","item"]);return e.jsx("div",Object.assign({ref:s},null==i?void 0:i.listItemProps,n))}));exports.VirtuosoItem=i,exports.VirtuosoList=s;
+//# sourceMappingURL=virtuoso-components.js.map

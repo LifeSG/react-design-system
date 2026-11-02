@@ -1,0 +1,2 @@
+import{__rest as t}from"../../_virtual/_tslib.js";import{jsx as r}from"react/jsx-runtime";import{forwardRef as o}from"react";const e=o(((o,e)=>{const{context:i}=o,n=t(o,["context"]);return r("div",Object.assign({ref:e},null==i?void 0:i.listProps,n))})),i=o(((o,e)=>{const{context:i,item:n}=o,s=t(o,["context","item"]);return r("div",Object.assign({ref:e},null==i?void 0:i.listItemProps,s))}));export{i as VirtuosoItem,e as VirtuosoList};
+//# sourceMappingURL=virtuoso-components.js.map

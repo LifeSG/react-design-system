@@ -1,0 +1,2 @@
+"use strict";var e=require("../_virtual/_tslib.js"),r=require("react/jsx-runtime"),s=require("clsx"),a=require("./sidenav-group.styles.js");function t(e){return e&&"object"==typeof e&&"default"in e?e:{default:e}}var i=t(s);exports.SidenavGroup=s=>{var{separator:t,children:l,className:u}=s,c=e.__rest(s,["separator","children","className"]);return r.jsxs("ul",Object.assign({},c,{className:i.default(a.container,u),children:[l,t&&r.jsx("li",{"data-testid":"divider",className:a.divider})]}))};
+//# sourceMappingURL=sidenav-group.js.map

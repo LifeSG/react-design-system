@@ -1,0 +1,2 @@
+import"./typography-text.styles_1734x2k.css";import"./typography.styles_1wd82dn.css";const t={typographyBase:{maxLines:"--fds-internal-typography-base-maxLines"}},s="ts2ljtd",p="tu0nvfw",y="t1ruq6ql",a="d1cfdq56",e="d4n1hjq",o="p1ydob6f",d="l1w2xa0l",n="hspw24h",r="u3g791q",l="nlbpwo0",h="e1f7dy7t";export{e as displayBlock,a as displayInline,h as externalIcon,n as hyperlinkBase,d as lineClamp,l as noUnderline,o as paragraph,t as tokens,s as typographyBase,y as typographyBody,p as typographyHeader,r as underline};
+//# sourceMappingURL=typography.styles.js.map

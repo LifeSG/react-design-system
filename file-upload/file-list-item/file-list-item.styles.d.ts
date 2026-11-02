@@ -1,0 +1,11 @@
+export declare const editItem: import("@linaria/core").LinariaClassName;
+export declare const editContentSection: import("@linaria/core").LinariaClassName;
+export declare const editDetailsSection: import("@linaria/core").LinariaClassName;
+export declare const editNameSection: import("@linaria/core").LinariaClassName;
+export declare const editFileNameText: import("@linaria/core").LinariaClassName;
+export declare const editFileSizeText: import("@linaria/core").LinariaClassName;
+export type ItemFocusType = "self" | "others" | "none";
+export declare const item: import("@linaria/core").LinariaClassName;
+export declare const dragHandleIcon: import("@linaria/core").LinariaClassName;
+export declare const box: import("@linaria/core").LinariaClassName;
+export declare const contentSection: import("@linaria/core").LinariaClassName;

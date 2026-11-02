@@ -1,0 +1,9 @@
+@layer fds{.i76s810{-webkit-animation:var(--fds-motion-duration-150) var(--fds-motion-timing-ease-default) checkbox-icon-fade-in-i76s810;animation:var(--fds-motion-duration-150) var(--fds-motion-timing-ease-default) checkbox-icon-fade-in-i76s810;width:100%;height:100%;-webkit-transition:color var(--fds-motion-duration-150) var(--fds-motion-timing-ease-default);transition:color var(--fds-motion-duration-150) var(--fds-motion-timing-ease-default);}@-webkit-keyframes checkbox-icon-fade-in-i76s810{0%{opacity:0;}100%{opacity:1;}}@keyframes checkbox-icon-fade-in-i76s810{0%{opacity:0;}100%{opacity:1;}}
+.ue1dgoy{color:var(--fds-colour-icon-primary-subtlest);}
+.s8wyls8{color:var(--fds-colour-icon-selected);}
+.i1k0dk4y{color:var(--fds-colour-icon-disabled-subtle);}
+.cuj1wdj{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;-webkit-justify-content:center;justify-content:center;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;position:relative;height:2rem;width:2rem;}.cuj1wdj input:focus-visible+svg{outline:2px solid var(--fds-colour-focus-ring);outline-offset:0px;border-radius:4px;}
+.c1rz5cog{height:1.5rem;width:1.5rem;}
+.iidy4i6{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;}
+@media (pointer: fine){.isykh53:hover+svg{color:var(--fds-colour-icon-hover);}}
+.iihjvql{cursor:not-allowed;}}

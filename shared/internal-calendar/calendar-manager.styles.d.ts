@@ -1,0 +1,16 @@
+export declare const icon: import("@linaria/core").LinariaClassName;
+export declare const iconChevronDown: import("@linaria/core").LinariaClassName;
+export declare const iconChevronDownExpanded: import("@linaria/core").LinariaClassName;
+export declare const container: import("@linaria/core").LinariaClassName;
+export declare const toggleZone: import("@linaria/core").LinariaClassName;
+export declare const defaultView: import("@linaria/core").LinariaClassName;
+export declare const optionsOverlay: import("@linaria/core").LinariaClassName;
+export declare const header: import("@linaria/core").LinariaClassName;
+export declare const headerInputDropdown: import("@linaria/core").LinariaClassName;
+export declare const dropdownButton: import("@linaria/core").LinariaClassName;
+export declare const dropdownText: import("@linaria/core").LinariaClassName;
+export declare const headerArrows: import("@linaria/core").LinariaClassName;
+export declare const headerArrowButton: import("@linaria/core").LinariaClassName;
+export declare const hidden: import("@linaria/core").LinariaClassName;
+export declare const actionButtonSection: import("@linaria/core").LinariaClassName;
+export declare const actionButton: import("@linaria/core").LinariaClassName;

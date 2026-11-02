@@ -1,0 +1,2 @@
+"use strict";require("./row-cell.styles_y1dl5j.css");exports.block="byp749t",exports.blockContainer="brs2fuo",exports.blockContainerOnTheHour="b1tkj60f",exports.blockDescription="bbb5nib",exports.blockTitle="bhkclis",exports.gap="g1ly7zml",exports.tokens={block:{mainColor:"--fds-internal-timetable-rowCellBlock-mainColor",altColor:"--fds-internal-timetable-rowCellBlock-altColor",width:"--fds-internal-timetable-rowCellBlock-width"}},exports.wrapper="w3l6hrm";
+//# sourceMappingURL=row-cell.styles.js.map

@@ -1,0 +1,2 @@
+"use strict";var e=require("react"),s=require("../theme-provider/hooks.js"),r=require("./css-variable.js");const o=e=>null==e||""===e,t=o=>{const{theme:t,mode:u,themeElement:a}=s.useTheme(),[i,l]=e.useState(void 0);return e.useEffect((()=>{a&&l(r.parseCSSVariableValue(o,a))}),[t,u,a,o]),i};exports.useDesignToken=t,exports.useResolvedTokenValue=e=>{const{value:s,fallback:r,isToken:u,normalizeCustom:a}=e,i=u(s),l=t(i?s:void 0),n=u(r),c=t(n?r:void 0);return i&&!o(l)?l:i||o(s)?n&&!o(c)?c:a(r):a(s)};
+//# sourceMappingURL=use-design-token.js.map

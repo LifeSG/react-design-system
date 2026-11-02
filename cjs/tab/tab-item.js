@@ -1,0 +1,2 @@
+"use strict";var e=require("../_virtual/_tslib.js"),t=require("react/jsx-runtime"),r=require("react"),n=require("./tab-context.js");const i=i=>{var{index:a,children:s,titleAddon:d}=i,l=e.__rest(i,["index","children","titleAddon"]);const{currentActiveIndex:c,instanceId:b}=r.useContext(n.TabContext);return c===a?t.jsx("div",Object.assign({role:"tabpanel","aria-labelledby":`${b}-tab-${a}`,tabIndex:0},l,{children:s})):null};i.displayName="Tab.Item",exports.TabItem=i;
+//# sourceMappingURL=tab-item.js.map

@@ -1,0 +1,2 @@
+"use strict";var e=require("../external/@dnd-kit/core/dist/core.esm.js");class t extends e.MouseSensor{}t.activators=[{eventName:"onMouseDown",handler:({nativeEvent:e})=>r(e.target)}];class n extends e.KeyboardSensor{}function r(e){let t=e;for(;t;){if(t.dataset&&t.dataset.noDnd)return!1;t=t.parentElement}return!0}n.activators=[{eventName:"onKeyDown",handler:({nativeEvent:e})=>r(e.target)}],exports.KeyboardSensor=n,exports.MouseSensor=t;
+//# sourceMappingURL=custom-sensors.js.map
