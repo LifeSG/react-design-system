@@ -352,5 +352,31 @@ test.describe("ESignature", () => {
 
             await expect(story.locators.signatureModal).toBeVisible();
         });
+
+        test("Traps focus within the signature modal", async ({ story }) => {
+            await story.locators.focusStart.focus();
+            await story.page.keyboard.press("Tab");
+            await story.page.keyboard.press("Enter");
+            await expect(story.locators.signatureModal).toBeVisible();
+
+            // the container also wraps the focus guards that cycle focus
+            const isFocusInDialog = () =>
+                story.locators.signatureModal.evaluate((el) =>
+                    el.contains(document.activeElement)
+                );
+
+            // more presses than focusable elements, so focus has to cycle
+            for (let i = 0; i < 6; i++) {
+                await story.page.keyboard.press("Tab");
+                expect(await isFocusInDialog()).toBe(true);
+            }
+            for (let i = 0; i < 6; i++) {
+                await story.page.keyboard.press("Shift+Tab");
+                expect(await isFocusInDialog()).toBe(true);
+            }
+
+            await story.page.keyboard.press("Escape");
+            await expect(story.locators.signatureModal).not.toBeVisible();
+        });
     });
 });
