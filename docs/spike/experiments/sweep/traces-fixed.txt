@@ -1,0 +1,108 @@
+######## flat-fixed
+ [smart-app-banner/default cp9l7rn width]
+  .cp9l7rn width: computed 20px
+     fds.all  .m18ljjag svg  width: 1.125rem
+     fds.all  .cp9l7rn, .cp9l7rn.cp9l7rn  width: 1.25rem
+ [navbar/default m11vsg37 width]
+  .m11vsg37 width: computed 24px
+     fds.all  .m18ljjag svg  width: 1.125rem
+     fds.all  .m11vsg37, .m11vsg37.m11vsg37  width: 1.5rem
+ [otp-verification/email-variants e1ik236m padding-left]
+  .e1ik236m padding-left: computed 0px
+     fds.all  .nx53mj4  padding: 0 var(--fds-spacing-16)
+     fds.all  .nx53mj4[data-no-border="true"], .nx53mj4[data-read-only="true"]  padding-left: 0px
+     fds.all  .nx53mj4[data-no-border="true"], .nx53mj4[data-read-only="true"]  padding: 0px
+     fds.all  .e1ik236m  padding: 0 var(--fds-spacing-16)
+     fds.all  .e1ik236m[data-no-border="true"], .e1ik236m[data-read-only="true"]  padding-left: 0px
+     fds.all  .e1ik236m[data-no-border="true"], .e1ik236m[data-read-only="true"]  padding: 0px
+     main  *  padding-left: 0px
+     main  *  padding: 0px
+ [otp-verification/phone-number-variants pqn3wrd padding-left]
+  .pqn3wrd padding-left: computed 0px
+     fds.all  .afvd13  padding: 0 var(--fds-spacing-16)
+     fds.all  .afvd13[data-no-border="true"], .afvd13[data-read-only="true"]  padding-left: 0px
+     fds.all  .afvd13[data-no-border="true"], .afvd13[data-read-only="true"]  padding: 0px
+     fds.all  .pqn3wrd  padding: 0 var(--fds-spacing-16)
+     fds.all  .pqn3wrd[data-no-border="true"], .pqn3wrd[data-read-only="true"]  padding-left: 0px
+     fds.all  .pqn3wrd[data-no-border="true"], .pqn3wrd[data-read-only="true"]  padding: 0px
+     main  *  padding-left: 0px
+     main  *  padding: 0px
+ [unit-number/all-variants h1ujh1ah margin-right]
+  .h1ujh1ah margin-right: computed 8px
+     fds.all  .l1s6ick6  margin-right: var(--fds-spacing-12)
+     fds.all  .h1ujh1ah  margin-right: 0.5rem
+     main  *  margin-right: 0px
+     main  *  margin: 0px
+######## styleedge-fixed
+ [smart-app-banner/default cp9l7rn width]
+  .cp9l7rn width: computed 20px
+     fds.shared  .m18ljjag svg  width: 1.125rem
+     fds.smart-app-banner  .cp9l7rn, .cp9l7rn.cp9l7rn  width: 1.25rem
+ [navbar/default m11vsg37 width]
+  .m11vsg37 width: computed 24px
+     fds.shared  .m18ljjag svg  width: 1.125rem
+     fds.navbar  .m11vsg37, .m11vsg37.m11vsg37  width: 1.5rem
+ [otp-verification/email-variants e1ik236m padding-left]
+  .e1ik236m padding-left: computed 0px
+     fds.input-group  .nx53mj4  padding: 0 var(--fds-spacing-16)
+     fds.input-group  .nx53mj4[data-no-border="true"], .nx53mj4[data-read-only="true"]  padding-left: 0px
+     fds.input-group  .nx53mj4[data-no-border="true"], .nx53mj4[data-read-only="true"]  padding: 0px
+     fds.otp-verification  .e1ik236m  padding: 0 var(--fds-spacing-16)
+     fds.otp-verification  .e1ik236m[data-no-border="true"], .e1ik236m[data-read-only="true"]  padding-left: 0px
+     fds.otp-verification  .e1ik236m[data-no-border="true"], .e1ik236m[data-read-only="true"]  padding: 0px
+     main  *  padding-left: 0px
+     main  *  padding: 0px
+ [otp-verification/phone-number-variants pqn3wrd padding-left]
+  .pqn3wrd padding-left: computed 0px
+     fds.input-group  .afvd13  padding: 0 var(--fds-spacing-16)
+     fds.input-group  .afvd13[data-no-border="true"], .afvd13[data-read-only="true"]  padding-left: 0px
+     fds.input-group  .afvd13[data-no-border="true"], .afvd13[data-read-only="true"]  padding: 0px
+     fds.otp-verification  .pqn3wrd  padding: 0 var(--fds-spacing-16)
+     fds.otp-verification  .pqn3wrd[data-no-border="true"], .pqn3wrd[data-read-only="true"]  padding-left: 0px
+     fds.otp-verification  .pqn3wrd[data-no-border="true"], .pqn3wrd[data-read-only="true"]  padding: 0px
+     main  *  padding-left: 0px
+     main  *  padding: 0px
+ [unit-number/all-variants h1ujh1ah margin-right]
+  .h1ujh1ah margin-right: computed 8px
+     fds.input-group  .l1s6ick6  margin-right: var(--fds-spacing-12)
+     fds.unit-number  .h1ujh1ah  margin-right: 0.5rem
+     main  *  margin-right: 0px
+     main  *  margin: 0px
+######## flat-fixed
+ [unit-number/all-variants l1s6ick6@1 margin-right l1s6ick6@2 margin-right l1s6ick6@3 margin-right]
+  .l1s6ick6@1 margin-right: computed 8px
+     fds.all  .l1s6ick6  margin-right: var(--fds-spacing-12)
+     fds.all  .h1ujh1ah  margin-right: 0.5rem
+     main  *  margin-right: 0px
+     main  *  margin: 0px
+  .l1s6ick6@2 margin-right: computed 4px
+     fds.all  .l1s6ick6  margin-right: var(--fds-spacing-12)
+     fds.all  .l1s6ick6[data-read-only="true"]  margin-right: var(--fds-spacing-4)
+     fds.all  .h1ujh1ah  margin-right: 0.5rem
+     fds.all  .h1ujh1ah[data-read-only="true"]  margin-right: var(--fds-spacing-4)
+     main  *  margin-right: 0px
+     main  *  margin: 0px
+  .l1s6ick6@3 margin-right: computed 8px
+     fds.all  .l1s6ick6  margin-right: var(--fds-spacing-12)
+     fds.all  .h1ujh1ah  margin-right: 0.5rem
+     main  *  margin-right: 0px
+     main  *  margin: 0px
+######## styleedge-fixed
+ [unit-number/all-variants l1s6ick6@1 margin-right l1s6ick6@2 margin-right l1s6ick6@3 margin-right]
+  .l1s6ick6@1 margin-right: computed 8px
+     fds.input-group  .l1s6ick6  margin-right: var(--fds-spacing-12)
+     fds.unit-number  .h1ujh1ah  margin-right: 0.5rem
+     main  *  margin-right: 0px
+     main  *  margin: 0px
+  .l1s6ick6@2 margin-right: computed 4px
+     fds.input-group  .l1s6ick6  margin-right: var(--fds-spacing-12)
+     fds.input-group  .l1s6ick6[data-read-only="true"]  margin-right: var(--fds-spacing-4)
+     fds.unit-number  .h1ujh1ah  margin-right: 0.5rem
+     fds.unit-number  .h1ujh1ah[data-read-only="true"]  margin-right: var(--fds-spacing-4)
+     main  *  margin-right: 0px
+     main  *  margin: 0px
+  .l1s6ick6@3 margin-right: computed 8px
+     fds.input-group  .l1s6ick6  margin-right: var(--fds-spacing-12)
+     fds.unit-number  .h1ujh1ah  margin-right: 0.5rem
+     main  *  margin-right: 0px
+     main  *  margin: 0px

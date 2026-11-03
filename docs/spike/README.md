@@ -4,7 +4,7 @@ Problem: Next.js production builds load component CSS in a non-deterministic
 order, so source-order-dependent overrides break in prod but not in dev.
 Source spec: [`../css-layer-specs.md`](../css-layer-specs.md). Branch: `rl/css-layers`.
 
-Last updated: 2026-10-27
+Last updated: 2026-11-03
 
 ## Charter (applies to the whole effort)
 
@@ -17,8 +17,7 @@ layers per variant relationship? If not, which alternative in
 layers, or a non-layer path (specificity bumps, CSS `@import` ordering, a
 single pre-ordered stylesheet).
 
-**Decision owner.** None assigned yet. Open gap: without one, nobody is
-accountable for acting on the result.
+**Decision owner.** DS team
 
 **Timebox.** None set yet. Open gap: the spike cannot overrun on record
 without one. Record the budget, the start date and any extension decision here
@@ -55,10 +54,10 @@ condition below is hit:
 
 ## Spikes
 
-| #   | Spike                                                             | Doc                                                | Status      | Verdict                                                                          |
-| --- | ----------------------------------------------------------------- | -------------------------------------------------- | ----------- | -------------------------------------------------------------------------------- |
-| 01  | Native CSS layers (granularity, parent/child variants, migration) | [01-css-layers.md](01-css-layers.md)               | In progress | Draft: Adopt for subset, with conditions (4 regressions to fix, scan incomplete) |
-| 02  | Alternative paths (shortlist and ordering)                        | [02-alternative-paths.md](02-alternative-paths.md) | Proposed    | TBD                                                                              |
+| #   | Spike                                                             | Doc                                                | Status      | Verdict                                                                               |
+| --- | ----------------------------------------------------------------- | -------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------- |
+| 01  | Native CSS layers (granularity, parent/child variants, migration) | [01-css-layers.md](01-css-layers.md)               | In progress | Draft: Adopt for subset, with conditions (4 layering changes to fix, scan incomplete) |
+| 02  | Alternative paths (shortlist and ordering)                        | [02-alternative-paths.md](02-alternative-paths.md) | Proposed    | TBD                                                                                   |
 
 ## Conventions
 

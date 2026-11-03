@@ -1,0 +1,19 @@
+[flat-fixed] building (0m00s elapsed)
+[flat-fixed] screenshots light desktop (0m14s elapsed)
+519/519 screenshots in shots/flat-fixed/light-desktop, 0 failed
+[flat-fixed] screenshots light mobile (2m24s elapsed)
+519/519 screenshots in shots/flat-fixed/light-mobile, 0 failed
+[flat-fixed] screenshots dark desktop (4m33s elapsed)
+519/519 screenshots in shots/flat-fixed/dark-desktop, 0 failed
+[flat-fixed] screenshots dark mobile (6m39s elapsed)
+519/519 screenshots in shots/flat-fixed/dark-mobile, 0 failed
+[styleedge-fixed] building (8m43s elapsed)
+[styleedge-fixed] screenshots light desktop (8m56s elapsed)
+519/519 screenshots in shots/styleedge-fixed/light-desktop, 0 failed
+[styleedge-fixed] screenshots light mobile (11m05s elapsed)
+519/519 screenshots in shots/styleedge-fixed/light-mobile, 0 failed
+[styleedge-fixed] screenshots dark desktop (13m09s elapsed)
+519/519 screenshots in shots/styleedge-fixed/dark-desktop, 0 failed
+[styleedge-fixed] screenshots dark mobile (15m19s elapsed)
+519/519 screenshots in shots/styleedge-fixed/dark-mobile, 0 failed
+done in 17m20s

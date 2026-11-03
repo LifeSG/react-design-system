@@ -948,14 +948,59 @@ What it shows:
 
 What it does **not** show:
 
--   Whether each change is _wanted_: not shown by the data. **Decided 2026-10-27:** all
-    four are regressions, not intended. Today's single-layer rendering is the expected
-    design; the layered build must reproduce it. See Follow-up tickets.
+-   Whether each change is _wanted_: not shown by the data. **Decided 2026-10-28**
+    (replacing a 2026-10-27 decision that all four were regressions): the two icon
+    changes are intended, the two read-only input changes are regressions. See the
+    simulated fixes below and Follow-up tickets.
 -   States neither the stories nor the e2e specs reach, and any real app. The e2e
     suite covers the states its specs script, not every reachable state.
 -   `depth` against the e2e suite (not run).
--   A fix: none was tried. Options are a specificity bump on the parent's rule, deleting
-    the now-redundant override, or leaving the layered result.
+
+**Simulated fixes (Measured).** Reproduce: from `docs/spike/experiments/sweep/`,
+`node simulate-fixes.mjs` (writes `../final/libs/flat-fixed` and `styleedge-fixed`),
+`LIBS="flat-fixed styleedge-fixed" SCHEMES="light dark" VIEWPORTS="desktop mobile"
+./run-sweep.sh` (17 min; log in `run-sweep-fixed.log`), then `node diff-sweep.mjs <ref>
+<lib>` for each pair (results in `sweep/results-*fixed*.jsonl`), and `LIBS="flat-fixed
+styleedge-fixed" TRACE_OUT=traces-fixed.txt ./trace-run.sh ...` for the values. The
+script patches the built CSS, not `src/`, inserting each fix right after the component's
+own rule in its own layer, as a source fix would compile. The same patch goes into
+both libraries, so a remaining difference between them is layering.
+
+| Change                        | Should win (2026-10-28)                | Simulated fix                                                                                |
+| ----------------------------- | -------------------------------------- | -------------------------------------------------------------------------------------------- |
+| smart-app-banner dismiss icon | the banner's `cross` 1.25rem           | `.cross.cross` (0,2,0), so it beats `ClickableIcon`'s `.x svg` (0,1,1) in a single layer too |
+| navbar menu icon              | the navbar's `mobileMenuIcon` 1.5rem   | `.mobileMenuIcon.mobileMenuIcon`, same                                                       |
+| read-only OTP input padding   | `input-group`'s `[data-read-only]` 0   | both OTP inputs re-declare `[data-read-only]` and `[data-no-border]` `padding: 0`            |
+| read-only unit-number margin  | `input-group`'s `[data-read-only]` 4px | the hash container re-declares the read-only and right-position margins                      |
+
+| Comparison                        | Renders that differ | Of    | What they are                                                                                                                |
+| --------------------------------- | ------------------- | ----- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `flat-fixed` vs `styleedge-fixed` | **18**              | 2,076 | toast 11, timetable 3, countdown-timer 2, fullscreen-image-carousel 2: the noise stories above. **0 in the four components** |
+| `flat` vs `flat-fixed`            | 78                  | 2,076 | navbar 34, smart-app-banner 24 (the icon fixes change the single layer), plus noise                                          |
+| `styleedge` vs `styleedge-fixed`  | 55                  | 2,076 | otp-verification 24, unit-number 12 (the input fixes change the layered build), plus noise                                   |
+
+All 2,076 renders per library rendered, 0 failures. Traced values, the same on both
+libraries (`traces-fixed.txt`): banner icon 20px, navbar icon 24px, OTP read-only
+`padding-left` 0px (email and phone), unit-number read-only `margin-right` 4px.
+
+What it shows:
+
+-   **With the four fixes, layering changes no story render.** The 94 layering renders
+    become 0; the 18 left are the noise stories `repeat-check.sh` already classified.
+-   **Each fix works without layers.** The same patch gives the same result in one layer,
+    so a fix can land before the layered build ships.
+-   **The input fixes re-declare a parent's state rule in the child.** That is the spec's
+    "redeclare variant styles in every child" on a small scale: two components, three
+    rules. It is per-relationship work, so a component that composes `input-group` and
+    overrides its padding or margin needs the same.
+
+What it does **not** show:
+
+-   The e2e suite on the patched libraries: not run (Docker not running). Expected: the 17
+    icon tests (navbar 10, smart-app-banner 7) fail on both libraries until their
+    baselines are regenerated, and the OTP and unit-number tests pass.
+-   A source fix. The patch is on built CSS; the production fix is written in the style
+    files and goes through Linaria.
 
 ## Planned experiments
 
@@ -1066,11 +1111,13 @@ See [02-alternative-paths.md](02-alternative-paths.md).
 
 ## Verdict
 
-**Draft (2026-10-27): Adopt for subset, with conditions.** All three exit criteria
-are met on the evidence below (F8 reproduced, F16 fix verified over 5 builds, spec
-answered). What is left is checking that layering does not change visuals elsewhere
-(F16's banner icon) and the production work, not another unknown about the approach.
-Granularity (F14), theme delivery (F15) and the generator (F13) are measured.
+**Draft (2026-10-28): Adopt for subset, with conditions.** Exit criterion 1 is met (F8).
+Criterion 2 is met for order stability (F16: 5 builds, more than one entry point) and,
+with the four F17 fixes simulated, for the story screenshots (0 layering renders of
+2,076). It is not met as written until the e2e suite passes on the fixed build: not
+rerun yet. Criterion 3 still has two open parts: the edge scan behind granularity and
+condition 2 (E8), and consumer overrides measured on one rule only (E9). Granularity
+(F14), theme delivery (F15) and the generator (F13) are measured.
 
 Per-folder layers solve the reported problem and their known blocker is
 fixable, on the evidence so far:
@@ -1099,14 +1146,16 @@ Conditions for adopting:
    requirement and detect it (for example a dev-mode warning when a component
    layer appears before the statement), or to move the order statement out of the
    theme stylesheet into something every component loads first.
-4. **Fix the four regressions before shipping.** Layering resolves specificity
+4. **Resolve the four layering changes before shipping.** Layering resolves specificity
    differently from one layer. Against a single-layer build it changes 4 styles (94 of
    2,076 e2e story renders) and fails 38 e2e tests (F17): the banner and navbar icons
    grow, the OTP and unit-number read-only inputs gain padding or margin. Decided
-   2026-10-27 that none is intended, so each is a bug to fix in the component until
-   the layered build passes the existing e2e baselines. `depth` additionally breaks the
-   modal close button where the edge scan is incomplete; the scan must read every style
-   file and descendant selectors (F17) before `depth` can be trusted.
+   2026-10-28: the icon sizes are intended, so those components must win in both builds
+   and 17 e2e baselines are regenerated; the read-only inputs are regressions, fixed by
+   re-declaring `input-group`'s state rules in the component. Simulated, this leaves 0
+   layering renders (F17, simulated fixes). `depth` additionally breaks the modal close
+   button where the edge scan is incomplete; the scan must read every style file and
+   descendant selectors (F17) before `depth` can be trusted.
 
 Rejected alternatives to this verdict:
 
@@ -1147,22 +1196,25 @@ Still open:
 
 ## Follow-up tickets
 
-**Fix the four layering regressions (F17).** Decided 2026-10-27: not intended, keep
-today's rendering. Each is a pair of rules where the child's more specific rule wins in
-one layer and the parent's rule wins under layers; the fix is to make the layered build
-render today's value. Done when `docs/spike/experiments/sweep/run-e2e.sh` passes for the
-layered build with the existing baselines (38 failures today, `e2e-summary.txt`).
+**Resolve the four layering changes (F17), on the bug ticket.** Decided 2026-10-28,
+replacing the 2026-10-27 decision that all four were regressions: the consuming
+component's icon size is intended, and the read-only inputs keep today's rendering. Each
+is a pair of rules where the child's more specific rule wins in one layer and the
+parent's rule wins under layers; the fix makes both builds render the intended value.
+Done when `docs/spike/experiments/sweep/run-e2e.sh` passes for the layered build, with
+the 17 icon baselines regenerated (38 failures today, `e2e-summary.txt`).
 
-| Regression                                          | Rule that should win (today)                                                        | Rule that wins under layers                                                          |
-| --------------------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| Smart-app-banner dismiss icon 18px became 20px      | `src/shared/clickable-icon/clickable-icon.styles.ts:19` `svg { width: 1.125rem }`   | `src/smart-app-banner/smart-app-banner.styles.ts:59` `cross` 1.25rem                 |
-| Navbar menu icon 18px became 24px                   | `src/shared/clickable-icon/clickable-icon.styles.ts:19`, same rule                  | `src/navbar/navbar.styles.ts:96` `mobileMenuIcon` 1.5rem                             |
-| Read-only OTP input gains 16px side padding         | `src/input-group/input-group.styles.ts:14`, `:33` `[data-read-only] { padding: 0 }` | `src/otp-verification/contact-input-section.styles.ts:107`, `:123` `padding: 0 16px` |
-| Read-only unit-number divider margin 4px became 8px | `src/input-group/input-group.styles.ts:61` `[data-read-only] { margin-right: 4px }` | `src/unit-number/unit-number-input.styles.ts:5` `hashContainer` 0.5rem               |
+| Change                                              | Rule that should win                                                                             | Fix (simulated in F17)                                                     |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| Smart-app-banner dismiss icon 18px became 20px      | `src/smart-app-banner/smart-app-banner.styles.ts:59` `cross` 1.25rem (intended)                  | beat `ClickableIcon`'s `svg` rule in one layer too; regenerate 7 baselines |
+| Navbar menu icon 18px became 24px                   | `src/navbar/navbar.styles.ts:96` `mobileMenuIcon` 1.5rem (intended)                              | same; regenerate 10 baselines                                              |
+| Read-only OTP input gains 16px side padding         | `src/input-group/input-group.styles.ts:14`, `:33` `[data-read-only] { padding: 0 }` (regression) | re-declare it on both OTP inputs                                           |
+| Read-only unit-number divider margin 4px became 8px | `src/input-group/input-group.styles.ts:61` `[data-read-only] { margin-right: 4px }` (regression) | re-declare it, and the right-position margins, on the hash container       |
 
 Evidence: `sweep/traces-f17.txt` (competing rules and computed values per build),
 `sweep/cmp/` (side-by-side images), `sweep/e2e-results/` (reports; diff images are
-regenerated by `run-e2e.sh`).
+regenerated by `run-e2e.sh`), and for the fixes `sweep/simulate-fixes.mjs`,
+`sweep/results-*fixed*.jsonl` and `sweep/traces-fixed.txt`.
 
 Other follow-ups: TBD after the verdict. Production work is a rewrite, not a promotion of the
 `rl/css-layers` spike code. That includes the spike generator in
