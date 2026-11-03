@@ -151,7 +151,6 @@ export const ESignature = (props: EsignatureProps) => {
                     className={styles.modalCard}
                     data-mobile-landscape={isMobileLandscape}
                     fullscreen={isMobile || isMobileLandscape}
-                    fillHeight
                 >
                     <ModalV2.Header
                         title="Signature"

@@ -68,9 +68,7 @@ export const instructions = css`
 
 export const modalCard = css`
     width: 100%;
-    height: 29rem;
     max-width: 672px;
-    max-height: none;
     margin: 0 auto;
 `;
 

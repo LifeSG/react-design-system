@@ -212,8 +212,7 @@ export const slotSpacer = css`
     }
 `;
 
-/** Lets the slot area absorb the leftover height of a size-constrained card. */
-export const fillHeightSlotSpacer = css`
+export const fullscreenSlotSpacer = css`
     :where(&) {
         flex: 1;
         min-height: 0;
