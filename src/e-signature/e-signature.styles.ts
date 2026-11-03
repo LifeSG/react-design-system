@@ -1,7 +1,7 @@
 import { css } from "@linaria/core";
 
 import { slotSpacerTokens } from "../modal-v2/slots/slot-styles";
-import { Border, Colour, MediaQuery, Radius, Shadow, Spacing } from "../theme";
+import { Border, Colour, MediaQuery, Radius, Spacing } from "../theme";
 
 // -----------------------------------------------------------------------------
 // MAIN FIELD
@@ -73,7 +73,6 @@ export const modalCard = css`
     max-width: 672px;
     max-height: none;
     margin: 0 auto;
-    box-shadow: ${Shadow["lg-strong"]};
 
     ${slotSpacerTokens.contentLastChildMarginBottom}: 0;
 `;
