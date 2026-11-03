@@ -69,7 +69,12 @@ describe("ESignature", () => {
         drawSignature();
         fireEvent.click(screen.getByRole("button", { name: "Save" }));
 
+        await waitFor(() => {
+            expect(getSignatureModal()).not.toBeVisible();
+        });
+        // field stays inert until the modal's exit transition unmounts it
         expect(await findEditSignatureButton()).toBeInTheDocument();
+        expect(queryAddSignatureButton()).not.toBeInTheDocument();
         expect(changeFn).toHaveBeenCalled();
         expect(screen.getByAltText("Signature preview")).toBeInTheDocument();
     });
@@ -95,6 +100,10 @@ describe("ESignature", () => {
         fireEvent.click(screen.getByRole("button", { name: "Clear" }));
         fireEvent.click(screen.getByRole("button", { name: "Save" }));
 
+        await waitFor(() => {
+            expect(getSignatureModal()).not.toBeVisible();
+        });
+        // field stays inert until the modal's exit transition unmounts it
         expect(await findAddSignatureButton()).toBeInTheDocument();
     });
 });
