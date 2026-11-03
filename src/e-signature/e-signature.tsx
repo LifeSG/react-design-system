@@ -62,6 +62,7 @@ export const ESignature = (props: EsignatureProps) => {
             },
         ],
     });
+    const isFullscreenModal = isMobile || isMobileLandscape;
 
     // =============================================================================
     // EVENT HANDLERS
@@ -148,9 +149,8 @@ export const ESignature = (props: EsignatureProps) => {
                 onClose={() => setShowModal(false)}
             >
                 <ModalV2.Card
-                    className={styles.modalCard}
-                    data-mobile-landscape={isMobileLandscape}
-                    fullscreen={isMobile || isMobileLandscape}
+                    className={isFullscreenModal ? undefined : styles.modalCard}
+                    fullscreen={isFullscreenModal}
                 >
                     <ModalV2.Header
                         title="Signature"

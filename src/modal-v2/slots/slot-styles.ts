@@ -83,22 +83,13 @@ export const modalCard = css`
 `;
 
 /*
- * Deliberately high specificity, unlike the other card styles: `fullscreen` has
- * to win over sizing and spacing that a consumer sets via `className` (e.g.
- * e-signature's own modalCard pins height/max-width/padding/box-shadow). That
- * is also why every property it needs to neutralise is reset explicitly here
- * rather than relying on `modalCard` being absent.
+ * Not wrapped in :where(), so fullscreen sizing outranks the zero-specificity
+ * windowed styles. Consumers that resize the windowed card via `className`
+ * should omit that class when `fullscreen` is set.
  */
 export const fullscreenModalCard = css`
-    &&[data-fullscreen] {
-        width: 100%;
-        height: 100vh;
-        max-width: none;
-        margin: 0;
-        padding: 0;
-        border-radius: 0;
-        box-shadow: none;
-    }
+    width: 100%;
+    height: 100vh;
 `;
 
 export const closeButtonContainer = css`

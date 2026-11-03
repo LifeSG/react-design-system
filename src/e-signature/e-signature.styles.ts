@@ -66,6 +66,7 @@ export const instructions = css`
 // SIGNATURE MODAL
 // -----------------------------------------------------------------------------
 
+/* only applied to the windowed card; omitted when fullscreen */
 export const modalCard = css`
     width: 100%;
     max-width: 672px;
