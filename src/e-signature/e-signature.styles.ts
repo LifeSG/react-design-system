@@ -68,8 +68,7 @@ export const instructions = css`
 
 /* only applied to the windowed card; omitted when fullscreen */
 export const modalCard = css`
-    width: 100%;
-    max-width: 672px;
+    width: 672px;
     margin: 0 auto;
 `;
 
