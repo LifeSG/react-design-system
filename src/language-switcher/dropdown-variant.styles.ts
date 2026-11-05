@@ -21,11 +21,6 @@ export const expandableElement = css`
             color: ${Colour["text-selected"]};
         }
     }
-
-    &:focus-visible {
-        outline: 2px solid ${Colour["focus-ring"]};
-        outline-offset: -2px;
-    }
 `;
 
 export const languageIconWrapper = css`

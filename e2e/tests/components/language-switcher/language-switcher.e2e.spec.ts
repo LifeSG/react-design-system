@@ -119,9 +119,9 @@ test.describe("LanguageSwitcher", () => {
             });
 
             test("Preselected", async ({ story }) => {
-                await expect(story.locators.internal.trigger).toContainText(
-                    "中文"
-                );
+                await expect(
+                    story.locators.internal.trigger
+                ).toHaveAccessibleName(/中文/);
 
                 await compareScreenshot(story, "mount", {
                     locator: story.locators.languageSwitcher,
@@ -152,9 +152,9 @@ test.describe("LanguageSwitcher", () => {
                 await story.page.keyboard.press("ArrowDown");
                 await story.page.keyboard.press("Enter");
                 await expect(story.locators.internal.panel).not.toBeVisible();
-                await expect(story.locators.internal.trigger).toContainText(
-                    "中文"
-                );
+                await expect(
+                    story.locators.internal.trigger
+                ).toHaveAccessibleName(/中文/);
 
                 await story.page.keyboard.press("Enter");
                 await expect(story.locators.internal.panel).toBeVisible();

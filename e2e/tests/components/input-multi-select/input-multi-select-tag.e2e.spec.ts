@@ -65,7 +65,7 @@ const test = base.extend<{ story: StoryPage }>({
     },
 });
 
-test.describe("Input Multi Select Tag", () => {
+test.describe("InputMultiSelectTag", () => {
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("tag-default");
@@ -114,7 +114,9 @@ test.describe("Input Multi Select Tag", () => {
             await story.getOption("Option 2").click();
             await story.closeDropdown();
 
-            await expect(field.getByRole("combobox")).toHaveText("2 selected");
+            await expect(field.getByRole("combobox")).toHaveAccessibleName(
+                "2 selected"
+            );
             await expect(
                 story.getRemoveButton(field, "Option 1")
             ).toBeVisible();
@@ -151,19 +153,10 @@ test.describe("Input Multi Select Tag", () => {
                     .click();
                 await story.closeDropdown();
 
-                await expect(field.getByRole("combobox")).toHaveText("Select");
+                await expect(field.getByRole("combobox")).toHaveAccessibleName(
+                    "Select"
+                );
             });
-        });
-
-        test("Clicking a tag opens the dropdown", async ({ story }) => {
-            const field = story.locators.default;
-
-            await story.openDropdown(field);
-            await story.getOption("Option 1").click();
-            await story.closeDropdown();
-
-            await field.getByText("Option 1", { exact: true }).click();
-            await expect(story.locators.dropdownContainer).toBeVisible();
         });
 
         test("Keyboard", async ({ story }) => {

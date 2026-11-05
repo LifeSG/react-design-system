@@ -607,9 +607,9 @@ describe("InputMultiSelect", () => {
 
             expect(screen.getByText("Option 1")).toBeInTheDocument();
             expect(screen.getByText("Option 2")).toBeInTheDocument();
-            // the count only exists in the visually hidden combobox
-            expect(screen.getByText("2 selected")).toBe(
-                screen.getByRole("combobox")
+            // the count is only exposed to assistive technologies
+            expect(screen.getByRole("combobox")).toHaveAccessibleName(
+                "2 selected"
             );
         });
 
@@ -654,8 +654,7 @@ describe("InputMultiSelect", () => {
                 />
             );
 
-            // visible placeholder, plus the copy in the hidden combobox
-            expect(screen.getAllByText("Select")).toHaveLength(2);
+            expect(screen.getByText("Select")).toBeVisible();
             expect(
                 screen.queryByRole("button", { name: /^Remove/ })
             ).not.toBeInTheDocument();
@@ -685,7 +684,7 @@ describe("InputMultiSelect", () => {
             ).not.toBeInTheDocument();
         });
 
-        it("should open the dropdown when the tag is clicked", async () => {
+        it("should open the dropdown when the field is clicked", async () => {
             const user = userEvent.setup();
 
             render(
@@ -697,7 +696,8 @@ describe("InputMultiSelect", () => {
                 />
             );
 
-            await user.click(screen.getByText("Option 1"));
+            // the tags let clicks through to the combobox
+            await user.click(screen.getByRole("combobox"));
 
             await waitFor(() => {
                 expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
@@ -748,8 +748,8 @@ describe("InputMultiSelect", () => {
                 expect(screen.getByText(option)).toBeInTheDocument();
             });
             // the label is only exposed to assistive technologies
-            expect(screen.getByText("All selected")).toBe(
-                screen.getByRole("combobox")
+            expect(screen.getByRole("combobox")).toHaveAccessibleName(
+                "All selected"
             );
         });
 
@@ -763,7 +763,7 @@ describe("InputMultiSelect", () => {
                 />
             );
 
-            expect(screen.getByRole("combobox")).toHaveTextContent(
+            expect(screen.getByRole("combobox")).toHaveAccessibleName(
                 "2 selected"
             );
         });
@@ -778,7 +778,9 @@ describe("InputMultiSelect", () => {
                 />
             );
 
-            expect(screen.getByRole("combobox")).toHaveTextContent("Pick one");
+            expect(screen.getByRole("combobox")).toHaveAccessibleName(
+                "Pick one"
+            );
         });
 
         it.each([

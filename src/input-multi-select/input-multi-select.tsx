@@ -3,6 +3,7 @@ import findIndex from "lodash/findIndex";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 
+import { VisuallyHidden } from "../shared/accessibility";
 import {
     DropdownList,
     DropdownListState,
@@ -73,6 +74,7 @@ export const InputMultiSelect = <T, V>({
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
     const internalId = useId();
+    const tagSummaryId = `${internalId}-tag-summary`;
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const selectorRef = useRef<HTMLButtonElement>(null);
@@ -184,18 +186,6 @@ export const InputMultiSelect = <T, V>({
         return `item_${index}__${formattedValue}`;
     };
 
-    /**
-     * The tags are not announced, so the hidden combobox carries the same
-     * text a "count" display would show
-     */
-    const getHiddenLabel = () => {
-        if (selected.length === 0) {
-            return placeholder;
-        }
-
-        return getDisplayValue();
-    };
-
     const getDisplayValue = () => {
         if (options && selected.length === options.length) {
             return allSelectedLabel || "All selected";
@@ -224,18 +214,25 @@ export const InputMultiSelect = <T, V>({
     // RENDER FUNCTIONS
     // =============================================================================
     const renderTags = () => (
-        <SelectedTagList
-            removable={!disabled && !readOnly}
-            items={selected.map((item, index) => ({
-                key: getTagKey(item, index),
-                label: getTagLabel(item),
-                onRemove: () =>
-                    handleListItemClick(
-                        item,
-                        valueExtractor ? valueExtractor(item) : item
-                    ),
-            }))}
-        />
+        <>
+            {/* the tags are not announced, so the combobox is named by the
+            same text a "count" display would show */}
+            <VisuallyHidden id={tagSummaryId} aria-hidden>
+                {getDisplayValue()}
+            </VisuallyHidden>
+            <SelectedTagList
+                removable={!disabled && !readOnly}
+                items={selected.map((item, index) => ({
+                    key: getTagKey(item, index),
+                    label: getTagLabel(item),
+                    onRemove: () =>
+                        handleListItemClick(
+                            item,
+                            valueExtractor ? valueExtractor(item) : item
+                        ),
+                }))}
+            />
+        </>
     );
 
     const renderLabel = () => {
@@ -261,12 +258,13 @@ export const InputMultiSelect = <T, V>({
     };
 
     const isTagDisplay = displayVariant === "tag";
+    const showTags = isTagDisplay && selected.length > 0;
 
     const renderSelectorContent = () => {
         // LabelContainer cannot shrink below its content (min-width: auto),
         // which prevents long tags from truncating, so the tags go without it.
         // The tags have their own disabled styling
-        if (isTagDisplay && selected.length > 0) {
+        if (showTags) {
             return renderTags();
         }
 
@@ -298,8 +296,8 @@ export const InputMultiSelect = <T, V>({
                     popupRole="listbox"
                     readOnly={readOnly}
                     variant={variant}
-                    nestedInteractive={isTagDisplay}
-                    hiddenLabel={isTagDisplay ? getHiddenLabel() : undefined}
+                    dynamicHeight={isTagDisplay}
+                    valueLabelId={showTags ? tagSummaryId : undefined}
                     aria-labelledby={ariaLabelledBy}
                     aria-describedby={ariaDescribedBy}
                     aria-invalid={ariaInvalid}

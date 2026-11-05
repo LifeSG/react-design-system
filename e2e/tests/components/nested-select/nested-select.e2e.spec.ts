@@ -418,8 +418,8 @@ test.describe("NestedSelect", () => {
             await expect(
                 story.locators.internal.dropdownContainer
             ).not.toBeVisible();
-            await expect(story.locators.internal.selector).toContainText(
-                "Option 999-1"
+            await expect(story.locators.internal.selector).toHaveAccessibleName(
+                /Option 999-1/
             );
         });
     });
