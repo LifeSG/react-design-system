@@ -358,6 +358,7 @@ test.describe("ESignature", () => {
             await story.page.keyboard.press("Tab");
             await story.page.keyboard.press("Enter");
             await expect(story.locators.signatureModal).toBeVisible();
+            await waitForAnimationEnd(story.locators.signatureModal);
 
             // the container also wraps the focus guards that cycle focus
             const isFocusInDialog = () =>
@@ -365,14 +366,17 @@ test.describe("ESignature", () => {
                     el.contains(document.activeElement)
                 );
 
+            // initial focus is applied asynchronously after the modal opens
+            await expect.poll(isFocusInDialog).toBe(true);
+
             // more presses than focusable elements, so focus has to cycle
             for (let i = 0; i < 6; i++) {
                 await story.page.keyboard.press("Tab");
-                expect(await isFocusInDialog()).toBe(true);
+                await expect.poll(isFocusInDialog).toBe(true);
             }
             for (let i = 0; i < 6; i++) {
                 await story.page.keyboard.press("Shift+Tab");
-                expect(await isFocusInDialog()).toBe(true);
+                await expect.poll(isFocusInDialog).toBe(true);
             }
 
             await story.page.keyboard.press("Escape");
