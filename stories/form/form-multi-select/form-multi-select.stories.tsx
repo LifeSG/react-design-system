@@ -208,14 +208,25 @@ export const RenderingInGridLayout: StoryObj<Component> = {
 export const SmallVariant: StoryObj<StandaloneComponent> = {
     render: (_args) => {
         return (
-            <Form.MultiSelect
-                variant="small"
-                label="This is the small variant"
-                options={OPTIONS_DATA}
-                valueExtractor={(item) => item.value}
-                listExtractor={(item) => item.label}
-                enableSearch
-            />
+            <>
+                <Form.MultiSelect
+                    variant="small"
+                    label="This is the small variant"
+                    options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    enableSearch
+                />
+                <Form.MultiSelect
+                    variant="small"
+                    displayVariant="tag"
+                    label="This is the small variant with tags"
+                    options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    selectedOptions={[OPTIONS_DATA[0], OPTIONS_DATA[2]]}
+                />
+            </>
         );
     },
     decorators: [StoryDecorator({ maxWidth: true })],
@@ -232,27 +243,36 @@ export const TagDisplayVariant: StoryObj<Component> = {
             <>
                 <Form.MultiSelect
                     displayVariant="tag"
-                    label="This is the tag display variant"
+                    label="This is the select field"
                     options={OPTIONS_DATA}
                     valueExtractor={(item) => item.value}
                     listExtractor={(item) => item.label}
                 />
                 <Form.MultiSelect
                     displayVariant="tag"
-                    label="Tags can be removed with the x or by unchecking the option"
+                    label="This is the disabled state"
                     options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    selectedOptions={[OPTIONS_DATA[0], OPTIONS_DATA[2]]}
+                    disabled
+                />
+                <Form.MultiSelect
+                    displayVariant="tag"
+                    label="This is the error state"
+                    options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    errorMessage="Selection is required"
+                />
+                <Form.MultiSelect
+                    displayVariant="tag"
+                    label="This has preselected items"
+                    options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
                     selectedOptions={selected}
                     onSelectOptions={setSelected}
-                    valueExtractor={(item) => item.value}
-                    listExtractor={(item) => item.label}
-                />
-                <Form.MultiSelect
-                    displayVariant="tag"
-                    label="All options selected shows every tag"
-                    options={OPTIONS_DATA}
-                    selectedOptions={OPTIONS_DATA}
-                    valueExtractor={(item) => item.value}
-                    listExtractor={(item) => item.label}
                 />
             </>
         );
@@ -264,6 +284,14 @@ export const TagOverflow: StoryObj<Component> = {
     render: (_args) => {
         return (
             <>
+                <Form.MultiSelect
+                    displayVariant="tag"
+                    label="All options selected shows every tag"
+                    options={OPTIONS_DATA}
+                    selectedOptions={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                />
                 <Form.MultiSelect
                     displayVariant="tag"
                     label="Tags wrap and collapse into 'and X more' after 4 rows"
@@ -278,52 +306,6 @@ export const TagOverflow: StoryObj<Component> = {
                     label="A long label is truncated to one line"
                     options={LONG_OPTIONS_DATA}
                     selectedOptions={LONG_OPTIONS_DATA}
-                    valueExtractor={(item) => item.value}
-                    listExtractor={(item) => item.label}
-                />
-            </>
-        );
-    },
-    decorators: [StoryDecorator({ maxWidth: true })],
-};
-
-export const TagStates: StoryObj<Component> = {
-    render: (_args) => {
-        return (
-            <>
-                <Form.MultiSelect
-                    displayVariant="tag"
-                    label="Disabled"
-                    disabled
-                    options={OPTIONS_DATA}
-                    selectedOptions={OPTIONS_DATA.slice(0, 3)}
-                    valueExtractor={(item) => item.value}
-                    listExtractor={(item) => item.label}
-                />
-                <Form.MultiSelect
-                    displayVariant="tag"
-                    label="Read-only"
-                    readOnly
-                    options={OPTIONS_DATA}
-                    selectedOptions={OPTIONS_DATA.slice(0, 3)}
-                    valueExtractor={(item) => item.value}
-                    listExtractor={(item) => item.label}
-                />
-                <Form.MultiSelect
-                    displayVariant="tag"
-                    label="Error"
-                    errorMessage="Selection is required"
-                    options={OPTIONS_DATA}
-                    selectedOptions={OPTIONS_DATA.slice(0, 3)}
-                    valueExtractor={(item) => item.value}
-                    listExtractor={(item) => item.label}
-                />
-                <Form.MultiSelect
-                    displayVariant="tag"
-                    variant="small"
-                    label="Small variant"
-                    options={OPTIONS_DATA}
-                    selectedOptions={OPTIONS_DATA.slice(0, 3)}
                     valueExtractor={(item) => item.value}
                     listExtractor={(item) => item.label}
                 />
