@@ -8,6 +8,7 @@ import {
     DropdownList,
     DropdownListState,
     ExpandableElement,
+    SelectedTagList,
 } from "../shared/dropdown-list";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
@@ -17,7 +18,6 @@ import {
 } from "../shared/dropdown-wrapper/dropdown-wrapper";
 import { InputBox } from "../shared/input-wrapper/input-wrapper";
 import { useId } from "../util";
-import { SelectedTagList } from "./selected-tag-list";
 import type { InputMultiSelectProps } from "./types";
 
 // @catalog

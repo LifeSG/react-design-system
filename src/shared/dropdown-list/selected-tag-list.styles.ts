@@ -1,6 +1,6 @@
 import { css } from "@linaria/core";
 
-import { Border, Colour, Font, Radius, Spacing } from "../theme";
+import { Border, Colour, Font, Radius, Spacing } from "../../theme";
 
 // =============================================================================
 // STYLING
@@ -20,7 +20,7 @@ export const tag = css`
     gap: ${Spacing["spacing-4"]};
     min-width: 0;
     max-width: 100%;
-    padding: 0.125rem 0.5rem;
+    padding: 2px ${Spacing["spacing-8"]};
     border: ${Border["width-010"]} ${Border["solid"]}
         ${Colour["border-primary"]};
     border-radius: ${Radius["sm"]};

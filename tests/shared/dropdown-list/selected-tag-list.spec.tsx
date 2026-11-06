@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { SelectedTagList } from "src/input-multi-select/selected-tag-list";
+import { SelectedTagList } from "src/shared/dropdown-list/selected-tag-list";
 
 const TAGS_PER_ROW = 2;
 

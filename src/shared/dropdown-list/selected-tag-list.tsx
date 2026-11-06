@@ -1,8 +1,10 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import clsx from "clsx";
+import type React from "react";
 import { useRef, useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
 
-import { useIsomorphicLayoutEffect } from "../util";
+import { useIsomorphicLayoutEffect } from "../../util";
 import * as styles from "./selected-tag-list.styles";
 
 export interface SelectedTagListItem {
@@ -32,10 +34,14 @@ export const SelectedTagList = ({
     // =========================================================================
     // `null` renders every tag so that the rows can be measured
     const [visibleCount, setVisibleCount] = useState<number | null>(null);
-    const [width, setWidth] = useState<number>(0);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const measuredSignatureRef = useRef<string>();
+
+    const { width } = useResizeDetector({
+        targetRef: containerRef,
+        handleHeight: false,
+    });
 
     const itemsSignature = JSON.stringify(
         items.map(({ key, label }) => [key, label])
@@ -44,21 +50,15 @@ export const SelectedTagList = ({
     // =========================================================================
     // EFFECTS
     // =========================================================================
-    useIsomorphicLayoutEffect(() => {
-        const element = containerRef.current;
-
-        if (!element || typeof ResizeObserver === "undefined") {
-            return;
-        }
-
-        const observer = new ResizeObserver(([entry]) => {
-            setWidth(Math.round(entry.contentRect.width));
-        });
-        observer.observe(element);
-
-        return () => observer.disconnect();
-    }, []);
-
+    /**
+     * Measures how many tags fit within `maxRows`. This runs over several
+     * layout-effect passes before paint:
+     * 1. `visibleCount === null`: render every tag and find the first one that
+     *    starts on row `maxRows + 1`
+     * 2. render up to that tag plus the "and X more" tag
+     * 3. if "and X more" wrapped onto a new row, hide one more tag and repeat
+     * Changes to the items, width or `maxRows` reset to step 1.
+     */
     useIsomorphicLayoutEffect(() => {
         const element = containerRef.current;
 
@@ -66,8 +66,9 @@ export const SelectedTagList = ({
             return;
         }
 
-        // changes in tags or width invalidate the previous measurement
-        const signature = `${itemsSignature}|${width}|${maxRows}`;
+        const signature = `${itemsSignature}|${Math.round(
+            width ?? 0
+        )}|${maxRows}`;
         if (measuredSignatureRef.current !== signature) {
             measuredSignatureRef.current = signature;
 
@@ -77,24 +78,41 @@ export const SelectedTagList = ({
             }
         }
 
+        // tags wrap in DOM order, so offsetTop never decreases
         const tags = Array.from(element.children) as HTMLElement[];
-        const rowTops = Array.from(new Set(tags.map((tag) => tag.offsetTop)));
-        rowTops.sort((a, b) => a - b);
+        let rows = 0;
+        let lastTop: number | undefined;
+        const firstHiddenIndex = tags.findIndex((tag) => {
+            if (tag.offsetTop !== lastTop) {
+                rows += 1;
+                lastTop = tag.offsetTop;
+            }
+            return rows > maxRows;
+        });
 
-        if (rowTops.length <= maxRows) {
+        if (firstHiddenIndex === -1) {
+            // fits within maxRows
             return;
         }
 
         if (visibleCount === null) {
-            const firstHiddenIndex = tags.findIndex(
-                (tag) => tag.offsetTop >= rowTops[maxRows]
-            );
             setVisibleCount(firstHiddenIndex);
         } else if (visibleCount > 0) {
             // the "and X more" tag does not fit in the last row
             setVisibleCount(visibleCount - 1);
         }
     }, [visibleCount, itemsSignature, width, maxRows]);
+
+    // =========================================================================
+    // EVENT HANDLERS
+    // =========================================================================
+    const handleRemoveClick =
+        (onRemove: () => void) =>
+        (event: React.MouseEvent<HTMLButtonElement>) => {
+            // do not toggle the dropdown
+            event.stopPropagation();
+            onRemove();
+        };
 
     // =========================================================================
     // RENDER FUNCTIONS
@@ -121,11 +139,7 @@ export const SelectedTagList = ({
                             type="button"
                             className={styles.removeButton}
                             aria-label={`Remove ${label}`}
-                            onClick={(event) => {
-                                // do not toggle the dropdown
-                                event.stopPropagation();
-                                onRemove();
-                            }}
+                            onClick={handleRemoveClick(onRemove)}
                         >
                             <CrossIcon aria-hidden />
                         </button>

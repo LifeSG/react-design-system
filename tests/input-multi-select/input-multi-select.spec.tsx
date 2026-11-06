@@ -594,6 +594,7 @@ describe("InputMultiSelect", () => {
             expect(screen.queryByText("Option 1")).not.toBeInTheDocument();
         });
     });
+
     describe("tag display variant", () => {
         it("should show one tag per selected option", () => {
             render(
