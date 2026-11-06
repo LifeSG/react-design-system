@@ -91,12 +91,12 @@ test.describe("InputMultiSelectTag", () => {
 
             await test.step("Accessibility", async () => {
                 await expect(field.getByRole("combobox")).toMatchAriaSnapshot(`
-                    - combobox: /Select/
+                    - combobox "Select"
                 `);
 
                 await story.selectAll(field);
                 await expect(field.getByRole("combobox")).toMatchAriaSnapshot(`
-                    - combobox: /All selected/
+                    - combobox "All selected"
                 `);
             });
         });
