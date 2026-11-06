@@ -106,3 +106,17 @@
      fds.unit-number  .h1ujh1ah  margin-right: 0.5rem
      main  *  margin-right: 0px
      main  *  margin: 0px
+######## flat-fixed
+ [navbar/submenu c160mxwv width]
+  .c160mxwv width: computed 18px
+     fds.all  .c160mxwv  width: 1.25rem
+     fds.all  .c1s8ur0k  width: 1.125rem
+ [navbar/default c160mxwv width]
+  .c160mxwv width: computed (element not found)
+######## styleedge-fixed
+ [navbar/submenu c160mxwv width]
+  .c160mxwv width: computed 18px
+     fds.navbar  .c160mxwv  width: 1.25rem
+     fds.navbar  .c1s8ur0k  width: 1.125rem
+ [navbar/default c160mxwv width]
+  .c160mxwv width: computed (element not found)

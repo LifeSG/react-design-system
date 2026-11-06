@@ -1,0 +1,50 @@
+== flat-fixed: 18 not passing (18 failed, 0 flaky)
+  navbar (9)
+     bookingsg theme  |  screenshot, 2192/2192/2192/2192/2192/2192 px
+     bookingsg theme  |  screenshot, 2114/2114/2114/2114/2114/2114 px
+     Secondary brand  |  screenshot, 2195/2195/2195/2195/2195/2195 px
+     Collapsed  |  screenshot, 96/96/96/96/96/96 px
+     Collapsed (dark mode)  |  screenshot, 96/96/96/96/96/96 px
+     Secondary brand  |  screenshot, 1454/1454/1454/1454/1454/1454 px
+     Custom action button  |  screenshot, 646/646/646/646/646/646 px
+     Uncollapsible action buttons  |  screenshot, 611/611/611/611/611/611 px
+     Hamburger button shows focus highlight  |  screenshot, 432/432/432/432/432/432 px
+  smart-app-banner (7)
+     Default appearance  |  screenshot, 1645/1645/1645/1645/1645/1645 px
+     Default appearance (dark mode)  |  screenshot, 1816/1816/1816/1816/1816/1816 px
+     No message  |  screenshot, 920/920/920/920/920/920 px
+     All stars filled  |  screenshot, 1600/1600/1600/1600/1600/1600 px
+     Partial stars with half star  |  screenshot, 1714/1714/1714/1714/1714/1714 px
+     Zero stars (all empty)  |  screenshot, 1945/1945/1945/1945/1945/1945 px
+     No rating shown for invalid value  |  screenshot, 1445/1445/1445/1445/1445/1445 px
+  footer (2)
+     bookingsg theme  |  screenshot, 1638/1638/1638/1638/1638/1638 px
+     bookingsg theme  |  screenshot, 1706/1706/1706/1706/1706/1706 px
+== styleedge-fixed: 23 not passing (22 failed, 1 flaky)
+  navbar (13)
+     bookingsg theme  |  screenshot, 2192/2192/2192/2192/2192/2192 px
+     bookingsg theme  |  screenshot, 2114/2114/2114/2114/2114/2114 px
+     Secondary brand  |  screenshot, 2195/2195/2195/2195/2195/2195 px
+     Mobile  |  screenshot, 7374/7374/7374/7374/7374/7374 px
+     Collapsed  |  screenshot, 96/96/96/96/96/96 px
+     Collapsed (dark mode)  |  screenshot, 96/96/96/96/96/96 px
+     Secondary brand  |  screenshot, 1454/1454/1454/1454/1454/1454 px
+     Custom action button  |  screenshot, 646/646/646/646/646/646 px
+     Submenu  |  screenshot, 7914/7914/7914/9303/9303/9303/7914/7914/7914/9303/9303/9303 px
+     Submenu (selected item)  |  screenshot, 9287/9287/9287/7939/7939/7939/9287/9287/9287/7939/7939/7939 px
+     Submenu (dark mode)  |  screenshot, 8174/8174/8174/9564/9564/9564/8174/8174/8174/9564/9564/9564 px
+     Uncollapsible action buttons  |  screenshot, 611/611/611/611/611/611 px
+     Hamburger button shows focus highlight  |  screenshot, 432/432/432/432/432/432 px
+  smart-app-banner (7)
+     Default appearance  |  screenshot, 1645/1645/1645/1645/1645/1645 px
+     Default appearance (dark mode)  |  screenshot, 1816/1816/1816/1816/1816/1816 px
+     No message  |  screenshot, 920/920/920/920/920/920 px
+     All stars filled  |  screenshot, 1600/1600/1600/1600/1600/1600 px
+     Partial stars with half star  |  screenshot, 1714/1714/1714/1714/1714/1714 px
+     Zero stars (all empty)  |  screenshot, 1945/1945/1945/1945/1945/1945 px
+     No rating shown for invalid value  |  screenshot, 1445/1445/1445/1445/1445/1445 px
+  footer (2)
+     bookingsg theme  |  screenshot, 1638/1638/1638/1638/1638/1638 px
+     bookingsg theme  |  screenshot, 1706/1706/1706/1706/1706/1706 px
+  data-table (1)
+     [flaky] Floating  |  screenshot, 84789/84789/84789 px

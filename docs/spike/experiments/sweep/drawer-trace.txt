@@ -1,0 +1,22 @@
+######## flat-fixed
+  drawer  svg width 24px
+     fds.all  .m18ljjag svg  width: 1.125rem
+     fds.all  .csth4gk  width: 1.5rem
+     fds.all  .c4lb5hz svg  width: 1.5rem
+  link__mobile-2-expand-collapse-button  svg width 18px
+     fds.all  .m18ljjag svg  width: 1.125rem
+     fds.all  .c160mxwv  width: 1.25rem
+  link__mobile-3-expand-collapse-button  svg width 18px
+     fds.all  .m18ljjag svg  width: 1.125rem
+     fds.all  .c160mxwv  width: 1.25rem
+######## styleedge-fixed
+  drawer  svg width 24px
+     fds.shared  .m18ljjag svg  width: 1.125rem
+     fds.navbar  .csth4gk  width: 1.5rem
+     fds.navbar  .c4lb5hz svg  width: 1.5rem
+  link__mobile-2-expand-collapse-button  svg width 20px
+     fds.shared  .m18ljjag svg  width: 1.125rem
+     fds.navbar  .c160mxwv  width: 1.25rem
+  link__mobile-3-expand-collapse-button  svg width 20px
+     fds.shared  .m18ljjag svg  width: 1.125rem
+     fds.navbar  .c160mxwv  width: 1.25rem

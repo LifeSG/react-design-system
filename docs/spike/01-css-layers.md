@@ -942,9 +942,11 @@ What it shows:
     degrades more gracefully.
 -   Earlier I wrote that layer-versus-specificity flips were a single case (F16). They
     are four components under `styleedge`, five counting the `depth`-only modal.
--   **The sweep and the e2e suite agree.** The suite reaches interaction states the
-    sweep cannot and found no further component, so the four are the full set the
-    repo's own tests can see.
+-   **The sweep and the e2e suite agree on components.** The suite reaches interaction
+    states the sweep cannot and found no further component. **Correction (simulated
+    fixes, below):** not on the full set of changes. A fifth flip, the navbar's mobile
+    submenu chevron, shows only once the drawer opens and was hidden among the navbar
+    failures here; it surfaced when the other fixes removed them.
 
 What it does **not** show:
 
@@ -961,17 +963,23 @@ What it does **not** show:
 `LIBS="flat-fixed styleedge-fixed" SCHEMES="light dark" VIEWPORTS="desktop mobile"
 ./run-sweep.sh` (17 min; log in `run-sweep-fixed.log`), then `node diff-sweep.mjs <ref>
 <lib>` for each pair (results in `sweep/results-*fixed*.jsonl`), and `LIBS="flat-fixed
-styleedge-fixed" TRACE_OUT=traces-fixed.txt ./trace-run.sh ...` for the values. The
-script patches the built CSS, not `src/`, inserting each fix right after the component's
+styleedge-fixed" TRACE_OUT=traces-fixed.txt ./trace-run.sh ...` for the values. The e2e
+suite: `LIBS="flat-fixed styleedge-fixed" ./run-e2e.sh` (reports
+`e2e-results/*-fixed-full.json`), then, after the chevron fix, the same with
+`SPECS="e2e/tests/components/navbar e2e/tests/components/smart-app-banner
+e2e/tests/components/footer e2e/tests/components/otp-verification
+e2e/tests/components/unit-number"` (`e2e-results/*-fixed-5spec.json`); the chevron is
+traced by `drawer-trace.mjs` (`drawer-trace.txt`). The script patches the built CSS, not `src/`, inserting each fix right after the component's
 own rule in its own layer, as a source fix would compile. The same patch goes into
 both libraries, so a remaining difference between them is layering.
 
-| Change                        | Should win (2026-10-28)                | Simulated fix                                                                                |
-| ----------------------------- | -------------------------------------- | -------------------------------------------------------------------------------------------- |
-| smart-app-banner dismiss icon | the banner's `cross` 1.25rem           | `.cross.cross` (0,2,0), so it beats `ClickableIcon`'s `.x svg` (0,1,1) in a single layer too |
-| navbar menu icon              | the navbar's `mobileMenuIcon` 1.5rem   | `.mobileMenuIcon.mobileMenuIcon`, same                                                       |
-| read-only OTP input padding   | `input-group`'s `[data-read-only]` 0   | both OTP inputs re-declare `[data-read-only]` and `[data-no-border]` `padding: 0`            |
-| read-only unit-number margin  | `input-group`'s `[data-read-only]` 4px | the hash container re-declares the read-only and right-position margins                      |
+| Change                        | Should win (2026-10-28)                                 | Simulated fix                                                                                |
+| ----------------------------- | ------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| smart-app-banner dismiss icon | the banner's `cross` 1.25rem                            | `.cross.cross` (0,2,0), so it beats `ClickableIcon`'s `.x svg` (0,1,1) in a single layer too |
+| navbar menu icon              | the navbar's `mobileMenuIcon` 1.5rem                    | `.mobileMenuIcon.mobileMenuIcon`, same                                                       |
+| navbar mobile submenu chevron | the navbar's `chevronIcon` 1.25rem (decided 2026-11-03) | `.expandCollapseButton .chevronIcon` (0,2,0), scoped so the desktop chevron keeps 1.125rem   |
+| read-only OTP input padding   | `input-group`'s `[data-read-only]` 0                    | both OTP inputs re-declare `[data-read-only]` and `[data-no-border]` `padding: 0`            |
+| read-only unit-number margin  | `input-group`'s `[data-read-only]` 4px                  | the hash container re-declares the read-only and right-position margins                      |
 
 | Comparison                        | Renders that differ | Of    | What they are                                                                                                                |
 | --------------------------------- | ------------------- | ----- | ---------------------------------------------------------------------------------------------------------------------------- |
@@ -982,11 +990,38 @@ both libraries, so a remaining difference between them is layering.
 All 2,076 renders per library rendered, 0 failures. Traced values, the same on both
 libraries (`traces-fixed.txt`): banner icon 20px, navbar icon 24px, OTP read-only
 `padding-left` 0px (email and phone), unit-number read-only `margin-right` 4px.
+The sweep ran before the chevron fix; the chevron is not on any story at rest, so the
+sweep cannot see it either way.
+
+| e2e run                          | `flat-fixed`                           | `styleedge-fixed`                               |
+| -------------------------------- | -------------------------------------- | ----------------------------------------------- |
+| Full suite, four fixes           | 1,088 passed, **18 failed**, 1 skipped | 1,083 passed, **22 failed**, 1 flaky, 1 skipped |
+| 5 spec folders, with the chevron | 134 passed, **22 failed**              | 134 passed, **22 failed**: the same 22 tests    |
+
+-   **OTP and unit-number pass on both** (14 and 7 failures before the fixes).
+-   **The 4 tests failing only on `styleedge-fixed` in the full run** are navbar Mobile,
+    Submenu, Submenu (selected item) and Submenu (dark mode): the mobile chevron, 18px in one
+    layer and 20px layered (`drawer-trace.txt`: `shared .m18ljjag svg` 1.125rem beat
+    `navbar .c160mxwv` 1.25rem on specificity). Decided 2026-11-03: 20px is intended, like the
+    other icons. With its fix, both libraries fail the same tests.
+-   **The 22 left are not layering**, since they fail on both libraries:
+    -   16 icon baselines still showing the 18px icons: smart-app-banner 7, navbar 9 (menu
+        icon 5: Collapsed, Collapsed dark, Custom action button, Uncollapsible action
+        buttons, Hamburger focus; chevron 4). Regenerated on the bug ticket.
+    -   6 BookingSG logo tests (navbar bookingsg theme 2, navbar Secondary brand 2, footer
+        bookingsg theme 2): the diff is only the BookingSG logo, loaded from
+        `booking.gov.sg`. In the F17 run on 2026-10-27 all six passed on `flat` (only
+        `styleedge`'s desktop Secondary brand failed, on the menu icon), and the remote
+        logo's `last-modified` is 2026-10-29, so it changed between the runs. Stale
+        baselines, outside this spike.
+-   The 1 flaky test (`data-table` Floating) failed once and passed on retry; `data-table`
+    differs in no sweep render.
 
 What it shows:
 
--   **With the four fixes, layering changes no story render.** The 94 layering renders
-    become 0; the 18 left are the noise stories `repeat-check.sh` already classified.
+-   **With the five fixes, layering changes no story render and fails no e2e test.** The 94
+    layering renders become 0; the 18 left are the noise stories `repeat-check.sh` already
+    classified. The e2e failures are the same set on both libraries.
 -   **Each fix works without layers.** The same patch gives the same result in one layer,
     so a fix can land before the layered build ships.
 -   **The input fixes re-declare a parent's state rule in the child.** That is the spec's
@@ -996,9 +1031,11 @@ What it shows:
 
 What it does **not** show:
 
--   The e2e suite on the patched libraries: not run (Docker not running). Expected: the 17
-    icon tests (navbar 10, smart-app-banner 7) fail on both libraries until their
-    baselines are regenerated, and the OTP and unit-number tests pass.
+-   The full e2e suite with all five fixes: the last run covered the 5 spec folders the fixes
+    touch. The other 87 specs passed or flaked identically on both libraries in the
+    full run, and the chevron fix does not touch their CSS.
+-   Other flips in states no spec scripts. The chevron was found only because the e2e suite
+    opens the drawer; E8's runtime scan is the check for the rest.
 -   A source fix. The patch is on built CSS; the production fix is written in the style
     files and goes through Linaria.
 
@@ -1111,11 +1148,13 @@ See [02-alternative-paths.md](02-alternative-paths.md).
 
 ## Verdict
 
-**Draft (2026-10-28): Adopt for subset, with conditions.** Exit criterion 1 is met (F8).
+**Draft (2026-11-03): Adopt for subset, with conditions.** Exit criterion 1 is met (F8).
 Criterion 2 is met for order stability (F16: 5 builds, more than one entry point) and,
-with the four F17 fixes simulated, for the story screenshots (0 layering renders of
-2,076). It is not met as written until the e2e suite passes on the fixed build: not
-rerun yet. Criterion 3 still has two open parts: the edge scan behind granularity and
+with the five F17 fixes simulated, for the Playwright screenshots: 0 layering renders of
+2,076, and the e2e suite fails the same tests on the single-layer and layered builds.
+Those failures are 16 icon baselines to regenerate and 6 stale BookingSG logo
+baselines, none layering. It is met as written once the fixes land and the baselines
+are regenerated (condition 4). Criterion 3 still has two open parts: the edge scan behind granularity and
 condition 2 (E8), and consumer overrides measured on one rule only (E9). Granularity
 (F14), theme delivery (F15) and the generator (F13) are measured.
 
@@ -1146,14 +1185,16 @@ Conditions for adopting:
    requirement and detect it (for example a dev-mode warning when a component
    layer appears before the statement), or to move the order statement out of the
    theme stylesheet into something every component loads first.
-4. **Resolve the four layering changes before shipping.** Layering resolves specificity
-   differently from one layer. Against a single-layer build it changes 4 styles (94 of
-   2,076 e2e story renders) and fails 38 e2e tests (F17): the banner and navbar icons
-   grow, the OTP and unit-number read-only inputs gain padding or margin. Decided
-   2026-10-28: the icon sizes are intended, so those components must win in both builds
-   and 17 e2e baselines are regenerated; the read-only inputs are regressions, fixed by
-   re-declaring `input-group`'s state rules in the component. Simulated, this leaves 0
-   layering renders (F17, simulated fixes). `depth` additionally breaks the modal close
+4. **Resolve the five layering changes before shipping.** Layering resolves specificity
+   differently from one layer. Against a single-layer build it changes 4 styles on the
+   stories (94 of 2,076 e2e story renders) and fails 38 e2e tests (F17): the banner and
+   navbar icons grow, the OTP and unit-number read-only inputs gain padding or margin. A
+   fifth, the navbar's mobile submenu chevron (18px to 20px), shows only with the drawer
+   open. Decided 2026-10-28 and 2026-11-03: the three icon sizes are intended, so those
+   components must win in both builds and 16 e2e baselines are regenerated; the read-only
+   inputs are regressions, fixed by re-declaring `input-group`'s state rules in the
+   component. Simulated, this leaves 0 layering renders and no e2e test failing on only
+   one build (F17, simulated fixes). `depth` additionally breaks the modal close
    button where the edge scan is incomplete; the scan must read every style file and
    descendant selectors (F17) before `depth` can be trusted.
 
@@ -1196,18 +1237,22 @@ Still open:
 
 ## Follow-up tickets
 
-**Resolve the four layering changes (F17), on the bug ticket.** Decided 2026-10-28,
-replacing the 2026-10-27 decision that all four were regressions: the consuming
-component's icon size is intended, and the read-only inputs keep today's rendering. Each
-is a pair of rules where the child's more specific rule wins in one layer and the
-parent's rule wins under layers; the fix makes both builds render the intended value.
-Done when `docs/spike/experiments/sweep/run-e2e.sh` passes for the layered build, with
-the 17 icon baselines regenerated (38 failures today, `e2e-summary.txt`).
+**Resolve the five layering changes (F17), on the bug ticket.** Decided 2026-10-28
+(chevron 2026-11-03), replacing the 2026-10-27 decision that the first four were
+regressions: the consuming component's icon size is intended, and the read-only inputs
+keep today's rendering. Each is a pair of rules where the child's more specific rule
+wins in one layer and the parent's rule wins under layers; the fix makes both builds
+render the intended value. Done when `docs/spike/experiments/sweep/run-e2e.sh` passes for
+the layered build, with the 16 icon baselines regenerated (38 failures before the fixes,
+`e2e-summary.txt`; 22 with the simulated fixes, the same on both builds, F17). The 4
+BookingSG logo baselines (navbar 4, footer 2) are stale against the remote logo and
+fail on both builds; they need regenerating too, but are not layering.
 
 | Change                                              | Rule that should win                                                                             | Fix (simulated in F17)                                                     |
 | --------------------------------------------------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
 | Smart-app-banner dismiss icon 18px became 20px      | `src/smart-app-banner/smart-app-banner.styles.ts:59` `cross` 1.25rem (intended)                  | beat `ClickableIcon`'s `svg` rule in one layer too; regenerate 7 baselines |
-| Navbar menu icon 18px became 24px                   | `src/navbar/navbar.styles.ts:96` `mobileMenuIcon` 1.5rem (intended)                              | same; regenerate 10 baselines                                              |
+| Navbar menu icon 18px became 24px                   | `src/navbar/navbar.styles.ts:96` `mobileMenuIcon` 1.5rem (intended)                              | same; regenerate 5 baselines                                               |
+| Navbar mobile submenu chevron 18px became 20px      | `src/navbar/navbar-items.styles.ts:165` `chevronIcon` 1.25rem (intended)                         | same, scoped to `expandCollapseButton`; regenerate 4 baselines             |
 | Read-only OTP input gains 16px side padding         | `src/input-group/input-group.styles.ts:14`, `:33` `[data-read-only] { padding: 0 }` (regression) | re-declare it on both OTP inputs                                           |
 | Read-only unit-number divider margin 4px became 8px | `src/input-group/input-group.styles.ts:61` `[data-read-only] { margin-right: 4px }` (regression) | re-declare it, and the right-position margins, on the hash container       |
 

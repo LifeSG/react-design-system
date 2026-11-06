@@ -1,0 +1,3071 @@
+[1A[2K[2m[WebServer] [22m
+[2m[WebServer] [22m> @lifesg/react-design-system@4.0.0-alpha.14 test-e2e:docker
+[2m[WebServer] [22m> docker compose up --build
+[2m[WebServer] [22m
+
+[1A[2K[2m[WebServer] [22m Image react-design-system-playwright-tests Building 
+
+[1A[2K[2m[WebServer] [22m#1 [internal] load local bake definitions
+
+[1A[2K[2m[WebServer] [22m#1 reading from stdin 618B done
+[2m[WebServer] [22m#1 DONE 0.0s
+
+[1A[2K[2m[WebServer] [22m
+[2m[WebServer] [22m#2 [internal] load build definition from Dockerfile
+
+[1A[2K[2m[WebServer] [22m#2 transferring dockerfile: 289B done
+[2m[WebServer] [22m#2 DONE 0.0s
+[2m[WebServer] [22m
+[2m[WebServer] [22m#3 [internal] load metadata for mcr.microsoft.com/playwright:v1.58.2-noble
+[2m[WebServer] [22m#3 DONE 0.0s
+[2m[WebServer] [22m
+[2m[WebServer] [22m#4 [internal] load .dockerignore
+[2m[WebServer] [22m#4 transferring context: 2B done
+[2m[WebServer] [22m#4 DONE 0.0s
+[2m[WebServer] [22m
+[2m[WebServer] [22m#5 [1/2] FROM mcr.microsoft.com/playwright:v1.58.2-noble@sha256:6446946a1d9fd62d9ae501312a2d76a43ee688542b21622056a372959b65d63d
+[2m[WebServer] [22m#5 resolve mcr.microsoft.com/playwright:v1.58.2-noble@sha256:6446946a1d9fd62d9ae501312a2d76a43ee688542b21622056a372959b65d63d done
+[2m[WebServer] [22m#5 DONE 0.0s
+[2m[WebServer] [22m
+[2m[WebServer] [22m#6 [2/2] WORKDIR /home/pwuser
+[2m[WebServer] [22m#6 CACHED
+[2m[WebServer] [22m
+[2m[WebServer] [22m#7 exporting to image
+[2m[WebServer] [22m#7 exporting layers done
+[2m[WebServer] [22m#7 exporting manifest sha256:2472513c4c3bcf18b910a5d2757f2d2c50c0e4483ecd5b9c60440079300a3724 done
+[2m[WebServer] [22m#7 exporting config sha256:087ae4b0d78d31fcbf2639c79dd995b7d6377bf61b6f7fea8730742855707caa done
+[2m[WebServer] [22m#7 exporting attestation manifest sha256:f49e388a5ed96868274bb0043752977a1011596f481b8249bc115b4b042ed3fd done
+[2m[WebServer] [22m#7 exporting manifest list sha256:f265f0b2ac3718aff5f6282115f0a03a0fcbe1e14aad840b6ecc4a6d8b369f64 done
+[2m[WebServer] [22m#7 naming to docker.io/library/react-design-system-playwright-tests:latest done
+[2m[WebServer] [22m#7 unpacking to docker.io/library/react-design-system-playwright-tests:latest done
+[2m[WebServer] [22m#7 DONE 0.0s
+
+[1A[2K[2m[WebServer] [22m
+[2m[WebServer] [22m#8 resolving provenance for metadata file
+[2m[WebServer] [22m#8 DONE 0.0s
+
+[1A[2K[2m[WebServer] [22m Image react-design-system-playwright-tests Built 
+
+[1A[2K[2m[WebServer] [22mAttaching to playwright-tests-1
+
+[1A[2K[2m[WebServer] [22m Container react-design-system-playwright-tests-1 Starting 
+
+[1A[2K[2m[WebServer] [22m Container react-design-system-playwright-tests-1 Started 
+
+[1A[2K[2m[WebServer] [22mplaywright-tests-1  | Listening on ws://0.0.0.0:3010/
+
+
+Running 156 tests using 6 workers
+
+[1A[2K[1/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › a11y-playground theme
+[1A[2K[2/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › bookingsg theme
+[1A[2K[3/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › bookingsg theme
+[1A[2K[4/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › a11y-playground theme
+[1A[2K[5/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › careercompass theme
+[1A[2K[6/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › careercompass theme
+[1A[2K[7/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › ccube theme
+[1A[2K[8/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › ccube theme
+[1A[2K[9/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › imda theme
+[1A[2K[10/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › imda theme
+[1A[2K[11/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › lifesg theme
+[1A[2K[12/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › lifesg theme
+[1A[2K[13/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › mylegacy theme
+[1A[2K[14/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › mylegacy theme
+[1A[2K[15/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › bookingsg theme (retry #1)
+[1A[2K[16/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › bookingsg theme (retry #1)
+[1A[2K[17/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › oneservice theme
+[1A[2K[18/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › oneservice theme
+[1A[2K[19/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › pa theme
+[1A[2K[20/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › pa theme
+[1A[2K[21/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › rbs theme
+[1A[2K[22/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › rbs theme
+[1A[2K[23/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › sgw-digital-lobby theme
+[1A[2K[24/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › sgw-digital-lobby theme
+[1A[2K[25/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › smgs theme
+[1A[2K[26/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › spf theme
+[1A[2K[27/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › smgs theme
+[1A[2K  1) [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › bookingsg theme 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      1706 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body class="fds-breakpoint-xxs-min fds-breakpoint-xs-min fds-breakpoint-sm-min fds-breakpoint-md-min fds-breakpoint-lg-min fds-breakpoint-xl fds-breakpoint-xl-min fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 1706 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body class="fds-breakpoint-xxs-min fds-breakpoint-xs-min fds-breakpoint-sm-min fds-breakpoint-md-min fds-breakpoint-lg-min fds-breakpoint-xl fds-breakpoint-xl-min fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 1706 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/footer/footer.e2e.spec.ts:58:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/footer/__screenshots__/chromium/Footer-Default-dark-mode-bookingsg-theme--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-footer-footer.e-f1584-t-dark-mode-bookingsg-theme-chromium/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-footer-footer.e-f1584-t-dark-mode-bookingsg-theme-chromium/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-footer-footer.e-f1584-t-dark-mode-bookingsg-theme-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-footer-footer.e-f1584-t-dark-mode-bookingsg-theme-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-footer-footer.e-f1584-t-dark-mode-bookingsg-theme-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      1706 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body class="fds-breakpoint-xxs-min fds-breakpoint-xs-min fds-breakpoint-sm-min fds-breakpoint-md-min fds-breakpoint-lg-min fds-breakpoint-xl fds-breakpoint-xl-min fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 1706 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body class="fds-breakpoint-xxs-min fds-breakpoint-xs-min fds-breakpoint-sm-min fds-breakpoint-md-min fds-breakpoint-lg-min fds-breakpoint-xl fds-breakpoint-xl-min fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 1706 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/footer/footer.e2e.spec.ts:58:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/footer/__screenshots__/chromium/Footer-Default-dark-mode-bookingsg-theme--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-footer-footer.e-f1584-t-dark-mode-bookingsg-theme-chromium-retry1/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-footer-footer.e-f1584-t-dark-mode-bookingsg-theme-chromium-retry1/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-footer-footer.e-f1584-t-dark-mode-bookingsg-theme-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-footer-footer.e-f1584-t-dark-mode-bookingsg-theme-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-footer-footer.e-f1584-t-dark-mode-bookingsg-theme-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  2) [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › bookingsg theme 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      1638 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body class="fds-breakpoint-xxs-min fds-breakpoint-xs-min fds-breakpoint-sm-min fds-breakpoint-md-min fds-breakpoint-lg-min fds-breakpoint-xl fds-breakpoint-xl-min fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 1638 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body class="fds-breakpoint-xxs-min fds-breakpoint-xs-min fds-breakpoint-sm-min fds-breakpoint-md-min fds-breakpoint-lg-min fds-breakpoint-xl fds-breakpoint-xl-min fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 1638 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/footer/footer.e2e.spec.ts:43:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/footer/__screenshots__/chromium/Footer-Default-bookingsg-theme--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-footer-footer.e2e-Footer-Default-bookingsg-theme-chromium/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-footer-footer.e2e-Footer-Default-bookingsg-theme-chromium/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-footer-footer.e2e-Footer-Default-bookingsg-theme-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-footer-footer.e2e-Footer-Default-bookingsg-theme-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-footer-footer.e2e-Footer-Default-bookingsg-theme-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      1638 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body class="fds-breakpoint-xxs-min fds-breakpoint-xs-min fds-breakpoint-sm-min fds-breakpoint-md-min fds-breakpoint-lg-min fds-breakpoint-xl fds-breakpoint-xl-min fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 1638 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body class="fds-breakpoint-xxs-min fds-breakpoint-xs-min fds-breakpoint-sm-min fds-breakpoint-md-min fds-breakpoint-lg-min fds-breakpoint-xl fds-breakpoint-xl-min fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 1638 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/footer/footer.e2e.spec.ts:43:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/footer/__screenshots__/chromium/Footer-Default-bookingsg-theme--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-footer-footer.e2e-Footer-Default-bookingsg-theme-chromium-retry1/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-footer-footer.e2e-Footer-Default-bookingsg-theme-chromium-retry1/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-footer-footer.e2e-Footer-Default-bookingsg-theme-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-footer-footer.e2e-Footer-Default-bookingsg-theme-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-footer-footer.e2e-Footer-Default-bookingsg-theme-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K[28/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › sportsg-orange theme
+[1A[2K[29/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › supportgowhere theme
+[1A[2K[30/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › spf theme
+[1A[2K[31/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › sportsg-orange theme
+[1A[2K[32/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › supportgowhere theme
+[1A[2K[33/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › tote-board theme
+[1A[2K[34/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › tote-board theme
+[1A[2K[35/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › vica theme
+[1A[2K[36/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › vica theme
+[1A[2K[37/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › websg theme
+[1A[2K[38/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › websg theme
+[1A[2K[39/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › wise theme
+[1A[2K[40/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › wise theme
+[1A[2K[41/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › wogaa theme
+[1A[2K[42/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › wogaa theme
+[1A[2K[43/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:68:9 › Footer › Minimal layout
+[1A[2K[44/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:81:9 › Footer › Minimal layout dark
+[1A[2K[45/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:93:9 › Footer › Download addon variant
+[1A[2K[46/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:106:9 › Footer › Download addon variant dark
+[1A[2K[47/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:118:9 › Footer › Resource addon variant
+[1A[2K[48/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:131:9 › Footer › Resource addon variant dark
+[1A[2K[49/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:143:9 › Footer › Custom content layout
+[1A[2K[50/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:156:9 › Footer › Stretch layout
+[1A[2K[51/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:168:9 › Footer › Hidden logo layout
+[1A[2K[52/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:180:9 › Footer › Custom copyright info
+[1A[2K[53/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:193:9 › Footer › Mobile
+[1A[2K[54/156] [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:206:9 › Footer › Tablet
+[1A[2K[55/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › a11y-playground theme
+[1A[2K[56/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › a11y-playground theme
+[1A[2K[57/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › bookingsg theme
+[1A[2K[58/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › bookingsg theme
+[1A[2K[59/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › careercompass theme
+[1A[2K[60/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › careercompass theme
+[1A[2K[61/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › ccube theme
+[1A[2K[62/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › ccube theme
+[1A[2K[63/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › imda theme
+[1A[2K[64/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › imda theme
+[1A[2K[65/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › lifesg theme
+[1A[2K[66/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › lifesg theme
+[1A[2K[67/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › mylegacy theme
+[1A[2K[68/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › mylegacy theme
+[1A[2K[69/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › oneservice theme
+[1A[2K[70/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › bookingsg theme (retry #1)
+[1A[2K[71/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › bookingsg theme (retry #1)
+[1A[2K[72/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › oneservice theme
+[1A[2K[73/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › pa theme
+[1A[2K[74/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › pa theme
+[1A[2K[75/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › rbs theme
+[1A[2K[76/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › rbs theme
+[1A[2K[77/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › sgw-digital-lobby theme
+[1A[2K[78/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › sgw-digital-lobby theme
+[1A[2K[79/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › smgs theme
+[1A[2K[80/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › smgs theme
+[1A[2K  3) [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › bookingsg theme 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      2192 pixels (ratio 0.02 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs-min fds-breakpoint-sm-min fds-breakpoint-md-min fds-breakpoint-lg-min fds-breakpoint-xl fds-breakpoint-xl-min fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 2192 pixels (ratio 0.02 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs-min fds-breakpoint-sm-min fds-breakpoint-md-min fds-breakpoint-lg-min fds-breakpoint-xl fds-breakpoint-xl-min fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 2192 pixels (ratio 0.02 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:117:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Default-bookingsg-theme--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Default-bookingsg-theme-chromium/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Default-bookingsg-theme-chromium/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Default-bookingsg-theme-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Default-bookingsg-theme-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Default-bookingsg-theme-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      2192 pixels (ratio 0.02 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs-min fds-breakpoint-sm-min fds-breakpoint-md-min fds-breakpoint-lg-min fds-breakpoint-xl fds-breakpoint-xl-min fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 2192 pixels (ratio 0.02 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs-min fds-breakpoint-sm-min fds-breakpoint-md-min fds-breakpoint-lg-min fds-breakpoint-xl fds-breakpoint-xl-min fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 2192 pixels (ratio 0.02 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:117:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Default-bookingsg-theme--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Default-bookingsg-theme-chromium-retry1/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Default-bookingsg-theme-chromium-retry1/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Default-bookingsg-theme-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Default-bookingsg-theme-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Default-bookingsg-theme-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K[81/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › spf theme
+[1A[2K  4) [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › bookingsg theme 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      2114 pixels (ratio 0.02 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs-min fds-breakpoint-sm-min fds-breakpoint-md-min fds-breakpoint-lg-min fds-breakpoint-xl fds-breakpoint-xl-min fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 2114 pixels (ratio 0.02 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs-min fds-breakpoint-sm-min fds-breakpoint-md-min fds-breakpoint-lg-min fds-breakpoint-xl fds-breakpoint-xl-min fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 2114 pixels (ratio 0.02 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:132:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Default-dark-mode-bookingsg-theme--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-a7200-t-dark-mode-bookingsg-theme-chromium/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-a7200-t-dark-mode-bookingsg-theme-chromium/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-a7200-t-dark-mode-bookingsg-theme-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-a7200-t-dark-mode-bookingsg-theme-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-a7200-t-dark-mode-bookingsg-theme-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      2114 pixels (ratio 0.02 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs-min fds-breakpoint-sm-min fds-breakpoint-md-min fds-breakpoint-lg-min fds-breakpoint-xl fds-breakpoint-xl-min fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 2114 pixels (ratio 0.02 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs-min fds-breakpoint-sm-min fds-breakpoint-md-min fds-breakpoint-lg-min fds-breakpoint-xl fds-breakpoint-xl-min fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 2114 pixels (ratio 0.02 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:132:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Default-dark-mode-bookingsg-theme--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-a7200-t-dark-mode-bookingsg-theme-chromium-retry1/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-a7200-t-dark-mode-bookingsg-theme-chromium-retry1/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-a7200-t-dark-mode-bookingsg-theme-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-a7200-t-dark-mode-bookingsg-theme-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-a7200-t-dark-mode-bookingsg-theme-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K[82/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › spf theme
+[1A[2K[83/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › sportsg-orange theme
+[1A[2K[84/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › sportsg-orange theme
+[1A[2K[85/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › supportgowhere theme
+[1A[2K[86/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › supportgowhere theme
+[1A[2K[87/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › tote-board theme
+[1A[2K[88/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › tote-board theme
+[1A[2K[89/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › vica theme
+[1A[2K[90/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › vica theme
+[1A[2K[91/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › websg theme
+[1A[2K[92/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › websg theme
+[1A[2K[93/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › wise theme
+[1A[2K[94/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › wise theme
+[1A[2K[95/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › wogaa theme
+[1A[2K[96/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › wogaa theme
+[1A[2K[97/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:142:9 › Navbar › Compress
+[1A[2K[98/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:152:9 › Navbar › Stretch
+[1A[2K[99/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:162:9 › Navbar › No masthead
+[1A[2K[100/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:172:9 › Navbar › Hide branding
+[1A[2K[101/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:182:9 › Navbar › Hide link indicator
+[1A[2K[102/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:192:9 › Navbar › Secondary brand
+[1A[2K[103/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:202:9 › Navbar › Multiple action buttons
+[1A[2K[104/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:212:9 › Navbar › Action button only
+[1A[2K[105/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:222:9 › Navbar › Link only
+[1A[2K[106/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:232:9 › Navbar › Custom link
+[1A[2K[107/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:242:9 › Navbar › Custom action button
+[1A[2K[108/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:252:9 › Navbar › Submenu › Open
+[1A[2K[109/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:259:9 › Navbar › Submenu › Open last item
+[1A[2K[110/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:273:13 › Navbar › Submenu Grid › Open
+[1A[2K[111/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:286:13 › Navbar › Submenu Grid › Mobile
+[1A[2K[112/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:304:13 › Navbar › Mobile › Collapsed
+[1A[2K[113/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:309:13 › Navbar › Mobile › Drawer
+[1A[2K[114/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:324:13 › Navbar › Mobile › Collapsed (dark mode)
+[1A[2K[115/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:329:13 › Navbar › Mobile › Drawer (dark mode)
+[1A[2K[116/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:192:9 › Navbar › Secondary brand (retry #1)
+[1A[2K  5) [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:192:9 › Navbar › Secondary brand ──
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      2195 pixels (ratio 0.02 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs-min fds-breakpoint-sm-min fds-breakpoint-md-min fds-breakpoint-lg-min fds-breakpoint-xl fds-breakpoint-xl-min fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 2195 pixels (ratio 0.02 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs-min fds-breakpoint-sm-min fds-breakpoint-md-min fds-breakpoint-lg-min fds-breakpoint-xl fds-breakpoint-xl-min fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 2195 pixels (ratio 0.02 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:193:36
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Secondary-brand--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Secondary-brand-chromium/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Secondary-brand-chromium/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Secondary-brand-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Secondary-brand-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Secondary-brand-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      2195 pixels (ratio 0.02 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs-min fds-breakpoint-sm-min fds-breakpoint-md-min fds-breakpoint-lg-min fds-breakpoint-xl fds-breakpoint-xl-min fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 2195 pixels (ratio 0.02 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs-min fds-breakpoint-sm-min fds-breakpoint-md-min fds-breakpoint-lg-min fds-breakpoint-xl fds-breakpoint-xl-min fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 2195 pixels (ratio 0.02 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:193:36
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Secondary-brand--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Secondary-brand-chromium-retry1/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Secondary-brand-chromium-retry1/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Secondary-brand-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Secondary-brand-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Secondary-brand-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K[117/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:304:13 › Navbar › Mobile › Collapsed (retry #1)
+[1A[2K[118/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:324:13 › Navbar › Mobile › Collapsed (dark mode) (retry #1)
+[1A[2K[119/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:344:13 › Navbar › Mobile › Secondary brand
+[1A[2K[120/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:354:13 › Navbar › Mobile › Custom action button
+[1A[2K[121/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:364:13 › Navbar › Mobile › Submenu
+[1A[2K  6) [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:304:13 › Navbar › Mobile › Collapsed 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      96 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 96 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 96 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:306:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Collapsed--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Collapsed-chromium/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Collapsed-chromium/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Collapsed-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Collapsed-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Collapsed-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      96 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 96 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 96 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:306:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Collapsed--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Collapsed-chromium-retry1/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Collapsed-chromium-retry1/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Collapsed-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Collapsed-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Collapsed-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  7) [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:324:13 › Navbar › Mobile › Collapsed (dark mode) 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      96 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 96 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 96 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:326:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Collapsed-dark-mode---mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-586c6-Mobile-Collapsed-dark-mode--chromium/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-586c6-Mobile-Collapsed-dark-mode--chromium/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-586c6-Mobile-Collapsed-dark-mode--chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-586c6-Mobile-Collapsed-dark-mode--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-586c6-Mobile-Collapsed-dark-mode--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      96 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 96 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 96 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:326:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Collapsed-dark-mode---mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-586c6-Mobile-Collapsed-dark-mode--chromium-retry1/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-586c6-Mobile-Collapsed-dark-mode--chromium-retry1/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-586c6-Mobile-Collapsed-dark-mode--chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-586c6-Mobile-Collapsed-dark-mode--chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-586c6-Mobile-Collapsed-dark-mode--chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K[122/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:388:13 › Navbar › Mobile › Submenu (selected item)
+[1A[2K[123/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:286:13 › Navbar › Submenu Grid › Mobile (retry #1)
+[1A[2K[124/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:427:13 › Navbar › Mobile › Submenu (dark mode)
+[1A[2K[125/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:354:13 › Navbar › Mobile › Custom action button (retry #1)
+[1A[2K[126/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:344:13 › Navbar › Mobile › Secondary brand (retry #1)
+[1A[2K  8) [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:354:13 › Navbar › Mobile › Custom action button 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      646 pixels (ratio 0.02 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 646 pixels (ratio 0.02 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 646 pixels (ratio 0.02 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:355:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Custom-action-button--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-55ed4-Mobile-Custom-action-button-chromium/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-55ed4-Mobile-Custom-action-button-chromium/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-55ed4-Mobile-Custom-action-button-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-55ed4-Mobile-Custom-action-button-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-55ed4-Mobile-Custom-action-button-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      646 pixels (ratio 0.02 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 646 pixels (ratio 0.02 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 646 pixels (ratio 0.02 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:355:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Custom-action-button--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-55ed4-Mobile-Custom-action-button-chromium-retry1/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-55ed4-Mobile-Custom-action-button-chromium-retry1/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-55ed4-Mobile-Custom-action-button-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-55ed4-Mobile-Custom-action-button-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-55ed4-Mobile-Custom-action-button-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  9) [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:344:13 › Navbar › Mobile › Secondary brand 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      1454 pixels (ratio 0.03 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 1454 pixels (ratio 0.03 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 1454 pixels (ratio 0.03 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:345:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Secondary-brand--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Secondary-brand-chromium/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Secondary-brand-chromium/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Secondary-brand-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Secondary-brand-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Secondary-brand-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      1454 pixels (ratio 0.03 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 1454 pixels (ratio 0.03 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 1454 pixels (ratio 0.03 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:345:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Secondary-brand--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Secondary-brand-chromium-retry1/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Secondary-brand-chromium-retry1/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Secondary-brand-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Secondary-brand-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Secondary-brand-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K[127/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:453:13 › Navbar › Mobile › Uncollapsible action buttons
+[1A[2K[128/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:364:13 › Navbar › Mobile › Submenu (retry #1)
+[1A[2K[129/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:465:13 › Navbar › Keyboard navigation › Mobile › Focus is trapped in drawer when open
+[1A[2K  10) [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:286:13 › Navbar › Submenu Grid › Mobile 
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      7374 pixels (ratio 0.03 of all image pixels) are different.
+
+      Snapshot: mobile-submenu-open.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mobile-submenu-open.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 7374 pixels (ratio 0.03 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 7374 pixels (ratio 0.03 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:291:40
+
+    attachment #1: mobile-submenu-open (image/png) ─────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Submenu-Grid-Mobile--mobile-submenu-open.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Submenu-Grid-Mobile-chromium/mobile-submenu-open-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Submenu-Grid-Mobile-chromium/mobile-submenu-open-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Submenu-Grid-Mobile-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Submenu-Grid-Mobile-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Submenu-Grid-Mobile-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      7374 pixels (ratio 0.03 of all image pixels) are different.
+
+      Snapshot: mobile-submenu-open.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mobile-submenu-open.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 7374 pixels (ratio 0.03 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 7374 pixels (ratio 0.03 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:291:40
+
+    attachment #1: mobile-submenu-open (image/png) ─────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Submenu-Grid-Mobile--mobile-submenu-open.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Submenu-Grid-Mobile-chromium-retry1/mobile-submenu-open-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Submenu-Grid-Mobile-chromium-retry1/mobile-submenu-open-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Submenu-Grid-Mobile-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Submenu-Grid-Mobile-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Submenu-Grid-Mobile-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K[130/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:505:13 › Navbar › Keyboard navigation › Mobile › Hamburger button shows focus highlight
+[1A[2K[131/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:453:13 › Navbar › Mobile › Uncollapsible action buttons (retry #1)
+[1A[2K[132/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:427:13 › Navbar › Mobile › Submenu (dark mode) (retry #1)
+[1A[2K  11) [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:453:13 › Navbar › Mobile › Uncollapsible action buttons 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      611 pixels (ratio 0.02 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 611 pixels (ratio 0.02 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 611 pixels (ratio 0.02 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:454:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Uncollapsible-action-buttons--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-e3dea-ncollapsible-action-buttons-chromium/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-e3dea-ncollapsible-action-buttons-chromium/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-e3dea-ncollapsible-action-buttons-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-e3dea-ncollapsible-action-buttons-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-e3dea-ncollapsible-action-buttons-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      611 pixels (ratio 0.02 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 611 pixels (ratio 0.02 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 611 pixels (ratio 0.02 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:454:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Uncollapsible-action-buttons--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-e3dea-ncollapsible-action-buttons-chromium-retry1/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-e3dea-ncollapsible-action-buttons-chromium-retry1/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-e3dea-ncollapsible-action-buttons-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-e3dea-ncollapsible-action-buttons-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-e3dea-ncollapsible-action-buttons-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  12) [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:364:13 › Navbar › Mobile › Submenu 
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      7914 pixels (ratio 0.03 of all image pixels) are different.
+
+      Snapshot: drawer-open.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(drawer-open.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 7914 pixels (ratio 0.03 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 7914 pixels (ratio 0.03 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:368:40
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      9303 pixels (ratio 0.04 of all image pixels) are different.
+
+      Snapshot: submenu-open.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(submenu-open.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 9303 pixels (ratio 0.04 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 9303 pixels (ratio 0.04 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:377:40
+
+    attachment #1: drawer-open (image/png) ─────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Submenu--drawer-open.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Submenu-chromium/drawer-open-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Submenu-chromium/drawer-open-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: submenu-open (image/png) ────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Submenu--submenu-open.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Submenu-chromium/submenu-open-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Submenu-chromium/submenu-open-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Submenu-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Submenu-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Submenu-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      7914 pixels (ratio 0.03 of all image pixels) are different.
+
+      Snapshot: drawer-open.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(drawer-open.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 7914 pixels (ratio 0.03 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 7914 pixels (ratio 0.03 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:368:40
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      9303 pixels (ratio 0.04 of all image pixels) are different.
+
+      Snapshot: submenu-open.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(submenu-open.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 9303 pixels (ratio 0.04 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 9303 pixels (ratio 0.04 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:377:40
+
+    attachment #1: drawer-open (image/png) ─────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Submenu--drawer-open.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Submenu-chromium-retry1/drawer-open-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Submenu-chromium-retry1/drawer-open-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: submenu-open (image/png) ────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Submenu--submenu-open.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Submenu-chromium-retry1/submenu-open-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Submenu-chromium-retry1/submenu-open-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Submenu-chromium-retry1/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Submenu-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e2e-Navbar-Mobile-Submenu-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K[133/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:505:13 › Navbar › Keyboard navigation › Mobile › Hamburger button shows focus highlight (retry #1)
+[1A[2K[134/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:529:13 › Navbar › Keyboard navigation › Desktop › Tab through nav links and action button
+[1A[2K[135/156] [chromium] › e2e/tests/components/otp-verification/otp-verification.e2e.spec.ts:101:13 › OtpVerification › Phone number › Form variants
+[1A[2K[136/156] [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:388:13 › Navbar › Mobile › Submenu (selected item) (retry #1)
+[1A[2K  13) [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:505:13 › Navbar › Keyboard navigation › Mobile › Hamburger button shows focus highlight › Verify hamburger button is focused 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      432 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: focus-hamburger.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(focus-hamburger.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 432 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 432 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:519:44
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:514:17
+
+    attachment #1: focus-hamburger (image/png) ─────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Keyboard-navigation-Mobile-Hamburger-button-shows-focus-highlight--focus-hamburger.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-19d18-utton-shows-focus-highlight-chromium/focus-hamburger-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-19d18-utton-shows-focus-highlight-chromium/focus-hamburger-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-19d18-utton-shows-focus-highlight-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-19d18-utton-shows-focus-highlight-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-19d18-utton-shows-focus-highlight-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('body')
+      432 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: focus-hamburger.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(focus-hamburger.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - 432 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - waiting for locator('body')[22m
+    [2m    - locator resolved to <body data-lifesg-ds-overlay-order="" class="fds-breakpoint-xxs-min fds-breakpoint-xs fds-breakpoint-xs-min fds-breakpoint-xs-max fds-breakpoint-sm-max fds-breakpoint-md-max fds-breakpoint-lg-max fds-breakpoint-xl-max">…</body>[22m
+    [2m  - taking element screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 432 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:519:44
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:514:17
+
+    attachment #1: focus-hamburger (image/png) ─────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Keyboard-navigation-Mobile-Hamburger-button-shows-focus-highlight--focus-hamburger.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-19d18-utton-shows-focus-highlight-chromium-retry1/focus-hamburger-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-19d18-utton-shows-focus-highlight-chromium-retry1/focus-hamburger-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-19d18-utton-shows-focus-highlight-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-19d18-utton-shows-focus-highlight-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-19d18-utton-shows-focus-highlight-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K[137/156] [chromium] › e2e/tests/components/otp-verification/otp-verification.e2e.spec.ts:156:13 › OtpVerification › Phone number › Form variants (dark mode)
+[1A[2K[138/156] [chromium] › e2e/tests/components/otp-verification/otp-verification.e2e.spec.ts:166:13 › OtpVerification › Phone number › Form variants (mobile)
+[1A[2K[139/156] [chromium] › e2e/tests/components/otp-verification/otp-verification.e2e.spec.ts:176:13 › OtpVerification › Phone number › OTP states
+[1A[2K[140/156] [chromium] › e2e/tests/components/otp-verification/otp-verification.e2e.spec.ts:105:13 › OtpVerification › Phone number › Accessibility
+[1A[2K  14) [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:427:13 › Navbar › Mobile › Submenu (dark mode) 
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      8174 pixels (ratio 0.03 of all image pixels) are different.
+
+      Snapshot: drawer-open.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(drawer-open.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 8174 pixels (ratio 0.03 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 8174 pixels (ratio 0.03 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:431:40
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      9564 pixels (ratio 0.04 of all image pixels) are different.
+
+      Snapshot: submenu-open.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(submenu-open.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 9564 pixels (ratio 0.04 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 9564 pixels (ratio 0.04 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:440:40
+
+    attachment #1: drawer-open (image/png) ─────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Submenu-dark-mode---drawer-open.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-94520-r-Mobile-Submenu-dark-mode--chromium/drawer-open-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-94520-r-Mobile-Submenu-dark-mode--chromium/drawer-open-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: submenu-open (image/png) ────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Submenu-dark-mode---submenu-open.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-94520-r-Mobile-Submenu-dark-mode--chromium/submenu-open-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-94520-r-Mobile-Submenu-dark-mode--chromium/submenu-open-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-94520-r-Mobile-Submenu-dark-mode--chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-94520-r-Mobile-Submenu-dark-mode--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-94520-r-Mobile-Submenu-dark-mode--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      8174 pixels (ratio 0.03 of all image pixels) are different.
+
+      Snapshot: drawer-open.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(drawer-open.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 8174 pixels (ratio 0.03 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 8174 pixels (ratio 0.03 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:431:40
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      9564 pixels (ratio 0.04 of all image pixels) are different.
+
+      Snapshot: submenu-open.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(submenu-open.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 9564 pixels (ratio 0.04 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 9564 pixels (ratio 0.04 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:440:40
+
+    attachment #1: drawer-open (image/png) ─────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Submenu-dark-mode---drawer-open.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-94520-r-Mobile-Submenu-dark-mode--chromium-retry1/drawer-open-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-94520-r-Mobile-Submenu-dark-mode--chromium-retry1/drawer-open-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: submenu-open (image/png) ────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Submenu-dark-mode---submenu-open.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-94520-r-Mobile-Submenu-dark-mode--chromium-retry1/submenu-open-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-94520-r-Mobile-Submenu-dark-mode--chromium-retry1/submenu-open-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-94520-r-Mobile-Submenu-dark-mode--chromium-retry1/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-94520-r-Mobile-Submenu-dark-mode--chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-94520-r-Mobile-Submenu-dark-mode--chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K[141/156] [chromium] › e2e/tests/components/otp-verification/otp-verification.e2e.spec.ts:219:13 › OtpVerification › Phone number › OTP states (dark mode)
+[1A[2K[142/156] [chromium] › e2e/tests/components/otp-verification/otp-verification.e2e.spec.ts:229:13 › OtpVerification › Phone number › OTP states (mobile)
+[1A[2K[143/156] [chromium] › e2e/tests/components/otp-verification/otp-verification.e2e.spec.ts:242:13 › OtpVerification › Phone number › OTP verification flow
+[1A[2K[144/156] [chromium] › e2e/tests/components/otp-verification/otp-verification.e2e.spec.ts:180:13 › OtpVerification › Phone number › OTP states accessibility
+[1A[2K[145/156] [chromium] › e2e/tests/components/otp-verification/otp-verification.e2e.spec.ts:308:13 › OtpVerification › Email › Form variants
+[1A[2K[146/156] [chromium] › e2e/tests/components/otp-verification/otp-verification.e2e.spec.ts:312:13 › OtpVerification › Email › Accessibility
+[1A[2K[147/156] [chromium] › e2e/tests/components/otp-verification/otp-verification.e2e.spec.ts:363:13 › OtpVerification › Email › Form variants (dark mode)
+[1A[2K[148/156] [chromium] › e2e/tests/components/otp-verification/otp-verification.e2e.spec.ts:373:13 › OtpVerification › Email › Form variants (mobile)
+[1A[2K[149/156] [chromium] › e2e/tests/components/otp-verification/otp-verification.e2e.spec.ts:383:13 › OtpVerification › Email › OTP states
+[1A[2K[150/156] [chromium] › e2e/tests/components/otp-verification/otp-verification.e2e.spec.ts:387:13 › OtpVerification › Email › OTP states accessibility
+[1A[2K[151/156] [chromium] › e2e/tests/components/otp-verification/otp-verification.e2e.spec.ts:426:13 › OtpVerification › Email › OTP states (dark mode)
+[1A[2K[152/156] [chromium] › e2e/tests/components/otp-verification/otp-verification.e2e.spec.ts:436:13 › OtpVerification › Email › OTP states (mobile)
+[1A[2K[153/156] [chromium] › e2e/tests/components/otp-verification/otp-verification.e2e.spec.ts:449:13 › OtpVerification › Email › OTP verification flow
+[1A[2K[154/156] [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:55:9 › SmartAppBanner › Default appearance
+[1A[2K[155/156] [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:71:9 › SmartAppBanner › Default appearance (dark mode)
+[1A[2K[156/156] [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:81:9 › SmartAppBanner › Default appearance (mobile)
+[1A[2K  15) [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:388:13 › Navbar › Mobile › Submenu (selected item) 
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      9287 pixels (ratio 0.04 of all image pixels) are different.
+
+      Snapshot: submenu-item-selected.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(submenu-item-selected.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 9287 pixels (ratio 0.04 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 9287 pixels (ratio 0.04 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:396:40
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      7939 pixels (ratio 0.03 of all image pixels) are different.
+
+      Snapshot: submenu-collapsed.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(submenu-collapsed.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 7939 pixels (ratio 0.03 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 7939 pixels (ratio 0.03 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:412:44
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:408:17
+
+    attachment #1: submenu-item-selected (image/png) ───────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Submenu-selected-item---submenu-item-selected.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-b5727-bile-Submenu-selected-item--chromium/submenu-item-selected-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-b5727-bile-Submenu-selected-item--chromium/submenu-item-selected-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: submenu-collapsed (image/png) ───────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Submenu-selected-item---submenu-collapsed.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-b5727-bile-Submenu-selected-item--chromium/submenu-collapsed-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-b5727-bile-Submenu-selected-item--chromium/submenu-collapsed-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-b5727-bile-Submenu-selected-item--chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-b5727-bile-Submenu-selected-item--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-b5727-bile-Submenu-selected-item--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      9287 pixels (ratio 0.04 of all image pixels) are different.
+
+      Snapshot: submenu-item-selected.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(submenu-item-selected.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 9287 pixels (ratio 0.04 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 9287 pixels (ratio 0.04 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:396:40
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      7939 pixels (ratio 0.03 of all image pixels) are different.
+
+      Snapshot: submenu-collapsed.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(submenu-collapsed.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 7939 pixels (ratio 0.03 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 7939 pixels (ratio 0.03 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:412:44
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/navbar/navbar.e2e.spec.ts:408:17
+
+    attachment #1: submenu-item-selected (image/png) ───────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Submenu-selected-item---submenu-item-selected.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-b5727-bile-Submenu-selected-item--chromium-retry1/submenu-item-selected-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-b5727-bile-Submenu-selected-item--chromium-retry1/submenu-item-selected-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: submenu-collapsed (image/png) ───────────────────────────────────────────────────
+    Expected: e2e/tests/components/navbar/__screenshots__/chromium/Navbar-Mobile-Submenu-selected-item---submenu-collapsed.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-b5727-bile-Submenu-selected-item--chromium-retry1/submenu-collapsed-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-b5727-bile-Submenu-selected-item--chromium-retry1/submenu-collapsed-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-b5727-bile-Submenu-selected-item--chromium-retry1/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-b5727-bile-Submenu-selected-item--chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-navbar-navbar.e-b5727-bile-Submenu-selected-item--chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K[157/156] (retries) [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:91:9 › SmartAppBanner › No message
+[1A[2K[158/156] (retries) [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:112:13 › SmartAppBanner › Star rating › Partial stars with half star
+[1A[2K[159/156] (retries) [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:102:13 › SmartAppBanner › Star rating › All stars filled
+[1A[2K[160/156] (retries) [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:55:9 › SmartAppBanner › Default appearance (retry #1)
+[1A[2K[161/156] (retries) [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:122:13 › SmartAppBanner › Star rating › Zero stars (all empty)
+[1A[2K[162/156] (retries) [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:71:9 › SmartAppBanner › Default appearance (dark mode) (retry #1)
+[1A[2K[163/156] (retries) [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:91:9 › SmartAppBanner › No message (retry #1)
+[1A[2K[164/156] (retries) [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:112:13 › SmartAppBanner › Star rating › Partial stars with half star (retry #1)
+[1A[2K[165/156] (retries) [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:102:13 › SmartAppBanner › Star rating › All stars filled (retry #1)
+[1A[2K  16) [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:55:9 › SmartAppBanner › Default appearance 
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      1645 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 1645 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 1645 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:56:36
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/smart-app-banner/__screenshots__/chromium/SmartAppBanner-Default-appearance--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-d3db8-ppBanner-Default-appearance-chromium/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-d3db8-ppBanner-Default-appearance-chromium/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-d3db8-ppBanner-Default-appearance-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-d3db8-ppBanner-Default-appearance-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-d3db8-ppBanner-Default-appearance-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      1645 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 1645 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 1645 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:56:36
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/smart-app-banner/__screenshots__/chromium/SmartAppBanner-Default-appearance--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-d3db8-ppBanner-Default-appearance-chromium-retry1/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-d3db8-ppBanner-Default-appearance-chromium-retry1/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-d3db8-ppBanner-Default-appearance-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-d3db8-ppBanner-Default-appearance-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-d3db8-ppBanner-Default-appearance-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  17) [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:91:9 › SmartAppBanner › No message 
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      920 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 920 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 920 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:92:36
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/smart-app-banner/__screenshots__/chromium/SmartAppBanner-No-message--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-b5609-e-SmartAppBanner-No-message-chromium/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-b5609-e-SmartAppBanner-No-message-chromium/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-b5609-e-SmartAppBanner-No-message-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-b5609-e-SmartAppBanner-No-message-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-b5609-e-SmartAppBanner-No-message-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      920 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 920 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 920 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:92:36
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/smart-app-banner/__screenshots__/chromium/SmartAppBanner-No-message--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-b5609-e-SmartAppBanner-No-message-chromium-retry1/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-b5609-e-SmartAppBanner-No-message-chromium-retry1/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-b5609-e-SmartAppBanner-No-message-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-b5609-e-SmartAppBanner-No-message-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-b5609-e-SmartAppBanner-No-message-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  18) [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:71:9 › SmartAppBanner › Default appearance (dark mode) 
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      1816 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 1816 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 1816 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:72:36
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/smart-app-banner/__screenshots__/chromium/SmartAppBanner-Default-appearance-dark-mode---mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-426c0-fault-appearance-dark-mode--chromium/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-426c0-fault-appearance-dark-mode--chromium/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-426c0-fault-appearance-dark-mode--chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-426c0-fault-appearance-dark-mode--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-426c0-fault-appearance-dark-mode--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      1816 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 1816 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 1816 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:72:36
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/smart-app-banner/__screenshots__/chromium/SmartAppBanner-Default-appearance-dark-mode---mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-426c0-fault-appearance-dark-mode--chromium-retry1/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-426c0-fault-appearance-dark-mode--chromium-retry1/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-426c0-fault-appearance-dark-mode--chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-426c0-fault-appearance-dark-mode--chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-426c0-fault-appearance-dark-mode--chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  19) [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:112:13 › SmartAppBanner › Star rating › Partial stars with half star 
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      1714 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 1714 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 1714 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:113:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/smart-app-banner/__screenshots__/chromium/SmartAppBanner-Star-rating-Partial-stars-with-half-star--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-73466-artial-stars-with-half-star-chromium/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-73466-artial-stars-with-half-star-chromium/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-73466-artial-stars-with-half-star-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-73466-artial-stars-with-half-star-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-73466-artial-stars-with-half-star-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      1714 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 1714 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 1714 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:113:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/smart-app-banner/__screenshots__/chromium/SmartAppBanner-Star-rating-Partial-stars-with-half-star--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-73466-artial-stars-with-half-star-chromium-retry1/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-73466-artial-stars-with-half-star-chromium-retry1/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-73466-artial-stars-with-half-star-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-73466-artial-stars-with-half-star-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-73466-artial-stars-with-half-star-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  20) [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:102:13 › SmartAppBanner › Star rating › All stars filled 
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      1600 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 1600 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 1600 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:103:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/smart-app-banner/__screenshots__/chromium/SmartAppBanner-Star-rating-All-stars-filled--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-2900b-tar-rating-All-stars-filled-chromium/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-2900b-tar-rating-All-stars-filled-chromium/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-2900b-tar-rating-All-stars-filled-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-2900b-tar-rating-All-stars-filled-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-2900b-tar-rating-All-stars-filled-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      1600 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 1600 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 1600 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:103:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/smart-app-banner/__screenshots__/chromium/SmartAppBanner-Star-rating-All-stars-filled--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-2900b-tar-rating-All-stars-filled-chromium-retry1/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-2900b-tar-rating-All-stars-filled-chromium-retry1/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-2900b-tar-rating-All-stars-filled-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-2900b-tar-rating-All-stars-filled-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-2900b-tar-rating-All-stars-filled-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K[166/156] (retries) [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:132:13 › SmartAppBanner › Star rating › No rating shown for invalid value
+[1A[2K[167/156] (retries) [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:122:13 › SmartAppBanner › Star rating › Zero stars (all empty) (retry #1)
+[1A[2K[168/156] (retries) [chromium] › e2e/tests/components/unit-number/unit-number.e2e.spec.ts:39:9 › UnitNumberInput › Visual
+[1A[2K[169/156] (retries) [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:143:9 › SmartAppBanner › Banner not rendered when show is false
+[1A[2K[170/156] (retries) [chromium] › e2e/tests/components/unit-number/unit-number.e2e.spec.ts:43:9 › UnitNumberInput › Focus
+[1A[2K[171/156] (retries) [chromium] › e2e/tests/components/unit-number/unit-number.e2e.spec.ts:81:9 › UnitNumberInput › Accessibility
+[1A[2K[172/156] (retries) [chromium] › e2e/tests/components/unit-number/unit-number.e2e.spec.ts:138:9 › UnitNumberInput › Visual dark mode
+[1A[2K[173/156] (retries) [chromium] › e2e/tests/components/unit-number/unit-number.e2e.spec.ts:142:9 › UnitNumberInput › Focus dark mode
+[1A[2K[174/156] (retries) [chromium] › e2e/tests/components/unit-number/unit-number.e2e.spec.ts:186:9 › UnitNumberInput › Mobile
+[1A[2K  21) [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:122:13 › SmartAppBanner › Star rating › Zero stars (all empty) 
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      1945 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 1945 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 1945 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:123:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/smart-app-banner/__screenshots__/chromium/SmartAppBanner-Star-rating-Zero-stars-all-empty---mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-35a29-ating-Zero-stars-all-empty--chromium/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-35a29-ating-Zero-stars-all-empty--chromium/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-35a29-ating-Zero-stars-all-empty--chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-35a29-ating-Zero-stars-all-empty--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-35a29-ating-Zero-stars-all-empty--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      1945 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 1945 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 1945 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:123:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/smart-app-banner/__screenshots__/chromium/SmartAppBanner-Star-rating-Zero-stars-all-empty---mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-35a29-ating-Zero-stars-all-empty--chromium-retry1/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-35a29-ating-Zero-stars-all-empty--chromium-retry1/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-35a29-ating-Zero-stars-all-empty--chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-35a29-ating-Zero-stars-all-empty--chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-35a29-ating-Zero-stars-all-empty--chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K[175/156] (retries) [chromium] › e2e/tests/components/unit-number/unit-number.e2e.spec.ts:206:9 › UnitNumberInput › Grid layout
+[1A[2K[176/156] (retries) [chromium] › e2e/tests/components/unit-number/unit-number.e2e.spec.ts:216:9 › UnitNumberInput › Standalone variants
+[1A[2K[177/156] (retries) [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:132:13 › SmartAppBanner › Star rating › No rating shown for invalid value (retry #1)
+[1A[2K[178/156] (retries) [chromium] › e2e/tests/components/unit-number/unit-number.e2e.spec.ts:196:9 › UnitNumberInput › Prefilled
+[1A[2K  22) [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:132:13 › SmartAppBanner › Star rating › No rating shown for invalid value 
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      1445 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 1445 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 1445 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:133:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/smart-app-banner/__screenshots__/chromium/SmartAppBanner-Star-rating-No-rating-shown-for-invalid-value--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-1fec0-ing-shown-for-invalid-value-chromium/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-1fec0-ing-shown-for-invalid-value-chromium/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-1fec0-ing-shown-for-invalid-value-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-1fec0-ing-shown-for-invalid-value-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-1fec0-ing-shown-for-invalid-value-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveScreenshot[2m([22m[32mexpected[39m[2m)[22m failed
+
+      1445 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: mount.png
+
+    Call log:
+    [2m  - Expect "soft toHaveScreenshot(mount.png)" with timeout 5000ms[22m
+    [2m    - verifying given screenshot expectation[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - 1445 pixels (ratio 0.01 of all image pixels) are different.[22m
+    [2m  - waiting 100ms before taking screenshot[22m
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+    [2m  - captured a stable screenshot[22m
+    [2m  - 1445 pixels (ratio 0.01 of all image pixels) are different.[22m
+
+
+       at utils.ts:213
+
+      211 |     await expect
+      212 |         .soft(target)
+    > 213 |         .toHaveScreenshot(`${name}.png`, screenshotOptions);
+          |          ^
+      214 |
+      215 |     test.info().annotations.push({
+      216 |         type: "_screenshot-used",
+        at compareScreenshot (/Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/utils.ts:213:10)
+        at /Users/tsp-idn-ghazwan/projects/react-design-system/e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:133:40
+
+    attachment #1: mount (image/png) ───────────────────────────────────────────────────────────────
+    Expected: e2e/tests/components/smart-app-banner/__screenshots__/chromium/SmartAppBanner-Star-rating-No-rating-shown-for-invalid-value--mount.png
+    Received: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-1fec0-ing-shown-for-invalid-value-chromium-retry1/mount-actual.png
+    Diff:     docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-1fec0-ing-shown-for-invalid-value-chromium-retry1/mount-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-1fec0-ing-shown-for-invalid-value-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-1fec0-ing-shown-for-invalid-value-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/spike/experiments/sweep/e2e-results/styleedge-fixed-test-results/components-smart-app-banne-1fec0-ing-shown-for-invalid-value-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K[2m[WebServer] [22m Compose Stopping Gracefully Stopping... press Ctrl+C again to force
+
+[1A[2K[2m[WebServer] [22m Container react-design-system-playwright-tests-1 Stopping 
+
+[1A[2K[2m[WebServer] [22m Container react-design-system-playwright-tests-1 Stopped 
+
+[1A[2K[2m[WebServer] [22m
+
+[1A[2K  22 failed
+    [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:42:13 › Footer › Default › bookingsg theme 
+    [chromium] › e2e/tests/components/footer/footer.e2e.spec.ts:57:13 › Footer › Default dark mode › bookingsg theme 
+    [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:115:13 › Navbar › Default › bookingsg theme 
+    [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:130:13 › Navbar › Default (dark mode) › bookingsg theme 
+    [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:192:9 › Navbar › Secondary brand ───
+    [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:286:13 › Navbar › Submenu Grid › Mobile 
+    [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:304:13 › Navbar › Mobile › Collapsed 
+    [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:324:13 › Navbar › Mobile › Collapsed (dark mode) 
+    [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:344:13 › Navbar › Mobile › Secondary brand 
+    [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:354:13 › Navbar › Mobile › Custom action button 
+    [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:364:13 › Navbar › Mobile › Submenu ─
+    [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:388:13 › Navbar › Mobile › Submenu (selected item) 
+    [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:427:13 › Navbar › Mobile › Submenu (dark mode) 
+    [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:453:13 › Navbar › Mobile › Uncollapsible action buttons 
+    [chromium] › e2e/tests/components/navbar/navbar.e2e.spec.ts:505:13 › Navbar › Keyboard navigation › Mobile › Hamburger button shows focus highlight 
+    [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:55:9 › SmartAppBanner › Default appearance 
+    [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:71:9 › SmartAppBanner › Default appearance (dark mode) 
+    [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:91:9 › SmartAppBanner › No message 
+    [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:102:13 › SmartAppBanner › Star rating › All stars filled 
+    [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:112:13 › SmartAppBanner › Star rating › Partial stars with half star 
+    [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:122:13 › SmartAppBanner › Star rating › Zero stars (all empty) 
+    [chromium] › e2e/tests/components/smart-app-banner/smart-app-banner.e2e.spec.ts:132:13 › SmartAppBanner › Star rating › No rating shown for invalid value 
+  134 passed (41.5s)

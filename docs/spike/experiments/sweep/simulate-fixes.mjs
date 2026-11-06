@@ -1,6 +1,6 @@
 // Usage: node simulate-fixes.mjs [lib ...]   (default: flat styleedge)
-// Spike 01 / F17 follow-up: simulate the fixes for the four layering changes, decided
-// 2026-10-28, without touching src/. Copies ../final/libs/<lib> to ../final/libs/<lib>-fixed
+// Spike 01 / F17 follow-up: simulate the fixes for the layering changes, decided
+// 2026-10-28 (and the chevron, 2026-11-03), without touching src/. Copies ../final/libs/<lib> to ../final/libs/<lib>-fixed
 // and inserts each fix right after the component's own rule, inside its own layer, as a
 // source fix in that component's style file would compile.
 //   Icons: the consuming component's size is intended, so it must beat ClickableIcon's
@@ -24,6 +24,14 @@ const FIXES = [
         file: "navbar/navbar.styles_koy0c7.css",
         after: ".m11vsg37{height:1.5rem;width:1.5rem;color:var(--fds-navbar-colour-icon);}",
         insert: ".m11vsg37.m11vsg37{height:1.5rem;width:1.5rem;}",
+    },
+    {
+        // found by the e2e rerun (drawer-trace.txt): drawer only, so the sweep never saw it.
+        // Scoped to the mobile expand button so the desktop chevron keeps 1.125rem.
+        name: "navbar mobile submenu chevron keeps 1.25rem (decided 2026-11-03)",
+        file: "navbar/navbar-items.styles_1klnd8i.css",
+        after: ".ej7h5do{padding:0.5rem;margin:auto 0;}",
+        insert: ".ej7h5do .c160mxwv{height:1.25rem;width:1.25rem;}",
     },
     {
         name: "OTP email input: input-group read-only and no-border padding 0",
