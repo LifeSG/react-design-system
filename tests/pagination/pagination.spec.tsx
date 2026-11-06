@@ -456,8 +456,8 @@ describe("Pagination", () => {
             );
 
             expect(screen.getByTestId(SELECTOR_TESTID)).toBeInTheDocument();
-            expect(screen.getByTestId(SELECTOR_TESTID)).toHaveTextContent(
-                "10 per page"
+            expect(screen.getByRole("combobox")).toHaveAccessibleName(
+                "Items per page 10 per page"
             );
         });
 
@@ -534,8 +534,8 @@ describe("Pagination", () => {
                 />
             );
 
-            expect(screen.getByTestId(SELECTOR_TESTID)).toHaveTextContent(
-                /^20 per page$/
+            expect(screen.getByRole("combobox")).toHaveAccessibleName(
+                "Items per page 20 per page"
             );
 
             rerender(
@@ -548,8 +548,8 @@ describe("Pagination", () => {
                 />
             );
 
-            expect(screen.getByTestId(SELECTOR_TESTID)).toHaveTextContent(
-                /^20 per page \(updated\)$/
+            expect(screen.getByRole("combobox")).toHaveAccessibleName(
+                "Items per page 20 per page (updated)"
             );
         });
 

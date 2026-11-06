@@ -3,10 +3,12 @@ import findIndex from "lodash/findIndex";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 
+import { VisuallyHidden } from "../shared/accessibility";
 import {
     DropdownList,
     DropdownListState,
     ExpandableElement,
+    SelectedTagList,
 } from "../shared/dropdown-list";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
@@ -56,6 +58,7 @@ export const InputMultiSelect = <T, V>({
     renderCustomCallToAction,
     onBlur,
     variant = "default",
+    displayVariant = "count",
     readOnly,
     alignment,
     dropdownZIndex,
@@ -71,6 +74,7 @@ export const InputMultiSelect = <T, V>({
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
     const internalId = useId();
+    const tagSummaryId = `${internalId}-tag-summary`;
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const selectorRef = useRef<HTMLButtonElement>(null);
@@ -167,6 +171,21 @@ export const InputMultiSelect = <T, V>({
     // =============================================================================
     // HELPER FUNCTION
     // =============================================================================
+    const getTagLabel = (item: T): string => {
+        const value = listExtractor ? listExtractor(item) : item?.toString();
+
+        if (typeof value === "object") {
+            return value.title;
+        }
+
+        return value ?? "";
+    };
+
+    const getTagKey = (item: T, index: number) => {
+        const formattedValue = valueExtractor ? valueExtractor(item) : item;
+        return `item_${index}__${formattedValue}`;
+    };
+
     const getDisplayValue = () => {
         if (options && selected.length === options.length) {
             return allSelectedLabel || "All selected";
@@ -194,6 +213,28 @@ export const InputMultiSelect = <T, V>({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
+    const renderTags = () => (
+        <>
+            {/* the tags are not announced, so the combobox is named by the
+            same text a "count" display would show */}
+            <VisuallyHidden id={tagSummaryId} aria-hidden>
+                {getDisplayValue()}
+            </VisuallyHidden>
+            <SelectedTagList
+                removable={!disabled && !readOnly}
+                items={selected.map((item, index) => ({
+                    key: getTagKey(item, index),
+                    label: getTagLabel(item),
+                    onRemove: () =>
+                        handleListItemClick(
+                            item,
+                            valueExtractor ? valueExtractor(item) : item
+                        ),
+                }))}
+            />
+        </>
+    );
+
     const renderLabel = () => {
         if (!selected || selected.length === 0) {
             return (
@@ -216,9 +257,21 @@ export const InputMultiSelect = <T, V>({
         }
     };
 
-    const renderSelectorContent = () => (
-        <LabelContainer disabled={disabled}>{renderLabel()}</LabelContainer>
-    );
+    const isTagDisplay = displayVariant === "tag";
+    const showTags = isTagDisplay && selected.length > 0;
+
+    const renderSelectorContent = () => {
+        // LabelContainer cannot shrink below its content (min-width: auto),
+        // which prevents long tags from truncating, so the tags go without it.
+        // The tags have their own disabled styling
+        if (showTags) {
+            return renderTags();
+        }
+
+        return (
+            <LabelContainer disabled={disabled}>{renderLabel()}</LabelContainer>
+        );
+    };
 
     const renderElement = () => {
         return (
@@ -243,6 +296,8 @@ export const InputMultiSelect = <T, V>({
                     popupRole="listbox"
                     readOnly={readOnly}
                     variant={variant}
+                    dynamicHeight={isTagDisplay}
+                    valueLabelId={showTags ? tagSummaryId : undefined}
                     aria-labelledby={ariaLabelledBy}
                     aria-describedby={ariaDescribedBy}
                     aria-invalid={ariaInvalid}

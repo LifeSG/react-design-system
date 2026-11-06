@@ -209,9 +209,11 @@ export const Component = <T, V>(
                     aria-labelledby={concatIds(ariaLabelledBy, comboboxLabelId)}
                     aria-describedby={concatIds(ariaDescribedBy, instructionId)}
                     aria-invalid={ariaInvalid}
-                    data-position={position}
                     className={clsx(
-                        noBorder && styles.expandableElementNoBorder
+                        noBorder &&
+                            (position === "right"
+                                ? styles.expandableElementNoBorderRight
+                                : styles.expandableElementNoBorderLeft)
                     )}
                 >
                     {renderSelectorContent()}

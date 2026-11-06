@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
+import { useState } from "react";
 import { Form } from "src/form";
 import { InputMultiSelect } from "src/input-multi-select";
 import { Layout } from "src/layout";
@@ -25,7 +26,20 @@ const OPTIONS_DATA = [
     { value: "D", label: "Option D" },
 ];
 
-const LARGE_OPTIONS_DATA = [...Array(50000)].map((_, i) => ({
+const MANY_OPTIONS_DATA = Array.from({ length: 30 }, (_, i) => ({
+    value: i + 1,
+    label: `Option ${i + 1}`,
+}));
+
+const LONG_OPTIONS_DATA = [
+    {
+        value: "long",
+        label: "This is a very long option label that cannot fit within the width of the field and should be truncated",
+    },
+    { value: "short", label: "Short" },
+];
+
+const LARGE_OPTIONS_DATA = Array.from({ length: 5000 }).map((_, i) => ({
     value: i + 1,
     label: `Option ${i + 1}`,
 }));
@@ -194,14 +208,108 @@ export const RenderingInGridLayout: StoryObj<Component> = {
 export const SmallVariant: StoryObj<StandaloneComponent> = {
     render: (_args) => {
         return (
-            <Form.MultiSelect
-                variant="small"
-                label="This is the small variant"
-                options={OPTIONS_DATA}
-                valueExtractor={(item) => item.value}
-                listExtractor={(item) => item.label}
-                enableSearch
-            />
+            <>
+                <Form.MultiSelect
+                    variant="small"
+                    label="This is the small variant"
+                    options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    enableSearch
+                />
+                <Form.MultiSelect
+                    variant="small"
+                    displayVariant="tag"
+                    label="This is the small variant with tags"
+                    options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    selectedOptions={[OPTIONS_DATA[0], OPTIONS_DATA[2]]}
+                />
+            </>
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
+export const TagDisplayVariant: StoryObj<Component> = {
+    render: (_args) => {
+        const [selected, setSelected] = useState<typeof OPTIONS_DATA>([
+            OPTIONS_DATA[0],
+            OPTIONS_DATA[2],
+        ]);
+
+        return (
+            <>
+                <Form.MultiSelect
+                    displayVariant="tag"
+                    label="This is the select field"
+                    options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                />
+                <Form.MultiSelect
+                    displayVariant="tag"
+                    label="This is the disabled state"
+                    options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    selectedOptions={[OPTIONS_DATA[0], OPTIONS_DATA[2]]}
+                    disabled
+                />
+                <Form.MultiSelect
+                    displayVariant="tag"
+                    label="This is the error state"
+                    options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    errorMessage="Selection is required"
+                />
+                <Form.MultiSelect
+                    displayVariant="tag"
+                    label="This has preselected items"
+                    options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    selectedOptions={selected}
+                    onSelectOptions={setSelected}
+                />
+            </>
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
+export const TagOverflow: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <>
+                <Form.MultiSelect
+                    displayVariant="tag"
+                    label="All options selected shows every tag"
+                    options={OPTIONS_DATA}
+                    selectedOptions={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                />
+                <Form.MultiSelect
+                    displayVariant="tag"
+                    label="Tags wrap and collapse into 'and X more' after 4 rows"
+                    options={MANY_OPTIONS_DATA}
+                    selectedOptions={MANY_OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    enableSearch
+                />
+                <Form.MultiSelect
+                    displayVariant="tag"
+                    label="A long label is truncated to one line"
+                    options={LONG_OPTIONS_DATA}
+                    selectedOptions={LONG_OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                />
+            </>
         );
     },
     decorators: [StoryDecorator({ maxWidth: true })],
@@ -231,6 +339,14 @@ export const StandaloneUsage: StoryObj<StandaloneComponent> = {
                     placeholder="Searchable multi select"
                     selectedOptions={[{ value: "B", label: "Option B" }]}
                     enableSearch
+                />
+                <InputMultiSelect
+                    options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    placeholder="Tag display"
+                    displayVariant="tag"
+                    selectedOptions={OPTIONS_DATA.slice(0, 2)}
                 />
             </>
         );
