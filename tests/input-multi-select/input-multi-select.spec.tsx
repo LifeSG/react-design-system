@@ -1,5 +1,6 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useState } from "react";
 import { InputMultiSelect } from "src/input-multi-select";
 
 import { setupCommonDomMocks } from "../_common";
@@ -11,6 +12,20 @@ const FIELD_TESTID = "test";
 const SELECTOR_TESTID = "selector";
 const DROPDOWN_TESTID = "dropdown-list";
 const OPTIONS = ["Option 1", "Option 2", "Option 3"];
+
+const ControlledTagSelect = ({ initial }: { initial: string[] }) => {
+    const [selected, setSelected] = useState<string[]>(initial);
+
+    return (
+        <InputMultiSelect
+            data-testid={FIELD_TESTID}
+            options={OPTIONS}
+            selectedOptions={selected}
+            onSelectOptions={setSelected}
+            displayVariant="tag"
+        />
+    );
+};
 
 describe("InputMultiSelect", () => {
     beforeEach(() => {
@@ -817,6 +832,123 @@ describe("InputMultiSelect", () => {
             expect(
                 screen.getByTestId(SELECTOR_TESTID).querySelector("button")
             ).toBeNull();
+        });
+
+        describe("keyboard", () => {
+            it("should not remove tags on Backspace or Delete", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <ControlledTagSelect initial={["Option 1", "Option 2"]} />
+                );
+
+                screen.getByRole("combobox").focus();
+                await user.keyboard("{Backspace}{Delete}");
+
+                expect(
+                    screen.getByRole("button", { name: "Remove Option 1" })
+                ).toBeInTheDocument();
+                expect(
+                    screen.getByRole("button", { name: "Remove Option 2" })
+                ).toBeInTheDocument();
+            });
+
+            it("should move focus from the combobox to the remove button with Tab", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <ControlledTagSelect initial={["Option 1", "Option 2"]} />
+                );
+
+                screen.getByRole("combobox").focus();
+                await user.tab();
+
+                expect(
+                    screen.getByRole("button", { name: "Remove Option 1" })
+                ).toHaveFocus();
+            });
+
+            it("should remove the tag without opening the dropdown when Enter is pressed on x", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <ControlledTagSelect initial={["Option 1", "Option 2"]} />
+                );
+
+                screen.getByRole("combobox").focus();
+                await user.tab();
+                await user.keyboard("{Enter}");
+
+                expect(
+                    screen.queryByRole("button", { name: "Remove Option 1" })
+                ).not.toBeInTheDocument();
+                expect(
+                    screen.getByRole("button", { name: "Remove Option 2" })
+                ).toBeInTheDocument();
+                expect(
+                    screen.queryByTestId(DROPDOWN_TESTID)
+                ).not.toBeInTheDocument();
+            });
+
+            it("should open the dropdown when Enter is pressed on the combobox", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <ControlledTagSelect initial={["Option 1", "Option 2"]} />
+                );
+
+                screen.getByRole("combobox").focus();
+                await user.keyboard("{Enter}");
+
+                await waitFor(() => {
+                    expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+                });
+            });
+        });
+
+        describe("removing tags", () => {
+            it("should uncheck the removed option in the dropdown", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <ControlledTagSelect initial={["Option 1", "Option 2"]} />
+                );
+
+                await user.click(
+                    screen.getByRole("button", { name: "Remove Option 1" })
+                );
+                await user.click(screen.getByRole("combobox"));
+
+                await waitFor(() => {
+                    expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+                });
+                expect(
+                    screen.getByRole("option", { name: "Option 1" })
+                ).toHaveAttribute("aria-selected", "false");
+                expect(
+                    screen.getByRole("option", { name: "Option 2" })
+                ).toHaveAttribute("aria-selected", "true");
+            });
+
+            it("should show the placeholder after clearing all", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <ControlledTagSelect initial={["Option 1", "Option 2"]} />
+                );
+
+                await user.click(screen.getByRole("combobox"));
+                await user.click(
+                    await screen.findByRole("button", { name: "Clear all" })
+                );
+
+                expect(
+                    screen.queryByRole("button", { name: /^Remove/ })
+                ).not.toBeInTheDocument();
+                expect(screen.getByRole("combobox")).toHaveAccessibleName(
+                    "Select"
+                );
+            });
         });
     });
 });

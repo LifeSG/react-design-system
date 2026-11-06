@@ -1,17 +1,20 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
+const LONG_OPTION_NAME = /^This is a very long option/;
+const FORM_STATES = ["default", "disabled", "readonly", "error"] as const;
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "input-multi-select";
 
     public readonly locators: {
         dropdownContainer: Locator;
         default: Locator;
-        disabled: Locator;
-        readonly: Locator;
         small: Locator;
-        error: Locator;
-        form: Locator;
+        form: Record<(typeof FORM_STATES)[number], Locator>;
+        formPrefilled: Record<
+            "default" | "disabled" | "readonly" | "error",
+            Locator
+        >;
     };
 
     constructor(page: Page) {
@@ -20,11 +23,19 @@ class StoryPage extends AbstractStoryPage {
         this.locators = {
             dropdownContainer: page.getByTestId("dropdown-container"),
             default: page.getByTestId("tag-default"),
-            disabled: page.getByTestId("tag-disabled"),
-            readonly: page.getByTestId("tag-readonly"),
-            small: page.getByTestId("tag-small"),
-            error: page.getByTestId("tag-error"),
-            form: page.getByTestId("tag-form-base"),
+            small: page.getByTestId("tag-small-base"),
+            form: {
+                default: page.getByTestId("tag-form-default-base"),
+                disabled: page.getByTestId("tag-form-disabled-base"),
+                readonly: page.getByTestId("tag-form-readonly-base"),
+                error: page.getByTestId("tag-form-error-base"),
+            },
+            formPrefilled: {
+                default: page.getByTestId("tag-form-prefilled-default-base"),
+                disabled: page.getByTestId("tag-form-prefilled-disabled-base"),
+                readonly: page.getByTestId("tag-form-prefilled-readonly-base"),
+                error: page.getByTestId("tag-form-prefilled-error-base"),
+            },
         };
     }
 
@@ -56,8 +67,6 @@ class StoryPage extends AbstractStoryPage {
     }
 }
 
-const LONG_OPTION_NAME = /^This is a very long option/;
-
 const test = base.extend<{ story: StoryPage }>({
     story: async ({ page }, use) => {
         const story = new StoryPage(page);
@@ -75,7 +84,6 @@ test.describe("InputMultiSelectTag", () => {
             const field = story.locators.default;
 
             await test.step("Placeholder", async () => {
-                await expect(field).toContainText("Select");
                 await compareScreenshot(story, "placeholder", {
                     locator: field,
                 });
@@ -90,116 +98,6 @@ test.describe("InputMultiSelectTag", () => {
                 await expect(field.getByRole("combobox")).toMatchAriaSnapshot(`
                     - combobox: /All selected/
                 `);
-            });
-        });
-
-        test("States", async ({ story }) => {
-            const { disabled, readonly } = story.locators;
-
-            await test.step("Visual", async () => {
-                await compareScreenshot(story, "disabled", {
-                    locator: disabled,
-                });
-                await compareScreenshot(story, "readonly", {
-                    locator: readonly,
-                });
-            });
-        });
-
-        test("Select and remove tags", async ({ story }) => {
-            const field = story.locators.default;
-
-            await story.openDropdown(field);
-            await story.getOption("Option 1").click();
-            await story.getOption("Option 2").click();
-            await story.closeDropdown();
-
-            await expect(field.getByRole("combobox")).toHaveAccessibleName(
-                "2 selected"
-            );
-            await expect(
-                story.getRemoveButton(field, "Option 1")
-            ).toBeVisible();
-
-            await test.step("Remove with the x", async () => {
-                await story.getRemoveButton(field, "Option 1").click();
-
-                await expect(
-                    story.getRemoveButton(field, "Option 1")
-                ).toHaveCount(0);
-                await expect(
-                    story.getRemoveButton(field, "Option 2")
-                ).toBeVisible();
-                await expect(
-                    story.locators.dropdownContainer
-                ).not.toBeVisible();
-            });
-
-            await test.step("Removed option is unchecked in the dropdown", async () => {
-                await story.openDropdown(field);
-                await expect(story.getOption("Option 1")).toHaveAttribute(
-                    "aria-selected",
-                    "false"
-                );
-                await expect(story.getOption("Option 2")).toHaveAttribute(
-                    "aria-selected",
-                    "true"
-                );
-            });
-
-            await test.step("Clear all shows the placeholder", async () => {
-                await story.page
-                    .getByRole("button", { name: "Clear all" })
-                    .click();
-                await story.closeDropdown();
-
-                await expect(field.getByRole("combobox")).toHaveAccessibleName(
-                    "Select"
-                );
-            });
-        });
-
-        test("Keyboard", async ({ story }) => {
-            const field = story.locators.default;
-
-            await story.openDropdown(field);
-            await story.getOption("Option 1").click();
-            await story.getOption("Option 2").click();
-            await story.closeDropdown();
-
-            await test.step("Backspace and Delete do not remove tags", async () => {
-                await field.getByRole("combobox").focus();
-                await story.page.keyboard.press("Backspace");
-                await story.page.keyboard.press("Delete");
-
-                await expect(
-                    story.getRemoveButton(field, "Option 1")
-                ).toBeVisible();
-                await expect(
-                    story.getRemoveButton(field, "Option 2")
-                ).toBeVisible();
-            });
-
-            await test.step("The x is in the tab order", async () => {
-                await field.getByRole("combobox").focus();
-                await story.page.keyboard.press("Tab");
-                await expect(
-                    story.getRemoveButton(field, "Option 1")
-                ).toBeFocused();
-
-                await story.page.keyboard.press("Enter");
-                await expect(
-                    story.getRemoveButton(field, "Option 1")
-                ).toHaveCount(0);
-                await expect(
-                    story.locators.dropdownContainer
-                ).not.toBeVisible();
-            });
-
-            await test.step("Combobox opens with the keyboard", async () => {
-                await field.getByRole("combobox").focus();
-                await story.page.keyboard.press("Enter");
-                await expect(story.locators.dropdownContainer).toBeVisible();
             });
         });
     });
@@ -220,7 +118,7 @@ test.describe("InputMultiSelectTag", () => {
         });
     });
 
-    test.describe("Select all", () => {
+    test.describe("Multi-line tags", () => {
         test("Desktop", async ({ story }) => {
             await story.init("tag-default");
             await story.selectAll(story.locators.default);
@@ -234,32 +132,40 @@ test.describe("InputMultiSelectTag", () => {
         });
     });
 
-    test.describe(() => {
-        test("Small", async ({ story }) => {
+    test.describe("Form", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("tag-form-variants");
+        });
+
+        for (const state of FORM_STATES) {
+            test(state, async ({ story }) => {
+                await compareScreenshot(story, state, {
+                    locator: story.locators.form[state],
+                });
+            });
+        }
+    });
+
+    test.describe("Form prefilled", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("tag-form-variants-prefilled");
+        });
+
+        for (const state of FORM_STATES) {
+            test(state, async ({ story }) => {
+                await compareScreenshot(story, state, {
+                    locator: story.locators.formPrefilled[state],
+                });
+            });
+        }
+    });
+
+    test.describe("Small", () => {
+        test("Mount", async ({ story }) => {
             await story.init("tag-small");
 
             await compareScreenshot(story, "mount", {
                 locator: story.locators.small,
-            });
-        });
-    });
-
-    test.describe(() => {
-        test("Error", async ({ story }) => {
-            await story.init("tag-error");
-
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.error,
-            });
-        });
-    });
-
-    test.describe(() => {
-        test("Form", async ({ story }) => {
-            await story.init("tag-form");
-
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.form,
             });
         });
     });
