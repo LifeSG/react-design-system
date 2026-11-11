@@ -131,7 +131,7 @@ test.describe("InputMultiSelect", () => {
             await expect(story.page.getByTestId("form-default"))
                 .toMatchAriaSnapshot(`
                     - text: Default
-                    - combobox "Default Default multi select"
+                    - combobox "Default": Default multi select
             `);
 
             await story.openDropdown(story.locators.form.default);
@@ -198,7 +198,7 @@ test.describe("InputMultiSelect", () => {
             await expect(story.page.getByTestId("form-error"))
                 .toMatchAriaSnapshot(`
                 - text: Error
-                - combobox "Error Error multi select"
+                - combobox "Error": Error multi select
                 - paragraph: Selection is required
             `);
         });
@@ -211,7 +211,7 @@ test.describe("InputMultiSelect", () => {
                 story.locators.component.dropdownContainer
             ).not.toBeVisible();
             await expect(story.locators.form.readonly).toMatchAriaSnapshot(`
-                - combobox "Readonly Readonly multi select"
+                - combobox "Readonly": Readonly multi select
             `);
 
             await story.locators.form.readonly.focus();
@@ -229,7 +229,7 @@ test.describe("InputMultiSelect", () => {
                 story.locators.component.dropdownContainer
             ).not.toBeVisible();
             await expect(story.locators.form.disabled).toMatchAriaSnapshot(`
-                - combobox "Disabled Disabled multi select" [disabled]
+                - combobox "Disabled" [disabled]: Disabled multi select
             `);
         });
     });
@@ -248,7 +248,7 @@ test.describe("InputMultiSelect", () => {
                 locator: story.locators.form.default,
             });
             await expect(story.locators.form.default).toMatchAriaSnapshot(`
-                - combobox "Default Default multi select"
+                - combobox "Default": Default multi select
             `);
 
             await story.openDropdown(story.locators.form.default);
@@ -291,7 +291,7 @@ test.describe("InputMultiSelect", () => {
                 locator: story.locators.form.default,
             });
             await expect(story.locators.form.default).toMatchAriaSnapshot(`
-                - combobox "Default Default multi select"
+                - combobox "Default": Default multi select
             `);
 
             await story.openDropdown(story.locators.form.default);

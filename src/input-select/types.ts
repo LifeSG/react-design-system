@@ -91,6 +91,8 @@ export interface InputSelectProps<T, V>
     valueToStringFunction?: ((value: V) => string) | undefined;
     /**
      * Renders a custom element for the currently selected option.
+     * It is rendered inside the combobox button, so it must be phrasing
+     * content (e.g. `span` or `img`) with no interactive elements.
      */
     renderCustomSelectedOption?: ((option: T) => JSX.Element) | undefined;
     /**

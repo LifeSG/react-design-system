@@ -91,12 +91,12 @@ test.describe("InputMultiSelectTag", () => {
 
             await test.step("Accessibility", async () => {
                 await expect(field.getByRole("combobox")).toMatchAriaSnapshot(`
-                    - combobox "Select"
+                    - combobox: Select
                 `);
 
                 await story.selectAll(field);
                 await expect(field.getByRole("combobox")).toMatchAriaSnapshot(`
-                    - combobox "All selected"
+                    - combobox: All selected
                 `);
             });
         });
@@ -130,6 +130,21 @@ test.describe("InputMultiSelectTag", () => {
             await story.selectAll(story.locators.default);
             await compareScreenshot(story, "state");
         });
+
+        test("Accessibility", async ({ story }) => {
+            const field = story.locators.default;
+
+            await story.init("tag-default", { size: "mobile" });
+            await story.selectAll(field);
+
+            await expect(field.getByText(/^and \d+ more$/)).toBeVisible();
+            await expect(field).toMatchAriaSnapshot(`
+                - combobox: All selected
+                - button "Remove This is a very long option label that cannot fit within the width of the field and should be truncated"
+                - button "Remove Option 1"
+            `);
+            expect(await field.ariaSnapshot()).not.toMatch(/more/);
+        });
     });
 
     test.describe("Form", () => {
@@ -158,6 +173,46 @@ test.describe("InputMultiSelectTag", () => {
                 });
             });
         }
+
+        test.describe("Accessibility", () => {
+            test("Removable", async ({ story }) => {
+                await expect(story.locators.formPrefilled.default)
+                    .toMatchAriaSnapshot(`
+                    - /children: equal
+                    - combobox "Default": 2 selected
+                    - button "Remove Option A"
+                    - button "Remove Option B"
+                `);
+            });
+
+            test("Disabled", async ({ story }) => {
+                await expect(story.locators.formPrefilled.disabled)
+                    .toMatchAriaSnapshot(`
+                    - /children: equal
+                    - combobox "Disabled" [disabled]: 2 selected
+                `);
+            });
+
+            test("Readonly", async ({ story }) => {
+                await expect(story.locators.formPrefilled.readonly)
+                    .toMatchAriaSnapshot(`
+                    - /children: equal
+                    - combobox "Readonly": 2 selected
+                `);
+            });
+
+            test("Removing a tag", async ({ story }) => {
+                const field = story.locators.formPrefilled.default;
+
+                await story.getRemoveButton(field, "Option A").click();
+
+                await expect(field).toMatchAriaSnapshot(`
+                    - /children: equal
+                    - combobox "Default": 1 selected
+                    - button "Remove Option B"
+                `);
+            });
+        });
     });
 
     test.describe("Small", () => {

@@ -5,21 +5,44 @@ import { Colour, Font, Motion, Spacing } from "../../theme";
 // =============================================================================
 // STYLING
 // =============================================================================
+// the combobox lays out the value in place of the content, so that it sizes
+// the selector. Its pseudo-element is stretched over the whole selector, so
+// that the click target and focus ring cover it
 export const comboboxButton = css`
-    position: absolute;
-    inset: 0;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: inherit;
+    min-width: 0;
     padding: 0;
     border: none;
     border-radius: inherit;
     background: transparent;
-    color: transparent;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-align: start;
     cursor: inherit;
     outline: none;
 
-    &:focus-visible {
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+    }
+
+    &:focus-visible::before {
         outline: 2px solid ${Colour["focus-ring"]};
         outline-offset: -2px;
     }
+`;
+
+// with content, the combobox only holds a visually hidden value, and is laid
+// over the selector so that the content sizes the selector
+export const comboboxButtonOverlay = css`
+    position: absolute;
+    inset: 0;
 `;
 
 export const selector = css`

@@ -456,9 +456,10 @@ describe("Pagination", () => {
             );
 
             expect(screen.getByTestId(SELECTOR_TESTID)).toBeInTheDocument();
-            expect(screen.getByRole("combobox")).toHaveAccessibleName(
-                "Items per page 10 per page"
-            );
+            const combobox = screen.getByRole("combobox", {
+                name: "Items per page",
+            });
+            expect(combobox).toHaveTextContent("10 per page");
         });
 
         it("should show the default options when selector is clicked", async () => {
@@ -534,9 +535,10 @@ describe("Pagination", () => {
                 />
             );
 
-            expect(screen.getByRole("combobox")).toHaveAccessibleName(
-                "Items per page 20 per page"
-            );
+            const combobox = screen.getByRole("combobox", {
+                name: "Items per page",
+            });
+            expect(combobox).toHaveTextContent("20 per page");
 
             rerender(
                 <Pagination
@@ -548,9 +550,7 @@ describe("Pagination", () => {
                 />
             );
 
-            expect(screen.getByRole("combobox")).toHaveAccessibleName(
-                "Items per page 20 per page (updated)"
-            );
+            expect(combobox).toHaveTextContent("20 per page (updated)");
         });
 
         describe("onPageSizeChange", () => {

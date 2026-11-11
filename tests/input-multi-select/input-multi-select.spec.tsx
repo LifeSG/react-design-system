@@ -1,6 +1,7 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
+import { Form } from "src/form";
 import { InputMultiSelect } from "src/input-multi-select";
 
 import { setupCommonDomMocks } from "../_common";
@@ -12,6 +13,7 @@ const FIELD_TESTID = "test";
 const SELECTOR_TESTID = "selector";
 const DROPDOWN_TESTID = "dropdown-list";
 const OPTIONS = ["Option 1", "Option 2", "Option 3"];
+const LABEL = "Form label";
 
 const ControlledTagSelect = ({ initial }: { initial: string[] }) => {
     const [selected, setSelected] = useState<string[]>(initial);
@@ -610,6 +612,29 @@ describe("InputMultiSelect", () => {
         });
     });
 
+    describe("count display variant", () => {
+        it.each([
+            ["the placeholder", [], "Select"],
+            ["the selected count", ["Option 1", "Option 2"], "2 selected"],
+            ["all selected", OPTIONS, "All selected"],
+        ])(
+            "should name the combobox by the label and give %s as its value",
+            (_, selectedOptions, value) => {
+                render(
+                    <Form.MultiSelect
+                        label={LABEL}
+                        options={OPTIONS}
+                        selectedOptions={selectedOptions}
+                    />
+                );
+
+                expect(
+                    screen.getByRole("combobox", { name: LABEL })
+                ).toHaveTextContent(value);
+            }
+        );
+    });
+
     describe("tag display variant", () => {
         it("should show one tag per selected option", () => {
             render(
@@ -623,8 +648,8 @@ describe("InputMultiSelect", () => {
 
             expect(screen.getByText("Option 1")).toBeInTheDocument();
             expect(screen.getByText("Option 2")).toBeInTheDocument();
-            // the count is only exposed to assistive technologies
-            expect(screen.getByRole("combobox")).toHaveAccessibleName(
+            // the count is rendered inside the combobox, visually hidden
+            expect(screen.getByRole("combobox")).toHaveTextContent(
                 "2 selected"
             );
         });
@@ -763,8 +788,8 @@ describe("InputMultiSelect", () => {
             OPTIONS.forEach((option) => {
                 expect(screen.getByText(option)).toBeInTheDocument();
             });
-            // the label is only exposed to assistive technologies
-            expect(screen.getByRole("combobox")).toHaveAccessibleName(
+            // the label is rendered inside the combobox, visually hidden
+            expect(screen.getByRole("combobox")).toHaveTextContent(
                 "All selected"
             );
         });
@@ -779,7 +804,7 @@ describe("InputMultiSelect", () => {
                 />
             );
 
-            expect(screen.getByRole("combobox")).toHaveAccessibleName(
+            expect(screen.getByRole("combobox")).toHaveTextContent(
                 "2 selected"
             );
         });
@@ -794,9 +819,7 @@ describe("InputMultiSelect", () => {
                 />
             );
 
-            expect(screen.getByRole("combobox")).toHaveAccessibleName(
-                "Pick one"
-            );
+            expect(screen.getByRole("combobox")).toHaveTextContent("Pick one");
         });
 
         it.each([
@@ -832,6 +855,63 @@ describe("InputMultiSelect", () => {
             expect(
                 screen.getByTestId(SELECTOR_TESTID).querySelector("button")
             ).toBeNull();
+        });
+
+        describe("accessibility tree", () => {
+            it("should name the combobox by the label and give the count as its value", () => {
+                render(
+                    <Form.MultiSelect
+                        label={LABEL}
+                        options={OPTIONS}
+                        selectedOptions={["Option 1", "Option 2"]}
+                        displayVariant="tag"
+                    />
+                );
+
+                expect(
+                    screen.getByRole("combobox", { name: LABEL })
+                ).toHaveTextContent("2 selected");
+            });
+
+            it("should render the remove buttons alongside the combobox", () => {
+                render(
+                    <Form.MultiSelect
+                        label={LABEL}
+                        options={OPTIONS}
+                        selectedOptions={["Option 1", "Option 2"]}
+                        displayVariant="tag"
+                    />
+                );
+
+                const combobox = screen.getByRole("combobox", { name: LABEL });
+                ["Remove Option 1", "Remove Option 2"].forEach((name) => {
+                    expect(combobox).not.toContainElement(
+                        screen.getByRole("button", { name })
+                    );
+                });
+            });
+
+            it.each([
+                ["disabled", { disabled: true }],
+                ["readOnly", { readOnly: true }],
+            ])("should keep the count as the value when %s", (_, props) => {
+                render(
+                    <Form.MultiSelect
+                        label={LABEL}
+                        options={OPTIONS}
+                        selectedOptions={["Option 1", "Option 2"]}
+                        displayVariant="tag"
+                        {...props}
+                    />
+                );
+
+                expect(
+                    screen.getByRole("combobox", { name: LABEL })
+                ).toHaveTextContent("2 selected");
+                expect(
+                    screen.queryByRole("button", { name: /^Remove/ })
+                ).not.toBeInTheDocument();
+            });
         });
 
         describe("keyboard", () => {
@@ -945,7 +1025,7 @@ describe("InputMultiSelect", () => {
                 expect(
                     screen.queryByRole("button", { name: /^Remove/ })
                 ).not.toBeInTheDocument();
-                expect(screen.getByRole("combobox")).toHaveAccessibleName(
+                expect(screen.getByRole("combobox")).toHaveTextContent(
                     "Select"
                 );
             });

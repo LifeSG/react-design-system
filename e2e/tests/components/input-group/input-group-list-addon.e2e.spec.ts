@@ -83,7 +83,7 @@ test.describe("Input Group List", () => {
         test("Accessibility", async ({ story }) => {
             await expect(story.locators.formListDefault).toMatchAriaSnapshot(`
             - text: Form list variant This is the subtitle
-            - combobox "Form list variant Select"
+            - combobox "Form list variant": Select
             - text: Press space to open options
             - textbox "Form list variant":
                 - /placeholder: Enter something
@@ -99,7 +99,7 @@ test.describe("Input Group List", () => {
 
             await expect(story.locators.formListRight).toMatchAriaSnapshot(`
             - text: Form list variant (right) This is the subtitle
-            - combobox "Form list variant (right) Select"
+            - combobox "Form list variant (right)": Select
             - text: Press space to open options
             - textbox "Form list variant (right)":
                 - /placeholder: Enter something
@@ -115,7 +115,7 @@ test.describe("Input Group List", () => {
 
             await expect(story.locators.formListDisabled).toMatchAriaSnapshot(`
             - text: Form list variant disabled state This is the subtitle
-            - combobox "Form list variant disabled state Select" [disabled]
+            - combobox "Form list variant disabled state" [disabled]: Select
             - text: Press space to open options
             - textbox "Form list variant disabled state" [disabled]:
                 - /placeholder: Enter something
@@ -140,7 +140,7 @@ test.describe("Input Group List", () => {
 
             await expect(story.locators.formListError).toMatchAriaSnapshot(`
             - text: Form list variant error state This is the subtitle
-            - combobox "Form list variant error state Select"
+            - combobox "Form list variant error state": Select
             - text: Press space to open options
             - textbox "Form list variant error state":
                 - /placeholder: Enter something

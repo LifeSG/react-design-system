@@ -57,7 +57,7 @@ describe("InputGroup - List addon", () => {
         );
 
         expect(screen.getByTestId(INPUT_TESTID)).toHaveValue("Initial value");
-        expect(screen.getByRole("combobox")).toHaveAccessibleName("Option 1");
+        expect(screen.getByRole("combobox")).toHaveTextContent("Option 1");
     });
 
     it("should open dropdown list when selector is clicked", async () => {
@@ -513,17 +513,13 @@ describe("InputGroup - List addon", () => {
             );
 
             expect(
-                screen.getByRole("combobox", {
-                    name: `${comboboxLabel} Select`,
-                })
-            ).toBeInTheDocument();
+                screen.getByRole("combobox", { name: comboboxLabel })
+            ).toHaveTextContent("Select");
             expect(
                 screen.getByRole("textbox", { name: textboxLabel })
             ).toBeInTheDocument();
             expect(
-                screen.getByRole("combobox", {
-                    name: `${comboboxLabel} Select`,
-                })
+                screen.getByRole("combobox", { name: comboboxLabel })
             ).toHaveAccessibleDescription(DROPDOWN_INSTRUCTION);
         });
 
@@ -542,7 +538,7 @@ describe("InputGroup - List addon", () => {
             );
 
             const combobox = screen.getByRole("combobox", {
-                name: `${LABEL} Select`,
+                name: LABEL,
                 description: `${ERROR} ${DESCRIPTION} ${DROPDOWN_INSTRUCTION}`,
             });
             const textbox = screen.getByRole("textbox", {

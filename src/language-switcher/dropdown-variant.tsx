@@ -121,7 +121,7 @@ export const DropdownVariant = ({
             listboxId={listboxId}
             popupRole="listbox"
             readOnly={false}
-            aria-label={`${ARIA_LABEL}, ${LANGUAGE_DISPLAY_MAP[selectedLanguage]}`}
+            aria-label={ARIA_LABEL}
             data-testid={`${testId}--trigger`}
         >
             <span className={styles.languageIconWrapper} aria-hidden>

@@ -8,8 +8,8 @@ const INPUT_TESTID = "input";
 const SELECTOR_TESTID = "selector";
 const LABEL = "Test label";
 const DESCRIPTION = "Test subtitle";
-// the combobox is named by its label followed by its value
-const DROPDOWN_LABEL = `${LABEL} Country code Select`;
+// the combobox is named by its label
+const DROPDOWN_LABEL = `${LABEL} Country code`;
 const DROPDOWN_INSTRUCTION = "Press space to open options";
 const TEXTBOX_LABEL = `${LABEL} Enter phone number`;
 const ERROR = "Error message";
@@ -27,9 +27,9 @@ describe("PhoneNumberInput", () => {
     it("should render default component", () => {
         render(<PhoneNumberInput />);
 
-        expect(screen.getByRole("combobox")).toHaveAccessibleName(
-            "Country code Select"
-        );
+        expect(
+            screen.getByRole("combobox", { name: "Country code" })
+        ).toHaveTextContent("Select");
         expect(screen.queryByTestId(INPUT_TESTID)).toHaveValue("");
     });
 
@@ -40,9 +40,9 @@ describe("PhoneNumberInput", () => {
             />
         );
 
-        expect(screen.getByRole("combobox")).toHaveAccessibleName(
-            "Country code +994"
-        );
+        expect(
+            screen.getByRole("combobox", { name: "Country code" })
+        ).toHaveTextContent("+994");
         expect(screen.queryByTestId(INPUT_TESTID)).toHaveValue(
             "(12) 345 67 89"
         );
@@ -138,9 +138,9 @@ describe("PhoneNumberInput", () => {
                     screen.getByRole("option", { name: /Singapore/i })
                 );
 
-                expect(screen.getByRole("combobox")).toHaveAccessibleName(
-                    "Country code +65"
-                );
+                expect(
+                    screen.getByRole("combobox", { name: "Country code" })
+                ).toHaveTextContent("+65");
                 expect(screen.queryByTestId(INPUT_TESTID)).toHaveValue(
                     "1234 5678"
                 );

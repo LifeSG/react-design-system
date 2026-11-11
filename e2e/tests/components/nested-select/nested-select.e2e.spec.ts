@@ -99,6 +99,17 @@ test.describe("NestedSelect", () => {
             await story.init("default");
         });
 
+        test("Accessibility", async ({ story }) => {
+            await expect(story.locators.nestedSelectDefaultBase)
+                .toMatchAriaSnapshot(`
+                - combobox "Default state": Select
+            `);
+            await expect(story.locators.nestedSelectDisabledBase)
+                .toMatchAriaSnapshot(`
+                - combobox "Disabled state" [disabled]: Select
+            `);
+        });
+
         test("Default states", async ({ story }) => {
             await test.step("On mount", async () => {
                 await compareScreenshot(story, "mount");
@@ -418,7 +429,7 @@ test.describe("NestedSelect", () => {
             await expect(
                 story.locators.internal.dropdownContainer
             ).not.toBeVisible();
-            await expect(story.locators.internal.selector).toHaveAccessibleName(
+            await expect(story.locators.internal.selector).toContainText(
                 /Option 999-1/
             );
         });

@@ -74,7 +74,6 @@ export const InputMultiSelect = <T, V>({
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
     const internalId = useId();
-    const tagSummaryId = `${internalId}-tag-summary`;
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const selectorRef = useRef<HTMLButtonElement>(null);
@@ -214,25 +213,18 @@ export const InputMultiSelect = <T, V>({
     // RENDER FUNCTIONS
     // =============================================================================
     const renderTags = () => (
-        <>
-            {/* the tags are not announced, so the combobox is named by the
-            same text a "count" display would show */}
-            <VisuallyHidden id={tagSummaryId} aria-hidden>
-                {getDisplayValue()}
-            </VisuallyHidden>
-            <SelectedTagList
-                removable={!disabled && !readOnly}
-                items={selected.map((item, index) => ({
-                    key: getTagKey(item, index),
-                    label: getTagLabel(item),
-                    onRemove: () =>
-                        handleListItemClick(
-                            item,
-                            valueExtractor ? valueExtractor(item) : item
-                        ),
-                }))}
-            />
-        </>
+        <SelectedTagList
+            removable={!disabled && !readOnly}
+            items={selected.map((item, index) => ({
+                key: getTagKey(item, index),
+                label: getTagLabel(item),
+                onRemove: () =>
+                    handleListItemClick(
+                        item,
+                        valueExtractor ? valueExtractor(item) : item
+                    ),
+            }))}
+        />
     );
 
     const renderLabel = () => {
@@ -260,12 +252,11 @@ export const InputMultiSelect = <T, V>({
     const isTagDisplay = displayVariant === "tag";
     const showTags = isTagDisplay && selected.length > 0;
 
-    const renderSelectorContent = () => {
-        // LabelContainer cannot shrink below its content (min-width: auto),
-        // which prevents long tags from truncating, so the tags go without it.
-        // The tags have their own disabled styling
+    const renderValue = () => {
+        // the tags are not announced, so the combobox has the same value a
+        // "count" display would show
         if (showTags) {
-            return renderTags();
+            return <VisuallyHidden>{getDisplayValue()}</VisuallyHidden>;
         }
 
         return (
@@ -297,12 +288,14 @@ export const InputMultiSelect = <T, V>({
                     readOnly={readOnly}
                     variant={variant}
                     dynamicHeight={isTagDisplay}
-                    valueLabelId={showTags ? tagSummaryId : undefined}
+                    // the tags are rendered alongside the combobox since they
+                    // contain buttons, and have their own disabled styling
+                    content={showTags ? renderTags() : undefined}
                     aria-labelledby={ariaLabelledBy}
                     aria-describedby={ariaDescribedBy}
                     aria-invalid={ariaInvalid}
                 >
-                    {renderSelectorContent()}
+                    {renderValue()}
                 </ExpandableElement>
             </InputBox>
         );

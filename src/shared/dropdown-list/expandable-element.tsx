@@ -3,8 +3,6 @@ import clsx from "clsx";
 import type { AriaAttributes, Ref } from "react";
 import { forwardRef } from "react";
 
-import { useId } from "../../util";
-import { concatIds } from "../accessibility";
 import * as styles from "./expandable-element.styles";
 import type { DropdownVariantType } from "./types";
 
@@ -13,7 +11,17 @@ export interface ExpandableElementProps
         AriaAttributes,
         "aria-label" | "aria-labelledby" | "aria-describedby" | "aria-invalid"
     > {
+    /**
+     * The current value, rendered inside the combobox and announced as its
+     * content. Must be phrasing content (no divs, no interactive elements)
+     */
     children: React.ReactNode;
+    /**
+     * Content rendered alongside the combobox, e.g. interactive tags.
+     * It is exposed to assistive technologies, so decorative parts
+     * should be aria-hidden
+     */
+    content?: React.ReactNode | undefined;
     className?: string | undefined;
     disabled: boolean | undefined;
     expanded: boolean | undefined;
@@ -26,18 +34,12 @@ export interface ExpandableElementProps
      * grow over multiple lines
      */
     dynamicHeight?: boolean | undefined;
-    /**
-     * Id of the element that describes the current value. Use this when
-     * `children` contain content that should not be part of the combobox
-     * name, such as interactive elements.
-     * Ignored when `aria-label` is set
-     */
-    valueLabelId?: string | undefined;
 }
 
 export const Component = (
     {
         children,
+        content,
         className,
         disabled,
         expanded,
@@ -48,13 +50,10 @@ export const Component = (
         dynamicHeight,
         "aria-label": ariaLabel,
         "aria-labelledby": ariaLabelledBy,
-        valueLabelId,
         ...otherProps
     }: ExpandableElementProps,
     ref: Ref<HTMLButtonElement>
 ) => {
-    const contentId = useId();
-
     const icon = !readOnly && (
         <div
             className={clsx(
@@ -66,13 +65,6 @@ export const Component = (
         </div>
     );
 
-    // the combobox is kept separate from the content so that the content can
-    // contain interactive elements, since buttons cannot be nested. It is
-    // stretched over the selector, and the content lets clicks through to it.
-    // Clicks bubble up to the reference element of the dropdown wrapper,
-    // so neither the div nor the button needs its own click handler.
-    // By default the combobox is named by the label and the content. An
-    // `aria-label` is expected to include the current value
     return (
         <div
             className={clsx(
@@ -88,13 +80,12 @@ export const Component = (
                 ref={ref}
                 type="button"
                 role="combobox"
-                className={styles.comboboxButton}
+                className={clsx(
+                    styles.comboboxButton,
+                    content && styles.comboboxButtonOverlay
+                )}
                 aria-label={ariaLabel}
-                aria-labelledby={
-                    ariaLabel
-                        ? ariaLabelledBy
-                        : concatIds(ariaLabelledBy, valueLabelId ?? contentId)
-                }
+                aria-labelledby={ariaLabelledBy}
                 aria-expanded={expanded}
                 aria-haspopup={popupRole}
                 aria-controls={expanded ? listboxId : undefined}
@@ -102,15 +93,10 @@ export const Component = (
                 aria-readonly={readOnly}
                 data-testid="selector"
                 {...otherProps}
-            />
-            {/* plain content is already announced as the combobox name */}
-            <div
-                id={contentId}
-                className={styles.content}
-                aria-hidden={valueLabelId ? undefined : true}
             >
                 {children}
-            </div>
+            </button>
+            {content && <div className={styles.content}>{content}</div>}
             {icon}
         </div>
     );

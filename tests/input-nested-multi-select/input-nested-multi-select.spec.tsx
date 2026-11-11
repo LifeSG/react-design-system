@@ -184,7 +184,7 @@ describe("InputNestedMultiSelect", () => {
             [["1", "10", "100"]],
             ["1.1.1"]
         );
-        expect(screen.getByRole("combobox")).toHaveAccessibleName(
+        expect(screen.getByRole("combobox")).toHaveTextContent(
             "Child 1.1.1 item"
         );
 
@@ -227,7 +227,7 @@ describe("InputNestedMultiSelect", () => {
             ],
             ["1.1.1", "1.1.2"]
         );
-        expect(screen.getByRole("combobox")).toHaveAccessibleName("2 selected");
+        expect(screen.getByRole("combobox")).toHaveTextContent("2 selected");
 
         await user.click(screen.getByText("Parent 1.1 item"));
 
@@ -265,7 +265,7 @@ describe("InputNestedMultiSelect", () => {
             ],
             ["1.1.1", "1.1.2"]
         );
-        expect(screen.getByRole("combobox")).toHaveAccessibleName("2 selected");
+        expect(screen.getByRole("combobox")).toHaveTextContent("2 selected");
 
         await user.click(screen.getByText("Parent 1.1 item"));
 
@@ -346,9 +346,7 @@ describe("InputNestedMultiSelect", () => {
         );
 
         expect(valueFormatter).toHaveBeenCalledWith("1.1.1");
-        expect(screen.getByRole("combobox")).toHaveAccessibleName(
-            "Value-1.1.1"
-        );
+        expect(screen.getByRole("combobox")).toHaveTextContent("Value-1.1.1");
     });
 
     it("should truncate display value in middle mode", async () => {
@@ -377,9 +375,7 @@ describe("InputNestedMultiSelect", () => {
             />
         );
 
-        expect(screen.getByRole("combobox")).toHaveAccessibleName(
-            "ABC ... JKL"
-        );
+        expect(screen.getByRole("combobox")).toHaveTextContent("ABC ... JKL");
 
         getBoundingClientRectSpy.mockRestore();
     });

@@ -75,7 +75,7 @@ export const InputSelect = <T, V>({
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const selectorRef = useRef<HTMLButtonElement>(null);
-    const labelContainerRef = useRef<HTMLDivElement>(null);
+    const labelContainerRef = useRef<HTMLSpanElement>(null);
 
     // =============================================================================
     // EFFECTS

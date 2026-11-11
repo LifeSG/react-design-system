@@ -146,8 +146,9 @@ export const SelectedTagList = ({
                     )}
                 </div>
             ))}
+            {/* the combobox value already gives the count */}
             {hiddenCount > 0 && (
-                <div className={styles.tag} data-testid="more-tag">
+                <div className={styles.tag} data-testid="more-tag" aria-hidden>
                     <span className={styles.tagLabel}>
                         and {hiddenCount} more
                     </span>

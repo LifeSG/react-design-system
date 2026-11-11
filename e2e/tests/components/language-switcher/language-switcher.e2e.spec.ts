@@ -54,7 +54,7 @@ test.describe("LanguageSwitcher", () => {
 
                 await expect(story.locators.languageSwitcher)
                     .toMatchAriaSnapshot(`
-                - combobox "Choose language / 选择语言 / Pilih bahasa / மொழியை தேர்ந்தெடுக்கவும், English"
+                - combobox "Choose language / 选择语言 / Pilih bahasa / மொழியை தேர்ந்தெடுக்கவும்": English
             `);
 
                 await story.locators.internal.trigger.click();
@@ -65,7 +65,7 @@ test.describe("LanguageSwitcher", () => {
 
                 await expect(story.locators.languageSwitcher)
                     .toMatchAriaSnapshot(`
-                - combobox "Choose language / 选择语言 / Pilih bahasa / மொழியை தேர்ந்தெடுக்கவும், English" [expanded]
+                - combobox "Choose language / 选择语言 / Pilih bahasa / மொழியை தேர்ந்தெடுக்கவும்" [expanded]: English
                 - listbox "Choose language / 选择语言 / Pilih bahasa / மொழியை தேர்ந்தெடுக்கவும்":
                     - option "English" [selected]
                     - option "中文"
@@ -119,9 +119,9 @@ test.describe("LanguageSwitcher", () => {
             });
 
             test("Preselected", async ({ story }) => {
-                await expect(
-                    story.locators.internal.trigger
-                ).toHaveAccessibleName(/中文/);
+                await expect(story.locators.internal.trigger).toContainText(
+                    /中文/
+                );
 
                 await compareScreenshot(story, "mount", {
                     locator: story.locators.languageSwitcher,
@@ -152,9 +152,9 @@ test.describe("LanguageSwitcher", () => {
                 await story.page.keyboard.press("ArrowDown");
                 await story.page.keyboard.press("Enter");
                 await expect(story.locators.internal.panel).not.toBeVisible();
-                await expect(
-                    story.locators.internal.trigger
-                ).toHaveAccessibleName(/中文/);
+                await expect(story.locators.internal.trigger).toContainText(
+                    /中文/
+                );
 
                 await story.page.keyboard.press("Enter");
                 await expect(story.locators.internal.panel).toBeVisible();
