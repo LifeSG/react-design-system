@@ -135,6 +135,64 @@ describe("NotificationBanner", () => {
         expect(anchor).toHaveAttribute("href", "https://www.example.com");
     });
 
+    it.each(["HREF", "Href", "hRef"])(
+        "should strip differently-cased %s from link otherAttributes",
+        (key) => {
+            const HOCElement = withNotificationBanner([
+                {
+                    type: "link",
+                    content: "malicious link",
+                    otherAttributes: {
+                        [key]: "javascript:alert(document.cookie)",
+                    },
+                },
+            ]);
+            render(<HOCElement data-testid="notification-banner" />);
+
+            const anchor = document.querySelector("a");
+            expect(anchor).toBeInTheDocument();
+            expect(anchor).not.toHaveAttribute("href");
+        }
+    );
+
+    it("should keep the validated href when a differently-cased duplicate is passed", () => {
+        const HOCElement = withNotificationBanner([
+            {
+                type: "link",
+                content: "link",
+                otherAttributes: {
+                    href: "https://www.example.com",
+                    HREF: "javascript:alert(document.cookie)",
+                } as Record<string, string>,
+            },
+        ]);
+        render(<HOCElement data-testid="notification-banner" />);
+
+        const anchor = document.querySelector("a");
+        expect(anchor).toHaveAttribute("href", "https://www.example.com");
+    });
+
+    it("should preserve event handlers and other attributes in link otherAttributes", () => {
+        const mockOnClick = jest.fn();
+        const HOCElement = withNotificationBanner([
+            {
+                type: "link",
+                content: "link",
+                otherAttributes: {
+                    href: "https://www.example.com",
+                    hrefLang: "en",
+                    onClick: mockOnClick,
+                },
+            },
+        ]);
+        render(<HOCElement data-testid="notification-banner" />);
+
+        const anchor = screen.getByText("link").closest("a")!;
+        expect(anchor).toHaveAttribute("hreflang", "en");
+        fireEvent.click(anchor);
+        expect(mockOnClick).toHaveBeenCalledTimes(1);
+    });
+
     it("should sanitise the content", () => {
         const HOCElement = withNotificationBanner([
             {

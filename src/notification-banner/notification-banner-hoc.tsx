@@ -12,16 +12,23 @@ import type {
 function sanitizeLinkAttributes(
     attrs: ContentLinkAttributes
 ): ContentLinkAttributes {
-    const { href, ...rest } = attrs;
+    const { href } = attrs;
+    const safeAttrs: Record<string, unknown> = {};
 
-    if (
-        typeof href !== "string" ||
-        !DOMPurify.isValidAttribute("a", "href", href)
-    ) {
-        return rest;
+    for (const [key, value] of Object.entries(attrs)) {
+        if (key.toLowerCase() !== "href") {
+            safeAttrs[key] = value;
+        }
     }
 
-    return attrs;
+    if (
+        typeof href === "string" &&
+        DOMPurify.isValidAttribute("a", "href", href)
+    ) {
+        safeAttrs.href = href;
+    }
+
+    return safeAttrs as ContentLinkAttributes;
 }
 
 /**
