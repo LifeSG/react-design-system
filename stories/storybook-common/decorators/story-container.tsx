@@ -93,7 +93,7 @@ const storyViewModeContainer = css`
 `;
 
 const storyViewModeContainerMaxWidth = css`
-    max-width: 500px;
+    max-width: min(500px, calc(100vw - 32px));
 `;
 
 const docsViewModeContainer = css`
@@ -108,7 +108,7 @@ const docsViewModeContainer = css`
 `;
 
 const docsViewModeContainerMaxWidth = css`
-    max-width: 500px;
+    max-width: min(500px, calc(100vw - 64px));
 `;
 
 // -----------------------------------------------------------------------------
