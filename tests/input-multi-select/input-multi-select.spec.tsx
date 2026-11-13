@@ -1,5 +1,7 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useState } from "react";
+import { Form } from "src/form";
 import { InputMultiSelect } from "src/input-multi-select";
 
 import { setupCommonDomMocks } from "../_common";
@@ -11,6 +13,21 @@ const FIELD_TESTID = "test";
 const SELECTOR_TESTID = "selector";
 const DROPDOWN_TESTID = "dropdown-list";
 const OPTIONS = ["Option 1", "Option 2", "Option 3"];
+const LABEL = "Form label";
+
+const ControlledTagSelect = ({ initial }: { initial: string[] }) => {
+    const [selected, setSelected] = useState<string[]>(initial);
+
+    return (
+        <InputMultiSelect
+            data-testid={FIELD_TESTID}
+            options={OPTIONS}
+            selectedOptions={selected}
+            onSelectOptions={setSelected}
+            displayVariant="tag"
+        />
+    );
+};
 
 describe("InputMultiSelect", () => {
     beforeEach(() => {
@@ -592,6 +609,426 @@ describe("InputMultiSelect", () => {
 
             expect(screen.queryByText("custom 1")).toBeVisible();
             expect(screen.queryByText("Option 1")).not.toBeInTheDocument();
+        });
+    });
+
+    describe("count display variant", () => {
+        it.each([
+            ["the placeholder", [], "Select"],
+            ["the selected count", ["Option 1", "Option 2"], "2 selected"],
+            ["all selected", OPTIONS, "All selected"],
+        ])(
+            "should name the combobox by the label and give %s as its value",
+            (_, selectedOptions, value) => {
+                render(
+                    <Form.MultiSelect
+                        label={LABEL}
+                        options={OPTIONS}
+                        selectedOptions={selectedOptions}
+                    />
+                );
+
+                expect(
+                    screen.getByRole("combobox", { name: LABEL })
+                ).toHaveTextContent(value);
+            }
+        );
+    });
+
+    describe("tag display variant", () => {
+        it("should show one tag per selected option", () => {
+            render(
+                <InputMultiSelect
+                    data-testid={FIELD_TESTID}
+                    options={OPTIONS}
+                    selectedOptions={["Option 1", "Option 2"]}
+                    displayVariant="tag"
+                />
+            );
+
+            expect(screen.getByText("Option 1")).toBeInTheDocument();
+            expect(screen.getByText("Option 2")).toBeInTheDocument();
+            // the count is rendered inside the combobox, visually hidden
+            expect(screen.getByRole("combobox")).toHaveTextContent(
+                "2 selected"
+            );
+        });
+
+        it("should use the same labels as the dropdown items", () => {
+            render(
+                <InputMultiSelect
+                    data-testid={FIELD_TESTID}
+                    options={[{ name: "Apple" }, { name: "Banana" }]}
+                    selectedOptions={[{ name: "Banana" }]}
+                    listExtractor={(item) => item.name}
+                    displayVariant="tag"
+                />
+            );
+
+            expect(screen.getByText("Banana")).toBeInTheDocument();
+            expect(
+                screen.getByRole("button", { name: "Remove Banana" })
+            ).toBeInTheDocument();
+        });
+
+        it("should keep the count display by default", () => {
+            render(
+                <InputMultiSelect
+                    data-testid={FIELD_TESTID}
+                    options={OPTIONS}
+                    selectedOptions={["Option 1", "Option 2"]}
+                />
+            );
+
+            expect(screen.getByText("2 selected")).toBeVisible();
+            expect(
+                screen.queryByRole("button", { name: /^Remove/ })
+            ).not.toBeInTheDocument();
+        });
+
+        it("should show the placeholder when nothing is selected", () => {
+            render(
+                <InputMultiSelect
+                    data-testid={FIELD_TESTID}
+                    options={OPTIONS}
+                    displayVariant="tag"
+                />
+            );
+
+            expect(screen.getByText("Select")).toBeVisible();
+            expect(
+                screen.queryByRole("button", { name: /^Remove/ })
+            ).not.toBeInTheDocument();
+        });
+
+        it("should deselect the option without opening the dropdown when x is clicked", async () => {
+            const user = userEvent.setup();
+            const mockOnSelectOptions = jest.fn();
+
+            render(
+                <InputMultiSelect
+                    data-testid={FIELD_TESTID}
+                    options={OPTIONS}
+                    selectedOptions={["Option 1", "Option 2"]}
+                    onSelectOptions={mockOnSelectOptions}
+                    displayVariant="tag"
+                />
+            );
+
+            await user.click(
+                screen.getByRole("button", { name: "Remove Option 1" })
+            );
+
+            expect(mockOnSelectOptions).toHaveBeenCalledWith(["Option 2"]);
+            expect(
+                screen.queryByTestId(DROPDOWN_TESTID)
+            ).not.toBeInTheDocument();
+        });
+
+        it("should open the dropdown when the field is clicked", async () => {
+            const user = userEvent.setup();
+
+            render(
+                <InputMultiSelect
+                    data-testid={FIELD_TESTID}
+                    options={OPTIONS}
+                    selectedOptions={["Option 1"]}
+                    displayVariant="tag"
+                />
+            );
+
+            // the tags let clicks through to the combobox
+            await user.click(screen.getByRole("combobox"));
+
+            await waitFor(() => {
+                expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+            });
+        });
+
+        it("should toggle the dropdown through the combobox", async () => {
+            const user = userEvent.setup();
+
+            render(
+                <InputMultiSelect
+                    data-testid={FIELD_TESTID}
+                    options={OPTIONS}
+                    displayVariant="tag"
+                />
+            );
+
+            await user.click(screen.getByTestId(SELECTOR_TESTID));
+
+            await waitFor(() => {
+                expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+            });
+            expect(screen.getByRole("combobox")).toHaveAttribute(
+                "aria-expanded",
+                "true"
+            );
+
+            await user.click(screen.getByTestId(SELECTOR_TESTID));
+
+            await waitFor(() => {
+                expect(
+                    screen.queryByTestId(DROPDOWN_TESTID)
+                ).not.toBeInTheDocument();
+            });
+        });
+
+        it("should show every tag when all options are selected", () => {
+            render(
+                <InputMultiSelect
+                    data-testid={FIELD_TESTID}
+                    options={OPTIONS}
+                    selectedOptions={OPTIONS}
+                    displayVariant="tag"
+                />
+            );
+
+            OPTIONS.forEach((option) => {
+                expect(screen.getByText(option)).toBeInTheDocument();
+            });
+            // the label is rendered inside the combobox, visually hidden
+            expect(screen.getByRole("combobox")).toHaveTextContent(
+                "All selected"
+            );
+        });
+
+        it("should expose the selected count to assistive technologies", () => {
+            render(
+                <InputMultiSelect
+                    data-testid={FIELD_TESTID}
+                    options={OPTIONS}
+                    selectedOptions={["Option 1", "Option 2"]}
+                    displayVariant="tag"
+                />
+            );
+
+            expect(screen.getByRole("combobox")).toHaveTextContent(
+                "2 selected"
+            );
+        });
+
+        it("should expose the placeholder to assistive technologies when nothing is selected", () => {
+            render(
+                <InputMultiSelect
+                    data-testid={FIELD_TESTID}
+                    options={OPTIONS}
+                    placeholder="Pick one"
+                    displayVariant="tag"
+                />
+            );
+
+            expect(screen.getByRole("combobox")).toHaveTextContent("Pick one");
+        });
+
+        it.each([
+            ["disabled", { disabled: true }],
+            ["readOnly", { readOnly: true }],
+        ])("should not show the x when %s", (_, props) => {
+            render(
+                <InputMultiSelect
+                    data-testid={FIELD_TESTID}
+                    options={OPTIONS}
+                    selectedOptions={["Option 1"]}
+                    displayVariant="tag"
+                    {...props}
+                />
+            );
+
+            expect(screen.getByText("Option 1")).toBeInTheDocument();
+            expect(
+                screen.queryByRole("button", { name: /^Remove/ })
+            ).not.toBeInTheDocument();
+        });
+
+        it("should not nest buttons in the selector", () => {
+            render(
+                <InputMultiSelect
+                    data-testid={FIELD_TESTID}
+                    options={OPTIONS}
+                    selectedOptions={["Option 1"]}
+                    displayVariant="tag"
+                />
+            );
+
+            expect(
+                screen.getByTestId(SELECTOR_TESTID).querySelector("button")
+            ).toBeNull();
+        });
+
+        describe("accessibility tree", () => {
+            it("should name the combobox by the label and give the count as its value", () => {
+                render(
+                    <Form.MultiSelect
+                        label={LABEL}
+                        options={OPTIONS}
+                        selectedOptions={["Option 1", "Option 2"]}
+                        displayVariant="tag"
+                    />
+                );
+
+                expect(
+                    screen.getByRole("combobox", { name: LABEL })
+                ).toHaveTextContent("2 selected");
+            });
+
+            it("should render the remove buttons alongside the combobox", () => {
+                render(
+                    <Form.MultiSelect
+                        label={LABEL}
+                        options={OPTIONS}
+                        selectedOptions={["Option 1", "Option 2"]}
+                        displayVariant="tag"
+                    />
+                );
+
+                const combobox = screen.getByRole("combobox", { name: LABEL });
+                ["Remove Option 1", "Remove Option 2"].forEach((name) => {
+                    expect(combobox).not.toContainElement(
+                        screen.getByRole("button", { name })
+                    );
+                });
+            });
+
+            it.each([
+                ["disabled", { disabled: true }],
+                ["readOnly", { readOnly: true }],
+            ])("should keep the count as the value when %s", (_, props) => {
+                render(
+                    <Form.MultiSelect
+                        label={LABEL}
+                        options={OPTIONS}
+                        selectedOptions={["Option 1", "Option 2"]}
+                        displayVariant="tag"
+                        {...props}
+                    />
+                );
+
+                expect(
+                    screen.getByRole("combobox", { name: LABEL })
+                ).toHaveTextContent("2 selected");
+                expect(
+                    screen.queryByRole("button", { name: /^Remove/ })
+                ).not.toBeInTheDocument();
+            });
+        });
+
+        describe("keyboard", () => {
+            it("should not remove tags on Backspace or Delete", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <ControlledTagSelect initial={["Option 1", "Option 2"]} />
+                );
+
+                screen.getByRole("combobox").focus();
+                await user.keyboard("{Backspace}{Delete}");
+
+                expect(
+                    screen.getByRole("button", { name: "Remove Option 1" })
+                ).toBeInTheDocument();
+                expect(
+                    screen.getByRole("button", { name: "Remove Option 2" })
+                ).toBeInTheDocument();
+            });
+
+            it("should move focus from the combobox to the remove button with Tab", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <ControlledTagSelect initial={["Option 1", "Option 2"]} />
+                );
+
+                screen.getByRole("combobox").focus();
+                await user.tab();
+
+                expect(
+                    screen.getByRole("button", { name: "Remove Option 1" })
+                ).toHaveFocus();
+            });
+
+            it("should remove the tag without opening the dropdown when Enter is pressed on x", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <ControlledTagSelect initial={["Option 1", "Option 2"]} />
+                );
+
+                screen.getByRole("combobox").focus();
+                await user.tab();
+                await user.keyboard("{Enter}");
+
+                expect(
+                    screen.queryByRole("button", { name: "Remove Option 1" })
+                ).not.toBeInTheDocument();
+                expect(
+                    screen.getByRole("button", { name: "Remove Option 2" })
+                ).toBeInTheDocument();
+                expect(
+                    screen.queryByTestId(DROPDOWN_TESTID)
+                ).not.toBeInTheDocument();
+            });
+
+            it("should open the dropdown when Enter is pressed on the combobox", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <ControlledTagSelect initial={["Option 1", "Option 2"]} />
+                );
+
+                screen.getByRole("combobox").focus();
+                await user.keyboard("{Enter}");
+
+                await waitFor(() => {
+                    expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+                });
+            });
+        });
+
+        describe("removing tags", () => {
+            it("should uncheck the removed option in the dropdown", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <ControlledTagSelect initial={["Option 1", "Option 2"]} />
+                );
+
+                await user.click(
+                    screen.getByRole("button", { name: "Remove Option 1" })
+                );
+                await user.click(screen.getByRole("combobox"));
+
+                await waitFor(() => {
+                    expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+                });
+                expect(
+                    screen.getByRole("option", { name: "Option 1" })
+                ).toHaveAttribute("aria-selected", "false");
+                expect(
+                    screen.getByRole("option", { name: "Option 2" })
+                ).toHaveAttribute("aria-selected", "true");
+            });
+
+            it("should show the placeholder after clearing all", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <ControlledTagSelect initial={["Option 1", "Option 2"]} />
+                );
+
+                await user.click(screen.getByRole("combobox"));
+                await user.click(
+                    await screen.findByRole("button", { name: "Clear all" })
+                );
+
+                expect(
+                    screen.queryByRole("button", { name: /^Remove/ })
+                ).not.toBeInTheDocument();
+                expect(screen.getByRole("combobox")).toHaveTextContent(
+                    "Select"
+                );
+            });
         });
     });
 });

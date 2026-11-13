@@ -14,12 +14,15 @@ export const fieldWrapper = css`
     }
 `;
 
-export const expandableElementNoBorder = css`
-    &[data-position="right"] {
+/* increase specificity to override the padding of the selector */
+export const expandableElementNoBorderRight = css`
+    && {
         padding-right: 0;
     }
+`;
 
-    &[data-position="left"] {
+export const expandableElementNoBorderLeft = css`
+    && {
         padding-left: 0;
     }
 `;

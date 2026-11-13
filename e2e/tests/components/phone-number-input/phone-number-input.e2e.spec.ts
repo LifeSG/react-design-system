@@ -125,7 +125,7 @@ test.describe("PhoneNumberInput", () => {
                     story.page.getByTestId("phone-number-input-disabled")
                 ).toMatchAriaSnapshot(`
                     - text: Disabled
-                    - combobox "Disabled Country code" [disabled]
+                    - combobox "Disabled Country code" [disabled]: Select
                     - text: Press space to open options
                     - textbox "Disabled Enter phone number" [disabled]:
                       - /placeholder: Enter phone number
@@ -138,7 +138,7 @@ test.describe("PhoneNumberInput", () => {
                 await expect(story.page.getByTestId("phone-number-input-error"))
                     .toMatchAriaSnapshot(`
                     - text: Error
-                    - combobox "Error Country code"
+                    - combobox "Error Country code": Select
                     - text: Press space to open options
                     - textbox "Error Enter phone number":
                       - /placeholder: Enter phone number
@@ -353,7 +353,7 @@ test.describe("PhoneNumberInput", () => {
 
             await expect(
                 story.getCombobox(story.locators.form.searchable)
-            ).toContainText("+65");
+            ).toContainText(/\+65/);
             await expect(input).not.toHaveValue(initialValue);
 
             await story.openDropdown(story.locators.form.searchable);
@@ -378,7 +378,7 @@ test.describe("PhoneNumberInput", () => {
 
             await expect(
                 story.getCombobox(story.locators.form.searchable)
-            ).toContainText("+65");
+            ).toContainText(/\+65/);
         });
 
         test("No results and search focus", async ({ story }) => {

@@ -30,16 +30,29 @@ The dropdown list displays large data sets using virtualised rendering to optimi
 
 <Canvas of={FormMultiSelectStories.Virtualisation} />
 
+## Tag display variant
+
+Set `displayVariant="tag"` to show each selected option as a tag in the field.
+
+<Canvas of={FormMultiSelectStories.TagDisplayVariant} />
+
+### Tag overflow behaviour
+
+Tags wrap onto new lines. After 4 lines, the remaining tags collapse into an
+"and X more" tag. A tag that is wider than the field is truncated to one line.
+
+<Canvas of={FormMultiSelectStories.TagOverflow} />
+
+## Small variant
+
+<Canvas of={FormMultiSelectStories.SmallVariant} />
+
 ## Rendering in grid layouts
 
 You can also specify [ColDiv's](/docs/core-layout-coldiv--docs)
 column props to span across the specified columns in grid layouts.
 
 <Canvas of={FormMultiSelectStories.RenderingInGridLayout} />
-
-## Small variant
-
-<Canvas of={FormMultiSelectStories.SmallVariant} />
 
 ## Z-index conflicts
 

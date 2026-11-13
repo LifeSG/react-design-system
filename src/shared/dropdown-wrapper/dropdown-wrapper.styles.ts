@@ -14,6 +14,7 @@ export const labelContainer = css`
 `;
 
 export const valueLabel = css`
+    display: block;
     ${Font["body-baseline-regular"]}
     color: ${Colour["text"]};
     text-align: left;

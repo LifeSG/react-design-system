@@ -184,11 +184,9 @@ describe("InputNestedMultiSelect", () => {
             [["1", "10", "100"]],
             ["1.1.1"]
         );
-        expect(
-            within(screen.getByTestId(SELECTOR_TESTID)).queryByText(
-                "Child 1.1.1 item"
-            )
-        ).toBeInTheDocument();
+        expect(screen.getByRole("combobox")).toHaveTextContent(
+            "Child 1.1.1 item"
+        );
 
         await user.click(
             within(screen.getByTestId(DROPDOWN_TESTID)).getByText(
@@ -229,11 +227,7 @@ describe("InputNestedMultiSelect", () => {
             ],
             ["1.1.1", "1.1.2"]
         );
-        expect(
-            within(screen.getByTestId(SELECTOR_TESTID)).queryByText(
-                "2 selected"
-            )
-        ).toBeInTheDocument();
+        expect(screen.getByRole("combobox")).toHaveTextContent("2 selected");
 
         await user.click(screen.getByText("Parent 1.1 item"));
 
@@ -271,11 +265,7 @@ describe("InputNestedMultiSelect", () => {
             ],
             ["1.1.1", "1.1.2"]
         );
-        expect(
-            within(screen.getByTestId(SELECTOR_TESTID)).queryByText(
-                "2 selected"
-            )
-        ).toBeInTheDocument();
+        expect(screen.getByRole("combobox")).toHaveTextContent("2 selected");
 
         await user.click(screen.getByText("Parent 1.1 item"));
 
@@ -356,9 +346,7 @@ describe("InputNestedMultiSelect", () => {
         );
 
         expect(valueFormatter).toHaveBeenCalledWith("1.1.1");
-        expect(
-            within(screen.getByTestId(SELECTOR_TESTID)).getByText("Value-1.1.1")
-        ).toBeInTheDocument();
+        expect(screen.getByRole("combobox")).toHaveTextContent("Value-1.1.1");
     });
 
     it("should truncate display value in middle mode", async () => {
@@ -387,9 +375,7 @@ describe("InputNestedMultiSelect", () => {
             />
         );
 
-        expect(
-            within(screen.getByTestId(SELECTOR_TESTID)).getByText("ABC ... JKL")
-        ).toBeInTheDocument();
+        expect(screen.getByRole("combobox")).toHaveTextContent("ABC ... JKL");
 
         getBoundingClientRectSpy.mockRestore();
     });
