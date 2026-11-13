@@ -9,6 +9,7 @@ export const container = css`
     justify-content: center;
     align-items: center;
     position: relative;
+    flex-shrink: 0;
 
     &[data-display-size="small"] {
         height: 1.5rem;
