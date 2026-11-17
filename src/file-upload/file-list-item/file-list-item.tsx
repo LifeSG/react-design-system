@@ -24,6 +24,7 @@ const Component = ({
     descriptionLabel,
     fileDescriptionMaxLength,
     descriptionRequired = true,
+    editEmptyDescriptionOnLoad = true,
     onDelete,
     onSave,
     onCancel,
@@ -57,7 +58,14 @@ const Component = ({
         if (errorMessage) return "error";
 
         const isUploaded = (progress ?? 1) >= 1;
-        if (isUploaded && editable && !description) return "edit";
+        if (
+            isUploaded &&
+            editable &&
+            !description &&
+            editEmptyDescriptionOnLoad
+        ) {
+            return "edit";
+        }
 
         return "display";
     };

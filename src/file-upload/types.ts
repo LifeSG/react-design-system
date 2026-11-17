@@ -122,6 +122,15 @@ export interface FileUploadProps extends FileInputProps {
      */
     descriptionRequired?: boolean | undefined;
     /**
+     * When `true`, editable image file items without a description are
+     * automatically opened in edit mode once uploaded. When `false`, they
+     * remain in display mode until the user clicks the edit button.
+     * Only applies when `editableFileItems` is `true`.
+     *
+     * @default true
+     */
+    editEmptyDescriptionOnLoad?: boolean | undefined;
+    /**
      * Overrides the default label and subtext for the description input field
      * on editable file items.
      */

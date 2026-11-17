@@ -36,6 +36,7 @@ export const FileUpload = ({
     fileDescriptionMaxLength,
     editableFileItems = false,
     descriptionRequired = true,
+    editEmptyDescriptionOnLoad = true,
     descriptionLabel,
     errorMessage,
     readOnly,
@@ -188,6 +189,7 @@ export const FileUpload = ({
                     fileItems={fileItems}
                     editableFileItems={editableFileItems}
                     descriptionRequired={descriptionRequired}
+                    editEmptyDescriptionOnLoad={editEmptyDescriptionOnLoad}
                     descriptionLabel={descriptionLabel}
                     fileDescriptionMaxLength={fileDescriptionMaxLength}
                     sortable={sortable}
