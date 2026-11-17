@@ -109,6 +109,17 @@ export const NavBrandContainer = styled.div<StyleProps>`
     }
 `;
 
+export const BrandAddonContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+
+    ${MediaQuery.MaxWidth.lg} {
+        display: none;
+    }
+`;
+
 export const NavSeparator = styled.div<StyleProps>`
     display: flex;
     background-color: ${Colour.border};
