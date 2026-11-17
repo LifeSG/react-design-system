@@ -178,6 +178,45 @@ describe("Navbar", () => {
             );
         });
     });
+
+    describe("Brand addon and drawer header", () => {
+        it("should render the brand addon after the brand", () => {
+            render(
+                <Navbar
+                    items={{ desktop: MOCK_ITEMS() }}
+                    brandAddon={<a href="/">Back to Home</a>}
+                />
+            );
+
+            expect(screen.getByTestId("main__brand-addon")).toHaveTextContent(
+                "Back to Home"
+            );
+        });
+
+        it("should replace the drawer brand with the drawer header", () => {
+            render(
+                <Navbar
+                    items={{ desktop: MOCK_ITEMS() }}
+                    drawerHeader={<a href="/">Go to Home</a>}
+                />
+            );
+
+            expect(screen.getByText("Go to Home")).toBeInTheDocument();
+            expect(
+                screen.queryByTestId("drawer__brand")
+            ).not.toBeInTheDocument();
+            expect(screen.getByTestId("main__brand")).toBeInTheDocument();
+        });
+
+        it("should render the drawer brand when no drawer header is given", () => {
+            render(<Navbar items={{ desktop: MOCK_ITEMS() }} />);
+
+            expect(screen.getByTestId("drawer__brand")).toBeInTheDocument();
+            expect(
+                screen.queryByTestId("main__brand-addon")
+            ).not.toBeInTheDocument();
+        });
+    });
 });
 
 // =============================================================================
