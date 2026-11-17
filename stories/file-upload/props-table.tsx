@@ -92,13 +92,6 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "true",
             },
             {
-                name: "editEmptyDescriptionOnLoad",
-                description:
-                    "When false, image files without a description are shown in display mode instead of opening in edit mode",
-                propTypes: ["boolean"],
-                defaultValue: "true",
-            },
-            {
                 name: "descriptionLabel",
                 description:
                     "Overrides the default label and subtext for the description field",
@@ -215,6 +208,13 @@ const DATA: ApiTableSectionProps[] = [
                 description: "Indicates if text should be truncated",
                 propTypes: ["boolean"],
                 defaultValue: "true",
+            },
+            {
+                name: "initialMode",
+                description:
+                    "The mode the file item opens in. `default` opens in edit mode only when there is no description, `display` keeps it in display mode (e.g. a saved item with an optional description), `edit` always opens in edit mode. Only applies to editable image files",
+                propTypes: [`"default"`, `"display"`, `"edit"`],
+                defaultValue: `"default"`,
             },
         ],
     },

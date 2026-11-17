@@ -431,6 +431,7 @@ export const DisplayModeWithoutDescription: StoryObj<Component> = {
                 name: "photo-1.jpg",
                 type: "image/jpeg",
                 size: 512000,
+                initialMode: "display",
                 thumbnailImageDataUrl:
                     "https://picsum.photos/seed/displaymode1/200/300",
             },
@@ -458,11 +459,10 @@ export const DisplayModeWithoutDescription: StoryObj<Component> = {
         return (
             <FileUpload
                 title="Display mode without description"
-                description="Images without a description stay in display mode until edited"
+                description="The first image was saved without a description and stays in display mode until edited"
                 fileItems={fileItems}
                 editableFileItems
                 descriptionRequired={false}
-                editEmptyDescriptionOnLoad={false}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
                 fileDescriptionMaxLength={200}

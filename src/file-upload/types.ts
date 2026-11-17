@@ -18,7 +18,21 @@ export interface FileItemProps {
     thumbnailImageDataUrl?: string | undefined;
     /** Indicates if text should be truncated */
     truncateText?: boolean | undefined;
+    /**
+     * The mode the file item opens in when first rendered. Only applies to
+     * editable image files (`editableFileItems` is true).
+     * - "default": edit mode if there is no description, otherwise display
+     *   mode. Cancelling the edit removes the file
+     * - "display": display mode, even without a description (e.g. a
+     *   previously saved item whose description is optional)
+     * - "edit": edit mode, even with a description
+     *
+     * Default: "default"
+     */
+    initialMode?: FileItemInitialMode | undefined;
 }
+
+export type FileItemInitialMode = "default" | "display" | "edit";
 
 export type FileUploadStyle = "bordered" | "no-border";
 
@@ -51,12 +65,6 @@ export interface FileUploadProps extends FileInputProps {
     fileDescriptionMaxLength?: number | undefined;
     /** When false, save button is enabled even with empty description. Default: true */
     descriptionRequired?: boolean | undefined;
-    /**
-     * When true (default), editable image items without a description open
-     * in edit mode. When false, they stay in display mode until the user
-     * clicks the edit button
-     */
-    editEmptyDescriptionOnLoad?: boolean | undefined;
     /** Overrides default label and subtext for description field */
     descriptionLabel?: FormLabelProps | undefined;
     /** Specifies if sorting is enabled for the file items */
