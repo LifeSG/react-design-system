@@ -92,6 +92,13 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "true",
             },
             {
+                name: "editEmptyDescriptionOnLoad",
+                description:
+                    "When false, image files without a description are shown in display mode instead of opening in edit mode",
+                propTypes: ["boolean"],
+                defaultValue: "true",
+            },
+            {
                 name: "descriptionLabel",
                 description:
                     "Overrides the default label and subtext for the description field",

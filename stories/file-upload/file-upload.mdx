@@ -61,6 +61,12 @@ When `descriptionRequired` is set to `false`, the save button is enabled even wh
 
 <Canvas of={FileUploadStories.EditableOptionalDescription} />
 
+## Display mode without description
+
+By default, editable image files without a description open in edit mode once uploaded. Set `editEmptyDescriptionOnLoad` to `false` to keep them in display mode until the user clicks the edit button.
+
+<Canvas of={FileUploadStories.DisplayModeWithoutDescription} />
+
 ## Custom description label
 
 Use `descriptionLabel` to override the default label and subtext for the description field.
