@@ -51,6 +51,12 @@ export interface FileUploadProps extends FileInputProps {
     fileDescriptionMaxLength?: number | undefined;
     /** When false, save button is enabled even with empty description. Default: true */
     descriptionRequired?: boolean | undefined;
+    /**
+     * When true (default), editable image items without a description open
+     * in edit mode. When false, they stay in display mode until the user
+     * clicks the edit button
+     */
+    editEmptyDescriptionOnLoad?: boolean | undefined;
     /** Overrides default label and subtext for description field */
     descriptionLabel?: FormLabelProps | undefined;
     /** Specifies if sorting is enabled for the file items */
