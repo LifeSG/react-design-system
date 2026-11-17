@@ -313,14 +313,13 @@ function Component(
     };
 
     const shouldRenderEditMode = (item: FileItemProps) => {
-        const initialMode = item.initialMode ?? "default";
         return (
             !item.errorMessage &&
             !readOnly &&
             !(typeof item.progress === "number" && item.progress < 1) &&
             checkEditable(item) &&
-            initialMode !== "display" &&
-            (initialMode === "edit" || !item.description)
+            item.initialMode !== "display" &&
+            !item.description
         );
     };
 
