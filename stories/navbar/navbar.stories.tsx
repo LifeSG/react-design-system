@@ -10,6 +10,7 @@ import {
     NavbarButtonProps,
     NavbarDrawerHandle,
 } from "src/navbar";
+import { Typography } from "src/typography";
 import { FullWidthStoryDecorator } from "stories/storybook-common";
 import {
     DesktopCustomComponent,
@@ -679,6 +680,28 @@ export const SecondaryBranding: StoryObj<Component> = {
                 onBrandClick={(type) => {
                     alert("Clicked on " + type + " brand");
                 }}
+            />
+        );
+    },
+};
+
+export const BrandAddonAndDrawerHeader: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Navbar
+                items={{ desktop: navItems }}
+                selectedId="home"
+                fixed={false}
+                brandAddon={
+                    <Typography.LinkSM href="#" weight="regular">
+                        Back to Home
+                    </Typography.LinkSM>
+                }
+                drawerHeader={
+                    <Typography.LinkMD href="#" weight="semibold">
+                        Go to Home
+                    </Typography.LinkMD>
+                }
             />
         );
     },
