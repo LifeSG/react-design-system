@@ -194,6 +194,19 @@ test.describe("Navbar", () => {
         });
     });
 
+    test.describe("Brand addon", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("brand-addon");
+        });
+
+        test("Desktop", async ({ story }) => {
+            await expect(
+                story.page.getByRole("link", { name: "Back to Home" })
+            ).toBeVisible();
+            await compareScreenshot(story, "mount");
+        });
+    });
+
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("multiple-action-buttons");
@@ -343,6 +356,34 @@ test.describe("Navbar", () => {
 
             test("Secondary brand", async ({ story }) => {
                 await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe("Brand addon and drawer header", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("brand-addon", { size: "mobile" });
+            });
+
+            test("Collapsed", async ({ story }) => {
+                await expect(
+                    story.page.getByTestId("main__brand-addon")
+                ).toBeHidden();
+                await compareScreenshot(story, "mount");
+            });
+
+            test("Drawer", async ({ story }) => {
+                await story.openMobileDrawer();
+                await story.page.mouse.move(0, 0);
+
+                await expect(
+                    story.locators.internal.drawer.getByRole("link", {
+                        name: "Go to Home",
+                    })
+                ).toBeVisible();
+                await expect(
+                    story.locators.internal.drawerBrand
+                ).not.toBeAttached();
+                await compareScreenshot(story, "open", { fullscreen: true });
             });
         });
 
