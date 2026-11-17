@@ -882,27 +882,6 @@ describe("FileUpload", () => {
             ).toBeInTheDocument();
         });
 
-        it("should render image files with description in edit mode when initialMode is edit", () => {
-            const rendered = render(
-                <FileUpload
-                    fileItems={[
-                        {
-                            ...MOCK_IMAGE_ITEM_WITH_DESCRIPTION,
-                            initialMode: "edit",
-                        },
-                    ]}
-                    editableFileItems
-                />
-            );
-
-            expect(
-                rendered.getByTestId("some-edit-display")
-            ).toBeInTheDocument();
-            expect(rendered.getByTestId("some-textarea-base")).toHaveValue(
-                "Some description"
-            );
-        });
-
         it("should apply initialMode per item in a mixed list", () => {
             const fileItems: FileItemProps[] = [
                 {
@@ -933,21 +912,6 @@ describe("FileUpload", () => {
             expect(
                 rendered.getByTestId("fresh-edit-display")
             ).toBeInTheDocument();
-        });
-
-        it("should not render non-editable files in edit mode when initialMode is edit", () => {
-            const rendered = render(
-                <FileUpload
-                    fileItems={[
-                        { ...MOCK_NON_IMAGE_FILE, initialMode: "edit" },
-                    ]}
-                    editableFileItems
-                />
-            );
-
-            expect(
-                rendered.queryByTestId("some-edit-display")
-            ).not.toBeInTheDocument();
         });
 
         it("should enter edit mode on clicking the edit button and save the description", () => {
@@ -999,32 +963,27 @@ describe("FileUpload", () => {
             );
         });
 
-        it.each(["display", "edit"] as const)(
-            "should return to display mode on cancel instead of deleting the file item when initialMode is %s",
-            (initialMode) => {
-                const onDelete = jest.fn();
-                const rendered = render(
-                    <FileUpload
-                        fileItems={[{ ...MOCK_IMAGE_ITEM, initialMode }]}
-                        editableFileItems
-                        onDelete={onDelete}
-                    />
-                );
+        it("should return to display mode on cancel instead of deleting the file item when initialMode is display", () => {
+            const onDelete = jest.fn();
+            const rendered = render(
+                <FileUpload
+                    fileItems={[{ ...MOCK_IMAGE_ITEM, initialMode: "display" }]}
+                    editableFileItems
+                    onDelete={onDelete}
+                />
+            );
 
-                if (initialMode === "display") {
-                    fireEvent.click(rendered.getByTestId("some-edit-button"));
-                }
-                fireEvent.click(rendered.getByTestId("some-cancel-button"));
+            fireEvent.click(rendered.getByTestId("some-edit-button"));
+            fireEvent.click(rendered.getByTestId("some-cancel-button"));
 
-                expect(onDelete).not.toHaveBeenCalled();
-                expect(
-                    rendered.queryByTestId("some-edit-display")
-                ).not.toBeInTheDocument();
-                expect(
-                    rendered.getByTestId("some-edit-button")
-                ).toBeInTheDocument();
-            }
-        );
+            expect(onDelete).not.toHaveBeenCalled();
+            expect(
+                rendered.queryByTestId("some-edit-display")
+            ).not.toBeInTheDocument();
+            expect(
+                rendered.getByTestId("some-edit-button")
+            ).toBeInTheDocument();
+        });
 
         it("should return to display mode instead of edit mode when an error is cleared", () => {
             const rendered = render(

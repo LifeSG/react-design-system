@@ -59,11 +59,7 @@ const Component = ({
         if (initialMode === "display") return "display";
 
         const isUploaded = (progress ?? 1) >= 1;
-        if (
-            isUploaded &&
-            editable &&
-            (initialMode === "edit" || !description)
-        ) {
+        if (isUploaded && editable && !description) {
             return "edit";
         }
 

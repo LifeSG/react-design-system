@@ -37,24 +37,28 @@ export interface FileItemProps {
      */
     truncateText?: boolean | undefined;
     /**
-     * The mode the file item opens in when it is first rendered. Only
-     * applies to editable image files (`editableFileItems` is `true`).
-     *
-     * - `"default"`: opens in edit mode if there is no description,
-     *   otherwise display mode. Cancelling the edit removes the file.
-     * - `"display"`: opens in display mode, even without a description
-     *   (e.g. a previously saved item whose description is optional).
-     * - `"edit"`: opens in edit mode, even with a description.
-     *
-     * An error message always takes precedence. Once it is cleared, the
-     * item returns to this mode.
+     * The mode the file item opens in when it is first rendered.
+     * See `FileItemInitialMode`.
      *
      * @default "default"
      */
     initialMode?: FileItemInitialMode | undefined;
 }
 
-export type FileItemInitialMode = "default" | "display" | "edit";
+/**
+ * The mode a file item opens in when it is first rendered. Only applies to
+ * editable image files (`editableFileItems` is `true`).
+ *
+ * - `"default"`: opens in edit mode if there is no description, otherwise
+ *   display mode. Cancelling the edit removes the file.
+ * - `"display"`: opens in display mode, even without a description
+ *   (e.g. a previously saved item whose description is optional).
+ *   Cancelling the edit keeps the file.
+ *
+ * An error message always takes precedence. Once it is cleared, the item
+ * returns to this mode.
+ */
+export type FileItemInitialMode = "default" | "display";
 
 /**
  * Visual style variant for `FileUpload`.
