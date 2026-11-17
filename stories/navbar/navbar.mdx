@@ -89,6 +89,19 @@ In this example, a co-brand is displayed next to the primary brand.
 
 <Canvas of={NavbarStories.SecondaryBranding} />
 
+## Brand addon and drawer header
+
+Use `brandAddon` to render a custom component after the brand on desktop,
+separated by a divider (e.g. a "Back to Home" link). It is hidden in tablet and
+mobile viewports.
+
+Use `drawerHeader` to replace the brand logos in the mobile drawer header with a
+custom component (e.g. a "Go to Home" link). The close button is retained.
+
+> **Note**: Clicking on these components will not dismiss the drawer automatically. Use the `dismissDrawer` method on the `Navbar` ref if needed
+
+<Canvas of={NavbarStories.BrandAddonAndDrawerHeader} />
+
 ## Hidden masthead
 
 In this example, the masthead is hidden.
