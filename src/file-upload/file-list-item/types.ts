@@ -13,7 +13,6 @@ export interface FileListItemProps {
     descriptionLabel?: FormLabelProps | undefined;
     fileDescriptionMaxLength?: number | undefined;
     descriptionRequired?: boolean | undefined;
-    editEmptyDescriptionOnLoad?: boolean | undefined;
     onDelete: () => void;
     onSave?: ((description: string) => void) | undefined;
     onCancel?: (() => void) | undefined;

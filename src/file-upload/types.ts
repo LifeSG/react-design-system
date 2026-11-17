@@ -36,7 +36,25 @@ export interface FileItemProps {
      * @default true
      */
     truncateText?: boolean | undefined;
+    /**
+     * The mode the file item opens in when it is first rendered. Only
+     * applies to editable image files (`editableFileItems` is `true`).
+     *
+     * - `"default"`: opens in edit mode if there is no description,
+     *   otherwise display mode. Cancelling the edit removes the file.
+     * - `"display"`: opens in display mode, even without a description
+     *   (e.g. a previously saved item whose description is optional).
+     * - `"edit"`: opens in edit mode, even with a description.
+     *
+     * An error message always takes precedence. Once it is cleared, the
+     * item returns to this mode.
+     *
+     * @default "default"
+     */
+    initialMode?: FileItemInitialMode | undefined;
 }
+
+export type FileItemInitialMode = "default" | "display" | "edit";
 
 /**
  * Visual style variant for `FileUpload`.
@@ -121,15 +139,6 @@ export interface FileUploadProps extends FileInputProps {
      * @default true
      */
     descriptionRequired?: boolean | undefined;
-    /**
-     * When `true`, editable image file items without a description are
-     * automatically opened in edit mode once uploaded. When `false`, they
-     * remain in display mode until the user clicks the edit button.
-     * Only applies when `editableFileItems` is `true`.
-     *
-     * @default true
-     */
-    editEmptyDescriptionOnLoad?: boolean | undefined;
     /**
      * Overrides the default label and subtext for the description input field
      * on editable file items.

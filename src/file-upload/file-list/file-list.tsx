@@ -44,7 +44,6 @@ interface Props {
     editableFileItems: boolean;
     fileDescriptionMaxLength?: number | undefined;
     descriptionRequired?: boolean | undefined;
-    editEmptyDescriptionOnLoad?: boolean | undefined;
     descriptionLabel?: FormLabelProps | undefined;
     sortable?: boolean | undefined;
     disabled?: boolean | undefined;
@@ -77,7 +76,6 @@ function Component(
         editableFileItems,
         fileDescriptionMaxLength,
         descriptionRequired,
-        editEmptyDescriptionOnLoad = true,
         descriptionLabel,
         sortable,
         disabled,
@@ -222,8 +220,9 @@ function Component(
 
     const handleCancel = (item: FileItemProps) => () => {
         removeDescription(item.id);
+        const isFreshItem = (item.initialMode ?? "default") === "default";
         if (
-            editEmptyDescriptionOnLoad &&
+            isFreshItem &&
             (!item.description || item.description.length === 0)
         ) {
             // New addition
@@ -362,7 +361,6 @@ function Component(
                     descriptionLabel={descriptionLabel}
                     fileDescriptionMaxLength={fileDescriptionMaxLength}
                     descriptionRequired={descriptionRequired}
-                    editEmptyDescriptionOnLoad={editEmptyDescriptionOnLoad}
                     onDelete={handleDelete(item)}
                     onSave={handleSaveEdit(item)}
                     onCancel={handleCancel(item)}

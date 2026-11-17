@@ -63,7 +63,7 @@ When `descriptionRequired` is set to `false`, the save button is enabled even wh
 
 ## Display mode without description
 
-By default, editable image files without a description open in edit mode once uploaded. Set `editEmptyDescriptionOnLoad` to `false` to keep them in display mode until the user clicks the edit button.
+By default, editable image files without a description open in edit mode once uploaded. To reopen a file that was previously saved without a description, set `initialMode: "display"` on that file item. It stays in display mode until the user clicks the edit button, and cancelling the edit keeps the file. Use `initialMode: "edit"` to open a file item in edit mode even when it has a description.
 
 <Canvas of={FileUploadStories.DisplayModeWithoutDescription} />
 
