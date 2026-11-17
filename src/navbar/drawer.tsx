@@ -27,6 +27,7 @@ const Component = (
         onBrandClick,
         drawerLabel = "Mobile navigation menu",
         mobileMenuRef,
+        headerContent,
     } = props;
     const [viewHeight, setViewHeight] = useState<number>(0);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -152,7 +153,7 @@ const Component = (
                 )}
                 data-id="drawer-brand-container"
             >
-                {!hideNavBranding && renderBrand()}
+                {headerContent ?? (!hideNavBranding && renderBrand())}
             </div>
             <ClickableIcon
                 className={styles.closeButton}
