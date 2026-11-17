@@ -153,30 +153,7 @@
         },
         "webpack-dev-middleware": "^7.4.5",
         "minimatch@>=9.0.0 <11.0.1": "^11.0.3",
-        "@storybook/react-docgen-typescript-plugin": {
-            "flat-cache": "^4.0.1"
-        },
-        "rollup-plugin-copy": {
-            "globby": "^11.1.0"
-        },
-        "@jest/reporters": {
-            "glob": "^14.0.3"
-        },
-        "jest-config": {
-            "glob": "^14.0.3"
-        },
-        "jest-runtime": {
-            "glob": "^14.0.3"
-        },
-        "test-exclude": {
-            "glob": "^14.0.3"
-        },
-        "js-beautify": {
-            "glob": "^14.0.3"
-        },
-        "@npmcli/map-workspaces": {
-            "glob": "^14.0.3"
-        }
+        "glob@>=9.0.0 <14.0.2": "^14.0.3"
     },
     "lint-staged": {
         "*.{tsx,ts}": [
