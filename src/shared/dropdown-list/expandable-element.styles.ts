@@ -5,33 +5,96 @@ import { Colour, Font, Motion, Spacing } from "../../theme";
 // =============================================================================
 // STYLING
 // =============================================================================
+// the combobox lays out the value in place of the content, so that it sizes
+// the selector. Its pseudo-element is stretched over the whole selector, so
+// that the click target and focus ring cover it
+export const comboboxButton = css`
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: inherit;
+    min-width: 0;
+    padding: 0;
+    border: none;
+    border-radius: inherit;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-align: start;
+    cursor: inherit;
+    outline: none;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+    }
+
+    &:focus-visible::before {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: -2px;
+    }
+`;
+
+// with content, the combobox only holds a visually hidden value, and is laid
+// over the selector so that the content sizes the selector
+export const comboboxButtonOverlay = css`
+    position: absolute;
+    inset: 0;
+`;
 
 export const selector = css`
+    position: relative;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     gap: ${Spacing["spacing-8"]};
     width: 100%;
-
-    ${Font["body-baseline-regular"]}
     height: calc(3rem - 2px);
+    ${Font["body-baseline-regular"]}
+`;
 
-    &:disabled {
-        cursor: not-allowed;
+export const content = css`
+    position: relative;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: inherit;
+    min-width: 0;
+    pointer-events: none;
+
+    button {
+        pointer-events: auto;
     }
+`;
 
-    &:focus-visible {
-        outline: 2px solid ${Colour["focus-ring"]};
-        outline-offset: -2px;
+export const selectorEditable = css`
+    padding: ${Spacing["spacing-16"]};
+    cursor: pointer;
+`;
+
+export const selectorDynamicHeight = css`
+    height: auto;
+    min-height: calc(3rem - 2px);
+
+    &.${selectorEditable} {
+        padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
     }
 `;
 
 export const selectorVariantSmall = css`
     ${Font["body-md-regular"]}
     height: calc(2.5rem - 2px);
+
+    &.${selectorDynamicHeight} {
+        height: auto;
+    }
 `;
 
-export const selectorEditable = css`
-    padding: ${Spacing["spacing-16"]};
+export const selectorDisabled = css`
+    cursor: not-allowed;
 `;
 
 export const iconContainer = css`

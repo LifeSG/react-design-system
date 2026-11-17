@@ -91,7 +91,7 @@ export const InputNestedSelect = <V1, V2, V3>({
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const selectorRef = useRef<HTMLButtonElement>(null);
-    const labelContainerRef = useRef<HTMLDivElement>(null);
+    const labelContainerRef = useRef<HTMLSpanElement>(null);
 
     // =========================================================================
     // EFFECTS

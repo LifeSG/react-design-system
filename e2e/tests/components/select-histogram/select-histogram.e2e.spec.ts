@@ -128,20 +128,14 @@ test.describe("SelectHistogram", () => {
                 await test.step("disabled combobox is reflected in aria", async () => {
                     await expect(story.locators.form.disabled)
                         .toMatchAriaSnapshot(`
-                        - combobox "Disabled" [disabled]:
-                            - paragraph: "1"
-                            - text: "-"
-                            - paragraph: "2"
+                        - combobox "Disabled" [disabled]: 1 - 2
                     `);
                 });
 
                 await test.step("readonly combobox is accessible and not marked as disabled", async () => {
                     await expect(story.locators.form.readonly)
                         .toMatchAriaSnapshot(`
-                        - combobox "Readonly":
-                            - paragraph: "1"
-                            - text: "-"
-                            - paragraph: "2"
+                        - combobox "Readonly": 1 - 2
                     `);
                 });
 
@@ -467,10 +461,10 @@ test.describe("SelectHistogram", () => {
                     ).toBeFocused();
                 });
 
-                await test.step("ArrowRight increases min value and updates combobox label", async () => {
+                await test.step("ArrowRight increases min value and updates combobox value", async () => {
                     await story.page.keyboard.press("ArrowRight");
                     await expect(story.locators.minValue).toHaveText("3");
-                    await expect(trigger).toContainText("3");
+                    await expect(trigger).toContainText(/3/);
                 });
 
                 await test.step("Tab focuses the max slider", async () => {
@@ -480,10 +474,10 @@ test.describe("SelectHistogram", () => {
                     ).toBeFocused();
                 });
 
-                await test.step("ArrowRight increases max value and updates combobox label", async () => {
+                await test.step("ArrowRight increases max value and updates combobox value", async () => {
                     await story.page.keyboard.press("ArrowRight");
                     await expect(story.locators.maxValue).toHaveText("5");
-                    await expect(trigger).toContainText("5");
+                    await expect(trigger).toContainText(/5/);
                 });
 
                 await compareScreenshot(story, "slider-adjusted", {
@@ -511,7 +505,7 @@ test.describe("SelectHistogram", () => {
                     await expect(story.locators.minValue).toHaveText("3");
                     await expect(
                         story.getTrigger(story.locators.interaction)
-                    ).toContainText("3");
+                    ).toContainText(/3/);
                 });
 
                 await test.step("Drag min thumb left by one step", async () => {
@@ -534,7 +528,7 @@ test.describe("SelectHistogram", () => {
                     await expect(story.locators.maxValue).toHaveText("5");
                     await expect(
                         story.getTrigger(story.locators.interaction)
-                    ).toContainText("5");
+                    ).toContainText(/5/);
                 });
 
                 await test.step("Drag max thumb left by one step", async () => {

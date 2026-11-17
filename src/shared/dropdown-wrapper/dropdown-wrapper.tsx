@@ -9,13 +9,13 @@ export const ValueLabel = ({
     truncateType,
     children,
 }: ValueLabelProps) => (
-    <div
+    <span
         className={styles.valueLabel}
         data-variant={variant}
         data-truncate={truncateType}
     >
         {children}
-    </div>
+    </span>
 );
 
 export const PlaceholderLabel = ({
@@ -23,25 +23,25 @@ export const PlaceholderLabel = ({
     truncateType,
     children,
 }: ValueLabelProps) => (
-    <div
+    <span
         className={clsx(styles.valueLabel, styles.placeholderLabel)}
         data-variant={variant}
         data-truncate={truncateType}
     >
         {children}
-    </div>
+    </span>
 );
 
-export const LabelContainer = forwardRef<HTMLDivElement, LabelContainerProps>(
+export const LabelContainer = forwardRef<HTMLSpanElement, LabelContainerProps>(
     function LabelContainer({ disabled, children }, ref) {
         return (
-            <div
+            <span
                 className={styles.labelContainer}
                 data-disabled={disabled}
                 ref={ref}
             >
                 {children}
-            </div>
+            </span>
         );
     }
 );

@@ -90,6 +90,8 @@ export interface SelectHistogramProps
     /**
      * Custom renderer for each bound value displayed in the trigger label.
      * Overrides `rangeLabelPrefix`, `rangeLabelSuffix`, and the default `Typography.BodyBL` wrapper.
+     * It is rendered inside the combobox button, so it must be phrasing
+     * content (e.g. `span`) with no interactive elements.
      *
      * @param value The numeric bound to render.
      */

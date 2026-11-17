@@ -113,6 +113,15 @@ test.describe("InputNestedMultiSelect", () => {
                 await compareScreenshot(story, "mount");
             });
 
+            test("Accessibility", async ({ story }) => {
+                await expect(story.locators.form.default).toMatchAriaSnapshot(`
+                    - combobox "Default": Select
+                `);
+                await expect(story.locators.form.selected).toMatchAriaSnapshot(`
+                    - combobox "Selected": 2 selected
+                `);
+            });
+
             test("Readonly disabled", async ({ story }) => {
                 await expect(story.locators.form.readonly).not.toBeDisabled();
 

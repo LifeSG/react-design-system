@@ -3,10 +3,12 @@ import findIndex from "lodash/findIndex";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 
+import { VisuallyHidden } from "../shared/accessibility";
 import {
     DropdownList,
     DropdownListState,
     ExpandableElement,
+    SelectedTagList,
 } from "../shared/dropdown-list";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
@@ -56,6 +58,7 @@ export const InputMultiSelect = <T, V>({
     renderCustomCallToAction,
     onBlur,
     variant = "default",
+    displayVariant = "count",
     readOnly,
     alignment,
     dropdownZIndex,
@@ -167,6 +170,21 @@ export const InputMultiSelect = <T, V>({
     // =============================================================================
     // HELPER FUNCTION
     // =============================================================================
+    const getTagLabel = (item: T): string => {
+        const value = listExtractor ? listExtractor(item) : item?.toString();
+
+        if (typeof value === "object") {
+            return value.title;
+        }
+
+        return value ?? "";
+    };
+
+    const getTagKey = (item: T, index: number) => {
+        const formattedValue = valueExtractor ? valueExtractor(item) : item;
+        return `item_${index}__${formattedValue}`;
+    };
+
     const getDisplayValue = () => {
         if (options && selected.length === options.length) {
             return allSelectedLabel || "All selected";
@@ -194,6 +212,21 @@ export const InputMultiSelect = <T, V>({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
+    const renderTags = () => (
+        <SelectedTagList
+            removable={!disabled && !readOnly}
+            items={selected.map((item, index) => ({
+                key: getTagKey(item, index),
+                label: getTagLabel(item),
+                onRemove: () =>
+                    handleListItemClick(
+                        item,
+                        valueExtractor ? valueExtractor(item) : item
+                    ),
+            }))}
+        />
+    );
+
     const renderLabel = () => {
         if (!selected || selected.length === 0) {
             return (
@@ -216,9 +249,20 @@ export const InputMultiSelect = <T, V>({
         }
     };
 
-    const renderSelectorContent = () => (
-        <LabelContainer disabled={disabled}>{renderLabel()}</LabelContainer>
-    );
+    const isTagDisplay = displayVariant === "tag";
+    const showTags = isTagDisplay && selected.length > 0;
+
+    const renderValue = () => {
+        // the tags are not announced, so the combobox has the same value a
+        // "count" display would show
+        if (showTags) {
+            return <VisuallyHidden>{getDisplayValue()}</VisuallyHidden>;
+        }
+
+        return (
+            <LabelContainer disabled={disabled}>{renderLabel()}</LabelContainer>
+        );
+    };
 
     const renderElement = () => {
         return (
@@ -243,11 +287,15 @@ export const InputMultiSelect = <T, V>({
                     popupRole="listbox"
                     readOnly={readOnly}
                     variant={variant}
+                    dynamicHeight={isTagDisplay}
+                    // the tags are rendered alongside the combobox since they
+                    // contain buttons, and have their own disabled styling
+                    content={showTags ? renderTags() : undefined}
                     aria-labelledby={ariaLabelledBy}
                     aria-describedby={ariaDescribedBy}
                     aria-invalid={ariaInvalid}
                 >
-                    {renderSelectorContent()}
+                    {renderValue()}
                 </ExpandableElement>
             </InputBox>
         );

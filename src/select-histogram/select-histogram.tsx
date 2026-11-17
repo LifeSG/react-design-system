@@ -63,7 +63,7 @@ export const SelectHistogram = ({
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const selectorRef = useRef<HTMLButtonElement>(null);
-    const labelContainerRef = useRef<HTMLDivElement>(null);
+    const labelContainerRef = useRef<HTMLSpanElement>(null);
 
     const testId = otherProps["data-testid"] || "select-histogram";
     // =========================================================================
@@ -135,7 +135,7 @@ export const SelectHistogram = ({
         }
 
         return (
-            <Typography.BodyBL>
+            <Typography.BodyBL as="span">
                 {rangeLabelPrefix}
                 {value}
                 {rangeLabelSuffix}
@@ -145,7 +145,7 @@ export const SelectHistogram = ({
 
     const getDisplayValue = () => {
         return !values || values.length === 0 ? (
-            <div
+            <span
                 className={clsx(
                     styles.placeholderLabel,
                     optionTruncationType !== "middle" &&
@@ -153,24 +153,25 @@ export const SelectHistogram = ({
                 )}
             >
                 {placeholder}
-            </div>
+            </span>
         ) : (
-            <div className={styles.label}>
+            <span className={styles.label}>
                 {renderSelector(selection[0])}
-                <div className={styles.separator}>-</div>
+                <span className={styles.separator}>-</span>
                 {renderSelector(selection[1])}
-            </div>
+            </span>
         );
     };
 
+    // rendered inside the combobox button, so only phrasing content is used
     const renderSelectorContent = () => (
-        <div
+        <span
             className={dropdownWrapperStyles.labelContainer}
             ref={labelContainerRef}
             data-disabled={disabled || undefined}
         >
             {getDisplayValue()}
-        </div>
+        </span>
     );
 
     const renderElement = () => {

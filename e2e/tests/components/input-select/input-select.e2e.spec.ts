@@ -147,6 +147,15 @@ test.describe("InputSelect", () => {
             await story.init("form-variants");
         });
 
+        test("Accessibility", async ({ story }) => {
+            await expect(story.locators.form.default).toMatchAriaSnapshot(`
+                - combobox "Default": Select
+            `);
+            await expect(story.locators.form.selected).toMatchAriaSnapshot(`
+                - combobox "Selected": Option B
+            `);
+        });
+
         test("Visual", async ({ story }) => {
             await compareScreenshot(story, "mount", {
                 locator: story.locators.form.default,

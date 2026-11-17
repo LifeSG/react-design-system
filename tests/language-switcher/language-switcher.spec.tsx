@@ -1,6 +1,7 @@
 import { announce } from "@react-aria/live-announcer";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { LanguageSwitcher } from "src/language-switcher";
+import { ARIA_LABEL } from "src/language-switcher/data";
 
 jest.mock("@react-aria/live-announcer", () => ({
     announce: jest.fn(),
@@ -27,6 +28,14 @@ describe("LanguageSwitcher (dropdown)", () => {
         render(<LanguageSwitcher variant="dropdown" />);
 
         expect(screen.getByText("English")).toBeInTheDocument();
+    });
+
+    it("should name the combobox without the selected language, which is its value", () => {
+        render(<LanguageSwitcher variant="dropdown" />);
+
+        const combobox = screen.getByRole("combobox");
+        expect(combobox).toHaveAccessibleName(ARIA_LABEL);
+        expect(combobox).toHaveTextContent("English");
     });
 
     it("should display the selected language name on the trigger", () => {
