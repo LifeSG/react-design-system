@@ -12,6 +12,7 @@ export const LinkButton = styled(BasicButton)`
     width: 100%;
     padding: 0.75rem 1rem;
     border-radius: ${Radius["md"]};
+    cursor: pointer;
 
     ${Font["body-md-regular"]}
     color: ${Colour["text"]};
