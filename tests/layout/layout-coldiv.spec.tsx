@@ -1,4 +1,5 @@
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import ReactDOMServer from "react-dom/server";
 import { ColDiv } from "src/layout/col-div";
 import * as styles from "src/layout/col-div.styles";
 
@@ -61,7 +62,7 @@ describe("ColDiv Component", () => {
         expect(el.style.getPropertyValue(styles.tokens.lgSpan)).toBe("4");
     });
 
-    it("should correctly apply span to end (-1) for xxs", () => {
+    it("should correctly apply end (-1) for xxs", () => {
         const { container } = render(
             <ColDiv xxsCols={[2, -1]}>XXS Span to End ColDiv</ColDiv>
         );
@@ -94,5 +95,82 @@ describe("ColDiv Component", () => {
 
         expect(container.firstChild).toHaveClass(styles.colDiv);
         expect(container.firstChild).toHaveClass("custom-class");
+    });
+
+    it("should apply span as data attributes before hydration and CSS variables after hydration", () => {
+        const ui = (
+            <ColDiv data-testid="output" xxsCols={4}>
+                Fallback ColDiv
+            </ColDiv>
+        );
+
+        // simulate server-side rendering
+        const container = document.createElement("div");
+        document.body.appendChild(container);
+        container.innerHTML = ReactDOMServer.renderToString(ui);
+
+        const el = screen.getByTestId("output");
+        expect(el.style.getPropertyValue(styles.tokens.xxsSpan)).toBe("");
+        expect(el.getAttribute(styles.tokens.xxsSpanAttr)).toBe("4");
+
+        // hydrate the component
+        render(ui, { hydrate: true, container });
+
+        expect(el.style.getPropertyValue(styles.tokens.xxsSpan)).toBe("4");
+        expect(el.getAttribute(styles.tokens.xxsSpanAttr)).toBe(null);
+    });
+
+    it("should apply start and span as data attributes before hydration and CSS variables after hydration", () => {
+        const ui = (
+            <ColDiv data-testid="output" xxsCols={[1, 4]}>
+                Fallback ColDiv
+            </ColDiv>
+        );
+
+        // simulate server-side rendering
+        const container = document.createElement("div");
+        document.body.appendChild(container);
+        container.innerHTML = ReactDOMServer.renderToString(ui);
+
+        const el = screen.getByTestId("output");
+        expect(el.style.getPropertyValue(styles.tokens.xxsSpan)).toBe("");
+        expect(el.style.getPropertyValue(styles.tokens.xxsStart)).toBe("");
+        expect(el.getAttribute(styles.tokens.xxsStartAttr)).toBe("1");
+        expect(el.getAttribute(styles.tokens.xxsSpanAttr)).toBe("3");
+
+        // hydrate the component
+        render(ui, { hydrate: true, container });
+
+        expect(el.style.getPropertyValue(styles.tokens.xxsStart)).toBe("1");
+        expect(el.style.getPropertyValue(styles.tokens.xxsSpan)).toBe("3");
+        expect(el.getAttribute(styles.tokens.xxsStartAttr)).toBe(null);
+        expect(el.getAttribute(styles.tokens.xxsSpanAttr)).toBe(null);
+    });
+
+    it("should apply end (-1) as data attributes before hydration and CSS variables after hydration", () => {
+        const ui = (
+            <ColDiv data-testid="output" xxsCols={[1, -1]}>
+                Fallback ColDiv
+            </ColDiv>
+        );
+
+        // simulate server-side rendering
+        const container = document.createElement("div");
+        document.body.appendChild(container);
+        container.innerHTML = ReactDOMServer.renderToString(ui);
+
+        const el = screen.getByTestId("output");
+        expect(el.style.getPropertyValue(styles.tokens.xxsEnd)).toBe("");
+        expect(el.style.getPropertyValue(styles.tokens.xxsStart)).toBe("");
+        expect(el.getAttribute(styles.tokens.xxsStartAttr)).toBe("1");
+        expect(el.getAttribute(styles.tokens.xxsEndAttr)).toBe("-1");
+
+        // hydrate the component
+        render(ui, { hydrate: true, container });
+
+        expect(el.style.getPropertyValue(styles.tokens.xxsEnd)).toBe("-1");
+        expect(el.style.getPropertyValue(styles.tokens.xxsStart)).toBe("1");
+        expect(el.getAttribute(styles.tokens.xxsEndAttr)).toBe(null);
+        expect(el.getAttribute(styles.tokens.xxsStartAttr)).toBe(null);
     });
 });
