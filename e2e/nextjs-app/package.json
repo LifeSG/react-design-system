@@ -24,5 +24,9 @@
         "postcss-import": "^16.1.0",
         "postcss-mixins": "^12.1.2",
         "typescript": "^5"
+    },
+    "overrides": {
+        "happy-dom": "^21.0.4",
+        "minimatch@>=9.0.0 <11.0.1": "^11.0.3"
     }
 }

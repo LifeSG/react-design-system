@@ -17,6 +17,8 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 22
+      - name: Install npm 11
+        run: npm install -g npm@11.12.0
       - name: Install dependencies
         run: npm ci
       - name: Pack dependencies
@@ -37,6 +39,8 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 22
+      - name: Install npm 11
+        run: npm install -g npm@11.12.0
       - name: Download dependencies artifact
         uses: actions/download-artifact@v8
         with:
@@ -58,6 +62,8 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 22
+      - name: Install npm 11
+        run: npm install -g npm@11.12.0
       - name: Download dependencies artifact
         uses: actions/download-artifact@v8
         with:
@@ -77,6 +83,8 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 22
+      - name: Install npm 11
+        run: npm install -g npm@11.12.0
       - name: Download dependencies artifact
         uses: actions/download-artifact@v8
         with:
@@ -96,6 +104,8 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 22
+      - name: Install npm 11
+        run: npm install -g npm@11.12.0
       - name: Download dependencies artifact
         uses: actions/download-artifact@v8
         with:
