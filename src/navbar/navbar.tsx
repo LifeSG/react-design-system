@@ -60,6 +60,8 @@ const Component = <T,>(
         layout = "default",
         headerLabel = "Main navigation menu",
         drawerLabel,
+        brandAddon,
+        drawerHeader,
         ...otherProps
     }: NavbarProps<T>,
     ref: React.Ref<NavbarDrawerHandle>
@@ -237,6 +239,7 @@ const Component = <T,>(
                 hideNavBranding={hideNavBranding}
                 mobileMenuRef={mobileMenuRef}
                 drawerLabel={drawerLabel}
+                headerContent={drawerHeader}
             >
                 <NavbarItems
                     items={items.mobile || items.desktop}
@@ -293,6 +296,22 @@ const Component = <T,>(
                         type="secondary"
                     />
                 </>
+            )}
+            {brandAddon && (
+                <div
+                    className={styles.brandAddonContainer}
+                    data-testid="main__brand-addon"
+                >
+                    <div
+                        className={clsx(
+                            styles.navSeparator,
+                            compress
+                                ? styles.navSeparatorCompressed
+                                : styles.navSeparatorFull
+                        )}
+                    />
+                    {brandAddon}
+                </div>
             )}
         </div>
     );
