@@ -18,6 +18,7 @@ import { NavbarHelper } from "./navbar-helper";
 import { NavbarItems } from "./navbar-items";
 import { getDefaultResourceLogo } from "./navbar-logo-data";
 import {
+    BrandAddonContainer,
     MobileMenuButton,
     MobileMenuIcon,
     Nav,
@@ -59,6 +60,8 @@ const Component = <T,>(
         layout = "default",
         headerLabel = "Main navigation menu",
         drawerLabel,
+        brandAddon,
+        drawerHeader,
         ...otherProps
     }: NavbarProps<T>,
     ref: React.Ref<NavbarDrawerHandle>
@@ -232,6 +235,7 @@ const Component = <T,>(
                 hideNavBranding={hideNavBranding}
                 mobileMenuRef={mobileMenuRef}
                 drawerLabel={drawerLabel}
+                headerContent={drawerHeader}
             >
                 <NavbarItems
                     items={items.mobile || items.desktop}
@@ -271,6 +275,12 @@ const Component = <T,>(
                         type="secondary"
                     />
                 </>
+            )}
+            {brandAddon && (
+                <BrandAddonContainer data-testid="main__brand-addon">
+                    <NavSeparator $compress={compress} />
+                    {brandAddon}
+                </BrandAddonContainer>
             )}
         </NavBrandContainer>
     );
