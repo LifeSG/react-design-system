@@ -2,9 +2,10 @@
 
 Problem: Next.js production builds load component CSS in a non-deterministic
 order, so source-order-dependent overrides break in prod but not in dev.
-Source spec: [`../css-layer-specs.md`](../css-layer-specs.md). Branch: `rl/css-layers`.
+Source spec: [`../css-layer-specs.md`](../css-layer-specs.md). Branch: `gz/css-layers`
+(spike work), built on `rl/css-layers` (`93cd86ede`).
 
-Last updated: 2026-11-03
+Last updated: 2026-11-18
 
 ## Charter (applies to the whole effort)
 
@@ -19,9 +20,9 @@ single pre-ordered stylesheet).
 
 **Decision owner.** DS team
 
-**Timebox.** None set yet. Open gap: the spike cannot overrun on record
-without one. Record the budget, the start date and any extension decision here
-once they exist.
+**Timebox.** None was set. Actual: 2026-10-15 (first spike commit `93cd86ede`) to
+2026-11-18, about 5 weeks, with no recorded extension decision. Planning signal for
+the next spike: set the budget in the charter before starting.
 
 **Exit criteria.** The spike is done when all of these hold, or when a stop
 condition below is hit:
@@ -54,10 +55,13 @@ condition below is hit:
 
 ## Spikes
 
-| #   | Spike                                                             | Doc                                                | Status      | Verdict                                                                               |
-| --- | ----------------------------------------------------------------- | -------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------- |
-| 01  | Native CSS layers (granularity, parent/child variants, migration) | [01-css-layers.md](01-css-layers.md)               | In progress | Draft: Adopt for subset, with conditions (4 layering changes to fix, scan incomplete) |
-| 02  | Alternative paths (shortlist and ordering)                        | [02-alternative-paths.md](02-alternative-paths.md) | Proposed    | TBD                                                                                   |
+**Final findings, verdict and proposal: [FINDINGS.md](FINDINGS.md).** The numbered docs
+below are the working records it cites.
+
+| #   | Spike                                                             | Doc                                                | Status  | Verdict                                                                                                                                                                               |
+| --- | ----------------------------------------------------------------- | -------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 01  | Native CSS layers (granularity, parent/child variants, migration) | [01-css-layers.md](01-css-layers.md)               | Done    | Adopt `styleedge` per-folder layers, with 5 conditions and named risks (scan completeness, E8, descoped; exit criterion 2 met only in simulation; "no redeclaring" holds only partly) |
+| 02  | Alternative paths (shortlist and ordering)                        | [02-alternative-paths.md](02-alternative-paths.md) | Dropped | Not run: layers were viable; #5 kept as a workaround ticket                                                                                                                           |
 
 ## Conventions
 

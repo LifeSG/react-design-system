@@ -1,4 +1,8 @@
-# E9 finding (draft F19, to merge into `01-css-layers.md` by hand after review)
+# E9 finding (merged into `01-css-layers.md` as F19 on 2026-11-18)
+
+The finding and the proposed replacement text are applied in 01. The troubleshooting
+wording at the end of this file is the input to the "Consumer override guidance"
+follow-up ticket.
 
 ### F19. E9: consumer overrides give the same result on per-folder and single-layer builds in 92 of 96 applicable cells; the 4 that differ are all consumers writing into a library layer by name (Measured)
 

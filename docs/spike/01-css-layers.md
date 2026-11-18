@@ -1,6 +1,6 @@
 # 01 - Native CSS layers for deterministic order
 
-Status: In progress | Owner: TBD | Branch: `rl/css-layers`
+Status: Done (2026-11-18) | Decision owner: see [README.md](README.md) | Branch: `gz/css-layers` (spike work), built on `rl/css-layers` (`93cd86ede`)
 Timebox, decision owner, exit criteria and stop conditions: see the charter in
 [README.md](README.md).
 
@@ -32,8 +32,9 @@ per variant relationship? Sub-questions from the spec:
 
 ## Findings so far
 
-Only F1 and F3 are Measured, and only as a static scan. Nothing here has been
-checked against a real Next build yet, so none of it feeds a verdict.
+F1 to F4 come from static scans of `src/` (F2 is Assumed). F5 onwards are Measured
+in real Next 16 production builds, each with its reproduce command. Only Measured
+findings feed the verdict.
 
 ### F1. The import graph has cycles (Measured, static scan)
 
@@ -518,13 +519,13 @@ What it shows:
     value computes to 0px. An earlier version of this bullet said the probed
     properties do not depend on tokens; for the textarea that was wrong. The timeline
     values are genuine (its rules are literal `1rem` and `0`).
--   **E6, consumer overrides behave the same as today.** An unlayered app rule
-    beats the library on both builds. An app rule inside `@layer main` loses on
-    both builds: `@layer main, fds;` (the troubleshooting doc and the e2e app's
-    `globals.css`) makes `fds` the later, stronger layer. That matches the doc's
-    stated purpose, "styles from main.css take precedence over component styles"
-    being the problem it solves, so it is intended, not a layers regression.
-    Per-folder layers sit inside `fds` and do not change this.
+-   **E6, the two overrides probed behave the same as today.** An unlayered app rule
+    beats the library on both builds, and an app rule inside `@layer main` loses on
+    both builds. `@layer main, fds;` (the troubleshooting doc and the e2e app's
+    `globals.css`) makes `fds` the later, stronger layer. That is the doc's stated
+    purpose, so it is intended, not a layers regression. F19 extends this to 15
+    mechanisms and 6 targets: the same result on single-layer and per-folder builds,
+    except for rules written into `@layer fds.<folder>`.
 
 Correction to my earlier read of the smoke test: I called the `app-layered`
 result "the doc's advice inverts the consumer's expectation". The published
@@ -627,7 +628,7 @@ layers. Two rules in one tier fall back to source order, which is the
 bundler-dependent order behind the original bug. So a tiering is only as good as
 the number of style edges it leaves inside one tier.
 
-| Tiering                                                                                                                                     | Layers                         | Style edges inside one tier (of 205)                                         | Inverted |
+| Tiering                                                                                                                                     | Layers                         | Style edges inside one tier (of 205 after exemptions)                        | Inverted |
 | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ---------------------------------------------------------------------------- | -------- |
 | Per-folder (F13)                                                                                                                            | 85                             | 0                                                                            | 0        |
 | **Depth**: a folder's tier is the longest chain of styled children below it, so a parent is always one tier deeper than any child it styles | **4** (36, 10, 20, 19 folders) | **0**                                                                        | 0        |
@@ -958,7 +959,7 @@ What it does **not** show:
     suite covers the states its specs script, not every reachable state.
 -   `depth` against the e2e suite (not run).
 
-**Simulated fixes (Measured).** Reproduce: from `docs/spike/experiments/sweep/`,
+**Simulated fixes (Measured, simulation on built CSS; webpack only).** Reproduce: from `docs/spike/experiments/sweep/`,
 `node simulate-fixes.mjs` (writes `../final/libs/flat-fixed` and `styleedge-fixed`),
 `LIBS="flat-fixed styleedge-fixed" SCHEMES="light dark" VIEWPORTS="desktop mobile"
 ./run-sweep.sh` (17 min; log in `run-sweep-fixed.log`), then `node diff-sweep.mjs <ref>
@@ -1019,11 +1020,15 @@ sweep cannot see it either way.
 
 What it shows:
 
--   **With the five fixes, layering changes no story render and fails no e2e test.** The 94
-    layering renders become 0; the 18 left are the noise stories `repeat-check.sh` already
-    classified. The e2e failures are the same set on both libraries.
--   **Each fix works without layers.** The same patch gives the same result in one layer,
-    so a fix can land before the layered build ships.
+-   **With the fixes simulated on built CSS, layering changes no story render, and fails
+    no e2e test on only one build in the folders checked.** The sweep ran with four fixes
+    (the chevron is on no story): the 94 layering renders become 0, and the 18 left are
+    the noise stories `repeat-check.sh` already classified. The full e2e suite ran with
+    four fixes; all five were run only on the 5 spec folders they touch, where both
+    libraries fail the same 22 tests.
+-   **Each simulated fix works without layers.** The same patch gives the same result in
+    one layer. That a fix can therefore land before the layered build ships is
+    **Assumed**: it relies on the Linaria source fix compiling to the same rule.
 -   **The input fixes re-declare a parent's state rule in the child.** That is the spec's
     "redeclare variant styles in every child" on a small scale: two components, three
     rules. It is per-relationship work, so a component that composes `input-group` and
@@ -1038,6 +1043,225 @@ What it does **not** show:
     opens the drawer; E8's runtime scan is the check for the rest.
 -   A source fix. The patch is on built CSS; the production fix is written in the style
     files and goes through Linaria.
+-   Turbopack. Both the sweep and the e2e suite build with `next build --webpack`
+    (`run-sweep.sh:31`, `run-e2e.sh:29`, like the repo's e2e app), one build per library.
+    F16 covers Turbopack for order stability, but not for the screenshots.
+
+### F19. E9: consumer overrides give the same result on per-folder and single-layer builds in 92 of 96 applicable cells; the 4 that differ are all consumers writing into a library layer by name (Measured)
+
+Reproduce (from `docs/spike/experiments/e2`, with `final/libs/{flat,styleedge}` built by
+`../final/prepare-libs.sh`):
+
+```sh
+node make-overrides.mjs && for l in ../final/libs/flat ../final/libs/styleedge published; do LIB=$l SUITE=overrides RUNS=2 ./run-consumer.sh; done && node matrix-overrides.mjs results/{flat,styleedge,published}-overrides.jsonl
+```
+
+Results in `e2/results/{flat,styleedge,published}-overrides.jsonl`, the printed matrix in
+`e2/results/overrides-matrix.md`, log in `e2/results/run-overrides.log`. Pages in
+`e2/src/app/overrides/`, generated from `overrides-spec.mjs` (14 and 15 hand-written).
+
+Setup. Libraries are linked by a symlink from the e2 app's
+`node_modules/@lifesg/react-design-system` straight to `final/libs/<lib>` (`LIB=<path>`,
+new in `run-consumer.sh`); `published` is alpha.14 as installed. Each library: Turbopack
+default and webpack default × 2 rebuilds × 3 `globals.css` setups (`@layer main, fds;` as
+documented, `@layer fds, main;`, no statement) = 12 builds, 23 pages each. Every page
+imports the theme stylesheet first. Each mechanism is read from the builds with its own
+setup (7: reversed, 8 and 14b: none, the rest: documented). Chromium, 1280×900.
+
+**No cell varied across rebuilds or bundlers, on any library** (Measured, the matrix
+prints "Unstable cells: none"; every cell is 4/4).
+
+Six targets, picked from the built CSS (Read, rule traces in the `.jsonl` `rules` field):
+
+| Target                            | Measured element and property                        | Library rule(s) on `styleedge`                                       |
+| --------------------------------- | ---------------------------------------------------- | -------------------------------------------------------------------- |
+| `timeline` (F12's)                | title `margin-bottom`, 16px                          | `fds.timeline .tfsmff8` (0,1,0) over `fds.typography .d4n1hjq`       |
+| `button` (one folder)             | `background-color`, rgb(23,104,190)                  | `fds.button .mharb8i` (0,1,0)                                        |
+| `navbar-icon` (F17 flip)          | mobile menu `svg` `width`: 18px flat, 24px styleedge | `fds.shared .m18ljjag svg` (0,1,1) vs `fds.navbar .m11vsg37` (0,1,0) |
+| `textarea` (library `!important`) | read-only `background-color`, transparent            | `fds.input-textarea .e1kovz0t { background: 0 0 !important }`        |
+| `input-group` (state rule)        | read-only wrapper `padding-left`, 0px                | `fds.input-group .nx53mj4[data-read-only="true"]` (0,2,0)            |
+| `modal` (portal)                  | Modal v2 content `margin-left`, 64px                 | `fds.modal-v2 .c1vsayl1` (0,1,0), `var(--fds-spacing-64)`            |
+
+The app's value is distinctive per target (40px, 7px, rgb(10,20,30)), so a cell is "app"
+when the computed value equals it and "library" when it equals the same build's
+baseline page. "Intended" is what the consumer means to happen, stated in
+`overrides-spec.mjs` before `flat` was measured: "library" only for 3 and 12, where
+`@layer main, fds;` makes the library win by design (F12).
+
+#### The matrix (condensed; every cell per target in `results/overrides-matrix.md`)
+
+`n/a` = does not apply: the class or `style` was passed to the component and the
+measurer found it did not land on the measured element (Measured), or the property is
+a literal with no token (Read). The textarea column is the library's `!important`.
+
+| #   | Mechanism                                                                 | Intended | timeline   | button                           | navbar-icon | textarea | input-group                      | modal                            | flat vs styleedge                    |
+| --- | ------------------------------------------------------------------------- | -------- | ---------- | -------------------------------- | ----------- | -------- | -------------------------------- | -------------------------------- | ------------------------------------ |
+| 1   | Unlayered, descendant selector                                            | app      | app        | app                              | app         | library  | app                              | app                              | same                                 |
+| 1p  | Unlayered, descendant of the app wrapper (modal only)                     | app      | -          | -                                | -           | -        | -                                | library                          | same (portal is outside the wrapper) |
+| 2   | Unlayered, single class via `className`                                   | app      | n/a        | app                              | n/a         | library  | app                              | app                              | same                                 |
+| 3   | `@layer main`                                                             | library  | library    | library                          | library     | library  | library                          | library                          | same                                 |
+| 4   | Unlayered `!important`                                                    | app      | app        | app                              | app         | library  | app                              | app                              | same                                 |
+| 5   | `!important` in `@layer main`                                             | app      | app        | app                              | app         | **app**  | app                              | app                              | same                                 |
+| 6   | Inline `style` prop                                                       | app      | n/a        | app                              | n/a         | library  | n/a                              | app                              | same                                 |
+| 7   | `@layer fds, main;`, rule in `main`                                       | app      | app        | app                              | app         | library  | app                              | app                              | same                                 |
+| 8   | No `@layer` statement, rule in `main`                                     | app      | app        | app                              | app         | library  | app                              | app                              | same                                 |
+| 9a  | `@layer fds { }`, descendant                                              | app      | app        | app                              | app         | library  | app                              | app                              | same                                 |
+| 9b  | `@layer fds.<folder> { }`, descendant                                     | app      | app        | app                              | app         | library  | **flat app / styleedge library** | app                              | **1 differs**                        |
+| 9c  | `@layer fds.<folder> { }`, single class                                   | app      | n/a        | **flat app / styleedge library** | n/a         | library  | **flat app / styleedge library** | **flat app / styleedge library** | **3 differ**                         |
+| 9d  | `@layer fds.<renamed> { }` (undeclared name), descendant                  | app      | app        | app                              | app         | library  | app                              | app                              | same                                 |
+| 10  | Token, unlayered `[data-fds-theme="lifesg"]` (documented)                 | app      | n/a        | app                              | n/a         | n/a      | n/a                              | app                              | same                                 |
+| 11a | Token, `ThemeProvider style` (documented)                                 | app      | n/a        | app                              | n/a         | n/a      | n/a                              | app                              | same                                 |
+| 11b | Token, `useApplyStyle` (documented)                                       | app      | n/a        | app                              | n/a         | n/a      | n/a                              | app                              | same                                 |
+| 12  | Token inside `@layer main`                                                | library  | n/a        | library                          | n/a         | n/a      | n/a                              | **app**                          | same                                 |
+| 13  | CSS Modules class via `className`                                         | app      | n/a        | app                              | n/a         | library  | app                              | app                              | same                                 |
+| 14p | Tailwind v4 imported, no utilities (preflight only)                       | library  | **0px**    | **transparent**                  | library     | library  | library                          | **0px**                          | same                                 |
+| 14a | Tailwind v4 utilities, Tailwind's default layers                          | app      | n/a (0px)  | app                              | n/a         | library  | app                              | app                              | same                                 |
+| 14b | Tailwind v4 utilities, `@layer theme, base, fds, components, utilities;`  | app      | n/a (16px) | app                              | n/a         | library  | app                              | app                              | same                                 |
+| 15  | styled-components `createGlobalStyle` (runtime `<style>`) via `className` | app      | n/a        | app                              | n/a         | library  | app                              | app                              | same                                 |
+
+Counts over the 127 non-baseline cells (Measured): 64 app on both, 23 library on both, 3
+"other" on both (14p, Tailwind's preflight), 31 n/a, 2 library on both with a different
+library value (3 and 14p on `navbar-icon`: F17's flip, 18px vs 24px, not caused by the
+consumer), and **4 different**.
+
+Published alpha.14 (information only, it also differs in component code): the same as
+`flat` in every cell **except 14 cells, all mechanism 9**. On alpha.14, every 9b and 9d
+cell is "library" (except the textarea, "library" everywhere), and so is 9a
+`input-group`. On both branch builds these are "app", except 9b `input-group` on
+`styleedge`. The three 9c cells that differ are "library" on alpha.14, matching
+`styleedge`, not `flat`. Causes below.
+
+#### Why the 4 cells differ
+
+All four are consumers writing into `@layer fds.<folder>` (Measured values; cascade rules
+Read from CSS Cascade 5; the rule order is in the `.jsonl` `rules` field).
+
+| Cell             | `flat`                                                                                                                             | `styleedge`                                                                                                            |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| 9b `input-group` | app: `fds.input-group` does not exist, so the consumer creates it **after `fds.all`**; a later layer wins whatever the specificity | library: same layer as the library rule, specificity ties at (0,2,0), and the library rule comes later in source order |
+| 9c `button`      | app (new later sublayer)                                                                                                           | library: same layer, tie at (0,1,0), library later in source order                                                     |
+| 9c `modal`       | app (new later sublayer)                                                                                                           | library: same layer, tie at (0,1,0), library later in source order                                                     |
+| 9c `input-group` | app (new later sublayer)                                                                                                           | library: same layer, the library's (0,2,0) beats the consumer's (0,1,0)                                                |
+
+In all 4 `styleedge` builds the consumer's rule came **before** the library's in source
+order (Measured: consumer rule index 0, library 1 or 4, every build). That holds because
+these pages import the consumer CSS before the components. The three ties are therefore
+decided by load order, which is the original bug: a consumer whose CSS loads after the
+components' would get "app" on those three (Assumed, not measured).
+
+Mechanisms 7, 8, 9a, 9d and 12, which the brief expected to match, do match. 9b and 9c
+are expected to differ: on `flat` a folder name is a new layer, on `styleedge` it is the
+library's own layer. The brief's premise that "per-folder layers are inside `fds`" is
+true. It only implies the same result when the consumer does not name a folder.
+
+**Why alpha.14 differs from both branch builds on 9.** alpha.14 puts every component rule
+directly in `@layer fds { … }` with no sublayer (Read: `button.styles_1jxad2l.css`
+starts `@layer fds{.mf6do54{`). Rules placed directly in a layer beat all of its
+sublayers. So on alpha.14 a consumer's `fds.<anything>` loses to every library rule (9b,
+9d: library), and `@layer fds { }` shares the library's own layer (9a `input-group`: tie,
+library later, library). On the branch builds the library moved into sublayers (`fds.all`
+or `fds.<folder>`), so a consumer's `@layer fds { }` now beats all of them. **The
+consumer-visible change on mechanism 9 comes from moving the rules into sublayers at all,
+and it already happens with one sublayer (`flat`).** Per-folder layers add the 4 cells
+above.
+
+#### Layer names as API (mechanism 9)
+
+Writing into `fds.<folder>` works, but what it does depends on the library's layer names:
+
+-   On `styleedge`, writing into the target's own folder layer (9c) gives library on
+    `button`, `modal` and `input-group`. Writing into a name the library does not declare
+    (9d, the stand-in for a renamed layer) gives app on all three. **Renaming a folder
+    layer would flip a consumer's result from library to app, silently** (Measured: 9c
+    vs 9d on `styleedge`).
+-   Moving a folder later in the generated order (a new style edge) changes which
+    library rules a consumer's `fds.<folder>` rule beats. That is Read from the cascade
+    order, not measured here.
+
+So if consumers are allowed to write into `fds.<folder>`, the per-folder names and their
+order become public API, and a rename or reorder is a breaking change. Not documenting
+them, and saying so, avoids that.
+
+What it shows:
+
+-   **Q1 (Measured).** Consumer results differ between `flat` and `styleedge` in 4 of 127
+    cells, all mechanism 9b or 9c (naming a library folder layer). Causes above:
+    new-later-layer on `flat` versus same-layer specificity and source order on
+    `styleedge`. Mechanisms 1 to 8 and 10 to 15 give the same result in every cell.
+    That includes `!important`, tokens, CSS Modules, Tailwind v4 and runtime CSS-in-JS.
+-   **Q2, `!important` (Measured, no difference).** Against the library's
+    `background: … !important` on read-only Textarea, an unlayered `!important` (4)
+    **loses** on all three libraries, while `!important` inside `@layer main` (5)
+    **wins**. Normal declarations, including the inline `style` prop (6), lose. Read:
+    important declarations reverse layer order, and unlayered `!important` is the
+    weakest author `!important`, so `main` (declared before `fds`) beats the library's
+    layered `!important`. That is the same with one layer or 85. On normal targets, 4
+    and 5 both win, as expected. Not measured: a consumer `!important` written into
+    `fds.<folder>`. By the same rules it would differ between `flat` (a new later
+    sublayer is weaker for `!important`) and `styleedge` (same layer).
+-   **Q3, tokens (Measured, no difference).** 10, 11a and 11b work identically on all
+    three libraries, including the modal in its portal: the portal carries
+    `data-fds-theme`, Measured `portalTheme=lifesg`. The brief's premise is wrong in one
+    detail (Read, `theme/styles/lifesg.css` on both builds): tokens are **not** in
+    `fds.theme`. They sit directly in `@layer fds { :root {…} [data-fds-theme="lifesg"]
+{…} }`. `fds.theme` is declared in `styleedge`'s order statement but holds no rules.
+    Token placement is therefore the same on every build, which is why 10 to 12 cannot
+    differ. **12 is not uniform, on any build:** a token override inside `@layer main`
+    loses for `--fds-colour-bg-primary`, which the library declares on
+    `[data-fds-theme="lifesg"]`, the element the consumer's rule targets. It wins for
+    `--fds-spacing-64`, which the library declares on `:root`, so nothing in `fds`
+    competes on the theme element and the consumer's value is inherited. That is a
+    pre-existing property of where tokens are declared, not of layering.
+-   **Q4, Tailwind v4 and CSS-in-JS (Measured, no difference between libraries).**
+    styled-components' runtime `<style>` (15) behaves exactly like bundled unlayered
+    CSS (2). Tailwind v4 brings `@layer theme, base, components, utilities;`. Under the
+    documented `@layer main, fds;` those four layers first appear after `fds`, so they
+    all rank above it. Utilities win (14a), but **so does Tailwind's preflight**: with no
+    utility at all (14p), the Timeline title margin goes 16px to 0, the Button
+    background to transparent, and the Modal content margin 64px to 0. This happens on
+    `flat`, `styleedge` **and published alpha.14**, so it is a hazard for today's
+    consumers, not a layering regression. Declaring
+    `@layer theme, base, fds, components, utilities;` before any other CSS (14b, with no
+    `main, fds` statement in `globals.css`) restores the library (16px) and keeps
+    utilities winning. With `@layer main, fds;` already first, the same Tailwind
+    statement cannot move `fds`: page 14b under the documented globals still gives 0px
+    on all three libraries (Measured).
+-   **Portals (Measured).** A selector scoped to the app's wrapper never reaches Modal v2
+    content (1p: library on all), because the modal renders outside that subtree.
+    Scoping by the modal's own `className` works (1). Same on every library.
+-   **Q5, guidance.** See the proposed troubleshooting text below. The only item the
+    migration itself needs is "do not write into `fds.*` layers". The rest (`!important`,
+    tokens in `main`, Tailwind, portals) behaves the same on alpha.14 and is missing
+    from today's docs.
+
+What it does **not** show:
+
+-   Source order in the three 9c/9b ties with the consumer CSS loaded **after** the
+    components. It is Assumed to flip them to app, so those cells are order-dependent,
+    not fixed results.
+-   Consumer `!important` inside `fds.<folder>`, Tailwind's order statement combined with
+    `main` (for example `@layer main, theme, base, fds, components, utilities;`), dark
+    mode token selectors, and Tailwind through `@tailwindcss/postcss`. Tailwind was
+    compiled by its CLI into a static file, to avoid adding a `postcss.config` that
+    would change every route of the e2 app. The cascade result depends on the emitted
+    layers, which are the same, but the pipeline was not measured.
+-   styled-components with SSR (a registry). Only client-side injection was measured.
+-   Other browsers (Chromium only), Next dev mode, mobile viewports, and interaction
+    states.
+-   The F17 flip itself through an override. The `navbar-icon` library value differs
+    (18px vs 24px), but every consumer mechanism that reaches it wins on both.
+-   `input-group` is a plain read-only InputGroup, not the OTP-verification usage where
+    F17's `[data-read-only]` flip occurs.
+
+What didn't work, kept for the record: the first `useApplyStyle` page (11b) gave no
+override. I had called the hook in a child of `ThemeProvider`, whose layout effect runs
+before the parent's ref is attached. Calling it where the docs show, in the component
+that renders `ThemeProvider`, works. The intended-winner list was committed before
+measuring `flat`. `styleedge` had been seen in two test runs before that.
+
+F18 was reserved for E8 (a complete style-edge scan plus a runtime scan for layering
+flips in states no story or spec reaches). E8 was descoped on 2026-11-18 and not run;
+see the Verdict and Follow-up tickets.
 
 ## Planned experiments
 
@@ -1054,6 +1278,8 @@ Ordered by risk, riskiest first (see the charter's riskiest assumptions).
 | E5b | Mitigation for E5a: explicit order for the cycle members (`form` before `input-textarea`), rerun the matrix. The original plan here (probe every cross-folder edge from E1) is replaced by the E5a scan                                                  | Full edge table                  | Done (F11): one reorder fixes F10, keeps F9; generator change not built                                                                                                    |
 | E6  | Consumer overrides: consumer unlayered CSS and consumer `@layer main, fds` ordering still win/lose as documented                                                                                                                                         | Pass/fail                        | Done (F12): overrides behave as today; unlayered wins, `@layer main` loses on both builds                                                                                  |
 | E7  | Migration: what must consumers add? Is the `default.css` order statement mandatory, what if it loads late or not at all                                                                                                                                  | Checklist                        | Done (F12): order statement must load first, else it falls back to load order                                                                                              |
+| E8  | Scan completeness: read every style file and descendant selectors for style edges, and scan runtime states (open drawers, menus) for layering flips no story or spec reaches                                                                             | Edge list, flip list             | Descoped 2026-11-18, not run. Assumed not needed to choose `styleedge` per-folder layers; carried as a named risk and a follow-up ticket                                   |
+| E9  | Consumer overrides: 15 override mechanisms × 6 targets on single-layer, per-folder and published builds                                                                                                                                                  | Override matrix                  | Done (F19): same result in 92 of 96 applicable cells; the 4 that differ all write into `fds.<folder>`                                                                      |
 
 ## Granularity hypothesis (resolved by E4, F14)
 
@@ -1093,10 +1319,24 @@ verdict carries.
     include a style edge.
 -   ~~Exit criterion 2~~: done (F16). Left open from it: toast screenshots are excluded
     (JS animation). The full-story sweep is F17.
+-   ~~Consumer overrides (E9)~~: done (F19). Left open from it: the three 9b/9c ties with
+    consumer CSS loaded after the components (Assumed to flip), a consumer `!important`
+    inside `fds.<folder>`, Tailwind's order statement combined with `main`, Tailwind
+    through `@tailwindcss/postcss`, and styled-components with SSR.
+-   **E8, scan completeness: descoped 2026-11-18, not run.** Neither the complete
+    style-edge scan nor a runtime scan for flips in unscripted states was built. The
+    chevron flip (F17) was found only because one e2e spec opens the drawer, so other
+    flips in states no story or spec reaches may exist. That this does not change the
+    choice of `styleedge` per-folder layers is **Assumed**, not measured: it rests on
+    `styleedge` falling back to the import graph for unscanned pairs, seen on one pair
+    (`modal-v2 -> shared`, F17). It certainly limits how much the build-time cycle check
+    (condition 2), condition 4's list of five changes, and any future `depth` tiering
+    can be trusted. Carried as a follow-up.
 
 **Coverage of the override scan**
 
--   The style-edge scan is a regex, so 205 edges is a lower bound. Known miss:
+-   The style-edge scan is a regex, so its 207 edges (205 after the `NOT_COLLIDING`
+    exemption, F13) are a lower bound. Known miss:
     `error-display -> typography`, because the tag regex stops at the `>` inside
     `` `${testId}--title` ``. Not scanned at all: multi-line `clsx(...)`, classes passed
     through props, overrides in non-`.tsx` files.
@@ -1139,8 +1379,9 @@ verdict carries.
     not reviewed or hardened.
 -   No dev-mode warning exists for the F12 failure (component CSS before the order
     statement); it is only proposed.
--   Rare reordering: 2 rebuilds show build-to-build noise, they cannot rule out a
-    reordering that happens one build in many.
+-   Rare reordering: 5 builds per library in F16, and 2 per combination in the
+    earlier experiments, show build-to-build noise; they cannot rule out a reordering
+    that happens one build in many.
 
 ## Alternatives considered
 
@@ -1148,25 +1389,46 @@ See [02-alternative-paths.md](02-alternative-paths.md).
 
 ## Verdict
 
-**Draft (2026-11-03): Adopt for subset, with conditions.** Exit criterion 1 is met (F8).
-Criterion 2 is met for order stability (F16: 5 builds, more than one entry point) and,
-with the five F17 fixes simulated, for the Playwright screenshots: 0 layering renders of
-2,076, and the e2e suite fails the same tests on the single-layer and layered builds.
-Those failures are 16 icon baselines to regenerate and 6 stale BookingSG logo
-baselines, none layering. It is met as written once the fixes land and the baselines
-are regenerated (condition 4). Criterion 3 still has two open parts: the edge scan behind granularity and
-condition 2 (E8), and consumer overrides measured on one rule only (E9). Granularity
-(F14), theme delivery (F15) and the generator (F13) are measured.
+> [FINDINGS.md](FINDINGS.md) owns the verdict and the proposal from 2026-11-18 on. This
+> section is the working record it was written from; if the two disagree, FINDINGS.md
+> wins.
+
+**Final (2026-11-18): Adopt `styleedge` per-folder layers, with conditions and named
+risks.** The draft of 2026-11-03 said "Adopt for subset"; the subset was the open parts
+of criterion 3, now closed or descoped below. Exit criterion 1 is met (F8).
+**Criterion 2 is not met as written.** Order stability is met (F16: 5 builds, more
+than one entry point, both bundlers). The Playwright screenshots are not: the layered
+build fails 38 e2e tests and changes 94 story renders (F17). Only in a simulation do
+they come out level: with the fixes patched into built CSS, webpack only, there are 0
+layering renders of 2,076, and on the 5 spec folders the fixes touch, both builds fail
+the same 22 tests (16 icon baselines to regenerate, 6 stale BookingSG logo baselines).
+Three of the five changes count as fixes only because they were reclassified as
+intended (2026-10-28, 2026-11-03). Criterion 2 is met when the source fixes land, the
+baselines are regenerated, and the full e2e suite passes on both bundlers (condition
+4). Criterion 3 is answered for every spec requirement: granularity (F14, F17),
+parent/child variants (F10, F11, F13), consumer migration (F12, F15) and consumer
+overrides (F19, 15 mechanisms × 6 targets). The one part left is scan completeness
+(E8), descoped as a named risk. It limits the build-time cycle check and `depth`
+tiering; that it does not change the choice between approaches is **Assumed** (see
+"Untested and caveats").
+
+**Against the charter's two clauses**, the answer is **partly**. No hand-ordering per
+variant relationship: yes, the generator orders from style edges (F13), apart from one
+hand-maintained `NOT_COLLIDING` exemption. No redeclaring variants in every child:
+not in every child, but not in none either. Condition 4 re-declares `input-group`'s
+read-only rules in two children, and the three icon fixes are specificity bumps
+(02 path #1). That is 5 known relationships, and more may be hidden by the incomplete
+scan.
 
 Per-folder layers solve the reported problem and their known blocker is
 fixable, on the evidence so far:
 
-| Spec requirement                 | Answer so far                                                                                                                                                                                                                                                                                                                                                                                            | Evidence      |
-| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| Deterministic style order        | **Yes, for every measured pair.** Layers make source order irrelevant: F8's broken source order is still there on the layered build, but the parent wins                                                                                                                                                                                                                                                 | F8, F9        |
-| Parent/child variant inheritance | **Blocker is real but narrow and fixable.** Layers break a parent's override wherever the order puts the child later (F10). 1 real case in 206 cross-folder overrides, inside an import cycle. Ordering from style edges fixes it in the generator and keeps F9                                                                                                                                          | F10, F11, F13 |
-| Granularity                      | **Per-folder is not required for the scanned edges, but the scan is incomplete.** 4 tiers derived from style-edge depth match it on every scanned edge; a hand-picked base/components split leaves 61 edges to source order and fails a hostile order. On the full e2e stories `depth` breaks the modal close button on 44 renders where `styleedge` does not (F17), so `styleedge` is the safer default | F14           |
-| Consumer migration path          | **One requirement, stricter than the documented setup.** Import the theme stylesheet as a bundled import in the outermost layout that renders any library component. A nested-layout import or a CDN `<link>` silently falls back to load order (F15). Several themes and runtime switching are fine. App overrides behave exactly as today                                                              | F5, F12       |
+| Spec requirement                 | Answer so far                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | Evidence          |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| Deterministic style order        | **Yes, for every measured pair.** Layers make source order irrelevant: F8's broken source order is still there on the layered build, but the parent wins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | F8, F9            |
+| Parent/child variant inheritance | **Blocker is real but narrow and fixable.** Layers break a parent's override wherever the order puts the child later (F10). 1 real case in 206 cross-folder className overrides (207 style edges in all, F13), inside an import cycle. Ordering from style edges fixes it in the generator and keeps F9                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | F10, F11, F13     |
+| Granularity                      | **Per-folder is not required for the scanned edges, but the scan is incomplete.** 4 tiers derived from style-edge depth match it on every scanned edge; a hand-picked base/components split leaves 61 edges to source order and fails a hostile order. On the full e2e stories `depth` breaks the modal close button on 44 renders where `styleedge` does not (F17), so `styleedge` is the safer default                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | F14               |
+| Consumer migration path          | **One requirement, stricter than the documented setup.** Import the theme stylesheet as a bundled import in the outermost layout that renders any library component. A nested-layout import or a CDN `<link>` silently falls back to load order (F15). Several themes and runtime switching are fine. **App overrides give the same result as a single-layer build for every documented route and every common one measured** (unlayered CSS, `@layer main`, `!important`, inline style, tokens, CSS Modules, Tailwind v4, runtime CSS-in-JS: 92 of 96 applicable cells, F19). The exception is CSS written into the library's own layers (`@layer fds.<folder>`), which changes result and becomes load-order dependent. Per-folder layer names must stay private and be documented as such. Moving the library from rules directly in `fds` (alpha.14) into sublayers already changes `@layer fds { }` and `@layer fds.* { }` overrides, with one sublayer too | F5, F12, F15, F19 |
 
 Conditions for adopting:
 
@@ -1193,19 +1455,45 @@ Conditions for adopting:
    open. Decided 2026-10-28 and 2026-11-03: the three icon sizes are intended, so those
    components must win in both builds and 16 e2e baselines are regenerated; the read-only
    inputs are regressions, fixed by re-declaring `input-group`'s state rules in the
-   component. Simulated, this leaves 0 layering renders and no e2e test failing on only
-   one build (F17, simulated fixes). `depth` additionally breaks the modal close
+   component. Simulated on built CSS (webpack), this leaves 0 layering renders and, on
+   the 5 spec folders the fixes touch, no e2e test failing on only one build (F17,
+   simulated fixes). The source fixes, a full e2e run and a Turbopack run are still owed. `depth` additionally breaks the modal close
    button where the edge scan is incomplete; the scan must read every style file and
    descendant selectors (F17) before `depth` can be trusted.
+5. **Layer names stay private.** Consumers must not write into `fds` or `fds.<folder>`
+   (F19): on per-folder layers such rules tie with the library and are decided by load
+   order, and a folder rename silently flips them. Document this in the troubleshooting
+   page, so that renaming or reordering folder layers is not a breaking change.
+
+Named risks the decision owner accepts with this verdict:
+
+-   **Incomplete scan (E8 descoped).** The style-edge scan is a regex lower bound
+    (207 edges, 205 after exemptions) and no runtime flip scan exists. A missed edge can hide a cycle from the
+    build check (condition 2) or leave an override to the generated order, as F10 did
+    before F11. Mitigated by the follow-up scanner ticket.
+-   **Probe coverage.** 7 probes, 6 real collisions, one hostile-order pair, Chromium
+    only, Next 16.3.6 only (see "Untested and caveats").
+-   **Rare reordering.** 5 builds per library (F16) cannot rule out a
+    reordering that happens one build in many.
+-   **Criterion 2 rests on a simulation.** The screenshot half is met only with the
+    fixes patched into built CSS, on webpack, with the full e2e suite run on four of
+    the five fixes (see the Verdict paragraph above).
 
 Rejected alternatives to this verdict:
 
--   _Redeclare variants in every child_ (spec option 1): not needed; the blocker
-    is one ordering decision, not per-variant styling.
+-   _Redeclare variants in every child_ (spec option 1): not needed as the general
+    approach, since the generated order handles every scanned variant relationship
+    but one. It is still needed in places: condition 4 re-declares `input-group`'s
+    read-only rules in two children (F17), so a component that composes `input-group`
+    and overrides its padding or margin needs the same.
 -   _Hand-ordered layers per variant_ (spec option 3): not needed either; one move
     fixed the only real case. The generator does the ordering.
 -   _Rely on `cssChunking: "graph"`_: fixed F8 here, but by reordering, with no
     guarantee (F8). Keep it as a workaround, not the fix.
+-   _The non-layer paths in [02](02-alternative-paths.md)_ (specificity bumps, `@import`
+    ordering, a single pre-ordered stylesheet) were not run. The charter makes 02
+    conditional on layers failing, and they did not. 02 records why each was not
+    needed.
 
 ## Open questions
 
@@ -1244,8 +1532,8 @@ keep today's rendering. Each is a pair of rules where the child's more specific 
 wins in one layer and the parent's rule wins under layers; the fix makes both builds
 render the intended value. Done when `docs/spike/experiments/sweep/run-e2e.sh` passes for
 the layered build, with the 16 icon baselines regenerated (38 failures before the fixes,
-`e2e-summary.txt`; 22 with the simulated fixes, the same on both builds, F17). The 4
-BookingSG logo baselines (navbar 4, footer 2) are stale against the remote logo and
+`e2e-summary.txt`; 22 with the simulated fixes, the same on both builds, F17). The
+6 BookingSG logo baselines (navbar 4, footer 2) are stale against the remote logo and
 fail on both builds; they need regenerating too, but are not layering.
 
 | Change                                              | Rule that should win                                                                             | Fix (simulated in F17)                                                     |
@@ -1261,7 +1549,17 @@ Evidence: `sweep/traces-f17.txt` (competing rules and computed values per build)
 regenerated by `run-e2e.sh`), and for the fixes `sweep/simulate-fixes.mjs`,
 `sweep/results-*fixed*.jsonl` and `sweep/traces-fixed.txt`.
 
-Other follow-ups: TBD after the verdict. Production work is a rewrite, not a promotion of the
+**Other follow-ups** (estimates are rough, for planning):
+
+| Ticket                                      | Scope                                                                                                                                                                                                            | Done when                                                                                                           | Rough size |
+| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ---------- |
+| Style-edge generator in the build           | Rewrite F13's generator for production: order `fds.<folder>` layers from style edges, declare every styled folder, fail the build on a style cycle with a reviewed exemption list (conditions 1, 2)              | Build emits the order statement; a new cycle fails CI                                                               | 3-5 days   |
+| Complete style-edge scanner (E8 follow-up)  | Parse every style file, multi-line `clsx(...)`, classes passed through props and descendant selectors, instead of the regex; add a runtime check for flips in drawer/menu states                                 | Scanner finds the known miss (`error-display -> typography`) and the edge behind the modal close-button break (F17) | 3-5 days   |
+| Order statement loads first                 | Hard requirement in the setup docs, plus a dev-mode warning when a component layer appears before the order statement (condition 3, F12, F15)                                                                    | Warning fires on F12's `theme-late` page                                                                            | 1-2 days   |
+| Consumer override guidance                  | Add the "Overriding component styles" section to `stories/getting-started/troubleshooting.mdx`, from the proposal in `experiments/e2/E9-FINDING.md`; state that `fds` layer names are private (condition 5, F19) | Docs merged; Tailwind combined-statement case measured or marked untested                                           | 1 day      |
+| Ship `cssChunking: "graph"` workaround docs | 02 path #5, independent of the layer work                                                                                                                                                                        | Docs merged                                                                                                         | 0.5 day    |
+
+Production work is a rewrite, not a promotion of the
 `rl/css-layers` spike code. That includes the spike generator in
 `rollup/add-css-layer-plugin.js` and `rollup/style-edges.js` on `gz/css-layers`
 (F13): it is evidence that the approach works, not code to merge as is.
