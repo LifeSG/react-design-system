@@ -89,3 +89,10 @@ export const closeButton = css`
         width: 1.5rem;
     }
 `;
+
+export const headerContent = css`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+`;

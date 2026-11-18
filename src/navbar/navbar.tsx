@@ -22,6 +22,7 @@ import {
 import { ThemeContext } from "../theme/theme-provider/context";
 import { Brand } from "./brand";
 import { Drawer } from "./drawer";
+import { NavSeparator } from "./nav-separator";
 import * as styles from "./navbar.styles";
 import { NavbarActionButtons } from "./navbar-action-buttons";
 import { NavbarHelper } from "./navbar-helper";
@@ -62,6 +63,7 @@ const Component = <T,>(
         drawerLabel,
         headerBrandAddon,
         drawerHeader,
+        hideDrawerBranding = false,
         ...otherProps
     }: NavbarProps<T>,
     ref: React.Ref<NavbarDrawerHandle>
@@ -240,6 +242,7 @@ const Component = <T,>(
                 mobileMenuRef={mobileMenuRef}
                 drawerLabel={drawerLabel}
                 headerContent={drawerHeader}
+                hideDrawerBranding={hideDrawerBranding}
             >
                 <NavbarItems
                     items={items.mobile || items.desktop}
@@ -279,15 +282,7 @@ const Component = <T,>(
             )}
             {secondary && (
                 <>
-                    <div
-                        className={clsx(
-                            styles.navSeparator,
-                            compress
-                                ? styles.navSeparatorCompressed
-                                : styles.navSeparatorFull,
-                            styles.navSeparatorResponsive
-                        )}
-                    />
+                    <NavSeparator compress={compress} />
                     <Brand
                         resources={secondary}
                         onClick={handleBrandClick}
@@ -302,14 +297,7 @@ const Component = <T,>(
                     className={styles.headerBrandAddonContainer}
                     data-testid="main__brand-addon"
                 >
-                    <div
-                        className={clsx(
-                            styles.navSeparator,
-                            compress
-                                ? styles.navSeparatorCompressed
-                                : styles.navSeparatorFull
-                        )}
-                    />
+                    <NavSeparator compress={compress} responsive={false} />
                     {headerBrandAddon}
                 </div>
             )}

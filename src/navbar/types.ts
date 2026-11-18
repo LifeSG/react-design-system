@@ -238,9 +238,13 @@ export interface NavbarDrawerProps extends NavbarSharedProps {
      */
     mobileMenuRef?: React.RefObject<HTMLButtonElement> | undefined;
     /**
-     * Custom content rendered in the drawer header in place of the brand logos.
+     * Custom content rendered in the drawer header after the brand logos.
      */
     headerContent?: JSX.Element | undefined;
+    /**
+     * Hides the brand logos in the drawer header only.
+     */
+    hideDrawerBranding?: boolean | undefined;
 }
 
 /**
@@ -355,8 +359,15 @@ export interface NavbarProps<T = void> extends NavbarSharedProps {
      */
     headerBrandAddon?: JSX.Element | undefined;
     /**
-     * Custom content rendered in the mobile drawer header in place of the
-     * brand logos (e.g. a "Go to Home" link). The close button is retained.
+     * Custom content rendered in the mobile drawer header after the brand
+     * logos (e.g. a "Go to Home" link). The close button is retained.
      */
     drawerHeader?: JSX.Element | undefined;
+    /**
+     * Hides the brand logos in the mobile drawer header only. Has no effect
+     * if `hideNavBranding` is set, which hides the branding everywhere.
+     *
+     * @default false
+     */
+    hideDrawerBranding?: boolean | undefined;
 }
