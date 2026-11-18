@@ -11,7 +11,8 @@ const repoRoot = path.join(here, "../../../..");
 //   published copy, so the symlink is what swaps the library, not this config.
 //   React and friends are pinned here because dist/ would otherwise resolve them
 //   from the repo root (React 17).
-const useLocal = process.env.LIB === "local";
+// PIN_DEPS=1: run-consumer.sh with LIB=<path> (E9) needs the same pinning as local.
+const useLocal = process.env.LIB === "local" || process.env.PIN_DEPS === "1";
 const pinned = [
     "react",
     "react-dom",

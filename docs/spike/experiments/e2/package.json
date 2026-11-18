@@ -9,8 +9,11 @@
         "@floating-ui/react": "0.27.19",
         "@lifesg/react-design-system": "4.0.0-alpha.14",
         "@lifesg/react-icons": "1.18.0",
+        "@tailwindcss/cli": "4.3.5",
         "next": "16.3.6",
         "react": "19.2.3",
-        "react-dom": "19.2.3"
+        "react-dom": "19.2.3",
+        "styled-components": "6.6.0",
+        "tailwindcss": "4.3.5"
     }
 }

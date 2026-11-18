@@ -1,0 +1,4 @@
+/* stylelint-disable */
+/* E9 m14a: Tailwind v4 input */
+@import "tailwindcss" source(none);
+@source "./page.jsx";

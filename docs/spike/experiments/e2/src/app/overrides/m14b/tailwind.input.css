@@ -1,0 +1,5 @@
+/* stylelint-disable */
+/* E9 m14b: Tailwind v4 input */
+@layer theme, base, fds, components, utilities;
+@import "tailwindcss" source(none);
+@source "./page.jsx";
