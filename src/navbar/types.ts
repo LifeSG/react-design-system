@@ -108,8 +108,10 @@ export interface NavbarDrawerProps extends NavbarSharedProps {
     drawerLabel?: string | undefined;
     /** Ref to the mobile menu button for focus management */
     mobileMenuRef?: React.RefObject<HTMLButtonElement> | undefined;
-    /** Custom content rendered in the drawer header in place of the brand logos */
+    /** Custom content rendered in the drawer header after the brand logos */
     headerContent?: JSX.Element | undefined;
+    /** Hides the brand logos in the drawer header only */
+    hideDrawerBranding?: boolean | undefined;
 }
 
 export type BrandType = "primary" | "secondary";
@@ -152,10 +154,15 @@ export interface NavbarProps<T = void> extends NavbarSharedProps {
      * a divider (e.g. a "Back to Home" link). Hidden in tablet and mobile
      * viewports.
      */
-    brandAddon?: JSX.Element | undefined;
+    headerBrandAddon?: JSX.Element | undefined;
     /**
-     * Custom content rendered in the mobile drawer header in place of the
-     * brand logos (e.g. a "Go to Home" link). The close button is retained.
+     * Custom content rendered in the mobile drawer header after the brand
+     * logos (e.g. a "Go to Home" link). The close button is retained.
      */
     drawerHeader?: JSX.Element | undefined;
+    /**
+     * Hides the brand logos in the mobile drawer header only. Has no effect
+     * if `hideNavBranding` is set, which hides the branding everywhere.
+     */
+    hideDrawerBranding?: boolean | undefined;
 }
