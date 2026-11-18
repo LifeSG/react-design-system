@@ -60,7 +60,7 @@ const Component = <T,>(
         layout = "default",
         headerLabel = "Main navigation menu",
         drawerLabel,
-        brandAddon,
+        headerBrandAddon,
         drawerHeader,
         ...otherProps
     }: NavbarProps<T>,
@@ -297,9 +297,9 @@ const Component = <T,>(
                     />
                 </>
             )}
-            {brandAddon && (
+            {headerBrandAddon && (
                 <div
-                    className={styles.brandAddonContainer}
+                    className={styles.headerBrandAddonContainer}
                     data-testid="main__brand-addon"
                 >
                     <div
@@ -310,7 +310,7 @@ const Component = <T,>(
                                 : styles.navSeparatorFull
                         )}
                     />
-                    {brandAddon}
+                    {headerBrandAddon}
                 </div>
             )}
         </div>

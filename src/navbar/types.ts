@@ -353,7 +353,7 @@ export interface NavbarProps<T = void> extends NavbarSharedProps {
      * a divider (e.g. a "Back to Home" link). Hidden in tablet and mobile
      * viewports.
      */
-    brandAddon?: JSX.Element | undefined;
+    headerBrandAddon?: JSX.Element | undefined;
     /**
      * Custom content rendered in the mobile drawer header in place of the
      * brand logos (e.g. a "Go to Home" link). The close button is retained.

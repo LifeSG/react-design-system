@@ -131,7 +131,7 @@ export const navSeparator = css`
     width: 2px;
 `;
 
-export const brandAddonContainer = css`
+export const headerBrandAddonContainer = css`
     display: flex;
     flex-direction: row;
     align-items: center;

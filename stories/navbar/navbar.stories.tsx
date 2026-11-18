@@ -690,7 +690,7 @@ export const BrandAddonAndDrawerHeader: StoryObj<Component> = {
                 items={{ desktop: navItems }}
                 selectedId="home"
                 fixed={false}
-                brandAddon={
+                headerBrandAddon={
                     <Typography.LinkSM href="#" weight="regular">
                         Back to Home
                     </Typography.LinkSM>
