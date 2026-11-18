@@ -851,6 +851,239 @@ describe("FileUpload", () => {
         });
     });
 
+    describe("Initial Mode", () => {
+        it("should render image files without description in edit mode by default", () => {
+            const rendered = render(
+                <FileUpload fileItems={MOCK_FILE_ITEMS} editableFileItems />
+            );
+
+            expect(
+                rendered.getByTestId("some-edit-display")
+            ).toBeInTheDocument();
+        });
+
+        it("should render image files without description in display mode when initialMode is display", () => {
+            const rendered = render(
+                <FileUpload
+                    fileItems={[{ ...MOCK_IMAGE_ITEM, initialMode: "display" }]}
+                    editableFileItems
+                />
+            );
+
+            expect(
+                rendered.queryByTestId("some-edit-display")
+            ).not.toBeInTheDocument();
+            expect(rendered.getByTestId("some-item")).toBeInTheDocument();
+            expect(
+                rendered.getByTestId("some-edit-button")
+            ).toBeInTheDocument();
+            expect(
+                rendered.getByTestId("some-delete-button")
+            ).toBeInTheDocument();
+        });
+
+        it("should apply initialMode per item in a mixed list", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    id: "saved",
+                    name: "saved.png",
+                    type: "image/png",
+                    size: 3000,
+                    initialMode: "display",
+                },
+                {
+                    id: "fresh",
+                    name: "fresh.png",
+                    type: "image/png",
+                    size: 3000,
+                },
+            ];
+
+            const rendered = render(
+                <FileUpload fileItems={fileItems} editableFileItems />
+            );
+
+            expect(
+                rendered.queryByTestId("saved-edit-display")
+            ).not.toBeInTheDocument();
+            expect(
+                rendered.getByTestId("saved-edit-button")
+            ).toBeInTheDocument();
+            expect(
+                rendered.getByTestId("fresh-edit-display")
+            ).toBeInTheDocument();
+        });
+
+        it("should enter edit mode on clicking the edit button and save the description", () => {
+            const onEdit = jest.fn();
+            const rendered = render(
+                <FileUpload
+                    fileItems={[{ ...MOCK_IMAGE_ITEM, initialMode: "display" }]}
+                    editableFileItems
+                    descriptionRequired={false}
+                    onEdit={onEdit}
+                />
+            );
+
+            fireEvent.click(rendered.getByTestId("some-edit-button"));
+            expect(
+                rendered.getByTestId("some-edit-display")
+            ).toBeInTheDocument();
+
+            fireEvent.change(rendered.getByTestId("some-textarea-base"), {
+                target: { value: "A description" },
+            });
+            fireEvent.click(rendered.getByTestId("some-save-button"));
+
+            expect(onEdit).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    id: "some",
+                    description: "A description",
+                })
+            );
+            expect(
+                rendered.queryByTestId("some-edit-display")
+            ).not.toBeInTheDocument();
+        });
+
+        it("should keep a file item saved without description when its edit is cancelled", () => {
+            const onDelete = jest.fn();
+            const rendered = render(
+                <FileUpload
+                    fileItems={MOCK_FILE_ITEMS}
+                    editableFileItems
+                    descriptionRequired={false}
+                    onDelete={onDelete}
+                />
+            );
+
+            fireEvent.click(rendered.getByTestId("some-save-button"));
+            fireEvent.click(rendered.getByTestId("some-edit-button"));
+            fireEvent.click(rendered.getByTestId("some-cancel-button"));
+
+            expect(onDelete).not.toHaveBeenCalled();
+            expect(
+                rendered.getByTestId("some-edit-button")
+            ).toBeInTheDocument();
+        });
+
+        it("should treat a new upload that reuses the id of a removed item as a new upload", () => {
+            const onDelete = jest.fn();
+            const rendered = render(
+                <FileUpload
+                    fileItems={MOCK_FILE_ITEMS}
+                    editableFileItems
+                    descriptionRequired={false}
+                    onDelete={onDelete}
+                />
+            );
+
+            fireEvent.click(rendered.getByTestId("some-save-button"));
+
+            rendered.rerender(
+                <FileUpload
+                    fileItems={[]}
+                    editableFileItems
+                    descriptionRequired={false}
+                    onDelete={onDelete}
+                />
+            );
+            rendered.rerender(
+                <FileUpload
+                    fileItems={MOCK_FILE_ITEMS}
+                    editableFileItems
+                    descriptionRequired={false}
+                    onDelete={onDelete}
+                />
+            );
+
+            fireEvent.click(rendered.getByTestId("some-cancel-button"));
+
+            expect(onDelete).toHaveBeenCalledWith(MOCK_IMAGE_ITEM);
+        });
+
+        it("should return to display mode on cancel instead of deleting the file item when initialMode is display", () => {
+            const onDelete = jest.fn();
+            const rendered = render(
+                <FileUpload
+                    fileItems={[{ ...MOCK_IMAGE_ITEM, initialMode: "display" }]}
+                    editableFileItems
+                    onDelete={onDelete}
+                />
+            );
+
+            fireEvent.click(rendered.getByTestId("some-edit-button"));
+            fireEvent.click(rendered.getByTestId("some-cancel-button"));
+
+            expect(onDelete).not.toHaveBeenCalled();
+            expect(
+                rendered.queryByTestId("some-edit-display")
+            ).not.toBeInTheDocument();
+            expect(
+                rendered.getByTestId("some-edit-button")
+            ).toBeInTheDocument();
+        });
+
+        it("should return to display mode instead of edit mode when an error is cleared", () => {
+            const rendered = render(
+                <FileUpload
+                    fileItems={[
+                        {
+                            ...MOCK_IMAGE_ITEM,
+                            initialMode: "display",
+                            errorMessage: "Woops!",
+                        },
+                    ]}
+                    editableFileItems
+                />
+            );
+
+            expect(
+                rendered.getByTestId("some-error-delete-button")
+            ).toBeInTheDocument();
+
+            rendered.rerender(
+                <FileUpload
+                    fileItems={[{ ...MOCK_IMAGE_ITEM, initialMode: "display" }]}
+                    editableFileItems
+                />
+            );
+
+            expect(
+                rendered.queryByTestId("some-edit-display")
+            ).not.toBeInTheDocument();
+            expect(
+                rendered.getByTestId("some-edit-button")
+            ).toBeInTheDocument();
+        });
+
+        it("should keep sorting enabled when image files without description are in display mode", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    id: "img-1",
+                    name: "photo.jpg",
+                    type: "image/jpeg",
+                    size: 3000,
+                    initialMode: "display",
+                },
+                {
+                    id: "doc-1",
+                    name: "file.pdf",
+                    type: "application/pdf",
+                    size: 2000,
+                },
+            ];
+
+            const { getByTestId, queryByTestId } = render(
+                <FileUpload fileItems={fileItems} editableFileItems sortable />
+            );
+
+            expect(queryByTestId("img-1-edit-display")).not.toBeInTheDocument();
+            expect(getByTestId("img-1-drag-handle")).toBeInTheDocument();
+            expect(getByTestId("doc-1-drag-handle")).toBeInTheDocument();
+        });
+    });
+
     describe("Description Label", () => {
         it("should render default label and subtext when descriptionLabel is not provided", () => {
             const fileItems: FileItemProps[] = MOCK_FILE_ITEMS;

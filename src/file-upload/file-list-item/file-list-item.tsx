@@ -39,6 +39,7 @@ const Component = ({
         errorMessage,
         thumbnailImageDataUrl,
         truncateText = true,
+        initialMode = "default",
     } = fileItem;
 
     // =========================================================================
@@ -55,9 +56,12 @@ const Component = ({
 
     const computeMode = (): FileItemMode => {
         if (errorMessage) return "error";
+        if (initialMode === "display") return "display";
 
         const isUploaded = (progress ?? 1) >= 1;
-        if (isUploaded && editable && !description) return "edit";
+        if (isUploaded && editable && !description) {
+            return "edit";
+        }
 
         return "display";
     };

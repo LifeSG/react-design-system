@@ -439,6 +439,54 @@ export const EditableOptionalDescription: StoryObj<Component> = {
     },
 };
 
+export const DisplayModeWithoutDescription: StoryObj<Component> = {
+    render: () => {
+        const [fileItems, setFileItems] = useState<FileItemProps[]>([
+            {
+                id: "1",
+                name: "photo-1.jpg",
+                type: "image/jpeg",
+                size: 512000,
+                initialMode: "display",
+                thumbnailImageDataUrl:
+                    "https://picsum.photos/seed/displaymode1/200/300",
+            },
+            {
+                id: "2",
+                name: "photo-2.jpg",
+                type: "image/jpeg",
+                size: 819200,
+                description: "An existing description",
+                thumbnailImageDataUrl:
+                    "https://picsum.photos/seed/displaymode2/200/300",
+            },
+        ]);
+
+        const handleEdit = (fileItem: FileItemProps) => {
+            setFileItems((prev) =>
+                prev.map((f) => (f.id === fileItem.id ? fileItem : f))
+            );
+        };
+
+        const handleDelete = (fileItem: FileItemProps) => {
+            setFileItems((prev) => prev.filter((f) => f.id !== fileItem.id));
+        };
+
+        return (
+            <FileUpload
+                title="Display mode without description"
+                description="The first image was saved without a description and stays in display mode until edited"
+                fileItems={fileItems}
+                editableFileItems
+                descriptionRequired={false}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                fileDescriptionMaxLength={200}
+            />
+        );
+    },
+};
+
 export const CustomDescriptionLabel: StoryObj<Component> = {
     render: () => {
         const [fileItems, setFileItems] = useState<FileItemProps[]>([
