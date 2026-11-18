@@ -535,12 +535,53 @@ describe("FileUpload", () => {
             });
         });
 
-        it("should still delete a fresh item without description on cancel", () => {
+        it("should keep a file item saved without description when its edit is cancelled", () => {
             const onDelete = jest.fn();
             const rendered = render(
                 <FileUpload
                     fileItems={MOCK_FILE_ITEMS}
                     editableFileItems
+                    descriptionRequired={false}
+                    onDelete={onDelete}
+                />
+            );
+
+            fireEvent.click(rendered.getByTestId("some-save-button"));
+            fireEvent.click(rendered.getByTestId("some-edit-button"));
+            fireEvent.click(rendered.getByTestId("some-cancel-button"));
+
+            expect(onDelete).not.toHaveBeenCalled();
+            expect(
+                rendered.getByTestId("some-edit-button")
+            ).toBeInTheDocument();
+        });
+
+        it("should treat a new upload that reuses the id of a removed item as a new upload", () => {
+            const onDelete = jest.fn();
+            const rendered = render(
+                <FileUpload
+                    fileItems={MOCK_FILE_ITEMS}
+                    editableFileItems
+                    descriptionRequired={false}
+                    onDelete={onDelete}
+                />
+            );
+
+            fireEvent.click(rendered.getByTestId("some-save-button"));
+
+            rendered.rerender(
+                <FileUpload
+                    fileItems={[]}
+                    editableFileItems
+                    descriptionRequired={false}
+                    onDelete={onDelete}
+                />
+            );
+            rendered.rerender(
+                <FileUpload
+                    fileItems={MOCK_FILE_ITEMS}
+                    editableFileItems
+                    descriptionRequired={false}
                     onDelete={onDelete}
                 />
             );
