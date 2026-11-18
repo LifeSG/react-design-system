@@ -685,23 +685,53 @@ export const SecondaryBranding: StoryObj<Component> = {
     },
 };
 
-export const BrandAddonAndDrawerHeader: StoryObj<Component> = {
+export const HeaderBrandAddon: StoryObj<Component> = {
     render: (_args) => {
         return (
             <Navbar
                 items={{ desktop: navItems }}
                 selectedId="home"
                 fixed={false}
-                brandAddon={
+                headerBrandAddon={
                     <Typography.LinkSM href="#" weight="regular">
                         Back to Home
                     </Typography.LinkSM>
                 }
+            />
+        );
+    },
+};
+
+export const DrawerHeader: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Navbar
+                items={{ desktop: navItems }}
+                selectedId="home"
+                fixed={false}
                 drawerHeader={
                     <Typography.LinkMD href="#" weight="semibold">
                         Go to Home
                     </Typography.LinkMD>
                 }
+            />
+        );
+    },
+};
+
+export const HiddenDrawerBranding: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Navbar
+                items={{ desktop: navItems }}
+                selectedId="home"
+                fixed={false}
+                drawerHeader={
+                    <Typography.LinkMD href="#" weight="semibold">
+                        Go to Home
+                    </Typography.LinkMD>
+                }
+                hideDrawerBranding
             />
         );
     },
