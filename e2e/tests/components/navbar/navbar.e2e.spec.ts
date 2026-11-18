@@ -28,6 +28,8 @@ class StoryPage extends AbstractStoryPage {
             closeButton: Locator;
             drawer: Locator;
             drawerBrand: Locator;
+            drawerHeaderContent: Locator;
+            brandAddon: Locator;
             brand: Locator;
             navLink: (index: number) => Locator;
             menuMobileItem: (index: number) => Locator;
@@ -61,6 +63,8 @@ class StoryPage extends AbstractStoryPage {
                 }),
                 drawer: page.getByTestId("drawer"),
                 drawerBrand: page.getByTestId("drawer__brand"),
+                drawerHeaderContent: page.getByTestId("drawer__header-content"),
+                brandAddon: page.getByTestId("main__brand-addon"),
                 brand: page.getByTestId("main__brand"),
                 navLink: (index: number) => page.getByTestId(`link__${index}`),
                 menuMobileItem: (index: number) =>
@@ -194,15 +198,13 @@ test.describe("Navbar", () => {
         });
     });
 
-    test.describe("Brand addon", () => {
+    test.describe("Header brand addon", () => {
         test.beforeEach(async ({ story }) => {
-            await story.init("brand-addon");
+            await story.init("header-brand-addon");
         });
 
         test("Desktop", async ({ story }) => {
-            await expect(
-                story.page.getByRole("link", { name: "Back to Home" })
-            ).toBeVisible();
+            await expect(story.locators.internal.brandAddon).toBeVisible();
             await compareScreenshot(story, "mount");
         });
     });
@@ -359,30 +361,52 @@ test.describe("Navbar", () => {
             });
         });
 
-        test.describe("Brand addon and drawer header", () => {
+        test.describe("Header brand addon", () => {
             test.beforeEach(async ({ story }) => {
-                await story.init("brand-addon", { size: "mobile" });
+                await story.init("header-brand-addon", { size: "mobile" });
             });
 
             test("Collapsed", async ({ story }) => {
-                await expect(
-                    story.page.getByTestId("main__brand-addon")
-                ).toBeHidden();
+                await expect(story.locators.internal.brandAddon).toBeHidden();
                 await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe("Drawer header", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("drawer-header", { size: "mobile" });
             });
 
             test("Drawer", async ({ story }) => {
                 await story.openMobileDrawer();
                 await story.page.mouse.move(0, 0);
 
+                await expect(story.locators.internal.drawerBrand).toBeVisible();
                 await expect(
-                    story.locators.internal.drawer.getByRole("link", {
-                        name: "Go to Home",
-                    })
+                    story.locators.internal.drawerHeaderContent
                 ).toBeVisible();
+                await compareScreenshot(story, "open", { fullscreen: true });
+            });
+        });
+
+        test.describe("Hide drawer branding", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("hide-drawer-branding", { size: "mobile" });
+            });
+
+            test("Drawer", async ({ story }) => {
+                await story.waitForMasthead(story.page);
+                await expect(story.locators.internal.brand).toBeVisible();
+
+                await story.openMobileDrawer();
+                await story.page.mouse.move(0, 0);
+
                 await expect(
                     story.locators.internal.drawerBrand
                 ).not.toBeAttached();
+                await expect(
+                    story.locators.internal.drawerHeaderContent
+                ).toBeVisible();
                 await compareScreenshot(story, "open", { fullscreen: true });
             });
         });

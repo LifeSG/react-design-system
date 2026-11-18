@@ -13,3 +13,10 @@
     padding: 0.25rem;
     border: 1px solid green;
 }
+
+.custom-element {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    background-color: lightgreen;
+}
