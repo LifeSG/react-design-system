@@ -8,6 +8,7 @@ import { useApplyStyle } from "../theme";
 import { mergeRefs } from "../util";
 import { Brand } from "./brand";
 import * as styles from "./drawer.styles";
+import { NavSeparator } from "./nav-separator";
 import * as navbarStyles from "./navbar.styles";
 import type { NavbarDrawerProps } from "./types";
 
@@ -28,6 +29,7 @@ const Component = (
         drawerLabel = "Mobile navigation menu",
         mobileMenuRef,
         headerContent,
+        hideDrawerBranding,
     } = props;
     const [viewHeight, setViewHeight] = useState<number>(0);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -122,13 +124,7 @@ const Component = (
                 )}
                 {secondary && (
                     <>
-                        <div
-                            className={clsx(
-                                navbarStyles.navSeparator,
-                                navbarStyles.navSeparatorCompressed,
-                                navbarStyles.navSeparatorResponsive
-                            )}
-                        />
+                        <NavSeparator compress />
                         <Brand
                             resources={secondary}
                             compress
@@ -143,6 +139,8 @@ const Component = (
         );
     };
 
+    const showBrand = !hideNavBranding && !hideDrawerBranding;
+
     const renderTopBar = () => (
         <div className={styles.topBar}>
             <div
@@ -153,7 +151,16 @@ const Component = (
                 )}
                 data-id="drawer-brand-container"
             >
-                {headerContent ?? (!hideNavBranding && renderBrand())}
+                {showBrand && renderBrand()}
+                {headerContent && (
+                    <div
+                        className={styles.headerContent}
+                        data-testid="drawer__header-content"
+                    >
+                        {showBrand && <NavSeparator compress />}
+                        {headerContent}
+                    </div>
+                )}
             </div>
             <ClickableIcon
                 className={styles.closeButton}
