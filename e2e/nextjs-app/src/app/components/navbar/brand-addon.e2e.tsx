@@ -11,7 +11,7 @@ export default function Story() {
             data-testid="navbar-brand-addon"
             selectedId="home"
             items={{ desktop: navItems }}
-            brandAddon={
+            headerBrandAddon={
                 <Typography.LinkSM href="#" weight="regular">
                     Back to Home
                 </Typography.LinkSM>

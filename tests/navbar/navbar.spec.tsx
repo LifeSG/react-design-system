@@ -184,7 +184,7 @@ describe("Navbar", () => {
             render(
                 <Navbar
                     items={{ desktop: MOCK_ITEMS() }}
-                    brandAddon={<a href="/">Back to Home</a>}
+                    headerBrandAddon={<a href="/">Back to Home</a>}
                 />
             );
 
