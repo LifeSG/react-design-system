@@ -103,5 +103,17 @@ test.describe("Layout", () => {
                 await compareScreenshot(story, "mount");
             });
         });
+
+        test.describe(() => {
+            test.use({ javaScriptEnabled: false });
+
+            test.beforeEach(async ({ story }) => {
+                await story.init("col-div", { size: "lg" });
+            });
+
+            test("Pre-hydration fallback", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
     });
 });
