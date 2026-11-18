@@ -1,4 +1,3 @@
-"use client";
 import "@lifesg/react-design-system/theme/styles/a11y-playground.css";
 import "@lifesg/react-design-system/theme/styles/bookingsg.css";
 import "@lifesg/react-design-system/theme/styles/careercompass.css";
@@ -21,42 +20,24 @@ import "@lifesg/react-design-system/theme/styles/websg.css";
 import "@lifesg/react-design-system/theme/styles/wise.css";
 import "@lifesg/react-design-system/theme/styles/wogaa.css";
 
-import type {
-    ThemeFontPreset,
-    ThemeType,
-} from "@lifesg/react-design-system/theme";
-import {
-    THEME_FONT_PRESETS,
-    THEME_TYPES,
-    ThemeProvider,
-} from "@lifesg/react-design-system/theme";
-import { useSearchParams } from "next/navigation";
+import { headers } from "next/headers";
 import type React from "react";
 
 import styles from "./layout.module.css";
+import { Providers } from "./providers";
 
-export default function Layout({
+export default async function Layout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const searchParams = useSearchParams();
-    const themeParam = searchParams?.get("theme") as ThemeType;
-    const fontPresetParam = searchParams?.get("fontPreset") as ThemeFontPreset;
-
-    const theme: ThemeType | undefined =
-        themeParam && THEME_TYPES.includes(themeParam) ? themeParam : undefined;
-
-    const fontPreset: ThemeFontPreset | undefined =
-        fontPresetParam && THEME_FONT_PRESETS.includes(fontPresetParam)
-            ? fontPresetParam
-            : undefined;
+    const nonce = (await headers()).get("x-nonce");
 
     return (
-        <ThemeProvider theme={theme} fontPreset={fontPreset}>
+        <Providers nonce={nonce || undefined}>
             <div data-testid="story-layout" className={styles["story-layout"]}>
                 {children}
             </div>
-        </ThemeProvider>
+        </Providers>
     );
 }
