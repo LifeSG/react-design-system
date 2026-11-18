@@ -109,7 +109,7 @@ export const NavBrandContainer = styled.div<StyleProps>`
     }
 `;
 
-export const BrandAddonContainer = styled.div`
+export const HeaderBrandAddonContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
