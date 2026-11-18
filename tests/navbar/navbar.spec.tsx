@@ -193,7 +193,7 @@ describe("Navbar", () => {
             );
         });
 
-        it("should replace the drawer brand with the drawer header", () => {
+        it("should render the drawer header after the drawer brand", () => {
             render(
                 <Navbar
                     items={{ desktop: MOCK_ITEMS() }}
@@ -201,11 +201,47 @@ describe("Navbar", () => {
                 />
             );
 
-            expect(screen.getByText("Go to Home")).toBeInTheDocument();
+            const brand = screen.getByTestId("drawer__brand");
+            const header = screen.getByTestId("drawer__header-content");
+
+            expect(header).toHaveTextContent("Go to Home");
+            expect(
+                brand.compareDocumentPosition(header) &
+                    Node.DOCUMENT_POSITION_FOLLOWING
+            ).toBeTruthy();
+        });
+
+        it("should hide only the drawer brand if hideDrawerBranding is set", () => {
+            render(
+                <Navbar
+                    items={{ desktop: MOCK_ITEMS() }}
+                    drawerHeader={<a href="/">Go to Home</a>}
+                    hideDrawerBranding
+                />
+            );
+
             expect(
                 screen.queryByTestId("drawer__brand")
             ).not.toBeInTheDocument();
             expect(screen.getByTestId("main__brand")).toBeInTheDocument();
+            expect(screen.getByText("Go to Home")).toBeInTheDocument();
+        });
+
+        it("should hide all branding if hideNavBranding is set regardless of hideDrawerBranding", () => {
+            render(
+                <Navbar
+                    items={{ desktop: MOCK_ITEMS() }}
+                    drawerHeader={<a href="/">Go to Home</a>}
+                    hideNavBranding
+                    hideDrawerBranding={false}
+                />
+            );
+
+            expect(
+                screen.queryByTestId("drawer__brand")
+            ).not.toBeInTheDocument();
+            expect(screen.queryByTestId("main__brand")).not.toBeInTheDocument();
+            expect(screen.getByText("Go to Home")).toBeInTheDocument();
         });
 
         it("should render the drawer brand when no drawer header is given", () => {
