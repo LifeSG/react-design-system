@@ -1,15 +1,72 @@
 import clsx from "clsx";
 import React, { useRef } from "react";
 
-import type { BreakpointCSSVariableString } from "../theme";
-import { useApplyStyle, useTheme } from "../theme";
+import type { BreakpointCSSVariableString, BreakpointSize } from "../theme";
+import { BREAKPOINT_SIZES, useApplyStyle, useTheme } from "../theme";
 import { Breakpoint } from "../theme/tokens/breakpoint";
 import { parseCSSVariableValue } from "../theme/utils/css-variable";
 import { mergeRefs, useIsMounted } from "../util";
 import * as styles from "./col-div.styles";
-import type { BreakpointType } from "./col-div-helpers";
-import { BREAKPOINTS, TOKEN_MAP } from "./col-div-helpers";
 import type { ColDivProps, ColSpan } from "./types";
+
+const TOKEN_MAP = {
+    xxs: {
+        start: styles.tokens.xxsStart,
+        span: styles.tokens.xxsSpan,
+        end: styles.tokens.xxsEnd,
+        startAttr: styles.tokens.xxsStartAttr,
+        spanAttr: styles.tokens.xxsSpanAttr,
+        endAttr: styles.tokens.xxsEndAttr,
+    },
+    xs: {
+        start: styles.tokens.xsStart,
+        span: styles.tokens.xsSpan,
+        end: styles.tokens.xsEnd,
+        startAttr: styles.tokens.xsStartAttr,
+        spanAttr: styles.tokens.xsSpanAttr,
+        endAttr: styles.tokens.xsEndAttr,
+    },
+    sm: {
+        start: styles.tokens.smStart,
+        span: styles.tokens.smSpan,
+        end: styles.tokens.smEnd,
+        startAttr: styles.tokens.smStartAttr,
+        spanAttr: styles.tokens.smSpanAttr,
+        endAttr: styles.tokens.smEndAttr,
+    },
+    md: {
+        start: styles.tokens.mdStart,
+        span: styles.tokens.mdSpan,
+        end: styles.tokens.mdEnd,
+        startAttr: styles.tokens.mdStartAttr,
+        spanAttr: styles.tokens.mdSpanAttr,
+        endAttr: styles.tokens.mdEndAttr,
+    },
+    lg: {
+        start: styles.tokens.lgStart,
+        span: styles.tokens.lgSpan,
+        end: styles.tokens.lgEnd,
+        startAttr: styles.tokens.lgStartAttr,
+        spanAttr: styles.tokens.lgSpanAttr,
+        endAttr: styles.tokens.lgEndAttr,
+    },
+    xl: {
+        start: styles.tokens.xlStart,
+        span: styles.tokens.xlSpan,
+        end: styles.tokens.xlEnd,
+        startAttr: styles.tokens.xlStartAttr,
+        spanAttr: styles.tokens.xlSpanAttr,
+        endAttr: styles.tokens.xlEndAttr,
+    },
+    xxl: {
+        start: styles.tokens.xxlStart,
+        span: styles.tokens.xxlSpan,
+        end: styles.tokens.xxlEnd,
+        startAttr: styles.tokens.xxlStartAttr,
+        spanAttr: styles.tokens.xxlSpanAttr,
+        endAttr: styles.tokens.xxlEndAttr,
+    },
+} as const;
 
 const Component = (
     props: ColDivProps,
@@ -43,7 +100,7 @@ const Component = (
     // =========================================================================
 
     function resolveInheritedColumns() {
-        const colsByBreakpoint: Record<BreakpointType, ColSpan> = {
+        const colsByBreakpoint: Record<BreakpointSize, ColSpan> = {
             xxs: xxsCols,
             xs: xsCols,
             sm: smCols,
@@ -55,7 +112,7 @@ const Component = (
 
         // each breakpoint inherits the nearest smaller breakpoint's value
         let inheritedCols: ColSpan;
-        const resolvedCols = BREAKPOINTS.map((breakpoint) => {
+        const resolvedCols = BREAKPOINT_SIZES.map((breakpoint) => {
             inheritedCols = colsByBreakpoint[breakpoint] || inheritedCols;
             return { breakpoint, cols: inheritedCols };
         });

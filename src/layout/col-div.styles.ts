@@ -1,7 +1,7 @@
 import { css } from "@linaria/core";
 
+import type { BreakpointSize } from "../theme";
 import { MediaQuery } from "../theme";
-import type { BreakpointType } from "./col-div-helpers";
 
 export const tokens = {
     xxsStart: "--fds-internal-colDiv-xxs-start",
@@ -60,7 +60,7 @@ export const tokens = {
  * `col-end` is only emitted when spanning to a line, so it takes precedence
  * over `col-span`.
  */
-const gridCol = (breakpoint: BreakpointType) => {
+const gridCol = (breakpoint: BreakpointSize) => {
     const start = tokens[`${breakpoint}Start`];
     const end = tokens[`${breakpoint}End`];
     const span = tokens[`${breakpoint}Span`];
