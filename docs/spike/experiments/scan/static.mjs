@@ -66,7 +66,6 @@ for (const [file, deps] of Object.entries(graph)) {
 }
 
 const out = {
-    generated: new Date().toISOString(),
     order,
     depth,
     edges,
@@ -76,7 +75,14 @@ const out = {
             .map(([k, v]) => [k, [...v].sort()])
     ),
 };
-fs.writeFileSync(path.join(here, "static.json"), JSON.stringify(out, null, 1));
+// Rewrite only when the content changes, so a scan run leaves git clean
+const file = path.join(here, "static.json");
+const before = fs.existsSync(file)
+    ? JSON.parse(fs.readFileSync(file, "utf8"))
+    : null;
+if (before) delete before.generated;
+if (JSON.stringify(before) !== JSON.stringify(out))
+    fs.writeFileSync(file, JSON.stringify(out, null, 1));
 const tiers = {};
 for (const t of Object.values(depth)) tiers[t] = (tiers[t] ?? 0) + 1;
 console.log(

@@ -1,0 +1,81 @@
+
+[FOUND] missing edge: modal-v2 -> shared: padding 0 on ClickableIcon's 24px
+  static edges between modal-v2 and shared: none
+  padding-top: A modal-v2(#28,t0) .s1s12qxk [0,1,0] 0px
+     vs B shared(#7,t1) .m18ljjag [0,1,0] var(--fds-spacing-24) (via padding)
+     computed A 0px / B 24px, actual 0px; flat order-dependent (tie), styleedge a (layer), depth b (layer); flip false; 16 page(s), e.g. modal-v2/custom-styling@desktop button.m18ljjag.s1s12qxk[data-testid=close-button]
+  padding-right: A modal-v2(#28,t0) .s1s12qxk [0,1,0] 0px
+     vs B shared(#7,t1) .m18ljjag [0,1,0] var(--fds-spacing-24) (via padding)
+     computed A 0px / B 24px, actual 0px; flat order-dependent (tie), styleedge a (layer), depth b (layer); flip false; 16 page(s), e.g. modal-v2/custom-styling@desktop button.m18ljjag.s1s12qxk[data-testid=close-button]
+  padding-bottom: A modal-v2(#28,t0) .s1s12qxk [0,1,0] 0px
+     vs B shared(#7,t1) .m18ljjag [0,1,0] var(--fds-spacing-24) (via padding)
+     computed A 0px / B 24px, actual 0px; flat order-dependent (tie), styleedge a (layer), depth b (layer); flip false; 16 page(s), e.g. modal-v2/custom-styling@desktop button.m18ljjag.s1s12qxk[data-testid=close-button]
+  padding-left: A modal-v2(#28,t0) .s1s12qxk [0,1,0] 0px
+     vs B shared(#7,t1) .m18ljjag [0,1,0] var(--fds-spacing-24) (via padding)
+     computed A 0px / B 24px, actual 0px; flat order-dependent (tie), styleedge a (layer), depth b (layer); flip false; 16 page(s), e.g. modal-v2/custom-styling@desktop button.m18ljjag.s1s12qxk[data-testid=close-button]
+  padding-top: A modal-v2(#28,t0) .ht9zr8k [0,1,0] 0px
+     vs B shared(#7,t1) .m18ljjag [0,1,0] var(--fds-spacing-24) (via padding)
+     computed A 0px / B 24px, actual 0px; flat order-dependent (tie), styleedge a (layer), depth b (layer); flip false; 6 page(s), e.g. modal-v2/header-close-button-left@desktop button.m18ljjag.ht9zr8k[data-testid=close-button]
+  padding-right: A modal-v2(#28,t0) .ht9zr8k [0,1,0] 0px
+     vs B shared(#7,t1) .m18ljjag [0,1,0] var(--fds-spacing-24) (via padding)
+     computed A 0px / B 24px, actual 0px; flat order-dependent (tie), styleedge a (layer), depth b (layer); flip false; 6 page(s), e.g. modal-v2/header-close-button-left@desktop button.m18ljjag.ht9zr8k[data-testid=close-button]
+  padding-bottom: A modal-v2(#28,t0) .ht9zr8k [0,1,0] 0px
+     vs B shared(#7,t1) .m18ljjag [0,1,0] var(--fds-spacing-24) (via padding)
+     computed A 0px / B 24px, actual 0px; flat order-dependent (tie), styleedge a (layer), depth b (layer); flip false; 6 page(s), e.g. modal-v2/header-close-button-left@desktop button.m18ljjag.ht9zr8k[data-testid=close-button]
+  padding-left: A modal-v2(#28,t0) .ht9zr8k [0,1,0] 0px
+     vs B shared(#7,t1) .m18ljjag [0,1,0] var(--fds-spacing-24) (via padding)
+     computed A 0px / B 24px, actual 0px; flat order-dependent (tie), styleedge a (layer), depth b (layer); flip false; 6 page(s), e.g. modal-v2/header-close-button-left@desktop button.m18ljjag.ht9zr8k[data-testid=close-button]
+
+[FOUND] missing edge: unit-number -> input-group: margin-right on the read-only divider
+  static edges between unit-number and input-group: none
+  margin-right: A input-group(#36,t2) .l1s6ick6[data-read-only="true"] [0,2,0] var(--fds-spacing-4)
+     vs B unit-number(#51,t3) .h1ujh1ah [0,1,0] 0.5rem
+     computed A 4px / B 8px, actual 8px; flat a (specificity), styleedge b (layer), depth b (layer); flip true; 6 page(s), e.g. unit-number/all-variants@desktop div.h1ujh1ah.l1s6ick6[data-testid=addon]
+
+[FOUND] missing edge: error-display -> typography: title
+  static edges between error-display and typography: none
+  margin-bottom: A error-display(#20,t3) .twamush [0,1,0] var(--fds-spacing-32) 0 var(--fds-spacing-16) (via margin)
+     vs B typography(#3,t0) .d4n1hjq [0,1,0] 0px
+     computed A 16px / B 0px, actual 16px; flat order-dependent (tie), styleedge a (layer), depth a (layer); flip false; 8 page(s), e.g. error-display/maintenance@desktop h2.ts2ljtd.tu0nvfw.h12i879k.s1pdcykv[data-testid=error-display--title]
+
+[FOUND] specificity flip: smart-app-banner .cross width vs shared .x svg width
+  static edges between smart-app-banner and shared: smart-app-banner->shared <ClickableIcon .dismissButton>
+  width: A shared(#7,t1) .m18ljjag svg [0,1,1] 1.125rem
+     vs B smart-app-banner(#72,t3) .cp9l7rn [0,1,0] 1.25rem
+     computed A 18px / B 20px, actual 20px; flat a (specificity), styleedge b (layer), depth b (layer); flip true; 12 page(s), e.g. smart-app-banner/default@desktop svg.cp9l7rn
+
+[FOUND] specificity flip: navbar mobileMenuIcon width vs shared .x svg width
+  static edges between navbar and shared: navbar->shared <ClickableIcon .closeButton>; navbar->shared <ClickableIcon .expandCollapseButton>; navbar->shared <ClickableIcon .subMenuExpanded>; navbar->shared <ClickableIcon .mobileMenuButton>
+  width: A navbar(#63,t3) .m11vsg37 [0,1,0] 1.5rem
+     vs B shared(#7,t1) .m18ljjag svg [0,1,1] 1.125rem
+     computed A 24px / B 18px, actual 24px; flat b (specificity), styleedge a (layer), depth a (layer); flip true; 34 page(s), e.g. navbar/action-button-only@desktop svg.m11vsg37
+  width: A navbar(#63,t3) .csth4gk [0,1,0] 1.5rem
+     vs B shared(#7,t1) .m18ljjag svg [0,1,1] 1.125rem
+     computed A 24px / B 18px, actual 24px; flat b (specificity), styleedge a (layer), depth a (layer); flip true; 34 page(s), e.g. navbar/action-button-only@desktop svg.csth4gk
+  width: A navbar(#63,t3) .c160mxwv [0,1,0] 1.25rem
+     vs B shared(#7,t1) .m18ljjag svg [0,1,1] 1.125rem
+     computed A 20px / B 18px, actual 20px; flat b (specificity), styleedge a (layer), depth a (layer); flip true; 8 page(s), e.g. navbar/keyboard-navigation@desktop svg.c160mxwv
+
+[FOUND] specificity flip: otp-verification padding 0 16px vs input-group [data-read-only] padding 0
+  (matched by rule: the brief names the [data-read-only] branch; the branch that decides it is printed below)
+  static edges between otp-verification and input-group: otp-verification->input-group <InputGroup .emailContactInput>; otp-verification->input-group <InputGroup .emailContactInputDisabled>; otp-verification->input-group <InputGroup .emailContactInputReadonly>
+  padding-right: A input-group(#36,t2) .nx53mj4[data-no-border="true"] [0,2,0] 0px
+     vs B otp-verification(#45,t3) .e1ik236m [0,1,0] 0 var(--fds-spacing-16) (via padding)
+     computed A 0px / B 16px, actual 16px; flat a (specificity), styleedge b (layer), depth b (layer); flip true; 6 page(s), e.g. otp-verification/email-interactive@desktop div.i156rlh.ijzjlan.nx53mj4.e1ik236m[data-testid=otp-email-base-contact-contact-input]
+  padding-left: A input-group(#36,t2) .nx53mj4[data-no-border="true"] [0,2,0] 0px
+     vs B otp-verification(#45,t3) .e1ik236m [0,1,0] 0 var(--fds-spacing-16) (via padding)
+     computed A 0px / B 16px, actual 16px; flat a (specificity), styleedge b (layer), depth b (layer); flip true; 6 page(s), e.g. otp-verification/email-interactive@desktop div.i156rlh.ijzjlan.nx53mj4.e1ik236m[data-testid=otp-email-base-contact-contact-input]
+  padding-right: A input-group(#36,t2) .afvd13[data-no-border="true"] [0,2,0] 0px
+     vs B otp-verification(#45,t3) .pqn3wrd [0,1,0] 0 var(--fds-spacing-16) (via padding)
+     computed A 0px / B 16px, actual 16px; flat a (specificity), styleedge b (layer), depth b (layer); flip true; 6 page(s), e.g. otp-verification/phone-number-interactive@desktop div.i156rlh.ijzjlan.afvd13.pqn3wrd[data-testid=otp-phone-base-contact-contact-input]
+  padding-left: A input-group(#36,t2) .afvd13[data-no-border="true"] [0,2,0] 0px
+     vs B otp-verification(#45,t3) .pqn3wrd [0,1,0] 0 var(--fds-spacing-16) (via padding)
+     computed A 0px / B 16px, actual 16px; flat a (specificity), styleedge b (layer), depth b (layer); flip true; 6 page(s), e.g. otp-verification/phone-number-interactive@desktop div.i156rlh.ijzjlan.afvd13.pqn3wrd[data-testid=otp-phone-base-contact-contact-input]
+
+[FOUND] specificity flip: unit-number hashContainer margin vs input-group [data-read-only] margin-right
+  static edges between unit-number and input-group: none
+  margin-right: A input-group(#36,t2) .l1s6ick6[data-read-only="true"] [0,2,0] var(--fds-spacing-4)
+     vs B unit-number(#51,t3) .h1ujh1ah [0,1,0] 0.5rem
+     computed A 4px / B 8px, actual 8px; flat a (specificity), styleedge b (layer), depth b (layer); flip true; 6 page(s), e.g. unit-number/all-variants@desktop div.h1ujh1ah.l1s6ick6[data-testid=addon]
+
+7/7 ground-truth rows found

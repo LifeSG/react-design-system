@@ -268,8 +268,15 @@ const pairUp = (B) => {
                 if (!m) els.set(el, (m = new Map()));
                 const k = r.i + "|" + b.pseudoElement;
                 const prev = m.get(k);
+                // keep the most specific matching branch; remember every branch that matched
                 if (!prev || better(b, bs[prev.bi]))
-                    m.set(k, { ri: r.i, bi, pe: b.pseudoElement });
+                    m.set(k, {
+                        ri: r.i,
+                        bi,
+                        pe: b.pseudoElement,
+                        all: [...(prev?.all ?? []), bi],
+                    });
+                else prev.all.push(bi);
             }
         });
     }
@@ -300,6 +307,17 @@ const pairUp = (B) => {
             tid ? `[data-testid=${tid}]` : ""
         }`;
     };
+    // other branches of the same rule that match too, at the same specificity and state
+    const alsoOf = (x) => {
+        const bs = B[rules[x.ri].sel];
+        const w = bs[x.bi];
+        return x.all.filter(
+            (i) =>
+                i !== x.bi &&
+                String(bs[i].spec) === String(w.spec) &&
+                bs[i].state === w.state
+        );
+    };
     const pairs = [];
     for (const [el, m] of els) {
         const hits = [...m.values()];
@@ -325,6 +343,7 @@ const pairUp = (B) => {
                         a: {
                             ri: a.ri,
                             bi: a.bi,
+                            also: alsoOf(a),
                             value: a.value,
                             important: a.important,
                             via: a.via,
@@ -333,6 +352,7 @@ const pairUp = (B) => {
                         b: {
                             ri: b.ri,
                             bi: b.bi,
+                            also: alsoOf(b),
                             value: b.value,
                             important: b.important,
                             via: b.via,
@@ -363,10 +383,11 @@ let next = 0,
     done = 0;
 const T0 = Date.now();
 
-const side = (rule, b, x) => ({
+const side = (rule, b, x, bs) => ({
     folder: rule.folder,
     sel: rule.sel,
     branch: b.text,
+    alsoMatched: x.also.map((i) => bs[i].text),
     spec: b.spec,
     state: b.state,
     cond: rule.cond,
@@ -471,8 +492,8 @@ async function run() {
                     const differ = x.computed !== y.computed;
                     let rec = pairMap.get(key);
                     if (!rec) {
-                        const a = side(ra, ba, x),
-                            b = side(rb, bb, y);
+                        const a = side(ra, ba, x, B[ra.sel]),
+                            b = side(rb, bb, y, B[rb.sel]);
                         rec = {
                             prop: p.prop,
                             pseudoElement: p.pe,
