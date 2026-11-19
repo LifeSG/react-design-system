@@ -25,6 +25,7 @@ export const Container = styled.div<StyleProps>`
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-shrink: 0;
     ${(props) => {
         if (props.$displaySize === "small") {
             return css`
