@@ -1,7 +1,7 @@
 {
     "meta": {
         "packageName": "@lifesg/react-design-system",
-        "totalComponents": 106
+        "totalComponents": 107
     },
     "components": [
         {
@@ -183,6 +183,12 @@
             "importPath": "@lifesg/react-design-system/e-signature",
             "description": "A field that lets users draw and save a signature.  Use in forms that require a handwritten signature.",
             "keywords": ["field", "form", "input", "sign", "signature"]
+        },
+        {
+            "name": "FDS_INLINE_SCRIPT_CSP_HASH",
+            "importPath": "@lifesg/react-design-system/csp",
+            "description": "CSP source expression (`'sha256-...'`) for the inline script rendered by `ThemeProvider`. Add it to `script-src` as an alternative to passing a `nonce`, e.g. for statically generated pages where a per-request nonce is not available. It is computed from the script at build time, so it stays correct across library upgrades.",
+            "keywords": ["content security policy", "csp", "script-src"]
         },
         {
             "name": "FeedbackRating",

@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -15,6 +16,7 @@ import excludeDependenciesFromBundle from "rollup-plugin-exclude-dependencies-fr
 import generatePackageJson from "rollup-plugin-generate-package-json";
 import { libStylePlugin } from "rollup-plugin-lib-style";
 import typescript from "rollup-plugin-typescript2";
+import { require as tsRequire } from "tsx/cjs/api";
 
 const dirsToIgnore = new Set(["custom-types", "shared", "util", "__mocks__"]);
 
@@ -84,9 +86,33 @@ function bundleSgdsCss() {
     };
 }
 
+// Compute and inject the static CSP hash of the inline script
+function inlineScriptHash() {
+    const PLACEHOLDER = "__FDS_INLINE_SCRIPT_CSP_HASH__";
+    const { BREAKPOINT_INLINE_SCRIPT } = tsRequire(
+        "./src/theme/theme-provider/breakpoint.ts",
+        import.meta.url
+    );
+    const digest = createHash("sha256")
+        .update(BREAKPOINT_INLINE_SCRIPT)
+        .digest("base64");
+    const hash = `'sha256-${digest}'`;
+
+    return {
+        name: "hash-inline-script",
+        transform(code) {
+            if (!code.includes(PLACEHOLDER)) return null;
+            return {
+                code: code.replaceAll(PLACEHOLDER, hash),
+            };
+        },
+    };
+}
+
 const plugins = [
     ...basePlugins,
     bundleSgdsCss(),
+    inlineScriptHash(),
     typescript({
         useTsconfigDeclarationDir: true,
         tsconfig: "tsconfig.build.json",
