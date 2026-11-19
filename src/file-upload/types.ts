@@ -18,7 +18,23 @@ export interface FileItemProps {
     thumbnailImageDataUrl?: string | undefined;
     /** Indicates if text should be truncated */
     truncateText?: boolean | undefined;
+    /**
+     * The mode the file item opens in when first rendered. See
+     * `FileItemInitialMode`. Default: "default"
+     */
+    initialMode?: FileItemInitialMode | undefined;
 }
+
+/**
+ * The mode a file item opens in when first rendered. Only applies to
+ * editable image files (`editableFileItems` is true).
+ * - "default": edit mode if there is no description, otherwise display
+ *   mode. Cancelling the edit removes the file
+ * - "display": display mode, even without a description (e.g. a
+ *   previously saved item whose description is optional). Cancelling
+ *   the edit keeps the file
+ */
+export type FileItemInitialMode = "default" | "display";
 
 export type FileUploadStyle = "bordered" | "no-border";
 

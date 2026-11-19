@@ -109,6 +109,10 @@ function Component(
     // Keep track of edited description without re-rendering
     const descriptionsValueRef = useRef<FileEditedDescriptions>({});
 
+    // Ids of items whose description has been saved in this session,
+    // so that cancelling a later edit does not treat them as new uploads
+    const savedItemIdsRef = useRef<Set<string>>(new Set());
+
     /**
      * As the default drag sensors interfere with click events
      * on the file items, we'll need to configure the sensor to
@@ -137,6 +141,21 @@ function Component(
     const removeDescription = (itemId: string) => {
         delete descriptionsValueRef.current[itemId];
     };
+
+    const deleteItem = (item: FileItemProps) => {
+        savedItemIdsRef.current.delete(item.id);
+        onItemDelete(item);
+    };
+
+    /**
+     * A new upload is an item that has never been saved, has no
+     * description, and was not reopened in display mode. Cancelling
+     * its edit removes it
+     */
+    const isNewUpload = (item: FileItemProps) =>
+        (item.initialMode ?? "default") === "default" &&
+        !savedItemIdsRef.current.has(item.id) &&
+        !item.description;
 
     const shallowCompareRenderModes = (
         prev: FileItemRenderModes,
@@ -167,6 +186,15 @@ function Component(
         }
         setRenderModes(nextModes);
     }, [fileItems, editableFileItems, readOnly]);
+
+    // Forget saved ids of items that are no longer in the list, so a new
+    // upload that reuses an id is treated as a new upload
+    useEffect(() => {
+        const currentIds = new Set(fileItems.map((item) => item.id));
+        savedItemIdsRef.current.forEach((id) => {
+            if (!currentIds.has(id)) savedItemIdsRef.current.delete(id);
+        });
+    }, [fileItems]);
 
     // Progress announcements only at start and completion
     useEffect(() => {
@@ -239,6 +267,7 @@ function Component(
     // EVENT HANDLERS
     // =========================================================================
     const handleSaveEdit = (item: FileItemProps) => (description: string) => {
+        savedItemIdsRef.current.add(item.id);
         updateRenderModes(item.id, "display");
         removeDescription(item.id);
 
@@ -251,9 +280,8 @@ function Component(
     };
 
     const handleCancel = (item: FileItemProps) => () => {
-        if (!item.description || item.description.length === 0) {
-            // New addition
-            onItemDelete(item);
+        if (isNewUpload(item)) {
+            deleteItem(item);
         } else {
             updateRenderModes(item.id, "display");
         }
@@ -265,7 +293,7 @@ function Component(
     };
 
     const handleDelete = (item: FileItemProps) => () => {
-        onItemDelete(item);
+        deleteItem(item);
         if (wrapperRef.current) {
             wrapperRef.current.focus();
         }
@@ -314,6 +342,7 @@ function Component(
             !readOnly &&
             !(typeof item.progress === "number" && item.progress < 1) &&
             checkEditable(item) &&
+            item.initialMode !== "display" &&
             !item.description
         );
     };

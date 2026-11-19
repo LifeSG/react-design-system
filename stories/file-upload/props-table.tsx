@@ -209,6 +209,13 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
                 defaultValue: "true",
             },
+            {
+                name: "initialMode",
+                description:
+                    "The mode the file item opens in. `default` opens in edit mode only when there is no description, `display` keeps it in display mode (e.g. a saved item with an optional description). Only applies to editable image files",
+                propTypes: [`"default"`, `"display"`],
+                defaultValue: `"default"`,
+            },
         ],
     },
 ];
