@@ -90,6 +90,13 @@ export const TopBar = styled.div`
         ${Spacing["spacing-32"]};
 `;
 
+export const HeaderContent = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+`;
+
 export const CloseIcon = styled(CrossIcon)`
     height: 1.5rem;
     width: 1.5rem;

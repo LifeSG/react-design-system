@@ -8,6 +8,7 @@ import {
     CloseIcon,
     Container,
     Content,
+    HeaderContent,
     TopBar,
     Wrapper,
 } from "./drawer.styles";
@@ -30,6 +31,8 @@ const Component = (
         onBrandClick,
         drawerLabel = "Mobile navigation menu",
         mobileMenuRef,
+        headerContent,
+        hideDrawerBranding,
     } = props;
     const [viewHeight, setViewHeight] = useState<number>(0);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -133,10 +136,18 @@ const Component = (
         );
     };
 
+    const showBrand = !hideNavBranding && !hideDrawerBranding;
+
     const renderTopBar = () => (
         <TopBar>
             <NavBrandContainer data-id="drawer-brand-container">
-                {!hideNavBranding && renderBrand()}
+                {showBrand && renderBrand()}
+                {headerContent && (
+                    <HeaderContent data-testid="drawer__header-content">
+                        {showBrand && <NavSeparator />}
+                        {headerContent}
+                    </HeaderContent>
+                )}
             </NavBrandContainer>
             <CloseButton
                 onClick={onClose}

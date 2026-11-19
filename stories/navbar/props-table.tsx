@@ -135,6 +135,40 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
                 defaultValue: "Mobile navigation menu",
             },
+            {
+                name: "headerBrandAddon",
+                description: (
+                    <>
+                        Custom content rendered after the brand logos on
+                        desktop, separated by a divider (e.g. a &quot;Back to
+                        Home&quot; link). Hidden in tablet and mobile viewports
+                    </>
+                ),
+                propTypes: ["JSX.Element"],
+            },
+            {
+                name: "drawerHeader",
+                description: (
+                    <>
+                        Custom content rendered in the mobile drawer header
+                        after the brand logos (e.g. a &quot;Go to Home&quot;
+                        link). The close button is retained
+                    </>
+                ),
+                propTypes: ["JSX.Element"],
+            },
+            {
+                name: "hideDrawerBranding",
+                description: (
+                    <>
+                        Hides the brand logos in the mobile drawer header only.
+                        Has no effect if <code>hideNavBranding</code> is set,
+                        which hides the branding everywhere
+                    </>
+                ),
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
         ],
     },
     {
