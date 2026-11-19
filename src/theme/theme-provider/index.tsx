@@ -3,7 +3,10 @@ import { forwardRef, useContext, useEffect, useMemo, useState } from "react";
 
 import { mergeRefs, useIsomorphicLayoutEffect } from "../../util";
 import type { ResolvedThemeMode } from "../types";
-import { setupBreakpointListener } from "./breakpoint";
+import {
+    BREAKPOINT_INLINE_SCRIPT,
+    setupBreakpointListener,
+} from "./breakpoint";
 import { ThemeContext } from "./context";
 import { listenToSystemColourMode } from "./system-colour-mode";
 import type { ThemeProviderProps } from "./types";
@@ -16,6 +19,7 @@ const InnerThemeProvider = (
         className,
         style,
         fontPreset,
+        nonce,
     }: ThemeProviderProps,
     ref: Ref<HTMLDivElement>
 ) => {
@@ -64,6 +68,11 @@ const InnerThemeProvider = (
 
     return (
         <ThemeContext.Provider value={contextValue}>
+            {!isNestedThemeProvider && (
+                <script id="fds-init-script" nonce={nonce}>
+                    {BREAKPOINT_INLINE_SCRIPT}
+                </script>
+            )}
             <div
                 ref={mergeRefs(ref, setThemeElement)}
                 data-fds-theme={theme}

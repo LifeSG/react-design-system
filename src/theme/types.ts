@@ -83,6 +83,19 @@ export type FontSize =
 /** Available typography weight presets. */
 export type FontWeight = "light" | "regular" | "semibold" | "bold";
 
+export const BREAKPOINT_SIZES = [
+    "xxs",
+    "xs",
+    "sm",
+    "md",
+    "lg",
+    "xl",
+    "xxl",
+] as const;
+
+/** Union of all supported breakpoint keys. */
+export type BreakpointSize = (typeof BREAKPOINT_SIZES)[number];
+
 /** Accepted breakpoint CSS variable strings. */
 export type BreakpointCSSVariableString = ValueOf<typeof Breakpoint>;
 /** Accepted border CSS variable strings. */

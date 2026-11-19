@@ -103,5 +103,30 @@ test.describe("Layout", () => {
                 await compareScreenshot(story, "mount");
             });
         });
+
+        test.describe(() => {
+            test.use({ javaScriptEnabled: false });
+
+            test.beforeEach(async ({ story }) => {
+                await story.init("col-div", { size: "lg" });
+            });
+
+            test("Pre-hydration fallback", async ({ story }) => {
+                // force evaluation of the script which didn't run since JavaScript is disabled
+                await story.page.evaluate(() => {
+                    const script = document.getElementById("fds-init-script");
+                    if (script) {
+                        eval(script.innerHTML);
+                    }
+                });
+
+                const body = story.page.locator("body");
+                await expect(body).toContainClass("fds-breakpoint-lg");
+                await expect(body).not.toContainClass("fds-breakpoint-md");
+                await expect(body).not.toContainClass("fds-breakpoint-xl");
+
+                await compareScreenshot(story, "mount");
+            });
+        });
     });
 });
