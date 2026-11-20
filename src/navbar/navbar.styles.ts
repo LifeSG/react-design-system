@@ -131,6 +131,17 @@ export const navSeparator = css`
     width: 2px;
 `;
 
+export const headerBrandAddonContainer = css`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+
+    ${MediaQuery.MaxWidth.lg} {
+        display: none;
+    }
+`;
+
 export const navSeparatorCompressed = css`
     margin: 0 1rem;
 `;

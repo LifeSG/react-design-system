@@ -28,6 +28,8 @@ class StoryPage extends AbstractStoryPage {
             closeButton: Locator;
             drawer: Locator;
             drawerBrand: Locator;
+            drawerHeaderContent: Locator;
+            brandAddon: Locator;
             brand: Locator;
             navLink: (index: number) => Locator;
             menuMobileItem: (index: number) => Locator;
@@ -61,6 +63,8 @@ class StoryPage extends AbstractStoryPage {
                 }),
                 drawer: page.getByTestId("drawer"),
                 drawerBrand: page.getByTestId("drawer__brand"),
+                drawerHeaderContent: page.getByTestId("drawer__header-content"),
+                brandAddon: page.getByTestId("main__brand-addon"),
                 brand: page.getByTestId("main__brand"),
                 navLink: (index: number) => page.getByTestId(`link__${index}`),
                 menuMobileItem: (index: number) =>
@@ -190,6 +194,17 @@ test.describe("Navbar", () => {
         });
 
         test("Secondary brand", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("header-brand-addon");
+        });
+
+        test("Header brand addon", async ({ story }) => {
+            await expect(story.locators.internal.brandAddon).toBeVisible();
             await compareScreenshot(story, "mount");
         });
     });
@@ -343,6 +358,56 @@ test.describe("Navbar", () => {
 
             test("Secondary brand", async ({ story }) => {
                 await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("header-brand-addon", { size: "mobile" });
+            });
+
+            test("Header brand addon", async ({ story }) => {
+                await expect(story.locators.internal.brandAddon).toBeHidden();
+                await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("drawer-header", { size: "mobile" });
+            });
+
+            test("Drawer header", async ({ story }) => {
+                await story.openMobileDrawer();
+                await story.page.mouse.move(0, 0);
+
+                await expect(story.locators.internal.drawerBrand).toBeVisible();
+                await expect(
+                    story.locators.internal.drawerHeaderContent
+                ).toBeVisible();
+                await compareScreenshot(story, "open", { fullscreen: true });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("hide-drawer-branding", { size: "mobile" });
+            });
+
+            test("Hide drawer branding", async ({ story }) => {
+                await story.waitForMasthead(story.page);
+                await expect(story.locators.internal.brand).toBeVisible();
+
+                await story.openMobileDrawer();
+                await story.page.mouse.move(0, 0);
+
+                await expect(
+                    story.locators.internal.drawerBrand
+                ).not.toBeAttached();
+                await expect(
+                    story.locators.internal.drawerHeaderContent
+                ).toBeVisible();
+                await compareScreenshot(story, "open", { fullscreen: true });
             });
         });
 
