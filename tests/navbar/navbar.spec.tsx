@@ -179,7 +179,7 @@ describe("Navbar", () => {
         });
     });
 
-    describe("Brand addon and drawer header", () => {
+    describe("Header brand addon", () => {
         it("should render the brand addon after the brand", () => {
             render(
                 <Navbar
@@ -193,6 +193,16 @@ describe("Navbar", () => {
             );
         });
 
+        it("should not render the brand addon if headerBrandAddon is not given", () => {
+            render(<Navbar items={{ desktop: MOCK_ITEMS() }} />);
+
+            expect(
+                screen.queryByTestId("main__brand-addon")
+            ).not.toBeInTheDocument();
+        });
+    });
+
+    describe("Drawer header", () => {
         it("should render the drawer header after the drawer brand", () => {
             render(
                 <Navbar
@@ -249,7 +259,7 @@ describe("Navbar", () => {
 
             expect(screen.getByTestId("drawer__brand")).toBeInTheDocument();
             expect(
-                screen.queryByTestId("main__brand-addon")
+                screen.queryByTestId("drawer__header-content")
             ).not.toBeInTheDocument();
         });
     });

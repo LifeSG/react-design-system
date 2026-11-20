@@ -198,12 +198,12 @@ test.describe("Navbar", () => {
         });
     });
 
-    test.describe("Header brand addon", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("header-brand-addon");
         });
 
-        test("Desktop", async ({ story }) => {
+        test("Header brand addon", async ({ story }) => {
             await expect(story.locators.internal.brandAddon).toBeVisible();
             await compareScreenshot(story, "mount");
         });
@@ -361,23 +361,23 @@ test.describe("Navbar", () => {
             });
         });
 
-        test.describe("Header brand addon", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("header-brand-addon", { size: "mobile" });
             });
 
-            test("Collapsed", async ({ story }) => {
+            test("Header brand addon", async ({ story }) => {
                 await expect(story.locators.internal.brandAddon).toBeHidden();
                 await compareScreenshot(story, "mount");
             });
         });
 
-        test.describe("Drawer header", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("drawer-header", { size: "mobile" });
             });
 
-            test("Drawer", async ({ story }) => {
+            test("Drawer header", async ({ story }) => {
                 await story.openMobileDrawer();
                 await story.page.mouse.move(0, 0);
 
@@ -389,12 +389,12 @@ test.describe("Navbar", () => {
             });
         });
 
-        test.describe("Hide drawer branding", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("hide-drawer-branding", { size: "mobile" });
             });
 
-            test("Drawer", async ({ story }) => {
+            test("Hide drawer branding", async ({ story }) => {
                 await story.waitForMasthead(story.page);
                 await expect(story.locators.internal.brand).toBeVisible();
 
