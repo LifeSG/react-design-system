@@ -1,0 +1,61 @@
+avatar->typography  avatar/avatar.styles.js#avatarBaselineText
+    defined in avatar/avatar.styles.ts: read by the scan
+    avatar/avatar.tsx:37: <TextComponent>: TextComponent is not a named import from another folder (a local alias or variable)
+date-navigator->shared  date-navigator/date-navigator.styles.js#dateTextButton
+    defined in date-navigator/date-navigator.styles.ts: read by the scan
+    date-navigator/date-navigator.tsx:159: <BasicButton>: the tag regex stops at the first ">" before className (here "=>" in an arrow-function prop)
+error-display->typography  error-display/error-display.styles.js#title
+    defined in error-display/error-display.styles.ts: read by the scan
+    error-display/error-display.tsx:110: <Typography.HeadingMD>: className={...} not captured: the regex needs the next attribute to match \w+=, here "data-testid="
+link-list->typography  link-list/link-list.styles.js#itemTitleDefault
+    defined in link-list/link-list.styles.ts: read by the scan
+    link-list/components/common.tsx:27: class assigned to a variable or returned from a function, not written in className={} (style === "small" ? styles.itemTitleSmall : styles.itemTitleDefault)
+link-list->typography  link-list/link-list.styles.js#itemContainer
+    defined in link-list/link-list.styles.ts: read by the scan
+    link-list/components/common.tsx:47: on a <a> element, not a component
+link-list->typography  link-list/link-list.styles.js#toggleButtonLabel
+    defined in link-list/link-list.styles.ts: read by the scan
+    link-list/components/link-list-eager.tsx:84: <Typography.BodyMD>: matched; class toggleButtonLabel is not in a *.style(s).ts in link-list/components/ (the scan only looks beside the .tsx), so it has no props
+    link-list/components/link-list-lazy.tsx:95: <Typography.BodyMD>: matched; class toggleButtonLabel is not in a *.style(s).ts in link-list/components/ (the scan only looks beside the .tsx), so it has no props
+masked-input->input  masked-input/masked-input.styles.js#inputGroupWrapper
+    defined in masked-input/masked-input.styles.ts: read by the scan
+    masked-input/masked-input.tsx:299: <InputGroup>: imported from input-group, not input
+modal-v2->shared  modal-v2/slots/slot-styles.js#styledClickableIcon
+    defined in modal-v2/slots/slot-styles.ts: NOT READ (not *.style(s).ts)
+    modal-v2/slots/close-button.tsx:29: <ClickableIcon>: matched; class styledClickableIcon is not in a *.style(s).ts in modal-v2/slots/ (the scan only looks beside the .tsx), so it has no props
+notification-banner->typography  notification-banner/notification-banner.styles.js#content
+    defined in notification-banner/notification-banner.styles.ts: read by the scan
+    notification-banner/notification-banner.tsx:119: on a <div> element, not a component
+notification-banner->typography  notification-banner/notification-banner.styles.js#contentLink
+    defined in notification-banner/notification-banner.styles.ts: read by the scan
+    notification-banner/notification-banner.tsx:187: <Typography.LinkBL>: matched; contentLink declares {position}; typography folder declares none of them as the regex reads it (runtime props: color)
+otp-verification->shared  otp-verification/contact-input-section.styles.js#emailContactInput
+    defined in otp-verification/contact-input-section.styles.ts: read by the scan
+    otp-verification/contact-input-section.tsx:107: <InputGroup>: imported from input-group, not shared
+sidenav->typography  sidenav/sidenav-item.styles.js#defaultButton
+    defined in sidenav/sidenav-item.styles.ts: read by the scan
+    sidenav/sidenav-item.tsx:206: <BasicButton>: imported from shared, not typography
+sidenav->typography  sidenav/sidenav-item.styles.js#titleText
+    defined in sidenav/sidenav-item.styles.ts: read by the scan
+    sidenav/sidenav-item.tsx:216: <Typography.BodyXS>: matched; titleText declares {margin-top, transition}; typography folder declares none of them as the regex reads it (runtime props: color, display, font-weight)
+toggle->typography  toggle/toggle.styles.js#colorTextError
+    defined in toggle/toggle.styles.ts: read by the scan
+    toggle/toggle.tsx:191: class assigned to a variable or returned from a function, not written in className={} (if (selected) { if (error) return styles.colorTextError)
+    toggle/toggle.tsx:400: on a <?> element, not a component
+toggle->typography  toggle/toggle.styles.js#colorTextDisabled
+    defined in toggle/toggle.styles.ts: read by the scan
+    toggle/toggle.tsx:198: class assigned to a variable or returned from a function, not written in className={} (Selected; } if (disabled) return styles.colorTextDisabled)
+    toggle/toggle.tsx:266: on a <div> element, not a component
+    toggle/toggle.tsx:401: on a <?> element, not a component
+toggle->text-list  toggle/toggle.styles.js#colorTextError
+    defined in toggle/toggle.styles.ts: read by the scan
+    toggle/toggle.tsx:191: class assigned to a variable or returned from a function, not written in className={} (if (selected) { if (error) return styles.colorTextError)
+    toggle/toggle.tsx:400: on a <?> element, not a component
+toggle->text-list  toggle/toggle.styles.js#colorTextDisabled
+    defined in toggle/toggle.styles.ts: read by the scan
+    toggle/toggle.tsx:198: class assigned to a variable or returned from a function, not written in className={} (Selected; } if (disabled) return styles.colorTextDisabled)
+    toggle/toggle.tsx:266: on a <div> element, not a component
+    toggle/toggle.tsx:401: on a <?> element, not a component
+unit-number->input-group  unit-number/unit-number-input.styles.js#hashContainer
+    defined in unit-number/unit-number-input.styles.ts: read by the scan
+    unit-number/unit-number-input.tsx:432: on a <div> element, not a component; the element also takes inputGroupStyles (input-group's styles imported directly)

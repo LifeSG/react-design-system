@@ -1,24 +1,24 @@
 order 85 folders (matches final/libs/styleedge); depth tiers {"0":36,"1":10,"2":20,"3":19}; static edges 207 (2 exempt), 96 folder pairs; import graph 87 folders
-  50/1038 pages, 28 pairs, 19s
-  100/1038 pages, 37 pairs, 35s
-  150/1038 pages, 106 pairs, 52s
-  200/1038 pages, 172 pairs, 68s
-  250/1038 pages, 239 pairs, 85s
-  300/1038 pages, 362 pairs, 100s
-  350/1038 pages, 445 pairs, 118s
-  400/1038 pages, 585 pairs, 136s
-  450/1038 pages, 620 pairs, 151s
-  500/1038 pages, 659 pairs, 168s
-  550/1038 pages, 670 pairs, 183s
-  600/1038 pages, 670 pairs, 200s
-  650/1038 pages, 683 pairs, 217s
-  700/1038 pages, 687 pairs, 234s
-  750/1038 pages, 687 pairs, 249s
-  800/1038 pages, 687 pairs, 268s
-  850/1038 pages, 692 pairs, 286s
-  900/1038 pages, 692 pairs, 302s
-  950/1038 pages, 707 pairs, 318s
-  1000/1038 pages, 708 pairs, 334s
-  1038/1038 pages, 708 pairs, 345s
+  50/1038 pages, 28 pairs, 21s
+  100/1038 pages, 37 pairs, 43s
+  150/1038 pages, 106 pairs, 58s
+  200/1038 pages, 172 pairs, 73s
+  250/1038 pages, 239 pairs, 88s
+  300/1038 pages, 362 pairs, 103s
+  350/1038 pages, 445 pairs, 122s
+  400/1038 pages, 585 pairs, 138s
+  450/1038 pages, 620 pairs, 157s
+  500/1038 pages, 659 pairs, 177s
+  550/1038 pages, 670 pairs, 197s
+  600/1038 pages, 670 pairs, 225s
+  650/1038 pages, 683 pairs, 248s
+  700/1038 pages, 687 pairs, 269s
+  750/1038 pages, 687 pairs, 291s
+  800/1038 pages, 687 pairs, 315s
+  850/1038 pages, 692 pairs, 335s
+  900/1038 pages, 692 pairs, 352s
+  950/1038 pages, 707 pairs, 367s
+  1000/1038 pages, 708 pairs, 382s
+  1038/1038 pages, 708 pairs, 395s
 1038 page loads, 708 distinct pairs -> results/full
 exit 0

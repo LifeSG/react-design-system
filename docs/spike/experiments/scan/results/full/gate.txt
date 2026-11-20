@@ -36,7 +36,7 @@
   static edges between error-display and typography: none
   margin-bottom: A error-display(#20,t3) .twamush [0,1,0] var(--fds-spacing-32) 0 var(--fds-spacing-16) (via margin)
      vs B typography(#3,t0) .d4n1hjq [0,1,0] 0px
-     computed A 16px / B 0px, actual 16px; flat order-dependent (tie), styleedge a (layer), depth a (layer); flip false; 12 page(s), e.g. error-display/custom-error@desktop h2.ts2ljtd.tu0nvfw.h12i879k.s1pdcykv[data-testid=error-display--title]
+     computed A 16px / B 0px, actual 16px; flat order-dependent (tie), styleedge a (layer), depth a (layer); flip false; 12 page(s), e.g. error-display/custom-error@desktop h2.ts2ljtd.tu0nvfw.h12i879k.s1pdcykv.d4n1hjq.twamush[data-testid=error-display--title]
 
 [FOUND] specificity flip: smart-app-banner .cross width vs shared .x svg width
   static edges between smart-app-banner and shared: smart-app-banner->shared <ClickableIcon .dismissButton>
@@ -61,10 +61,10 @@
   static edges between otp-verification and input-group: otp-verification->input-group <InputGroup .emailContactInput>; otp-verification->input-group <InputGroup .emailContactInputDisabled>; otp-verification->input-group <InputGroup .emailContactInputReadonly>
   padding-right: A input-group(#36,t2) .nx53mj4[data-no-border="true"] [0,2,0] 0px
      vs B otp-verification(#45,t3) .e1ik236m [0,1,0] 0 var(--fds-spacing-16) (via padding)
-     computed A 0px / B 16px, actual 16px; flat a (specificity), styleedge b (layer), depth b (layer); flip true; 6 page(s), e.g. otp-verification/email-otp-state@desktop div.i156rlh.ijzjlan.nx53mj4.e1ik236m[data-testid=otp-email-verified-contact-contact-input]
+     computed A 0px / B 16px, actual 16px; flat a (specificity), styleedge b (layer), depth b (layer); flip true; 6 page(s), e.g. otp-verification/email-interactive@desktop div.i156rlh.ijzjlan.nx53mj4.e1ik236m[data-testid=otp-email-base-contact-contact-input]
   padding-left: A input-group(#36,t2) .nx53mj4[data-no-border="true"] [0,2,0] 0px
      vs B otp-verification(#45,t3) .e1ik236m [0,1,0] 0 var(--fds-spacing-16) (via padding)
-     computed A 0px / B 16px, actual 16px; flat a (specificity), styleedge b (layer), depth b (layer); flip true; 6 page(s), e.g. otp-verification/email-otp-state@desktop div.i156rlh.ijzjlan.nx53mj4.e1ik236m[data-testid=otp-email-verified-contact-contact-input]
+     computed A 0px / B 16px, actual 16px; flat a (specificity), styleedge b (layer), depth b (layer); flip true; 6 page(s), e.g. otp-verification/email-interactive@desktop div.i156rlh.ijzjlan.nx53mj4.e1ik236m[data-testid=otp-email-base-contact-contact-input]
   padding-right: A input-group(#36,t2) .afvd13[data-no-border="true"] [0,2,0] 0px
      vs B otp-verification(#45,t3) .pqn3wrd [0,1,0] 0 var(--fds-spacing-16) (via padding)
      computed A 0px / B 16px, actual 16px; flat a (specificity), styleedge b (layer), depth b (layer); flip true; 6 page(s), e.g. otp-verification/phone-number-interactive@desktop div.i156rlh.ijzjlan.afvd13.pqn3wrd[data-testid=otp-phone-base-contact-contact-input]

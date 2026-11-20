@@ -1,0 +1,19 @@
+static edges, folder level: 27548 rule pairs flagged; catches 18 of 22 runtime flips (13 of 14 at rest)
+static edges, class level: 3070 rule pairs flagged; catches 7 of 22 runtime flips (2 of 14 at rest)
+    not caught: masked-input .ilvnzaw input vs input .igi2hjf:hover cursor
+    not caught: navbar .m11vsg37 vs shared .m18ljjag svg height
+    not caught: navbar .m11vsg37 vs shared .m18ljjag svg width
+    not caught: navbar .csth4gk vs shared .m18ljjag svg height
+    not caught: navbar .csth4gk vs shared .m18ljjag svg width
+    not caught: navbar .c160mxwv vs shared .m18ljjag svg height
+    not caught: navbar .c160mxwv vs shared .m18ljjag svg width
+    not caught: notification-banner .c1qc2rgl a vs typography .hspw24h:active color
+    not caught: notification-banner .c12st863 vs typography .hspw24h:active color
+    not caught: otp-verification .pqn3wrd vs input-group .afvd13[data-no-border="true"] padding-right
+    not caught: otp-verification .pqn3wrd vs input-group .afvd13[data-no-border="true"] padding-left
+    not caught: smart-app-banner .cp9l7rn vs shared .m18ljjag svg height
+    not caught: smart-app-banner .cp9l7rn vs shared .m18ljjag svg width
+    not caught: time-slot-bar .a195ar7o vs shared .m18ljjag svg height
+    not caught: unit-number .h1ujh1ah vs input-group .l1s6ick6[data-read-only="true"] margin-right
+union edges, folder level: 29056 rule pairs flagged; catches 22 of 22 runtime flips (14 of 14 at rest)
+union edges, class level: 3070 rule pairs flagged; catches 7 of 22 runtime flips (2 of 14 at rest)

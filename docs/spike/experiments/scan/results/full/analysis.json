@@ -1,0 +1,728 @@
+{
+    "totals": {
+        "all": {
+            "pairs": 708,
+            "selectorPairs": 700,
+            "folderPairs": 76,
+            "stateDependent": 80,
+            "valuesDiffer": 343
+        },
+        "real": {
+            "pairs": 708,
+            "selectorPairs": 700,
+            "folderPairs": 76,
+            "stateDependent": 80,
+            "valuesDiffer": 343
+        },
+        "custom": {
+            "pairs": 0,
+            "selectorPairs": 0,
+            "folderPairs": 0,
+            "stateDependent": 0,
+            "valuesDiffer": 0
+        }
+    },
+    "q1": {
+        "runtimeEdges": 66,
+        "missing": [
+            {
+                "folders": ["avatar", "typography"],
+                "direction": "avatar->typography",
+                "by": "import",
+                "impliedByStaticPath": false,
+                "styleedgeOrder": "parent later (right)",
+                "depthOrder": "both t0 (SAME TIER: source order)",
+                "props": ["color"],
+                "differ": 1,
+                "examples": [
+                    {
+                        "line": "color | avatar(#11,t0) `.a12u9rhz` [0,1,0] var(--fds-colour-text-primary) vs typography(#3,t0) `.ts2ljtd` [0,1,0] var(--fds-colour-text) | computed rgb(23, 104, 190) / rgb(40, 40, 40), actual rgb(23, 104, 190) | flat order-dependent, styleedge a, depth order-dependent | 6p, e.g. avatar/default@desktop `p.ts2ljtd.t1ruq6ql.bg0vyh3.s1pdcykv.d4n1hjq.a12u9rhz`",
+                        "aClasses": [
+                            "a12u9rhz=avatar/avatar.styles.js#avatarBaselineText"
+                        ],
+                        "bClasses": [
+                            "ts2ljtd=typography/typography.styles.js#typographyBase"
+                        ]
+                    }
+                ]
+            },
+            {
+                "folders": ["date-navigator", "shared"],
+                "direction": "date-navigator->shared",
+                "by": "import",
+                "impliedByStaticPath": true,
+                "styleedgeOrder": "parent later (right)",
+                "depthOrder": "t3 > t1 (right)",
+                "props": ["outline-color", "outline-style", "outline-width"],
+                "differ": 3,
+                "examples": [
+                    {
+                        "line": "outline-color | date-navigator(#23,t3) `.d1pl361j:not(:disabled):focus` [0,3,0] initial (state) vs shared(#7,t1) `.b191fi5o:focus-visible` [0,2,0] var(--fds-border-width-010) var(--fds-border-style-solid) var(--fds-colour-border-focus) (state) | computed rgb(23, 104, 190) / rgb(60, 145, 236), actual rgb(23, 104, 190) | flat a, styleedge a, depth a | 12p, e.g. date-navigator/with-calendar@desktop `button.b191fi5o.d1pl361j[data-testid=date-navigator-date-text]`",
+                        "aClasses": [
+                            "d1pl361j=date-navigator/date-navigator.styles.js#dateTextButton"
+                        ],
+                        "bClasses": [
+                            "b191fi5o=shared/input-wrapper/input-wrapper.styles.js#basicButton"
+                        ]
+                    },
+                    {
+                        "line": "outline-style | date-navigator(#23,t3) `.d1pl361j:not(:disabled):focus` [0,3,0] none (state) vs shared(#7,t1) `.b191fi5o:focus-visible` [0,2,0] var(--fds-border-width-010) var(--fds-border-style-solid) var(--fds-colour-border-focus) (state) | computed none / solid, actual none | flat a, styleedge a, depth a | 12p, e.g. date-navigator/with-calendar@desktop `button.b191fi5o.d1pl361j[data-testid=date-navigator-date-text]`",
+                        "aClasses": [
+                            "d1pl361j=date-navigator/date-navigator.styles.js#dateTextButton"
+                        ],
+                        "bClasses": [
+                            "b191fi5o=shared/input-wrapper/input-wrapper.styles.js#basicButton"
+                        ]
+                    },
+                    {
+                        "line": "outline-width | date-navigator(#23,t3) `.d1pl361j:not(:disabled):focus` [0,3,0] initial (state) vs shared(#7,t1) `.b191fi5o:focus-visible` [0,2,0] var(--fds-border-width-010) var(--fds-border-style-solid) var(--fds-colour-border-focus) (state) | computed 0px / 1px, actual 0px | flat a, styleedge a, depth a | 12p, e.g. date-navigator/with-calendar@desktop `button.b191fi5o.d1pl361j[data-testid=date-navigator-date-text]`",
+                        "aClasses": [
+                            "d1pl361j=date-navigator/date-navigator.styles.js#dateTextButton"
+                        ],
+                        "bClasses": [
+                            "b191fi5o=shared/input-wrapper/input-wrapper.styles.js#basicButton"
+                        ]
+                    }
+                ]
+            },
+            {
+                "folders": ["error-display", "typography"],
+                "direction": "error-display->typography",
+                "by": "import",
+                "impliedByStaticPath": true,
+                "styleedgeOrder": "parent later (right)",
+                "depthOrder": "t3 > t0 (right)",
+                "props": ["margin-bottom"],
+                "differ": 1,
+                "examples": [
+                    {
+                        "line": "margin-bottom | error-display(#20,t3) `.twamush` [0,1,0] var(--fds-spacing-32) 0 var(--fds-spacing-16) vs typography(#3,t0) `.d4n1hjq` [0,1,0] 0px | computed 16px / 0px, actual 16px | flat order-dependent, styleedge a, depth a | 12p, e.g. error-display/custom-error@desktop `h2.ts2ljtd.tu0nvfw.h12i879k.s1pdcykv.d4n1hjq.twamush[data-testid=error-display--title]`",
+                        "aClasses": [
+                            "twamush=error-display/error-display.styles.js#title"
+                        ],
+                        "bClasses": [
+                            "d4n1hjq=typography/typography.styles.js#displayBlock"
+                        ]
+                    }
+                ]
+            },
+            {
+                "folders": ["link-list", "typography"],
+                "direction": "link-list->typography",
+                "by": "import",
+                "impliedByStaticPath": false,
+                "styleedgeOrder": "parent later (right)",
+                "depthOrder": "both t0 (SAME TIER: source order)",
+                "props": ["color"],
+                "differ": 6,
+                "examples": [
+                    {
+                        "line": "color | link-list(#60,t0) `.ixxi28v` [0,1,0] var(--fds-colour-text-primary) vs typography(#3,t0) `.ts2ljtd` [0,1,0] var(--fds-colour-text) | computed rgb(23, 104, 190) / rgb(40, 40, 40), actual rgb(23, 104, 190) | flat order-dependent, styleedge a, depth order-dependent | 8p, e.g. link-list/custom-content@desktop `div.ts2ljtd.tu0nvfw.h12v6vm5.s1pdcykv.d4n1hjq.ixxi28v[data-testid=link-title-0]`",
+                        "aClasses": [
+                            "ixxi28v=link-list/link-list.styles.js#itemTitleDefault"
+                        ],
+                        "bClasses": [
+                            "ts2ljtd=typography/typography.styles.js#typographyBase"
+                        ]
+                    },
+                    {
+                        "line": "color | link-list(#60,t0) `.i191w9a9:hover .ixxi28v` [0,3,0] var(--fds-colour-text-hover) (state) vs typography(#3,t0) `.ts2ljtd` [0,1,0] var(--fds-colour-text) | computed rgb(0, 77, 159) / rgb(40, 40, 40), actual rgb(23, 104, 190) | flat a, styleedge a, depth a | 8p, e.g. link-list/custom-content@desktop `div.ts2ljtd.tu0nvfw.h12v6vm5.s1pdcykv.d4n1hjq.ixxi28v[data-testid=link-title-0]`",
+                        "aClasses": [
+                            "i191w9a9=link-list/link-list.styles.js#itemContainer",
+                            "ixxi28v=link-list/link-list.styles.js#itemTitleDefault"
+                        ],
+                        "bClasses": [
+                            "ts2ljtd=typography/typography.styles.js#typographyBase"
+                        ]
+                    },
+                    {
+                        "line": "color | link-list(#60,t0) `.tjt90m3` [0,1,0] var(--fds-colour-text-primary) vs typography(#3,t0) `.ts2ljtd` [0,1,0] var(--fds-colour-text) | computed rgb(23, 104, 190) / rgb(40, 40, 40), actual rgb(23, 104, 190) | flat order-dependent, styleedge a, depth order-dependent | 4p, e.g. link-list/eager-load@desktop `span.ts2ljtd.t1ruq6ql.b1h8qozz.s1pdcykv.d4n1hjq.tjt90m3[data-testid=toggle-button-label]`",
+                        "aClasses": [
+                            "tjt90m3=link-list/link-list.styles.js#toggleButtonLabel"
+                        ],
+                        "bClasses": [
+                            "ts2ljtd=typography/typography.styles.js#typographyBase"
+                        ]
+                    }
+                ]
+            },
+            {
+                "folders": ["input", "masked-input"],
+                "direction": "masked-input->input",
+                "by": "import",
+                "impliedByStaticPath": false,
+                "styleedgeOrder": "parent later (right)",
+                "depthOrder": "t3 > t2 (right)",
+                "props": ["cursor"],
+                "differ": 1,
+                "examples": [
+                    {
+                        "line": "cursor | input(#35,t2) `.igi2hjf:hover` [0,2,0] not-allowed (state) vs masked-input(#43,t3) `.ilvnzaw input` [0,1,1] auto | computed not-allowed / auto, actual auto | flat a, styleedge b, depth b | 6p, e.g. masked-input/form-variants@desktop `input.b168rpxy.in7cu42.igi2hjf[data-testid=input]`",
+                        "aClasses": [
+                            "igi2hjf=input/input.styles.js#inputElementDisabled"
+                        ],
+                        "bClasses": [
+                            "ilvnzaw=masked-input/masked-input.styles.js#inputGroupWrapper"
+                        ]
+                    }
+                ]
+            },
+            {
+                "folders": ["modal-v2", "shared"],
+                "direction": "modal-v2->shared",
+                "by": "import",
+                "impliedByStaticPath": false,
+                "styleedgeOrder": "parent later (right)",
+                "depthOrder": "t0 < t1 (WRONG)",
+                "props": [
+                    "height",
+                    "padding-bottom",
+                    "padding-left",
+                    "padding-right",
+                    "padding-top",
+                    "width"
+                ],
+                "differ": 12,
+                "examples": [
+                    {
+                        "line": "padding-top | modal-v2(#28,t0) `.s1s12qxk` [0,1,0] 0px vs shared(#7,t1) `.m18ljjag` [0,1,0] var(--fds-spacing-24) | computed 0px / 24px, actual 0px | flat order-dependent, styleedge a, depth b | 16p, e.g. modal-v2/custom-styling@desktop `button.m18ljjag.s1s12qxk[data-testid=close-button]`",
+                        "aClasses": [
+                            "s1s12qxk=modal-v2/slots/slot-styles.js#styledClickableIcon"
+                        ],
+                        "bClasses": [
+                            "m18ljjag=shared/clickable-icon/clickable-icon.styles.js#main"
+                        ]
+                    },
+                    {
+                        "line": "padding-right | modal-v2(#28,t0) `.s1s12qxk` [0,1,0] 0px vs shared(#7,t1) `.m18ljjag` [0,1,0] var(--fds-spacing-24) | computed 0px / 24px, actual 0px | flat order-dependent, styleedge a, depth b | 16p, e.g. modal-v2/custom-styling@desktop `button.m18ljjag.s1s12qxk[data-testid=close-button]`",
+                        "aClasses": [
+                            "s1s12qxk=modal-v2/slots/slot-styles.js#styledClickableIcon"
+                        ],
+                        "bClasses": [
+                            "m18ljjag=shared/clickable-icon/clickable-icon.styles.js#main"
+                        ]
+                    },
+                    {
+                        "line": "padding-bottom | modal-v2(#28,t0) `.s1s12qxk` [0,1,0] 0px vs shared(#7,t1) `.m18ljjag` [0,1,0] var(--fds-spacing-24) | computed 0px / 24px, actual 0px | flat order-dependent, styleedge a, depth b | 16p, e.g. modal-v2/custom-styling@desktop `button.m18ljjag.s1s12qxk[data-testid=close-button]`",
+                        "aClasses": [
+                            "s1s12qxk=modal-v2/slots/slot-styles.js#styledClickableIcon"
+                        ],
+                        "bClasses": [
+                            "m18ljjag=shared/clickable-icon/clickable-icon.styles.js#main"
+                        ]
+                    }
+                ]
+            },
+            {
+                "folders": ["notification-banner", "typography"],
+                "direction": "notification-banner->typography",
+                "by": "import",
+                "impliedByStaticPath": true,
+                "styleedgeOrder": "parent later (right)",
+                "depthOrder": "t2 > t0 (right)",
+                "props": ["color"],
+                "differ": 12,
+                "examples": [
+                    {
+                        "line": "color | notification-banner(#64,t2) `.c1qc2rgl a` [0,1,1] var(--fds-colour-hyperlink-inverse) vs typography(#3,t0) `.ts2ljtd` [0,1,0] var(--fds-colour-text) | computed rgb(254, 171, 16) / rgb(40, 40, 40), actual rgb(254, 171, 16) | flat a, styleedge a, depth a | 2p, e.g. notification-banner/text-styling@desktop `a.ts2ljtd.t1ruq6ql.hspw24h.bg0vyh3.r1kcu5nk.u3g791q.c12st863`",
+                        "aClasses": [
+                            "c1qc2rgl=notification-banner/notification-banner.styles.js#content"
+                        ],
+                        "bClasses": [
+                            "ts2ljtd=typography/typography.styles.js#typographyBase"
+                        ]
+                    },
+                    {
+                        "line": "color | notification-banner(#64,t2) `.c1qc2rgl a:active` [0,2,1] var(--fds-colour-hyperlink-inverse) (state) vs typography(#3,t0) `.ts2ljtd` [0,1,0] var(--fds-colour-text) | computed rgb(254, 171, 16) / rgb(40, 40, 40), actual rgb(254, 171, 16) | flat a, styleedge a, depth a | 2p, e.g. notification-banner/text-styling@desktop `a.ts2ljtd.t1ruq6ql.hspw24h.bg0vyh3.r1kcu5nk.u3g791q.c12st863`",
+                        "aClasses": [
+                            "c1qc2rgl=notification-banner/notification-banner.styles.js#content"
+                        ],
+                        "bClasses": [
+                            "ts2ljtd=typography/typography.styles.js#typographyBase"
+                        ]
+                    },
+                    {
+                        "line": "color | notification-banner(#64,t2) `.c12st863` [0,1,0] var(--fds-colour-hyperlink-inverse) vs typography(#3,t0) `.ts2ljtd` [0,1,0] var(--fds-colour-text) | computed rgb(254, 171, 16) / rgb(40, 40, 40), actual rgb(254, 171, 16) | flat order-dependent, styleedge a, depth a | 2p, e.g. notification-banner/text-styling@desktop `a.ts2ljtd.t1ruq6ql.hspw24h.bg0vyh3.r1kcu5nk.u3g791q.c12st863`",
+                        "aClasses": [
+                            "c12st863=notification-banner/notification-banner.styles.js#contentLink"
+                        ],
+                        "bClasses": [
+                            "ts2ljtd=typography/typography.styles.js#typographyBase"
+                        ]
+                    }
+                ]
+            },
+            {
+                "folders": ["otp-verification", "shared"],
+                "direction": "otp-verification->shared",
+                "by": "import",
+                "impliedByStaticPath": true,
+                "styleedgeOrder": "parent later (right)",
+                "depthOrder": "t3 > t1 (right)",
+                "props": [
+                    "background-color",
+                    "color",
+                    "margin-left",
+                    "padding-left",
+                    "padding-right"
+                ],
+                "differ": 11,
+                "examples": [
+                    {
+                        "line": "background-color | otp-verification(#45,t3) `.e1ik236m` [0,1,0] transparent vs shared(#7,t1) `.i156rlh` [0,1,0] var(--fds-colour-bg) | computed rgba(0, 0, 0, 0) / rgb(255, 255, 255), actual rgba(0, 0, 0, 0) | flat order-dependent, styleedge a, depth a | 6p, e.g. otp-verification/email-interactive@desktop `div.i156rlh.ijzjlan.nx53mj4.e1ik236m[data-testid=otp-email-base-contact-contact-input]`",
+                        "aClasses": [
+                            "e1ik236m=otp-verification/contact-input-section.styles.js#emailContactInput"
+                        ],
+                        "bClasses": [
+                            "i156rlh=shared/input-wrapper/input-wrapper.styles.js#inputBox"
+                        ]
+                    },
+                    {
+                        "line": "background-color | otp-verification(#45,t3) `.e1ik236m` [0,1,0] transparent vs shared(#7,t1) `.iwp8knk` [0,1,0] var(--fds-colour-bg-disabled) | computed rgba(0, 0, 0, 0) / rgb(237, 239, 239), actual rgba(0, 0, 0, 0) | flat order-dependent, styleedge a, depth a | 2p, e.g. otp-verification/email-variants@desktop `div.i156rlh.iwp8knk.ijzjlan.nx53mj4.e1ik236m.e19c6q61[data-testid=otp-email-disabled-base-contact-contact-input]`",
+                        "aClasses": [
+                            "e1ik236m=otp-verification/contact-input-section.styles.js#emailContactInput"
+                        ],
+                        "bClasses": [
+                            "iwp8knk=shared/input-wrapper/input-wrapper.styles.js#inputBoxDisabled"
+                        ]
+                    },
+                    {
+                        "line": "padding-right | otp-verification(#45,t3) `.e1ik236m` [0,1,0] 0 var(--fds-spacing-16) vs shared(#7,t1) `.irl4gvd` [0,1,0] 0px | computed 16px / 0px, actual 0px | flat order-dependent, styleedge a, depth a | 2p, e.g. otp-verification/email-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.nx53mj4.e1ik236m.ergya1n[data-testid=otp-email-readonly-base-contact-contact-input]`",
+                        "aClasses": [
+                            "e1ik236m=otp-verification/contact-input-section.styles.js#emailContactInput"
+                        ],
+                        "bClasses": [
+                            "irl4gvd=shared/input-wrapper/input-wrapper.styles.js#inputBoxReadOnly"
+                        ]
+                    }
+                ]
+            },
+            {
+                "folders": ["sidenav", "typography"],
+                "direction": "sidenav->typography",
+                "by": "import",
+                "impliedByStaticPath": true,
+                "styleedgeOrder": "parent later (right)",
+                "depthOrder": "t2 > t0 (right)",
+                "props": ["color", "display", "font-weight"],
+                "differ": 3,
+                "examples": [
+                    {
+                        "line": "font-weight | sidenav(#70,t2) `.d5cbs2m:focus .tegzrsi` [0,3,0] var(--fds-font-weight-semibold) (state) vs typography(#3,t0) `.r1kcu5nk` [0,1,0] var(--fds-font-weight-regular) | computed 600 / 400, actual 400 | flat a, styleedge a, depth a | 4p, e.g. sidenav/default@desktop `span.ts2ljtd.t1ruq6ql.b14pmtsp.r1kcu5nk.d1cfdq56.tegzrsi`",
+                        "aClasses": [
+                            "d5cbs2m=sidenav/sidenav-item.styles.js#defaultButton",
+                            "tegzrsi=sidenav/sidenav-item.styles.js#titleText"
+                        ],
+                        "bClasses": ["r1kcu5nk=?"]
+                    },
+                    {
+                        "line": "color | sidenav(#70,t2) `.d5cbs2m:focus .tegzrsi` [0,3,0] var(--fds-colour-text-hover) (state) vs typography(#3,t0) `.ts2ljtd` [0,1,0] var(--fds-colour-text) | computed rgb(0, 77, 159) / rgb(40, 40, 40), actual rgb(40, 40, 40) | flat a, styleedge a, depth a | 4p, e.g. sidenav/default@desktop `span.ts2ljtd.t1ruq6ql.b14pmtsp.r1kcu5nk.d1cfdq56.tegzrsi`",
+                        "aClasses": [
+                            "d5cbs2m=sidenav/sidenav-item.styles.js#defaultButton",
+                            "tegzrsi=sidenav/sidenav-item.styles.js#titleText"
+                        ],
+                        "bClasses": [
+                            "ts2ljtd=typography/typography.styles.js#typographyBase"
+                        ]
+                    },
+                    {
+                        "line": "display | sidenav(#70,t2) `.tegzrsi` [0,1,0] -webkit-box vs typography(#3,t0) `.d1cfdq56` [0,1,0] inline | computed flow-root / block, actual flow-root | flat order-dependent, styleedge a, depth a | 4p, e.g. sidenav/default@desktop `span.ts2ljtd.t1ruq6ql.b14pmtsp.r1kcu5nk.d1cfdq56.tegzrsi`",
+                        "aClasses": [
+                            "tegzrsi=sidenav/sidenav-item.styles.js#titleText"
+                        ],
+                        "bClasses": [
+                            "d1cfdq56=typography/typography.styles.js#displayInline"
+                        ]
+                    }
+                ]
+            },
+            {
+                "folders": ["toggle", "typography"],
+                "direction": "toggle->typography",
+                "by": "import",
+                "impliedByStaticPath": false,
+                "styleedgeOrder": "parent later (right)",
+                "depthOrder": "both t0 (SAME TIER: source order)",
+                "props": ["color"],
+                "differ": 2,
+                "examples": [
+                    {
+                        "line": "color | toggle(#6,t0) `.c1qqpl3b` [0,1,0] var(--fds-colour-text-error) vs typography(#3,t0) `.ts2ljtd` [0,1,0] var(--fds-colour-text) | computed rgb(158, 19, 15) / rgb(40, 40, 40), actual rgb(158, 19, 15) | flat order-dependent, styleedge a, depth order-dependent | 2p, e.g. toggle/composite-section@desktop `p.ts2ljtd.t1ruq6ql.b1h8qozz.s1pdcykv.d4n1hjq.c1qqpl3b`",
+                        "aClasses": [
+                            "c1qqpl3b=toggle/toggle.styles.js#colorTextError"
+                        ],
+                        "bClasses": [
+                            "ts2ljtd=typography/typography.styles.js#typographyBase"
+                        ]
+                    },
+                    {
+                        "line": "color | toggle(#6,t0) `.c1l2ct9g` [0,1,0] var(--fds-colour-text-disabled) vs typography(#3,t0) `.ts2ljtd` [0,1,0] var(--fds-colour-text) | computed rgb(104, 104, 104) / rgb(40, 40, 40), actual rgb(104, 104, 104) | flat order-dependent, styleedge a, depth order-dependent | 2p, e.g. toggle/composite-section@desktop `p.ts2ljtd.t1ruq6ql.b1h8qozz.s1pdcykv.d4n1hjq.c1qqpl3b.c1l2ct9g`",
+                        "aClasses": [
+                            "c1l2ct9g=toggle/toggle.styles.js#colorTextDisabled"
+                        ],
+                        "bClasses": [
+                            "ts2ljtd=typography/typography.styles.js#typographyBase"
+                        ]
+                    }
+                ]
+            },
+            {
+                "folders": ["text-list", "toggle"],
+                "direction": "toggle->text-list",
+                "by": "import",
+                "impliedByStaticPath": false,
+                "styleedgeOrder": "parent later (right)",
+                "depthOrder": "both t0 (SAME TIER: source order)",
+                "props": ["color"],
+                "differ": 2,
+                "examples": [
+                    {
+                        "line": "color | text-list(#5,t0) `.l1oajjj5` [0,1,0] var(--fds-colour-text) vs toggle(#6,t0) `.c1qqpl3b` [0,1,0] var(--fds-colour-text-error) | computed rgb(40, 40, 40) / rgb(158, 19, 15), actual rgb(158, 19, 15) | flat order-dependent, styleedge b, depth order-dependent | 2p, e.g. toggle/composite-section@desktop `ul.l1oajjj5.u1kb1ugb.c1qqpl3b`",
+                        "aClasses": [
+                            "l1oajjj5=text-list/text-list.styles.js#listBase"
+                        ],
+                        "bClasses": [
+                            "c1qqpl3b=toggle/toggle.styles.js#colorTextError"
+                        ]
+                    },
+                    {
+                        "line": "color | text-list(#5,t0) `.l1oajjj5` [0,1,0] var(--fds-colour-text) vs toggle(#6,t0) `.c1l2ct9g` [0,1,0] var(--fds-colour-text-disabled) | computed rgb(40, 40, 40) / rgb(104, 104, 104), actual rgb(104, 104, 104) | flat order-dependent, styleedge b, depth order-dependent | 2p, e.g. toggle/composite-section@desktop `ul.l1oajjj5.u1kb1ugb.c1qqpl3b.c1l2ct9g`",
+                        "aClasses": [
+                            "l1oajjj5=text-list/text-list.styles.js#listBase"
+                        ],
+                        "bClasses": [
+                            "c1l2ct9g=toggle/toggle.styles.js#colorTextDisabled"
+                        ]
+                    }
+                ]
+            },
+            {
+                "folders": ["input-group", "unit-number"],
+                "direction": "unit-number->input-group",
+                "by": "import",
+                "impliedByStaticPath": false,
+                "styleedgeOrder": "parent later (right)",
+                "depthOrder": "t3 > t2 (right)",
+                "props": ["margin-right"],
+                "differ": 2,
+                "examples": [
+                    {
+                        "line": "margin-right | input-group(#36,t2) `.l1s6ick6` [0,1,0] var(--fds-spacing-12) vs unit-number(#51,t3) `.h1ujh1ah` [0,1,0] 0.5rem | computed 12px / 8px, actual 8px | flat order-dependent, styleedge b, depth b | 8p, e.g. unit-number/all-variants@desktop `div.h1ujh1ah.l1s6ick6[data-testid=addon]`",
+                        "aClasses": [
+                            "l1s6ick6=input-group/input-group.styles.js#labelAddonContainer"
+                        ],
+                        "bClasses": [
+                            "h1ujh1ah=unit-number/unit-number-input.styles.js#hashContainer"
+                        ]
+                    },
+                    {
+                        "line": "margin-right | input-group(#36,t2) `.l1s6ick6[data-read-only=\"true\"]` [0,2,0] var(--fds-spacing-4) vs unit-number(#51,t3) `.h1ujh1ah` [0,1,0] 0.5rem | computed 4px / 8px, actual 8px | flat a, styleedge b, depth b | 6p, e.g. unit-number/all-variants@desktop `div.h1ujh1ah.l1s6ick6[data-testid=addon]`",
+                        "aClasses": [
+                            "l1s6ick6=input-group/input-group.styles.js#labelAddonContainer"
+                        ],
+                        "bClasses": [
+                            "h1ujh1ah=unit-number/unit-number-input.styles.js#hashContainer"
+                        ]
+                    }
+                ]
+            }
+        ],
+        "staticNoConflict": [
+            "accordion ~ button",
+            "alert ~ markup",
+            "button ~ shared",
+            "data-table ~ shared",
+            "button ~ date-navigator",
+            "drawer ~ shared",
+            "button ~ error-display",
+            "button ~ feedback-rating",
+            "file-download ~ markup",
+            "file-download ~ shared",
+            "button ~ file-download",
+            "button ~ file-upload",
+            "file-upload ~ shared",
+            "file-upload ~ markup",
+            "alert ~ file-upload",
+            "footer ~ layout",
+            "histogram-slider ~ input-range-slider",
+            "button ~ navbar",
+            "button ~ otp-input",
+            "otp-verification ~ typography",
+            "card ~ popover",
+            "markup ~ shared",
+            "shared ~ toggle",
+            "shared ~ typography",
+            "shared ~ sidenav",
+            "shared ~ tab",
+            "button ~ time-slot-bar-week",
+            "shared ~ time-slot-bar-week",
+            "shared ~ time-slot-week-view",
+            "button ~ timetable",
+            "shared ~ timetable",
+            "animations ~ timetable",
+            "button ~ toast",
+            "alert ~ uneditable-section",
+            "layout ~ uneditable-section"
+        ],
+        "staticOnlyEqual": [
+            "dashed-border ~ e-signature",
+            "dashed-border ~ file-download",
+            "dashed-border ~ file-upload",
+            "divider ~ footer",
+            "local-nav ~ typography",
+            "pagination ~ typography"
+        ]
+    },
+    "q2": {
+        "flips": {
+            "pairs": 22,
+            "selectorPairs": 22,
+            "folderPairs": 11,
+            "stateDependent": 8,
+            "valuesDiffer": 22
+        },
+        "list": [
+            "background-color | button(#8,t2) `.m70z5yw:active` [0,2,0] var(--fds-colour-bg-hover-neutral) (state) @media (pointer: fine) vs filter(#55,t3) `.f122t6n9` [0,1,0] transparent | computed rgb(249, 249, 249) / rgba(0, 0, 0, 0), actual rgba(0, 0, 0, 0) | flat a, styleedge b, depth b | 9p, e.g. filter-checkbox/default@desktop `button.mf6do54.m1jxbf2q.m70z5yw.m1ytkx3r.f122t6n9[data-testid=button]`",
+            "color | footer(#56,t1) `.d2vgmpj` [0,1,0] var(--fds-footer-disclaimer-link-colour-text) vs typography(#3,t0) `.hspw24h:active` [0,2,0] var(--fds-colour-text-hover) (state) | computed rgb(40, 40, 40) / rgb(0, 77, 159), actual rgb(40, 40, 40) | flat b, styleedge a, depth a | 16p, e.g. footer/custom-content@desktop `a.ts2ljtd.t1ruq6ql.hspw24h.b14pmtsp.r1kcu5nk.nlbpwo0.d2vgmpj`",
+            "color | footer(#56,t1) `.f1b3ng0m` [0,1,0] var(--fds-footer-link-colour-text) vs typography(#3,t0) `.hspw24h:active` [0,2,0] var(--fds-colour-text-hover) (state) | computed rgb(40, 40, 40) / rgb(0, 77, 159), actual rgb(40, 40, 40) | flat b, styleedge a, depth a | 12p, e.g. footer/default-layout@desktop `a.ts2ljtd.t1ruq6ql.hspw24h.b1h8qozz.r1kcu5nk.nlbpwo0.f1b3ng0m`",
+            "background-color | fullscreen-image-carousel(#57,t2) `.ijhrw4g` [0,1,0] var(--fds-colour-bg) vs shared(#7,t1) `.hv69up9:active` [0,2,0] var(--fds-colour-bg-hover-neutral) (state) | computed rgb(255, 255, 255) / rgb(249, 249, 249), actual rgb(255, 255, 255) | flat b, styleedge a, depth a | 14p, e.g. fullscreen-image-carousel/configurable-carousel@desktop `button.m18ljjag.o1plr5dj.hv69up9.ijhrw4g`",
+            "cursor | input(#35,t2) `.igi2hjf:hover` [0,2,0] not-allowed (state) vs masked-input(#43,t3) `.ilvnzaw input` [0,1,1] auto | computed not-allowed / auto, actual auto | flat a, styleedge b, depth b | 6p, e.g. masked-input/form-variants@desktop `input.b168rpxy.in7cu42.igi2hjf[data-testid=input]`",
+            "color | menu(#62,t1) `.l5rk4za` [0,1,0] var(--fds-colour-text) vs typography(#3,t0) `.hspw24h:active` [0,2,0] var(--fds-colour-text-hover) (state) | computed rgb(40, 40, 40) / rgb(0, 77, 159), actual rgb(40, 40, 40) | flat b, styleedge a, depth a | 6p, e.g. menu/grid-layout@desktop `a.ts2ljtd.t1ruq6ql.hspw24h.b1h8qozz.r1kcu5nk.nlbpwo0.l5rk4za[data-testid=menu-link]`",
+            "height | navbar(#63,t3) `.m11vsg37` [0,1,0] 1.5rem vs shared(#7,t1) `.m18ljjag svg` [0,1,1] 1.125rem | computed 24px / 18px, actual 24px | flat b, styleedge a, depth a | 34p, e.g. navbar/action-button-only@desktop `svg.m11vsg37`",
+            "width | navbar(#63,t3) `.m11vsg37` [0,1,0] 1.5rem vs shared(#7,t1) `.m18ljjag svg` [0,1,1] 1.125rem | computed 24px / 18px, actual 24px | flat b, styleedge a, depth a | 34p, e.g. navbar/action-button-only@desktop `svg.m11vsg37`",
+            "height | navbar(#63,t3) `.csth4gk` [0,1,0] 1.5rem vs shared(#7,t1) `.m18ljjag svg` [0,1,1] 1.125rem | computed 24px / 18px, actual 24px | flat b, styleedge a, depth a | 34p, e.g. navbar/action-button-only@desktop `svg.csth4gk`",
+            "width | navbar(#63,t3) `.csth4gk` [0,1,0] 1.5rem vs shared(#7,t1) `.m18ljjag svg` [0,1,1] 1.125rem | computed 24px / 18px, actual 24px | flat b, styleedge a, depth a | 34p, e.g. navbar/action-button-only@desktop `svg.csth4gk`",
+            "height | navbar(#63,t3) `.c160mxwv` [0,1,0] 1.25rem vs shared(#7,t1) `.m18ljjag svg` [0,1,1] 1.125rem | computed 20px / 18px, actual 20px | flat b, styleedge a, depth a | 8p, e.g. navbar/keyboard-navigation@desktop `svg.c160mxwv`",
+            "width | navbar(#63,t3) `.c160mxwv` [0,1,0] 1.25rem vs shared(#7,t1) `.m18ljjag svg` [0,1,1] 1.125rem | computed 20px / 18px, actual 20px | flat b, styleedge a, depth a | 8p, e.g. navbar/keyboard-navigation@desktop `svg.c160mxwv`",
+            "color | notification-banner(#64,t2) `.c1qc2rgl a` [0,1,1] var(--fds-colour-hyperlink-inverse) vs typography(#3,t0) `.hspw24h:active` [0,2,0] var(--fds-colour-text-hover) (state) | computed rgb(254, 171, 16) / rgb(0, 77, 159), actual rgb(254, 171, 16) | flat b, styleedge a, depth a | 2p, e.g. notification-banner/text-styling@desktop `a.ts2ljtd.t1ruq6ql.hspw24h.bg0vyh3.r1kcu5nk.u3g791q.c12st863`",
+            "color | notification-banner(#64,t2) `.c12st863` [0,1,0] var(--fds-colour-hyperlink-inverse) vs typography(#3,t0) `.hspw24h:active` [0,2,0] var(--fds-colour-text-hover) (state) | computed rgb(254, 171, 16) / rgb(0, 77, 159), actual rgb(254, 171, 16) | flat b, styleedge a, depth a | 2p, e.g. notification-banner/text-styling@desktop `a.ts2ljtd.t1ruq6ql.hspw24h.bg0vyh3.r1kcu5nk.u3g791q.c12st863`",
+            "padding-right | input-group(#36,t2) `.nx53mj4[data-no-border=\"true\"]` [0,2,0] 0px vs otp-verification(#45,t3) `.e1ik236m` [0,1,0] 0 var(--fds-spacing-16) | computed 0px / 16px, actual 16px | flat a, styleedge b, depth b | 6p, e.g. otp-verification/email-interactive@desktop `div.i156rlh.ijzjlan.nx53mj4.e1ik236m[data-testid=otp-email-base-contact-contact-input]`",
+            "padding-left | input-group(#36,t2) `.nx53mj4[data-no-border=\"true\"]` [0,2,0] 0px vs otp-verification(#45,t3) `.e1ik236m` [0,1,0] 0 var(--fds-spacing-16) | computed 0px / 16px, actual 16px | flat a, styleedge b, depth b | 6p, e.g. otp-verification/email-interactive@desktop `div.i156rlh.ijzjlan.nx53mj4.e1ik236m[data-testid=otp-email-base-contact-contact-input]`",
+            "padding-right | input-group(#36,t2) `.afvd13[data-no-border=\"true\"]` [0,2,0] 0px vs otp-verification(#45,t3) `.pqn3wrd` [0,1,0] 0 var(--fds-spacing-16) | computed 0px / 16px, actual 16px | flat a, styleedge b, depth b | 6p, e.g. otp-verification/phone-number-interactive@desktop `div.i156rlh.ijzjlan.afvd13.pqn3wrd[data-testid=otp-phone-base-contact-contact-input]`",
+            "padding-left | input-group(#36,t2) `.afvd13[data-no-border=\"true\"]` [0,2,0] 0px vs otp-verification(#45,t3) `.pqn3wrd` [0,1,0] 0 var(--fds-spacing-16) | computed 0px / 16px, actual 16px | flat a, styleedge b, depth b | 6p, e.g. otp-verification/phone-number-interactive@desktop `div.i156rlh.ijzjlan.afvd13.pqn3wrd[data-testid=otp-phone-base-contact-contact-input]`",
+            "height | shared(#7,t1) `.m18ljjag svg` [0,1,1] 1.125rem vs smart-app-banner(#72,t3) `.cp9l7rn` [0,1,0] 1.25rem | computed 18px / 20px, actual 20px | flat a, styleedge b, depth b | 12p, e.g. smart-app-banner/default@desktop `svg.cp9l7rn`",
+            "width | shared(#7,t1) `.m18ljjag svg` [0,1,1] 1.125rem vs smart-app-banner(#72,t3) `.cp9l7rn` [0,1,0] 1.25rem | computed 18px / 20px, actual 20px | flat a, styleedge b, depth b | 12p, e.g. smart-app-banner/default@desktop `svg.cp9l7rn`",
+            "height | shared(#7,t1) `.m18ljjag svg` [0,1,1] 1.125rem vs time-slot-bar(#76,t2) `.a195ar7o` [0,1,0] 1rem | computed 18px / 16px, actual 16px | flat a, styleedge b, depth b | 5p, e.g. time-slot-bar/with-initial-scroll-time@desktop `svg.a195ar7o`",
+            "margin-right | input-group(#36,t2) `.l1s6ick6[data-read-only=\"true\"]` [0,2,0] var(--fds-spacing-4) vs unit-number(#51,t3) `.h1ujh1ah` [0,1,0] 0.5rem | computed 4px / 8px, actual 8px | flat a, styleedge b, depth b | 6p, e.g. unit-number/all-variants@desktop `div.h1ujh1ah.l1s6ick6[data-testid=addon]`"
+        ]
+    },
+    "q3": {
+        "ties": {
+            "pairs": 535,
+            "selectorPairs": 532,
+            "folderPairs": 66,
+            "stateDependent": 28,
+            "valuesDiffer": 272
+        },
+        "tiesDiffer": {
+            "pairs": 272,
+            "selectorPairs": 270,
+            "folderPairs": 60,
+            "stateDependent": 13,
+            "valuesDiffer": 272
+        }
+    },
+    "q4": {
+        "important": [
+            {
+                "line": "margin-bottom | breadcrumb(#14,t2) `.ckhkv84` [0,1,0] !important var(--fds-spacing-8) vs typography(#3,t0) `.d4n1hjq` [0,1,0] 0px | computed 8px / 0px, actual 8px | flat a, styleedge a, depth a | 6p, e.g. breadcrumb/fade-gradients@desktop `span.ts2ljtd.t1ruq6ql.b1h8qozz.s1pdcykv.d4n1hjq.ckhkv84`",
+                "valuesDiffer": true
+            },
+            {
+                "line": "background-image | input(#35,t2) `.dtt8rz0` [0,1,0] !important initial vs shared(#7,t1) `.i156rlh` [0,1,0] var(--fds-colour-bg) | computed none / none, actual none | flat a, styleedge a, depth a | 8p, e.g. input/form-variants@desktop `div.i156rlh.irl4gvd.d7twtqb.dtt8rz0`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-image | input(#35,t2) `.dtt8rz0` [0,1,0] !important initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed none / none, actual none | flat order-dependent, styleedge b, depth b | 8p, e.g. input/form-variants@desktop `div.i156rlh.irl4gvd.d7twtqb.dtt8rz0`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-position-x | input(#35,t2) `.dtt8rz0` [0,1,0] !important initial vs shared(#7,t1) `.i156rlh` [0,1,0] var(--fds-colour-bg) | computed 0% / 0%, actual 0% | flat a, styleedge a, depth a | 8p, e.g. input/form-variants@desktop `div.i156rlh.irl4gvd.d7twtqb.dtt8rz0`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-position-x | input(#35,t2) `.dtt8rz0` [0,1,0] !important initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed 0% / 0%, actual 0% | flat order-dependent, styleedge b, depth b | 8p, e.g. input/form-variants@desktop `div.i156rlh.irl4gvd.d7twtqb.dtt8rz0`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-position-y | input(#35,t2) `.dtt8rz0` [0,1,0] !important initial vs shared(#7,t1) `.i156rlh` [0,1,0] var(--fds-colour-bg) | computed 0% / 0%, actual 0% | flat a, styleedge a, depth a | 8p, e.g. input/form-variants@desktop `div.i156rlh.irl4gvd.d7twtqb.dtt8rz0`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-position-y | input(#35,t2) `.dtt8rz0` [0,1,0] !important initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed 0% / 0%, actual 0% | flat order-dependent, styleedge b, depth b | 8p, e.g. input/form-variants@desktop `div.i156rlh.irl4gvd.d7twtqb.dtt8rz0`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-size | input(#35,t2) `.dtt8rz0` [0,1,0] !important initial vs shared(#7,t1) `.i156rlh` [0,1,0] var(--fds-colour-bg) | computed auto / auto, actual auto | flat a, styleedge a, depth a | 8p, e.g. input/form-variants@desktop `div.i156rlh.irl4gvd.d7twtqb.dtt8rz0`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-size | input(#35,t2) `.dtt8rz0` [0,1,0] !important initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed auto / auto, actual auto | flat order-dependent, styleedge b, depth b | 8p, e.g. input/form-variants@desktop `div.i156rlh.irl4gvd.d7twtqb.dtt8rz0`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-repeat | input(#35,t2) `.dtt8rz0` [0,1,0] !important initial vs shared(#7,t1) `.i156rlh` [0,1,0] var(--fds-colour-bg) | computed repeat / repeat, actual repeat | flat a, styleedge a, depth a | 8p, e.g. input/form-variants@desktop `div.i156rlh.irl4gvd.d7twtqb.dtt8rz0`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-repeat | input(#35,t2) `.dtt8rz0` [0,1,0] !important initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed repeat / repeat, actual repeat | flat order-dependent, styleedge b, depth b | 8p, e.g. input/form-variants@desktop `div.i156rlh.irl4gvd.d7twtqb.dtt8rz0`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-attachment | input(#35,t2) `.dtt8rz0` [0,1,0] !important initial vs shared(#7,t1) `.i156rlh` [0,1,0] var(--fds-colour-bg) | computed scroll / scroll, actual scroll | flat a, styleedge a, depth a | 8p, e.g. input/form-variants@desktop `div.i156rlh.irl4gvd.d7twtqb.dtt8rz0`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-attachment | input(#35,t2) `.dtt8rz0` [0,1,0] !important initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed scroll / scroll, actual scroll | flat order-dependent, styleedge b, depth b | 8p, e.g. input/form-variants@desktop `div.i156rlh.irl4gvd.d7twtqb.dtt8rz0`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-origin | input(#35,t2) `.dtt8rz0` [0,1,0] !important initial vs shared(#7,t1) `.i156rlh` [0,1,0] var(--fds-colour-bg) | computed padding-box / padding-box, actual padding-box | flat a, styleedge a, depth a | 8p, e.g. input/form-variants@desktop `div.i156rlh.irl4gvd.d7twtqb.dtt8rz0`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-origin | input(#35,t2) `.dtt8rz0` [0,1,0] !important initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed padding-box / padding-box, actual padding-box | flat order-dependent, styleedge b, depth b | 8p, e.g. input/form-variants@desktop `div.i156rlh.irl4gvd.d7twtqb.dtt8rz0`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-clip | input(#35,t2) `.dtt8rz0` [0,1,0] !important initial vs shared(#7,t1) `.i156rlh` [0,1,0] var(--fds-colour-bg) | computed border-box / border-box, actual border-box | flat a, styleedge a, depth a | 8p, e.g. input/form-variants@desktop `div.i156rlh.irl4gvd.d7twtqb.dtt8rz0`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-clip | input(#35,t2) `.dtt8rz0` [0,1,0] !important initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed border-box / border-box, actual border-box | flat order-dependent, styleedge b, depth b | 8p, e.g. input/form-variants@desktop `div.i156rlh.irl4gvd.d7twtqb.dtt8rz0`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-color | input(#35,t2) `.dtt8rz0` [0,1,0] !important transparent vs shared(#7,t1) `.i156rlh` [0,1,0] var(--fds-colour-bg) | computed rgba(0, 0, 0, 0) / rgb(255, 255, 255), actual rgba(0, 0, 0, 0) | flat a, styleedge a, depth a | 8p, e.g. input/form-variants@desktop `div.i156rlh.irl4gvd.d7twtqb.dtt8rz0`",
+                "valuesDiffer": true
+            },
+            {
+                "line": "background-color | input(#35,t2) `.dtt8rz0` [0,1,0] !important transparent vs shared(#7,t1) `.irl4gvd` [0,1,0] !important transparent | computed rgba(0, 0, 0, 0) / rgba(0, 0, 0, 0), actual rgba(0, 0, 0, 0) | flat order-dependent, styleedge b, depth b | 8p, e.g. input/form-variants@desktop `div.i156rlh.irl4gvd.d7twtqb.dtt8rz0`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-image | otp-verification(#45,t3) `.e1ik236m` [0,1,0] initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed none / none, actual none | flat b, styleedge b, depth b | 2p, e.g. otp-verification/email-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.nx53mj4.e1ik236m.ergya1n[data-testid=otp-email-readonly-base-contact-contact-input]`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-position-x | otp-verification(#45,t3) `.e1ik236m` [0,1,0] initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed 0% / 0%, actual 0% | flat b, styleedge b, depth b | 2p, e.g. otp-verification/email-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.nx53mj4.e1ik236m.ergya1n[data-testid=otp-email-readonly-base-contact-contact-input]`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-position-y | otp-verification(#45,t3) `.e1ik236m` [0,1,0] initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed 0% / 0%, actual 0% | flat b, styleedge b, depth b | 2p, e.g. otp-verification/email-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.nx53mj4.e1ik236m.ergya1n[data-testid=otp-email-readonly-base-contact-contact-input]`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-size | otp-verification(#45,t3) `.e1ik236m` [0,1,0] initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed auto / auto, actual auto | flat b, styleedge b, depth b | 2p, e.g. otp-verification/email-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.nx53mj4.e1ik236m.ergya1n[data-testid=otp-email-readonly-base-contact-contact-input]`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-repeat | otp-verification(#45,t3) `.e1ik236m` [0,1,0] initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed repeat / repeat, actual repeat | flat b, styleedge b, depth b | 2p, e.g. otp-verification/email-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.nx53mj4.e1ik236m.ergya1n[data-testid=otp-email-readonly-base-contact-contact-input]`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-attachment | otp-verification(#45,t3) `.e1ik236m` [0,1,0] initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed scroll / scroll, actual scroll | flat b, styleedge b, depth b | 2p, e.g. otp-verification/email-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.nx53mj4.e1ik236m.ergya1n[data-testid=otp-email-readonly-base-contact-contact-input]`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-origin | otp-verification(#45,t3) `.e1ik236m` [0,1,0] initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed padding-box / padding-box, actual padding-box | flat b, styleedge b, depth b | 2p, e.g. otp-verification/email-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.nx53mj4.e1ik236m.ergya1n[data-testid=otp-email-readonly-base-contact-contact-input]`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-clip | otp-verification(#45,t3) `.e1ik236m` [0,1,0] initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed border-box / border-box, actual border-box | flat b, styleedge b, depth b | 2p, e.g. otp-verification/email-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.nx53mj4.e1ik236m.ergya1n[data-testid=otp-email-readonly-base-contact-contact-input]`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-color | otp-verification(#45,t3) `.e1ik236m` [0,1,0] transparent vs shared(#7,t1) `.irl4gvd` [0,1,0] !important transparent | computed rgba(0, 0, 0, 0) / rgba(0, 0, 0, 0), actual rgba(0, 0, 0, 0) | flat b, styleedge b, depth b | 2p, e.g. otp-verification/email-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.nx53mj4.e1ik236m.ergya1n[data-testid=otp-email-readonly-base-contact-contact-input]`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-image | otp-verification(#45,t3) `.pqn3wrd` [0,1,0] initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed none / none, actual none | flat b, styleedge b, depth b | 2p, e.g. otp-verification/phone-number-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.afvd13.pqn3wrd.pg7qgn5[data-testid=otp-phone-readonly-base-contact-contact-input]`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-position-x | otp-verification(#45,t3) `.pqn3wrd` [0,1,0] initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed 0% / 0%, actual 0% | flat b, styleedge b, depth b | 2p, e.g. otp-verification/phone-number-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.afvd13.pqn3wrd.pg7qgn5[data-testid=otp-phone-readonly-base-contact-contact-input]`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-position-y | otp-verification(#45,t3) `.pqn3wrd` [0,1,0] initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed 0% / 0%, actual 0% | flat b, styleedge b, depth b | 2p, e.g. otp-verification/phone-number-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.afvd13.pqn3wrd.pg7qgn5[data-testid=otp-phone-readonly-base-contact-contact-input]`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-size | otp-verification(#45,t3) `.pqn3wrd` [0,1,0] initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed auto / auto, actual auto | flat b, styleedge b, depth b | 2p, e.g. otp-verification/phone-number-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.afvd13.pqn3wrd.pg7qgn5[data-testid=otp-phone-readonly-base-contact-contact-input]`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-repeat | otp-verification(#45,t3) `.pqn3wrd` [0,1,0] initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed repeat / repeat, actual repeat | flat b, styleedge b, depth b | 2p, e.g. otp-verification/phone-number-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.afvd13.pqn3wrd.pg7qgn5[data-testid=otp-phone-readonly-base-contact-contact-input]`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-attachment | otp-verification(#45,t3) `.pqn3wrd` [0,1,0] initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed scroll / scroll, actual scroll | flat b, styleedge b, depth b | 2p, e.g. otp-verification/phone-number-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.afvd13.pqn3wrd.pg7qgn5[data-testid=otp-phone-readonly-base-contact-contact-input]`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-origin | otp-verification(#45,t3) `.pqn3wrd` [0,1,0] initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed padding-box / padding-box, actual padding-box | flat b, styleedge b, depth b | 2p, e.g. otp-verification/phone-number-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.afvd13.pqn3wrd.pg7qgn5[data-testid=otp-phone-readonly-base-contact-contact-input]`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-clip | otp-verification(#45,t3) `.pqn3wrd` [0,1,0] initial vs shared(#7,t1) `.irl4gvd` [0,1,0] !important initial | computed border-box / border-box, actual border-box | flat b, styleedge b, depth b | 2p, e.g. otp-verification/phone-number-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.afvd13.pqn3wrd.pg7qgn5[data-testid=otp-phone-readonly-base-contact-contact-input]`",
+                "valuesDiffer": false
+            },
+            {
+                "line": "background-color | otp-verification(#45,t3) `.pqn3wrd` [0,1,0] transparent vs shared(#7,t1) `.irl4gvd` [0,1,0] !important transparent | computed rgba(0, 0, 0, 0) / rgba(0, 0, 0, 0), actual rgba(0, 0, 0, 0) | flat b, styleedge b, depth b | 2p, e.g. otp-verification/phone-number-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.afvd13.pqn3wrd.pg7qgn5[data-testid=otp-phone-readonly-base-contact-contact-input]`",
+                "valuesDiffer": false
+            }
+        ]
+    },
+    "q5": {
+        "sccs": [],
+        "cycleEdges": []
+    },
+    "modelCheck": {
+        "atRest": 302,
+        "mismatches": 10,
+        "list": [
+            "padding-right | input-group(#36,t2) `.afvd13` [0,1,0] 0 var(--fds-spacing-16) vs shared(#7,t1) `.irl4gvd` [0,1,0] 0px | computed 16px / 0px, actual 0px | flat order-dependent, styleedge a, depth a | 16p, e.g. input-group/borderless-custom-addon@desktop `div.i156rlh.irl4gvd.ijzjlan.afvd13[data-testid=input-group-custom-borderless-readonly]` | predicted 16px",
+            "padding-left | input-group(#36,t2) `.afvd13` [0,1,0] 0 var(--fds-spacing-16) vs shared(#7,t1) `.irl4gvd` [0,1,0] 0px | computed 16px / 0px, actual 0px | flat order-dependent, styleedge a, depth a | 16p, e.g. input-group/borderless-custom-addon@desktop `div.i156rlh.irl4gvd.ijzjlan.afvd13[data-testid=input-group-custom-borderless-readonly]` | predicted 16px",
+            "padding-right | input-group(#36,t2) `.nx53mj4` [0,1,0] 0 var(--fds-spacing-16) vs shared(#7,t1) `.irl4gvd` [0,1,0] 0px | computed 16px / 0px, actual 0px | flat order-dependent, styleedge a, depth a | 2p, e.g. otp-verification/email-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.nx53mj4.e1ik236m.ergya1n[data-testid=otp-email-readonly-base-contact-contact-input]` | predicted 16px",
+            "padding-right | otp-verification(#45,t3) `.e1ik236m` [0,1,0] 0 var(--fds-spacing-16) vs shared(#7,t1) `.irl4gvd` [0,1,0] 0px | computed 16px / 0px, actual 0px | flat order-dependent, styleedge a, depth a | 2p, e.g. otp-verification/email-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.nx53mj4.e1ik236m.ergya1n[data-testid=otp-email-readonly-base-contact-contact-input]` | predicted 16px",
+            "padding-left | input-group(#36,t2) `.nx53mj4` [0,1,0] 0 var(--fds-spacing-16) vs shared(#7,t1) `.irl4gvd` [0,1,0] 0px | computed 16px / 0px, actual 0px | flat order-dependent, styleedge a, depth a | 2p, e.g. otp-verification/email-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.nx53mj4.e1ik236m.ergya1n[data-testid=otp-email-readonly-base-contact-contact-input]` | predicted 16px",
+            "padding-left | otp-verification(#45,t3) `.e1ik236m` [0,1,0] 0 var(--fds-spacing-16) vs shared(#7,t1) `.irl4gvd` [0,1,0] 0px | computed 16px / 0px, actual 0px | flat order-dependent, styleedge a, depth a | 2p, e.g. otp-verification/email-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.nx53mj4.e1ik236m.ergya1n[data-testid=otp-email-readonly-base-contact-contact-input]` | predicted 16px",
+            "padding-right | otp-verification(#45,t3) `.pqn3wrd` [0,1,0] 0 var(--fds-spacing-16) vs shared(#7,t1) `.irl4gvd` [0,1,0] 0px | computed 16px / 0px, actual 0px | flat order-dependent, styleedge a, depth a | 2p, e.g. otp-verification/phone-number-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.afvd13.pqn3wrd.pg7qgn5[data-testid=otp-phone-readonly-base-contact-contact-input]` | predicted 16px",
+            "padding-left | otp-verification(#45,t3) `.pqn3wrd` [0,1,0] 0 var(--fds-spacing-16) vs shared(#7,t1) `.irl4gvd` [0,1,0] 0px | computed 16px / 0px, actual 0px | flat order-dependent, styleedge a, depth a | 2p, e.g. otp-verification/phone-number-variants@desktop `div.i156rlh.irl4gvd.ijzjlan.afvd13.pqn3wrd.pg7qgn5[data-testid=otp-phone-readonly-base-contact-contact-input]` | predicted 16px",
+            "color | progress-indicator(#68,t1) `.i1ubzlq2` [0,1,0] var(--fds-colour-text-disabled) vs typography(#3,t0) `.ts2ljtd` [0,1,0] var(--fds-colour-text) | computed rgb(104, 104, 104) / rgb(40, 40, 40), actual rgb(23, 104, 190) | flat order-dependent, styleedge a, depth a | 1p, e.g. progress-indicator/variants@desktop `p.ts2ljtd.t1ruq6ql.b1h8qozz.b1rin8wh.d4n1hjq.i1ubzlq2.i8ugwdc` | predicted rgb(104, 104, 104)",
+            "display | timetable(#80,t3) `.r1g67qip` [0,1,0] inline-flex vs typography(#3,t0) `.d4n1hjq` [0,1,0] block | computed flex / block, actual none | flat order-dependent, styleedge a, depth a | 20p, e.g. timetable/accessibility@desktop `p.ts2ljtd.t1ruq6ql.b14pmtsp.b1rin8wh.d4n1hjq.r1g67qip.rr9vcmw[data-testid=row-1-row-header-subtitle]` | predicted flex"
+        ]
+    },
+    "depthVsStyleedge": {
+        "count": {
+            "pairs": 20,
+            "selectorPairs": 19,
+            "folderPairs": 5,
+            "stateDependent": 0,
+            "valuesDiffer": 20
+        },
+        "list": [
+            "color | avatar(#11,t0) `.a12u9rhz` [0,1,0] var(--fds-colour-text-primary) vs typography(#3,t0) `.ts2ljtd` [0,1,0] var(--fds-colour-text) | computed rgb(23, 104, 190) / rgb(40, 40, 40), actual rgb(23, 104, 190) | flat order-dependent, styleedge a, depth order-dependent | 6p, e.g. avatar/default@desktop `p.ts2ljtd.t1ruq6ql.bg0vyh3.s1pdcykv.d4n1hjq.a12u9rhz`",
+            "color | link-list(#60,t0) `.ixxi28v` [0,1,0] var(--fds-colour-text-primary) vs typography(#3,t0) `.ts2ljtd` [0,1,0] var(--fds-colour-text) | computed rgb(23, 104, 190) / rgb(40, 40, 40), actual rgb(23, 104, 190) | flat order-dependent, styleedge a, depth order-dependent | 8p, e.g. link-list/custom-content@desktop `div.ts2ljtd.tu0nvfw.h12v6vm5.s1pdcykv.d4n1hjq.ixxi28v[data-testid=link-title-0]`",
+            "color | link-list(#60,t0) `.tjt90m3` [0,1,0] var(--fds-colour-text-primary) vs typography(#3,t0) `.ts2ljtd` [0,1,0] var(--fds-colour-text) | computed rgb(23, 104, 190) / rgb(40, 40, 40), actual rgb(23, 104, 190) | flat order-dependent, styleedge a, depth order-dependent | 4p, e.g. link-list/eager-load@desktop `span.ts2ljtd.t1ruq6ql.b1h8qozz.s1pdcykv.d4n1hjq.tjt90m3[data-testid=toggle-button-label]`",
+            "color | link-list(#60,t0) `.ia0puf0` [0,1,0] var(--fds-colour-text-primary) vs typography(#3,t0) `.ts2ljtd` [0,1,0] var(--fds-colour-text) | computed rgb(23, 104, 190) / rgb(40, 40, 40), actual rgb(23, 104, 190) | flat order-dependent, styleedge a, depth order-dependent | 2p, e.g. link-list/small@desktop `div.ts2ljtd.tu0nvfw.hzwk9ye.s1pdcykv.d4n1hjq.ia0puf0[data-testid=link-title-0]`",
+            "padding-top | modal-v2(#28,t0) `.s1s12qxk` [0,1,0] 0px vs shared(#7,t1) `.m18ljjag` [0,1,0] var(--fds-spacing-24) | computed 0px / 24px, actual 0px | flat order-dependent, styleedge a, depth b | 16p, e.g. modal-v2/custom-styling@desktop `button.m18ljjag.s1s12qxk[data-testid=close-button]`",
+            "padding-right | modal-v2(#28,t0) `.s1s12qxk` [0,1,0] 0px vs shared(#7,t1) `.m18ljjag` [0,1,0] var(--fds-spacing-24) | computed 0px / 24px, actual 0px | flat order-dependent, styleedge a, depth b | 16p, e.g. modal-v2/custom-styling@desktop `button.m18ljjag.s1s12qxk[data-testid=close-button]`",
+            "padding-bottom | modal-v2(#28,t0) `.s1s12qxk` [0,1,0] 0px vs shared(#7,t1) `.m18ljjag` [0,1,0] var(--fds-spacing-24) | computed 0px / 24px, actual 0px | flat order-dependent, styleedge a, depth b | 16p, e.g. modal-v2/custom-styling@desktop `button.m18ljjag.s1s12qxk[data-testid=close-button]`",
+            "padding-left | modal-v2(#28,t0) `.s1s12qxk` [0,1,0] 0px vs shared(#7,t1) `.m18ljjag` [0,1,0] var(--fds-spacing-24) | computed 0px / 24px, actual 0px | flat order-dependent, styleedge a, depth b | 16p, e.g. modal-v2/custom-styling@desktop `button.m18ljjag.s1s12qxk[data-testid=close-button]`",
+            "height | modal-v2(#28,t0) `.s1s12qxk svg` [0,1,1] 2rem vs shared(#7,t1) `.m18ljjag svg` [0,1,1] 1.125rem | computed 32px / 18px, actual 32px | flat order-dependent, styleedge a, depth b | 16p, e.g. modal-v2/custom-styling@desktop `svg`",
+            "width | modal-v2(#28,t0) `.s1s12qxk svg` [0,1,1] 2rem vs shared(#7,t1) `.m18ljjag svg` [0,1,1] 1.125rem | computed 32px / 18px, actual 32px | flat order-dependent, styleedge a, depth b | 16p, e.g. modal-v2/custom-styling@desktop `svg`",
+            "padding-top | modal-v2(#28,t0) `.ht9zr8k` [0,1,0] 0px vs shared(#7,t1) `.m18ljjag` [0,1,0] var(--fds-spacing-24) | computed 0px / 24px, actual 0px | flat order-dependent, styleedge a, depth b | 6p, e.g. modal-v2/header-close-button-left@desktop `button.m18ljjag.ht9zr8k[data-testid=close-button]`",
+            "padding-right | modal-v2(#28,t0) `.ht9zr8k` [0,1,0] 0px vs shared(#7,t1) `.m18ljjag` [0,1,0] var(--fds-spacing-24) | computed 0px / 24px, actual 0px | flat order-dependent, styleedge a, depth b | 6p, e.g. modal-v2/header-close-button-left@desktop `button.m18ljjag.ht9zr8k[data-testid=close-button]`",
+            "padding-bottom | modal-v2(#28,t0) `.ht9zr8k` [0,1,0] 0px vs shared(#7,t1) `.m18ljjag` [0,1,0] var(--fds-spacing-24) | computed 0px / 24px, actual 0px | flat order-dependent, styleedge a, depth b | 6p, e.g. modal-v2/header-close-button-left@desktop `button.m18ljjag.ht9zr8k[data-testid=close-button]`",
+            "padding-left | modal-v2(#28,t0) `.ht9zr8k` [0,1,0] 0px vs shared(#7,t1) `.m18ljjag` [0,1,0] var(--fds-spacing-24) | computed 0px / 24px, actual 0px | flat order-dependent, styleedge a, depth b | 6p, e.g. modal-v2/header-close-button-left@desktop `button.m18ljjag.ht9zr8k[data-testid=close-button]`",
+            "height | modal-v2(#28,t0) `.ht9zr8k svg` [0,1,1] 2rem vs shared(#7,t1) `.m18ljjag svg` [0,1,1] 1.125rem | computed 32px / 18px, actual 32px | flat order-dependent, styleedge a, depth b | 6p, e.g. modal-v2/header-close-button-left@desktop `svg`",
+            "width | modal-v2(#28,t0) `.ht9zr8k svg` [0,1,1] 2rem vs shared(#7,t1) `.m18ljjag svg` [0,1,1] 1.125rem | computed 32px / 18px, actual 32px | flat order-dependent, styleedge a, depth b | 6p, e.g. modal-v2/header-close-button-left@desktop `svg`",
+            "color | toggle(#6,t0) `.c1qqpl3b` [0,1,0] var(--fds-colour-text-error) vs typography(#3,t0) `.ts2ljtd` [0,1,0] var(--fds-colour-text) | computed rgb(158, 19, 15) / rgb(40, 40, 40), actual rgb(158, 19, 15) | flat order-dependent, styleedge a, depth order-dependent | 2p, e.g. toggle/composite-section@desktop `p.ts2ljtd.t1ruq6ql.b1h8qozz.s1pdcykv.d4n1hjq.c1qqpl3b`",
+            "color | toggle(#6,t0) `.c1l2ct9g` [0,1,0] var(--fds-colour-text-disabled) vs typography(#3,t0) `.ts2ljtd` [0,1,0] var(--fds-colour-text) | computed rgb(104, 104, 104) / rgb(40, 40, 40), actual rgb(104, 104, 104) | flat order-dependent, styleedge a, depth order-dependent | 2p, e.g. toggle/composite-section@desktop `p.ts2ljtd.t1ruq6ql.b1h8qozz.s1pdcykv.d4n1hjq.c1qqpl3b.c1l2ct9g`",
+            "color | text-list(#5,t0) `.l1oajjj5` [0,1,0] var(--fds-colour-text) vs toggle(#6,t0) `.c1qqpl3b` [0,1,0] var(--fds-colour-text-error) | computed rgb(40, 40, 40) / rgb(158, 19, 15), actual rgb(158, 19, 15) | flat order-dependent, styleedge b, depth order-dependent | 2p, e.g. toggle/composite-section@desktop `ul.l1oajjj5.u1kb1ugb.c1qqpl3b`",
+            "color | text-list(#5,t0) `.l1oajjj5` [0,1,0] var(--fds-colour-text) vs toggle(#6,t0) `.c1l2ct9g` [0,1,0] var(--fds-colour-text-disabled) | computed rgb(40, 40, 40) / rgb(104, 104, 104), actual rgb(104, 104, 104) | flat order-dependent, styleedge b, depth order-dependent | 2p, e.g. toggle/composite-section@desktop `ul.l1oajjj5.u1kb1ugb.c1qqpl3b.c1l2ct9g`"
+        ]
+    }
+}

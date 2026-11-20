@@ -301,7 +301,7 @@ const pairUp = (B) => {
         return v;
     };
     const desc = (el) => {
-        const cls = [...el.classList].slice(0, 4).join(".");
+        const cls = [...el.classList].join(".");
         const tid = el.getAttribute("data-testid");
         return `${el.tagName.toLowerCase()}${cls ? "." + cls : ""}${
             tid ? `[data-testid=${tid}]` : ""
@@ -319,6 +319,7 @@ const pairUp = (B) => {
         );
     };
     const pairs = [];
+    const pending = [];
     for (const [el, m] of els) {
         const hits = [...m.values()];
         if (new Set(hits.map((x) => rules[x.ri].folder)).size < 2) continue;
@@ -335,10 +336,9 @@ const pairUp = (B) => {
                 for (let j = i + 1; j < list.length; j++) {
                     const [a, b] = [list[i], list[j]];
                     if (rules[a.ri].folder === rules[b.ri].folder) continue;
-                    const comp = (x) =>
-                        x.value
-                            ? probe(el, x.prop, x.via || x.prop, x.value)
-                            : "";
+                    // computed values are filled in below, after every `actual` is read:
+                    // a probe restores the element's style, which can start a transition
+                    pending.push({ el, a, b });
                     pairs.push({
                         a: {
                             ri: a.ri,
@@ -347,7 +347,6 @@ const pairUp = (B) => {
                             value: a.value,
                             important: a.important,
                             via: a.via,
-                            computed: comp(a),
                         },
                         b: {
                             ri: b.ri,
@@ -356,18 +355,28 @@ const pairUp = (B) => {
                             value: b.value,
                             important: b.important,
                             via: b.via,
-                            computed: comp(b),
                         },
                         prop: a.prop,
                         pe: a.pe,
                         el: desc(el),
-                        actual: getComputedStyle(el, a.pe || null)
-                            .getPropertyValue(a.prop)
-                            .trim(),
+                        actual: null,
                     });
                 }
         }
     }
+    // 1. the value each element actually has, before anything is mutated
+    pending.forEach(({ el, a }, i) => {
+        pairs[i].actual = getComputedStyle(el, a.pe || null)
+            .getPropertyValue(a.prop)
+            .trim();
+    });
+    // 2. each declared value computed in the element's context (mutates, then restores)
+    const comp = (el, x) =>
+        x.value ? probe(el, x.prop, x.via || x.prop, x.value) : "";
+    pending.forEach(({ el, a, b }, i) => {
+        pairs[i].a.computed = comp(el, a);
+        pairs[i].b.computed = comp(el, b);
+    });
     return { pairs, bad: [...bad], matchedElements: els.size };
 };
 
