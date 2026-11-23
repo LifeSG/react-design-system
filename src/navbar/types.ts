@@ -237,6 +237,10 @@ export interface NavbarDrawerProps extends NavbarSharedProps {
      * Ref to the mobile menu button used to return focus when the drawer closes.
      */
     mobileMenuRef?: React.RefObject<HTMLButtonElement> | undefined;
+    /**
+     * Custom content rendered after the brand logos in the drawer header.
+     */
+    brandAddon?: JSX.Element | undefined;
 }
 
 /**
@@ -344,4 +348,16 @@ export interface NavbarProps<T = void> extends NavbarSharedProps {
      * Accessible label announced for the mobile navigation drawer.
      */
     drawerLabel?: string | undefined;
+    /**
+     * Custom content rendered after the brand logos on desktop, separated by
+     * a divider (e.g. a "Back to Home" link). Hidden in tablet and mobile
+     * viewports.
+     */
+    headerBrandAddon?: JSX.Element | undefined;
+    /**
+     * Custom content rendered after the brand logos in the mobile drawer
+     * header, separated by a divider (e.g. a "Go to Home" link). The close
+     * button is retained.
+     */
+    drawerBrandAddon?: JSX.Element | undefined;
 }

@@ -1,6 +1,6 @@
 import { Canvas, Meta } from "@storybook/addon-docs/blocks";
 import * as NavbarStories from "./navbar.stories";
-import { AutoArgTypesTabs } from "../storybook-common";
+import { AutoArgTypesTabs, DocInfo } from "../storybook-common";
 
 <Meta of={NavbarStories} />
 
@@ -89,6 +89,36 @@ In this example, a co-brand is displayed next to the primary brand.
 
 <Canvas of={NavbarStories.SecondaryBranding} />
 
+## Brand addon
+
+### Header
+
+Use `headerBrandAddon` to render a custom component after the branding on
+desktop. It is hidden in tablet and mobile viewports.
+
+> **Note**: View this story in a desktop viewport to see the addon
+
+<Canvas of={NavbarStories.HeaderBrandAddon} />
+
+### Drawer
+
+Use `drawerBrandAddon` for the drawer header in tablet and mobile viewports.
+
+> **Note**: View this story in a mobile or tablet viewport to see the drawer addon.
+
+<DocInfo>
+    Clicking on this component will not close the drawer automatically. Use
+    `dismissDrawer()` to programmatically dismiss the drawer.
+</DocInfo>
+
+<Canvas of={NavbarStories.DrawerBrandAddon} />
+
+## Hide branding
+
+When the branding elements are hidden, navigation items will be aligned to the left on desktop.
+
+<Canvas of={NavbarStories.HiddenBranding} />
+
 ## Hidden masthead
 
 In this example, the masthead is hidden.
@@ -101,12 +131,6 @@ In this example, the content of the navbar (and masthead, if applicable) is
 stretched to the full width of the screen with a fixed padding.
 
 <Canvas of={NavbarStories.StretchedLayout} />
-
-## Hide branding
-
-When the branding elements are hidden, navigation items will be aligned to the left on desktop.
-
-<Canvas of={NavbarStories.HiddenBranding} />
 
 ## Hide link indicator
 

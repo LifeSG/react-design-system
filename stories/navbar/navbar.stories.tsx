@@ -11,6 +11,7 @@ import type {
     NavItemProps,
 } from "src/navbar";
 import { Navbar } from "src/navbar";
+import { Typography } from "src/typography";
 import { FullWidthStoryDecorator } from "stories/storybook-common";
 
 import {
@@ -682,6 +683,53 @@ export const SecondaryBranding: StoryObj<Component> = {
     },
 };
 
+export const HeaderBrandAddon: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Navbar
+                items={{ desktop: navItems }}
+                selectedId="home"
+                fixed={false}
+                headerBrandAddon={
+                    <Typography.LinkSM href="#" weight="regular">
+                        Back to Home
+                    </Typography.LinkSM>
+                }
+            />
+        );
+    },
+};
+
+export const DrawerBrandAddon: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Navbar
+                items={{ desktop: navItems }}
+                selectedId="home"
+                fixed={false}
+                drawerBrandAddon={
+                    <Typography.LinkMD href="#" weight="semibold">
+                        Go to Home
+                    </Typography.LinkMD>
+                }
+            />
+        );
+    },
+};
+
+export const HiddenBranding: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Navbar
+                items={{ desktop: navItems }}
+                selectedId="home"
+                fixed={false}
+                hideNavBranding
+            />
+        );
+    },
+};
+
 export const HiddenMasthead: StoryObj<Component> = {
     render: (_args) => {
         return (
@@ -724,19 +772,6 @@ export const StretchedLayout: StoryObj<Component> = {
                 selectedId="home"
                 fixed={false}
                 layout={"stretch"}
-            />
-        );
-    },
-};
-
-export const HiddenBranding: StoryObj<Component> = {
-    render: (_args) => {
-        return (
-            <Navbar
-                items={{ desktop: navItems }}
-                selectedId="home"
-                fixed={false}
-                hideNavBranding
             />
         );
     },

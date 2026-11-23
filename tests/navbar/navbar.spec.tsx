@@ -178,6 +178,90 @@ describe("Navbar", () => {
             );
         });
     });
+
+    describe("Header brand addon", () => {
+        it("should render the brand addon after the brand", () => {
+            render(
+                <Navbar
+                    items={{ desktop: MOCK_ITEMS() }}
+                    headerBrandAddon={<a href="/">Back to Home</a>}
+                />
+            );
+
+            expect(screen.getByTestId("main__brand-addon")).toHaveTextContent(
+                "Back to Home"
+            );
+        });
+
+        it("should not render the brand addon if headerBrandAddon is not given", () => {
+            render(<Navbar items={{ desktop: MOCK_ITEMS() }} />);
+
+            expect(
+                screen.queryByTestId("main__brand-addon")
+            ).not.toBeInTheDocument();
+        });
+
+        it("should not render the header brand and addon if hideNavBranding is set", () => {
+            render(
+                <Navbar
+                    items={{ desktop: MOCK_ITEMS() }}
+                    headerBrandAddon={<a href="/">Back to Home</a>}
+                    hideNavBranding
+                />
+            );
+
+            expect(screen.queryByTestId("main__brand")).not.toBeInTheDocument();
+            expect(
+                screen.queryByTestId("main__brand-addon")
+            ).not.toBeInTheDocument();
+        });
+    });
+
+    describe("Drawer brand addon", () => {
+        it("should render the drawer brand addon after the drawer brand", () => {
+            render(
+                <Navbar
+                    items={{ desktop: MOCK_ITEMS() }}
+                    drawerBrandAddon={<a href="/">Go to Home</a>}
+                />
+            );
+
+            const brand = screen.getByTestId("drawer__brand");
+            const addon = screen.getByTestId("drawer__brand-addon");
+
+            expect(addon).toHaveTextContent("Go to Home");
+            expect(
+                brand.compareDocumentPosition(addon) &
+                    Node.DOCUMENT_POSITION_FOLLOWING
+            ).toBeTruthy();
+        });
+
+        it("should not render the drawer brand addon if drawerBrandAddon is not given", () => {
+            render(<Navbar items={{ desktop: MOCK_ITEMS() }} />);
+
+            expect(screen.getByTestId("drawer__brand")).toBeInTheDocument();
+            expect(
+                screen.queryByTestId("drawer__brand-addon")
+            ).not.toBeInTheDocument();
+        });
+
+        it("should not render the drawer brand and addon if hideNavBranding is set", () => {
+            render(
+                <Navbar
+                    items={{ desktop: MOCK_ITEMS() }}
+                    drawerBrandAddon={<a href="/">Go to Home</a>}
+                    hideNavBranding
+                />
+            );
+
+            expect(
+                screen.queryByTestId("drawer__brand")
+            ).not.toBeInTheDocument();
+            expect(
+                screen.queryByTestId("drawer__brand-addon")
+            ).not.toBeInTheDocument();
+        });
+    });
 });
 
 // =============================================================================

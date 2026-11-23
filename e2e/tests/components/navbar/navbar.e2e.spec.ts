@@ -28,6 +28,8 @@ class StoryPage extends AbstractStoryPage {
             closeButton: Locator;
             drawer: Locator;
             drawerBrand: Locator;
+            drawerBrandAddon: Locator;
+            brandAddon: Locator;
             brand: Locator;
             navLink: (index: number) => Locator;
             menuMobileItem: (index: number) => Locator;
@@ -61,6 +63,8 @@ class StoryPage extends AbstractStoryPage {
                 }),
                 drawer: page.getByTestId("drawer"),
                 drawerBrand: page.getByTestId("drawer__brand"),
+                drawerBrandAddon: page.getByTestId("drawer__brand-addon"),
+                brandAddon: page.getByTestId("main__brand-addon"),
                 brand: page.getByTestId("main__brand"),
                 navLink: (index: number) => page.getByTestId(`link__${index}`),
                 menuMobileItem: (index: number) =>
@@ -190,6 +194,17 @@ test.describe("Navbar", () => {
         });
 
         test("Secondary brand", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("header-brand-addon");
+        });
+
+        test("Header brand addon", async ({ story }) => {
+            await expect(story.locators.internal.brandAddon).toBeVisible();
             await compareScreenshot(story, "mount");
         });
     });
@@ -343,6 +358,34 @@ test.describe("Navbar", () => {
 
             test("Secondary brand", async ({ story }) => {
                 await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("header-brand-addon", { size: "mobile" });
+            });
+
+            test("Header brand addon", async ({ story }) => {
+                await expect(story.locators.internal.brandAddon).toBeHidden();
+                await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("drawer-brand-addon", { size: "mobile" });
+            });
+
+            test("Drawer brand addon", async ({ story }) => {
+                await story.openMobileDrawer();
+                await story.page.mouse.move(0, 0);
+
+                await expect(story.locators.internal.drawerBrand).toBeVisible();
+                await expect(
+                    story.locators.internal.drawerBrandAddon
+                ).toBeVisible();
+                await compareScreenshot(story, "open", { fullscreen: true });
             });
         });
 

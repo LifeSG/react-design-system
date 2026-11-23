@@ -8,6 +8,7 @@ import { useApplyStyle } from "../theme";
 import { mergeRefs } from "../util";
 import { Brand } from "./brand";
 import * as styles from "./drawer.styles";
+import { NavSeparator } from "./nav-separator";
 import * as navbarStyles from "./navbar.styles";
 import type { NavbarDrawerProps } from "./types";
 
@@ -27,6 +28,7 @@ const Component = (
         onBrandClick,
         drawerLabel = "Mobile navigation menu",
         mobileMenuRef,
+        brandAddon,
     } = props;
     const [viewHeight, setViewHeight] = useState<number>(0);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -121,13 +123,7 @@ const Component = (
                 )}
                 {secondary && (
                     <>
-                        <div
-                            className={clsx(
-                                navbarStyles.navSeparator,
-                                navbarStyles.navSeparatorCompressed,
-                                navbarStyles.navSeparatorResponsive
-                            )}
-                        />
+                        <NavSeparator compress />
                         <Brand
                             resources={secondary}
                             compress
@@ -137,6 +133,15 @@ const Component = (
                             type="secondary"
                         />
                     </>
+                )}
+                {brandAddon && (
+                    <div
+                        className={styles.brandAddonContainer}
+                        data-testid="drawer__brand-addon"
+                    >
+                        <NavSeparator compress />
+                        {brandAddon}
+                    </div>
                 )}
             </>
         );
