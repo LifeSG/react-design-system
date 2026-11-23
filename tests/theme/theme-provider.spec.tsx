@@ -341,4 +341,75 @@ describe("ThemeProvider", () => {
             expect(document.body.classList.contains("random-class")).toBe(true);
         });
     });
+
+    describe("BREAKPOINT_INLINE_SCRIPT", () => {
+        let matchMediaMock: ReturnType<typeof createMatchMediaMock>;
+
+        const runInlineScript = () => {
+            new Function(breakpoint.BREAKPOINT_INLINE_SCRIPT)();
+        };
+
+        beforeEach(() => {
+            matchMediaMock = createMatchMediaMock();
+        });
+
+        afterEach(() => {
+            matchMediaMock.restore();
+        });
+
+        it("does not crash when matchMedia is unavailable", () => {
+            matchMediaMock.restore();
+            delete (window as Partial<Window>).matchMedia;
+
+            expect(() => runInlineScript()).not.toThrow();
+            expect(document.body.className).toBe("");
+        });
+
+        it("applies correct breakpoint classes", () => {
+            matchMediaMock.setViewportWidth(500); // md range (481–768)
+
+            runInlineScript();
+
+            const body = document.body;
+
+            expect(body.classList.contains("fds-breakpoint-md")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-md-min")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-md-max")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-sm")).toBe(false);
+            expect(body.classList.contains("fds-breakpoint-sm-min")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-sm-max")).toBe(
+                false
+            );
+            expect(body.classList.contains("fds-breakpoint-lg")).toBe(false);
+            expect(body.classList.contains("fds-breakpoint-lg-min")).toBe(
+                false
+            );
+            expect(body.classList.contains("fds-breakpoint-lg-max")).toBe(true);
+        });
+
+        it("applies only min and base class for xxl", () => {
+            matchMediaMock.setViewportWidth(1600); // xxl (1441+)
+
+            runInlineScript();
+
+            const body = document.body;
+
+            expect(body.classList.contains("fds-breakpoint-xxl")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-xxl-min")).toBe(
+                true
+            );
+            expect(body.classList.contains("fds-breakpoint-xxl-max")).toBe(
+                false
+            );
+        });
+
+        it("does not remove non-breakpoint classes", () => {
+            document.body.classList.add("random-class");
+            matchMediaMock.setViewportWidth(500);
+
+            runInlineScript();
+
+            expect(document.body.classList.contains("random-class")).toBe(true);
+        });
+    });
 });

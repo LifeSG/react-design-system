@@ -43,4 +43,6 @@ export interface ThemeProviderProps {
      * Applicable to WISE product themes (wise, vica, websg, wogaa).
      */
     fontPreset?: ThemeFontPreset | undefined;
+    /** The nonce used for Content Security Policy (CSP). */
+    nonce?: string | undefined;
 }

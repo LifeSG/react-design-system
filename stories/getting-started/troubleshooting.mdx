@@ -28,3 +28,64 @@ from Next.js for possible workarounds.
 Alternatively, switch to
 [Webpack](https://nextjs.org/docs/app/api-reference/turbopack#using-webpack-instead)
 instead.
+
+## Content Security Policy (CSP)
+
+`ThemeProvider` runs an inline script to compute breakpoints before hydration.
+If your project enforces a strict `script-src` that does not allow
+`'unsafe-inline'`, the script will be blocked and the browser will report a CSP
+violation in the console.
+
+Allow the script with either a per-request nonce or a static hash.
+
+### CSP with nonce
+
+Use this when your pages are rendered per request and you can generate a nonce
+for each response.
+
+Pass the nonce to `ThemeProvider` through the `nonce` prop. It must match the
+nonce in your `Content-Security-Policy` header.
+
+```tsx
+<ThemeProvider nonce={nonce}>{/* ... */}</ThemeProvider>
+```
+
+```
+Content-Security-Policy: script-src 'self' 'nonce-<nonce>';
+```
+
+### CSP with hash
+
+A `FDS_INLINE_SCRIPT_CSP_HASH` value is exposed for statically generated pages,
+where a per-request nonce is not available. It is the `' sha256-...'` hash of
+the inline script, computed when the library is built, so it stays correct
+across library upgrades.
+
+Add it to your `script-src`. Do not pass a `nonce` to `ThemeProvider` in this
+case.
+
+```tsx
+import { FDS_INLINE_SCRIPT_CSP_HASH } from "@lifesg/react-design-system/csp";
+
+const csp = `script-src 'self' ${FDS_INLINE_SCRIPT_CSP_HASH};`;
+```
+
+## Hydration warning
+
+`ThemeProvider` runs an inline script to compute breakpoints before hydration.
+It sets attributes on the `body` element, which can differ from what React sees
+when it hydrates. To avoid hydration warnings, add `suppressHydrationWarning` to
+the `<body>` element in your root layout.
+
+For example, in Next.js:
+
+```tsx
+// app/layout.tsx
+export default function RootLayout({ children }) {
+    return (
+        <html lang="en">
+            <body suppressHydrationWarning>{children}</body>
+        </html>
+    );
+}
+```

@@ -1,5 +1,5 @@
 import { Breakpoint } from "../tokens/breakpoint";
-import type { CSSVariableString } from "../types";
+import { BREAKPOINT_SIZES, type CSSVariableString } from "../types";
 import { parseCSSVariableValue } from "../utils";
 
 function getBreakpointRanges(sourceElement: HTMLElement) {
@@ -90,6 +90,52 @@ function applyBreakpointClasses(sourceElement: HTMLElement) {
         }
     });
 }
+
+/**
+ * Self-contained equivalent of `applyBreakpointClasses` for use as an inline
+ * `<script>`. It runs while the HTML is parsed, so the `fds-breakpoint-*`
+ * classes are on `<body>` before hydration and avoid a layout shift.
+ *
+ * Tokens are read from `:root` because the theme element is not in the DOM yet.
+ */
+export const BREAKPOINT_INLINE_SCRIPT = `
+(function () {
+    try {
+        const classPrefix = ${JSON.stringify(BREAKPOINT_CLASS_PREFIX)};
+        const breakpointKeys = ${JSON.stringify(BREAKPOINT_SIZES)};
+        const body = document.body;
+
+        if (!body || !window.matchMedia) return;
+
+        const rootStyle = getComputedStyle(document.documentElement);
+
+        function getBreakpointValue(name) {
+            return rootStyle
+                .getPropertyValue("--fds-breakpoint-" + name)
+                .trim();
+        }
+
+        breakpointKeys.forEach(function (key, index) {
+            const atMax = index === breakpointKeys.length - 1;
+            const isMinMatched = window.matchMedia("(min-width: " + getBreakpointValue(key + "-min") + ")").matches;
+            const isMaxMatched = atMax ? false : window.matchMedia("(max-width: " + getBreakpointValue(key + "-max") + ")").matches;
+            const isWithinRange = isMinMatched && (atMax || isMaxMatched);
+
+            if (isWithinRange) {
+                body.classList.add(classPrefix + key);
+            }
+
+            if (isMinMatched) {
+                body.classList.add(classPrefix + key + "-min");
+            }
+
+            if (isMaxMatched) {
+                body.classList.add(classPrefix + key + "-max");
+            }
+        });
+    } catch (e) {}
+})();
+`;
 
 export function setupBreakpointListener(sourceElement: HTMLElement) {
     if (!globalThis.window || !globalThis.window.matchMedia) return;

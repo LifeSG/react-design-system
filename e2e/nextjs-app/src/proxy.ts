@@ -1,3 +1,4 @@
+import { FDS_INLINE_SCRIPT_CSP_HASH } from "@lifesg/react-design-system/csp";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
@@ -14,9 +15,17 @@ export function proxy(request: NextRequest) {
         ? "style-src 'self' 'unsafe-inline';"
         : `style-src 'self' 'nonce-${nonce}';`;
 
+    // Lets tests opt in to permitting the inline script by its hash
+    const hashSrc =
+        request.headers.get("x-include-csp-hash") === "true"
+            ? FDS_INLINE_SCRIPT_CSP_HASH
+            : "";
+
     const cspHeader = `
         default-src 'self';
-        script-src 'self' 'nonce-${nonce}' ${isDev ? "'unsafe-eval'" : ""};
+        script-src 'self' 'nonce-${nonce}' ${hashSrc} ${
+        isDev ? "'unsafe-eval'" : ""
+    };
         ${styleSrcDirective}
         img-src 'self' https://*.life.gov.sg https://fastly.picsum.photos 
             https://mylegacy.life.gov.sg https://*.booking.gov.sg blob: data:;

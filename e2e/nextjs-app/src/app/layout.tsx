@@ -40,7 +40,7 @@ export default async function RootLayout({
                     <link key={href} rel="stylesheet" href={href} />
                 ))}
             </head>
-            <body>
+            <body suppressHydrationWarning>
                 <E2EDateSeedBootstrap />
                 {children}
             </body>
