@@ -1,7 +1,6 @@
 # F18 draft (E8)
 
-Draft for `docs/spike/01-css-layers.md`, to be merged by hand after review. Brief:
-`drafts/spike-e8-edge-scan-brief.md`. Everything here is in `docs/spike/experiments/scan/`.
+Draft for `docs/spike/01-css-layers.md`, to be merged by hand after review. Everything here is in `docs/spike/experiments/scan/`.
 
 ### F18. E8: a runtime conflict check finds 12 folder edges the style scan misses and 22 specificity flips; `styleedge` orders all 12 correctly, a 4-tier `depth` does not, and 5 tiers from the full edge set render every story like `styleedge` (Measured)
 

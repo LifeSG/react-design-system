@@ -670,8 +670,8 @@ What it does **not** show:
 
 -   Depth tiers inherit the edge scan's blind spots. The scan misses at least one
     real override: `error-display -> typography` (`Typography.HeadingMD
-className={styles.title}`), because the tag regex stops at the `>` inside
-    `` `${testId}--title` ``. Under per-folder layers a missed edge is still ordered by
+className={styles.title}`), because the `className` regex needs the next attribute to match `\w+=`, and
+    `data-testid=` does not (corrected in F18; this first said the regex stops at a `>`). Under per-folder layers a missed edge is still ordered by
     the import-graph tiebreak; under depth tiers it falls into whatever tiers the two
     folders got. Here `error-display` (t3) is above `typography` (t0) anyway, so the
     F7 probe passes, but that is luck, not a guarantee.
@@ -875,14 +875,14 @@ combinations rendered all 519 pages with 0 failures.
 
 **What the differences are**, traced to the rules for one page per component:
 
-| Component                               | Change in a layered build                           | Why                                                                                                                                                                                                                                                                                                                                                                                                            |
-| --------------------------------------- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| smart-app-banner                        | dismiss icon 18px to 20px (F16)                     | `ClickableIcon`'s `.x svg` (0,1,1) beat the banner's `.cross` (0,1,0) in one layer; the banner's layer is later, so layers give it 20px, the size its style file asks for                                                                                                                                                                                                                                      |
-| navbar (34 renders)                     | `ClickableIcon` icon 18px to 24px                   | Same mechanism: `.m18ljjag svg { 1.125rem }` against the navbar's `.m11vsg37 { 1.5rem }`. The scan has `navbar -> shared` edges, but only for the class on the button, not the descendant `svg`                                                                                                                                                                                                                |
-| otp-verification (24)                   | read-only input gains 16px left and right padding   | In one layer `.afvd13[data-no-border], [data-read-only] { padding: 0 }` (0,2,0) beat `.pqn3wrd { padding: 0 16px }` (0,1,0). Layered, `fds.otp-verification` ranks after `fds.input-group`, so the 16px wins: the read-only state loses its zero padding. The scan has `otp-verification -> input-group` edges                                                                                                 |
-| unit-number (12)                        | read-only `margin-right` 4px to 8px                 | `.l1s6ick6[data-read-only] { 4px }` (0,2,0) beat `.h1ujh1ah { 0.5rem }` (0,1,0); layered, `fds.unit-number` ranks after `fds.input-group`. The scan has **no** `unit-number -> input-group` edge                                                                                                                                                                                                               |
-| modal-v2 (44, only in `depth`)          | close button 32px to 66px square, modal 34px taller | `ClickableIcon` sets `padding: 24px` and the modal's `slot-styles.ts` overrides it with `padding: 0`. That file is not named `*.style(s).ts`, so the edge scan skips it and the `modal-v2 -> shared` edge is missing. `depth` puts `shared` in `t1` and `modal-v2` in `t0`, so `shared`'s 24px wins. `styleedge` ranks `modal-v2` (29) after `shared` (8) through the import-graph tiebreak and matches `flat` |
-| toast (12), countdown-timer, animations | up to 38,946 px                                     | Toast animates with a JS spring; the rest is animation timing. Not layering                                                                                                                                                                                                                                                                                                                                    |
+| Component                               | Change in a layered build                                                                                  | Why                                                                                                                                                                                                                                                                                                                                                                                                            |
+| --------------------------------------- | ---------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| smart-app-banner                        | dismiss icon 18px to 20px (F16)                                                                            | `ClickableIcon`'s `.x svg` (0,1,1) beat the banner's `.cross` (0,1,0) in one layer; the banner's layer is later, so layers give it 20px, the size its style file asks for                                                                                                                                                                                                                                      |
+| navbar (34 renders)                     | `ClickableIcon` icon 18px to 24px                                                                          | Same mechanism: `.m18ljjag svg { 1.125rem }` against the navbar's `.m11vsg37 { 1.5rem }`. The scan has `navbar -> shared` edges, but only for the class on the button, not the descendant `svg`                                                                                                                                                                                                                |
+| otp-verification (24)                   | editable inputs gain 16px left and right padding (F18 correction 1; first recorded as the read-only input) | In one layer `.afvd13[data-no-border], [data-read-only] { padding: 0 }` (0,2,0) beat `.pqn3wrd { padding: 0 16px }` (0,1,0). Layered, `fds.otp-verification` ranks after `fds.input-group`, so the 16px wins: the read-only state loses its zero padding. The scan has `otp-verification -> input-group` edges                                                                                                 |
+| unit-number (12)                        | read-only `margin-right` 4px to 8px                                                                        | `.l1s6ick6[data-read-only] { 4px }` (0,2,0) beat `.h1ujh1ah { 0.5rem }` (0,1,0); layered, `fds.unit-number` ranks after `fds.input-group`. The scan has **no** `unit-number -> input-group` edge                                                                                                                                                                                                               |
+| modal-v2 (44, only in `depth`)          | close button 32px to 66px square, modal 34px taller                                                        | `ClickableIcon` sets `padding: 24px` and the modal's `slot-styles.ts` overrides it with `padding: 0`. That file is not named `*.style(s).ts`, so the edge scan skips it and the `modal-v2 -> shared` edge is missing. `depth` puts `shared` in `t1` and `modal-v2` in `t0`, so `shared`'s 24px wins. `styleedge` ranks `modal-v2` (29) after `shared` (8) through the import-graph tiebreak and matches `flat` |
+| toast (12), countdown-timer, animations | up to 38,946 px                                                                                            | Toast animates with a JS spring; the rest is animation timing. Not layering                                                                                                                                                                                                                                                                                                                                    |
 
 **The renders not traced by rule are render noise.** Of the 112, 94 are the four traced
 components and 12 are toast (its JS spring). The other 6 (`timetable` 3,
@@ -917,12 +917,12 @@ and none of their components differs in the sweep, so they are not counted as la
 
 **Traced rules** (`sweep/traces-f17.txt`, `flat` then `styleedge`, light desktop):
 
-| Element                                              | `flat` | `styleedge` | Rules                                                                                                                      |
-| ---------------------------------------------------- | ------ | ----------- | -------------------------------------------------------------------------------------------------------------------------- |
-| smart-app-banner dismiss icon width                  | 18px   | 20px        | `shared .m18ljjag svg` 1.125rem vs `smart-app-banner .cp9l7rn` 1.25rem                                                     |
-| navbar icon width                                    | 18px   | 24px        | `shared .m18ljjag svg` 1.125rem vs `navbar .m11vsg37` 1.5rem                                                               |
-| read-only OTP input `padding-left` (email and phone) | 0px    | 16px        | `input-group .nx53mj4[data-read-only]` / `.afvd13[data-read-only]` 0 vs `otp-verification .e1ik236m` / `.pqn3wrd` `0 16px` |
-| read-only unit-number divider `margin-right`         | 4px    | 8px         | `input-group .l1s6ick6[data-read-only]` 4px vs `unit-number .h1ujh1ah` 0.5rem                                              |
+| Element                                                                                                        | `flat` | `styleedge` | Rules                                                                                                                      |
+| -------------------------------------------------------------------------------------------------------------- | ------ | ----------- | -------------------------------------------------------------------------------------------------------------------------- |
+| smart-app-banner dismiss icon width                                                                            | 18px   | 20px        | `shared .m18ljjag svg` 1.125rem vs `smart-app-banner .cp9l7rn` 1.25rem                                                     |
+| navbar icon width                                                                                              | 18px   | 24px        | `shared .m18ljjag svg` 1.125rem vs `navbar .m11vsg37` 1.5rem                                                               |
+| OTP input `padding-left` (email and phone; F18: the editable `[data-no-border]` inputs, not the read-only one) | 0px    | 16px        | `input-group .nx53mj4[data-read-only]` / `.afvd13[data-read-only]` 0 vs `otp-verification .e1ik236m` / `.pqn3wrd` `0 16px` |
+| read-only unit-number divider `margin-right`                                                                   | 4px    | 8px         | `input-group .l1s6ick6[data-read-only]` 4px vs `unit-number .h1ujh1ah` 0.5rem                                              |
 
 What it shows:
 
@@ -974,13 +974,13 @@ traced by `drawer-trace.mjs` (`drawer-trace.txt`). The script patches the built 
 own rule in its own layer, as a source fix would compile. The same patch goes into
 both libraries, so a remaining difference between them is layering.
 
-| Change                        | Should win (2026-10-28)                                 | Simulated fix                                                                                |
-| ----------------------------- | ------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| smart-app-banner dismiss icon | the banner's `cross` 1.25rem                            | `.cross.cross` (0,2,0), so it beats `ClickableIcon`'s `.x svg` (0,1,1) in a single layer too |
-| navbar menu icon              | the navbar's `mobileMenuIcon` 1.5rem                    | `.mobileMenuIcon.mobileMenuIcon`, same                                                       |
-| navbar mobile submenu chevron | the navbar's `chevronIcon` 1.25rem (decided 2026-11-03) | `.expandCollapseButton .chevronIcon` (0,2,0), scoped so the desktop chevron keeps 1.125rem   |
-| read-only OTP input padding   | `input-group`'s `[data-read-only]` 0                    | both OTP inputs re-declare `[data-read-only]` and `[data-no-border]` `padding: 0`            |
-| read-only unit-number margin  | `input-group`'s `[data-read-only]` 4px                  | the hash container re-declares the read-only and right-position margins                      |
+| Change                                   | Should win (2026-10-28)                                 | Simulated fix                                                                                |
+| ---------------------------------------- | ------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| smart-app-banner dismiss icon            | the banner's `cross` 1.25rem                            | `.cross.cross` (0,2,0), so it beats `ClickableIcon`'s `.x svg` (0,1,1) in a single layer too |
+| navbar menu icon                         | the navbar's `mobileMenuIcon` 1.5rem                    | `.mobileMenuIcon.mobileMenuIcon`, same                                                       |
+| navbar mobile submenu chevron            | the navbar's `chevronIcon` 1.25rem (decided 2026-11-03) | `.expandCollapseButton .chevronIcon` (0,2,0), scoped so the desktop chevron keeps 1.125rem   |
+| OTP input padding (editable inputs, F18) | `input-group`'s `[data-read-only]` 0                    | both OTP inputs re-declare `[data-read-only]` and `[data-no-border]` `padding: 0`            |
+| read-only unit-number margin             | `input-group`'s `[data-read-only]` 4px                  | the hash container re-declares the read-only and right-position margins                      |
 
 | Comparison                        | Renders that differ | Of    | What they are                                                                                                                |
 | --------------------------------- | ------------------- | ----- | ---------------------------------------------------------------------------------------------------------------------------- |
@@ -1046,6 +1046,288 @@ What it does **not** show:
 -   Turbopack. Both the sweep and the e2e suite build with `next build --webpack`
     (`run-sweep.sh:31`, `run-e2e.sh:29`, like the repo's e2e app), one build per library.
     F16 covers Turbopack for order stability, but not for the screenshots.
+
+### F18. E8: a runtime conflict check finds 12 folder edges the style scan misses and 22 specificity flips; `styleedge` orders all 12 correctly, a 4-tier `depth` does not, and 5 tiers from the full edge set render every story like `styleedge` (Measured)
+
+Reproduce, from `docs/spike/experiments/scan/` (sweep app from `../sweep/prepare-app.sh`,
+libraries from `../final/prepare-libs.sh`):
+
+```
+OUT=results/full ./run-scan.sh && node gate.mjs results/full && node analyse.mjs results/full \
+  && (cd ../../../.. && node docs/spike/experiments/scan/why-missed.mjs) && node flip-rule.mjs results/full
+node depth-full.mjs results/full && (cd ../sweep && LIBS=depth-full SCHEMES="light dark" \
+  VIEWPORTS="desktop mobile" ./run-sweep.sh) && for r in flat styleedge depth; do \
+  (cd ../sweep && node diff-sweep.mjs $r depth-full) > results/q6/results-$r-vs-depthfull.jsonl; done \
+  && node sweep-summary.mjs results/q6/*.jsonl
+```
+
+The scan takes about 6 minutes, the `depth-full` sweep about 9 (webpack, port 4300, inside
+the sandbox). Results: `results/full/` (pairs, pages, gate, analysis, causes, flip rule),
+`results/q6/` (sweep diffs), `results/q6-smoke/` (the drift check).
+
+**What the check does.** `conflict-scan.mjs` loads every story page of the sweep app on the
+`styleedge` build (whose layer names are folder names) and collects every rule in a
+`fds.<folder>` layer, including rules inside `@media` and `@supports` whether or not they
+apply. It splits each selector into branches. State pseudo-classes (`:hover`, `:focus`,
+`:focus-visible`, `:focus-within`, `:active`, `:visited`, `:autofill`) and pseudo-elements
+are stripped before matching, and the branch is marked `stateDependent` or records its
+pseudo-element. Each branch is matched against every element under `<body>`, so portals
+are included. Then, for every element, every pair of rules from **different folders** that
+set the same longhand is recorded. A shorthand containing `var()` is read through its
+shorthand. Both declared values are computed in the element's own context (applied inline
+`!important`, with transitions off), so a pair whose two values compute the same is known.
+
+Each pair carries its specificity, `!important`, `styleedge` position, `depth` tier, and
+the predicted winner in `flat` (`!important`, then specificity; a tie is `order-dependent`),
+in `styleedge` and in `depth` (later layer wins; `!important` reverses it; within one tier,
+fall back to `flat`). Pairs are deduplicated by (rule A, branch A, rule B, branch B,
+property, pseudo-element), with one example page each.
+
+**Scope.** 519 story pages × desktop and mobile = 1,038 page loads, light scheme, date
+pinned. All 1,038 rendered, each with the order statement on all 20 theme sheets and the
+theme variable resolved. 0 selectors were unparsable, 0 stripped branches were
+unmatchable, and 0 sheets were unreadable. About 2,000 folder rules and 64 elements per
+page. **708 cross-folder pairs** (700 selector pairs, 76 folder pairs, 80 of them state
+dependent, 343 whose values compute differently). No two folders set the same custom
+property on one element. The library CSS has no nested rules (checked with `postcss`), so
+the check skips no library rule.
+
+**Ground truth (brief): 7 of 7 found** (`results/full/gate.txt`):
+
+| Kind             | Case                          | Result line (abridged)                                                                                                                                                |
+| ---------------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Missing edge     | `modal-v2 -> shared`          | `padding-*`: `.s1s12qxk` 0px vs `.m18ljjag` 24px on the close button; `flat` tie, `styleedge` modal-v2, `depth` shared; no static edge                                |
+| Missing edge     | `unit-number -> input-group`  | `margin-right`: `.l1s6ick6[data-read-only]` (0,2,0) 4px vs `.h1ujh1ah` (0,1,0) 8px; no static edge                                                                    |
+| Missing edge     | `error-display -> typography` | `margin-bottom` on the title `h2`: `.twamush` 16px vs `.d4n1hjq` 0px; `flat` tie; no static edge                                                                      |
+| Specificity flip | smart-app-banner              | `width`: `shared .m18ljjag svg` (0,1,1) 18px vs `.cp9l7rn` (0,1,0) 20px; `flat` shared, layered banner                                                                |
+| Specificity flip | navbar                        | `width`: `.m11vsg37` (0,1,0) 24px vs `.m18ljjag svg` 18px; also `.csth4gk` and the chevron `.c160mxwv`                                                                |
+| Specificity flip | otp-verification              | `padding-left/right`: `input-group .nx53mj4[data-no-border]` / `.afvd13[data-no-border]` (0,2,0) 0px vs `.e1ik236m` / `.pqn3wrd` (0,1,0) 16px. See correction 1 below |
+| Specificity flip | unit-number                   | as the missing edge above: `flat` input-group, layered unit-number                                                                                                    |
+
+**Model check.** On the `styleedge` build, the element's actual value equals the predicted
+`styleedge` winner in **292 of 302** pairs at rest whose values differ. In the other 10, a
+third rule on the same element sets the value (the OTP read-only class, `input-group`'s
+own `[data-read-only]`, `progress-indicator`'s `.i8ugwdc`, `timetable`'s `.rr9vcmw`), so
+the pairwise prediction does not decide there (`analysis.md`, "Model check").
+
+#### Q1. 12 runtime edges the static scan misses; `styleedge` orders all 12 correctly
+
+**66** folder pairs conflict at runtime with values that compute differently. **12** have no
+static edge in either direction. Directions come from the import graph (the folder that
+imports the other is the parent); none was unresolved. The cause of each was found by
+replaying `rollup/style-edges.js`'s own regexes on the parent's class
+(`results/full/why-missed.txt`, **Measured**) and then reading the source line it names
+(**Read**; the full table, with file and line for each, is in `results/full/q1-causes.md`):
+
+| Cause                                                                                                  | Edges                                                                                                                                     | A better source scan?                                                   |
+| ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| File not read (`slot-styles.ts` is not `*.style(s).ts`)                                                | `modal-v2 -> shared`                                                                                                                      | Yes: read every module that calls `css```                               |
+| Regex miss: next attribute is hyphenated (`data-testid=`)                                              | `error-display -> typography`                                                                                                             | Yes: parse JSX                                                          |
+| Regex miss: `=>` in an earlier prop ends the tag                                                       | `date-navigator -> shared`                                                                                                                | Yes: parse JSX                                                          |
+| Component or class through a local variable or a function return                                       | `avatar -> typography`, `link-list -> typography` (also a style file in another directory), `toggle -> typography`, `toggle -> text-list` | Yes: AST data flow and import resolution                                |
+| The parent applies the child's class to its own element                                                | `unit-number -> input-group` (`inputGroupStyles.labelAddonContainer` on a `<div>`)                                                        | Yes: cross-folder style imports used in `className`                     |
+| Properties set through a mixin (`${linkStyle}`, `${lineClampCss(2)}`) or a same-folder descendant rule | `notification-banner -> typography`, `sidenav -> typography`                                                                              | Yes, from compiled CSS; `.content a` on consumer children: runtime only |
+| Class forwarded through props to a grandchild's element                                                | `otp-verification -> shared` (via `InputGroup` to `InputWrapper`)                                                                         | Partly: follow `className` forwarding                                   |
+| Descendant tag selector into a grandchild                                                              | `masked-input -> input` (`.inputGroupWrapper input`, `:hover` cursor)                                                                     | Runtime only (needs the rendered tree)                                  |
+
+A better source scan (a JSX parser plus compiled CSS) could find **11 of the 12** (**Read**
+from the causes; not built). Only `masked-input -> input` needs the rendered tree.
+
+What the missing edges cost each layering (**Measured**, `analysis.md`):
+
+| Layering                | Parent after child | Same tier (source order)                                                                  | Parent before child (wrong)             |
+| ----------------------- | ------------------ | ----------------------------------------------------------------------------------------- | --------------------------------------- |
+| `styleedge` (85 layers) | **12**             | n/a                                                                                       | 0                                       |
+| `depth` (4 tiers, F14)  | 7                  | **4**: `avatar`, `link-list`, `toggle` vs `typography`, and `toggle -> text-list`, all t0 | **1**: `modal-v2` (t0) vs `shared` (t1) |
+
+5 of the 12 are already implied by a chain of static edges. `styleedge` gets all 12 right
+because its tiebreak is the import graph, and in all 12 the folder that styles the other
+also imports it. That holds here, not in general: inside an import cycle (F10) the
+tiebreak can point the wrong way.
+
+Static folder pairs with **no** runtime conflict on any story: 35 of 95 (including
+`button ~ shared`, in either direction). A further 6 conflict only with values that compute
+the same. For information only: a story that never renders the colliding combination
+looks the same as a false positive.
+
+#### Q2. 22 specificity flips; a static rule can only find them by flagging thousands of rule pairs
+
+A flip is a pair whose `flat` winner is decided by specificity and whose layered winner
+differs, with values that compute differently. **22** pairs, 11 folder pairs, **14 at rest,
+8 in interaction states** (**Measured**; the winners are predicted from the cascade rules,
+**Read**). `depth` predicts the same winner as `styleedge` for all 22.
+
+| Folder pair                                                    | Property           | Rest or state | `flat` → layered                               | Seen before                                               |
+| -------------------------------------------------------------- | ------------------ | ------------- | ---------------------------------------------- | --------------------------------------------------------- |
+| `shared` / `smart-app-banner`                                  | width, height      | rest          | 18px → 20px                                    | F17                                                       |
+| `shared` / `navbar` `.m11vsg37`                                | width, height      | rest          | 18px → 24px                                    | F17                                                       |
+| `shared` / `navbar` `.csth4gk`                                 | width, height      | rest          | 18px → 24px                                    | new rule; on the same 34 navbar page loads as `.m11vsg37` |
+| `shared` / `navbar` `.c160mxwv` (chevron)                      | width, height      | rest          | 18px → 20px                                    | F17 (drawer trace)                                        |
+| `input-group` / `otp-verification`                             | padding-left/right | rest          | 0 → 16px                                       | F17 (correction 1)                                        |
+| `input-group` / `unit-number`                                  | margin-right       | rest          | 4px → 8px                                      | F17                                                       |
+| `shared` / `time-slot-bar`                                     | height             | rest          | 18px → 16px; **0 pixels** (width-limited icon) | new                                                       |
+| `button` / `filter`                                            | background-color   | `:active`     | pressed colour → transparent                   | new                                                       |
+| `typography` / `footer` (2), `menu`, `notification-banner` (2) | color              | `:active`     | link pressed colour → the parent's link colour | new                                                       |
+| `shared` / `fullscreen-image-carousel`                         | background-color   | `:active`     | pressed colour → white                         | new                                                       |
+| `input` / `masked-input`                                       | cursor             | `:hover`      | `not-allowed` → `auto` on a disabled input     | new                                                       |
+
+All four F17 flips are found. The new ones are interaction states the stories never reach.
+In each, the child's state rule (`:active`, `:hover`) is more specific than the parent's
+resting rule, so in one layer the state rule won, and layered the parent's resting value
+wins. The pressed and disabled-hover feedback is lost. Whether that is wanted is not
+something the data can say.
+
+**Can a static rule catch this?** I tested the brief's rule ("for an edge parent → child, a
+parent rule less specific than a child rule on the same longhand") on the built CSS
+(`flip-rule.mjs`, **Measured**):
+
+| Edge set         | Parent rules considered              | Rule pairs flagged | Runtime flips caught        |
+| ---------------- | ------------------------------------ | ------------------ | --------------------------- |
+| static           | every rule in the parent folder      | 27,548             | 18 of 22 (13 of 14 at rest) |
+| static + runtime | every rule in the parent folder      | 29,056             | **22 of 22**                |
+| static           | rules on the class the parent passes | 3,070              | 7 of 22 (2 of 14 at rest)   |
+
+At folder level the rule finds everything, but only with the complete edge set, and with
+about 1,300 alarms per real flip: unusable as a build failure. Narrowed to the class the
+parent passes, it misses most flips, because the flipping rule is rarely on that class.
+`navbar`'s icon class is on the `<svg>` passed as children, not on the `ClickableIcon` that
+receives `.mobileMenuButton`; `shared` reaches the icon through a descendant `svg`. Only a
+rendered check sees which rules meet on an element.
+
+#### Q3. 535 cross-folder pairs tie on specificity; 272 compute differently
+
+These are the pairs exposed to the original bug: in `flat`, source order decides them.
+**535** pairs (532 selector pairs, 66 folder pairs), of which **272** compute different values
+(60 folder pairs, 13 state dependent). `styleedge` gives all 272 to the parent. `depth`
+gives 252 to the parent, leaves **8** in one tier (the four t0 pairs from Q1) and gives
+**12** to the child (the modal). `depth-full` separates all of them (Q6).
+
+#### Q4. Library `!important`: 3 of the 8 compete with another folder; no outcome changes
+
+37 pairs involve `!important`, from 3 declarations: `breadcrumb .ckhkv84`, `input .dtt8rz0`
+and `shared .irl4gvd`. The other five (`textarea`, `overlay`, `local-nav`, `timetable`, the
+second `breadcrumb`) meet no other folder on any story.
+
+-   **One side `!important`** (28 pairs, 2 whose values differ: `breadcrumb` vs `typography`
+    margin, and `input` vs `shared` background): the `!important` side wins in `flat`,
+    `styleedge` and `depth` alike.
+-   **Both sides `!important`** (9 pairs, `input .dtt8rz0` vs `shared .irl4gvd`, background
+    longhands): the case where layers reverse the order. `flat` is a tie; layered, the earlier
+    layer (`shared`) wins. **All 9 compute the same value** (`initial`, `transparent`), so
+    nothing changes.
+
+#### Q5. No cycle in static + runtime edges
+
+The union of the non-exempt static edges and the 12 resolved runtime edges has **no
+strongly connected component** (Tarjan, `analyse.mjs`). Condition 2's build check would
+pass on today's source with the scan completed. F13's one cycle (`button -> shared` and
+`shared -> button`) has **no runtime conflict on any element** in either direction, which
+confirms the `NOT_COLLIDING` exemption, and shows that the `button -> shared` spinner edges
+are not exercised by any story either.
+
+#### Q6. `depth-full`: 5 tiers from the full edge set; every story renders like `styleedge`
+
+`depth-full.mjs` applies the `tier-layers.mjs depth` rule to the static edges plus the 12
+runtime edges, on a copy of `final/libs/styleedge` (so `dist/` and `final/libs/depth`
+stay as measured):
+
+| Tiering                     | Tiers                     | Union edges inside one tier | Inverted | Runtime folder pairs in one tier |
+| --------------------------- | ------------------------- | --------------------------- | -------- | -------------------------------- |
+| `depth` (F14, static edges) | 4 (36, 10, 20, 19)        | 4 folder pairs (runtime)    | 1        | 4                                |
+| **`depth-full`**            | **5 (32, 12, 1, 21, 19)** | **0 of 217**                | **0**    | **0 of 66**                      |
+
+The fifth tier appears because `toggle` must now sit above `typography`. `shared`, which
+styles `toggle`, moves up to a tier of its own (t2), and 44 folders move up by one.
+
+Sweep, 2,076 renders, 0 failures (`results/q6/summary.txt`):
+
+| Comparison                  | Renders that differ | What they are                                                                                                                                                                                 |
+| --------------------------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `styleedge` vs `depth-full` | **26**              | **0 layering.** 18 on F17's noise stories (toast, timetable loading, countdown-timer, dots spinner, carousel); 8 `language-switcher` environment drift (below). **modal-v2: 0**               |
+| `flat` vs `depth-full`      | 118                 | **94 layering**: navbar 34, otp-verification 24, smart-app-banner 24, unit-number 12, the same components and counts as `flat` vs `styleedge` in F17, all Q2 flips; plus 8 drift and 16 noise |
+| `depth` vs `depth-full`     | 71                  | modal-v2 44 (the fix); plus drift and noise                                                                                                                                                   |
+
+**Environment drift** (**Measured**, `results/q6-smoke/`). `language-switcher/link-default`
+and `link-preselected` differed by 24 to 33 pixels from all three October references.
+Every computed property of all 40 elements and their pseudo-elements is identical between
+`styleedge` and `depth-full` (`full-style-dump.mjs --diff`: 0 lines). Renders of both
+libraries taken on the same day differ by 0 pixels in all 4 modes, and F17's October
+`styleedge` shots differ from today's `styleedge` render by the same 24 to 33 pixels: the
+anti-aliasing of the Tamil label "தமிழ்" (`ls-*-crop.png`). The machine's text rendering
+changed between 2026-10-27 and 2026-11-20.
+
+#### What it shows
+
+-   **The style scan misses real edges, and they are not exotic.** 12 of 66 runtime edges
+    (18%) have no static edge. The causes are ordinary code: a style file named differently,
+    a hyphenated attribute, a class in a variable, a mixin. A better source scan could find
+    11 of them; one needs the rendered tree.
+-   **`styleedge` absorbs the missing edges; `depth` does not.** The import-graph tiebreak
+    orders all 12 correctly. `depth` gets one wrong (the F17 modal break) and leaves four to
+    source order, which F17's sweep could not see, because that build's source order happened
+    to agree. F17 saw the fallback on one pair; it holds on all 12.
+-   **Tiers are viable only from the complete edge set.** With the runtime edges added, 5
+    tiers render all 519 stories exactly like `styleedge` (0 layering renders of 2,076), and
+    the modal goes back to 0. The tier count is a property of the edge set: completing it
+    added a tier.
+-   **Condition 2's claim ("a new override can only break the order by closing a cycle") is
+    wrong.** There is no cycle today, yet layering changes 22 pairs, all specificity flips on
+    edges that point the right way. A cycle check cannot see them, and a static
+    specificity rule cannot flag them without thousands of false alarms. Only a rendered
+    check can.
+-   **Layers lose state feedback in 8 places no story reaches** (`:active` on button, link
+    and carousel controls; `:hover` cursor on a disabled masked input). These join condition
+    4's list as candidates for a decision.
+-   **`!important` in the library changes no outcome** under per-folder layers.
+
+#### What it does not show
+
+-   **Webpack only.** Turbopack (the brief's optional step 3b) was not run.
+-   **States that need a DOM change.** Stripping state pseudo-classes covers `:hover`,
+    `:active` and focus rules on elements that exist at rest. Elements that only exist
+    after a click (closed menus, popovers, a modal not open on load, error states) are not
+    in the DOM, so their pairs are not seen. F17's chevron was found here only because one
+    story renders it.
+-   **The light scheme only.** Rules under `@media (prefers-color-scheme)` are included
+    (grouping rules are read regardless), but rules keyed on a theme attribute that the
+    stories do not set are not.
+-   **Rendered winners for state pairs.** The 8 state flips are predicted from specificity
+    and layer order (**Read**, the cascade rules); none was rendered in its state. The model
+    check covers pairs at rest only.
+-   **Pixels.** "Values differ" means a computed value differs. `time-slot-bar`'s flip
+    changes the computed height and no pixel.
+-   **Real apps and consumer content.** `notification-banner`'s `.content a` styles links
+    the consumer supplies; the stories have one such link.
+-   **`depth-full` under the e2e suite or in interaction states.** Only the story sweep was
+    run. Its pairwise predictions match `styleedge` for every runtime pair (0 inverted, 0 in
+    one tier), but that is the same model, not a render.
+-   **That a production source scan would find the 11 edges.** That is **Read** from the
+    causes; no improved scanner was built.
+-   **Pages compared across time.** Sweeps compared with F17's references pick up the
+    environment drift above. A new reference should be rendered on the same day.
+
+#### Corrections to earlier findings
+
+1.  **F17's OTP flip is on the editable inputs, not the read-only one.** F17 (traces and
+    "What the differences are") says the read-only OTP input gains 16px padding through
+    `[data-read-only]`. In the DOM, the read-only inputs keep 0px under `styleedge`, through
+    the component's own read-only class. The inputs that change are the editable ones
+    (default, disabled, error, interactive and the OTP-sent states). They all carry
+    `data-no-border="true"`, because `contact-input-section.tsx` always passes `noBorder`, and
+    `[data-no-border]` (0,2,0) is the branch that loses to `.e1ik236m` (0,1,0). F17's trace
+    took the first `.e1ik236m` (the default input), and `rule-trace.mjs` matches the whole
+    selector list, so it could not show the branch (**Measured**,
+    `results/gate/gate.txt`). The simulated fix re-declared both `[data-read-only]` and
+    `[data-no-border]`, so its pixel result should stand (**Assumed**). The 2026-10-28
+    decision ("the read-only inputs are regressions") was made about the wrong element:
+    what changes is the editable input's padding.
+2.  **The error-display miss is a hyphenated attribute, not a `>`.** F14 and "Untested and
+    caveats" say the tag regex stops at the `>` inside `` `${testId}--title` ``. There is no
+    `>` there. The `className` regex needs the next attribute to match `\w+=`, and
+    `data-testid=` does not (**Measured**, `why-missed.txt`).
+3.  **`styleedge`'s fallback holds on all 12 missing edges**, not one (F17, "Untested and
+    caveats"). It rests on the import direction matching the styling direction, which held
+    for all 12 here and fails inside an import cycle (F10).
 
 ### F19. E9: consumer overrides give the same result on per-folder and single-layer builds in 92 of 96 applicable cells; the 4 that differ are all consumers writing into a library layer by name (Measured)
 
@@ -1259,10 +1541,6 @@ before the parent's ref is attached. Calling it where the docs show, in the comp
 that renders `ThemeProvider`, works. The intended-winner list was committed before
 measuring `flat`. `styleedge` had been seen in two test runs before that.
 
-F18 was reserved for E8 (a complete style-edge scan plus a runtime scan for layering
-flips in states no story or spec reaches). E8 was descoped on 2026-11-18 and not run;
-see the Verdict and Follow-up tickets.
-
 ## Planned experiments
 
 Ordered by risk, riskiest first (see the charter's riskiest assumptions).
@@ -1278,7 +1556,7 @@ Ordered by risk, riskiest first (see the charter's riskiest assumptions).
 | E5b | Mitigation for E5a: explicit order for the cycle members (`form` before `input-textarea`), rerun the matrix. The original plan here (probe every cross-folder edge from E1) is replaced by the E5a scan                                                  | Full edge table                  | Done (F11): one reorder fixes F10, keeps F9; generator change not built                                                                                                    |
 | E6  | Consumer overrides: consumer unlayered CSS and consumer `@layer main, fds` ordering still win/lose as documented                                                                                                                                         | Pass/fail                        | Done (F12): overrides behave as today; unlayered wins, `@layer main` loses on both builds                                                                                  |
 | E7  | Migration: what must consumers add? Is the `default.css` order statement mandatory, what if it loads late or not at all                                                                                                                                  | Checklist                        | Done (F12): order statement must load first, else it falls back to load order                                                                                              |
-| E8  | Scan completeness: read every style file and descendant selectors for style edges, and scan runtime states (open drawers, menus) for layering flips no story or spec reaches                                                                             | Edge list, flip list             | Descoped 2026-11-18, not run. Assumed not needed to choose `styleedge` per-folder layers; carried as a named risk and a follow-up ticket                                   |
+| E8  | Scan completeness: read every style file and descendant selectors for style edges, and scan runtime states (open drawers, menus) for layering flips no story or spec reaches                                                                             | Edge list, flip list             | Done (F18), after being descoped on 2026-11-18: 12 runtime edges the scan misses, all ordered right by `styleedge`; 22 specificity flips, 8 in states; 0 cycles            |
 | E9  | Consumer overrides: 15 override mechanisms × 6 targets on single-layer, per-folder and published builds                                                                                                                                                  | Override matrix                  | Done (F19): same result in 92 of 96 applicable cells; the 4 that differ all write into `fds.<folder>`                                                                      |
 
 ## Granularity hypothesis (resolved by E4, F14)
@@ -1323,22 +1601,18 @@ verdict carries.
     consumer CSS loaded after the components (Assumed to flip), a consumer `!important`
     inside `fds.<folder>`, Tailwind's order statement combined with `main`, Tailwind
     through `@tailwindcss/postcss`, and styled-components with SSR.
--   **E8, scan completeness: descoped 2026-11-18, not run.** Neither the complete
-    style-edge scan nor a runtime scan for flips in unscripted states was built. The
-    chevron flip (F17) was found only because one e2e spec opens the drawer, so other
-    flips in states no story or spec reaches may exist. That this does not change the
-    choice of `styleedge` per-folder layers is **Assumed**, not measured: it rests on
-    `styleedge` falling back to the import graph for unscanned pairs, seen on one pair
-    (`modal-v2 -> shared`, F17). It certainly limits how much the build-time cycle check
-    (condition 2), condition 4's list of five changes, and any future `depth` tiering
-    can be trusted. Carried as a follow-up.
+-   ~~E8, scan completeness~~: descoped on 2026-11-18, then run (F18). Left open from it:
+    elements that only exist after a click (closed menus, popovers, unopened modals,
+    error states), the dark scheme's theme-attribute rules, the 8 state flips rendered
+    in their state, `depth-full` under the e2e suite, Turbopack, and a production source
+    scan (the 11 edges it would find are Read from the causes, not built).
 
 **Coverage of the override scan**
 
 -   The style-edge scan is a regex, so its 207 edges (205 after the `NOT_COLLIDING`
     exemption, F13) are a lower bound. Known miss:
-    `error-display -> typography`, because the tag regex stops at the `>` inside
-    `` `${testId}--title` ``. Not scanned at all: multi-line `clsx(...)`, classes passed
+    `error-display -> typography`, because the `className` regex needs the next attribute to match `\w+=`, and
+    `data-testid=` does not (corrected in F18; this first said the regex stops at a `>`). Not scanned at all: multi-line `clsx(...)`, classes passed
     through props, overrides in non-`.tsx` files.
 -   The exemption list (`NOT_COLLIDING`) is hand-maintained; each entry is a claim about
     runtime classes the scan cannot check.
@@ -1393,9 +1667,9 @@ See [02-alternative-paths.md](02-alternative-paths.md).
 > section is the working record it was written from; if the two disagree, FINDINGS.md
 > wins.
 
-**Final (2026-11-18): Adopt `styleedge` per-folder layers, with conditions and named
-risks.** The draft of 2026-11-03 said "Adopt for subset"; the subset was the open parts
-of criterion 3, now closed or descoped below. Exit criterion 1 is met (F8).
+**Final (2026-11-18, updated 2026-11-23 with F18): Adopt `styleedge` per-folder
+layers, with conditions and named risks.** The draft of 2026-11-03 said "Adopt for subset"; the subset was the open parts
+of criterion 3, now closed below. Exit criterion 1 is met (F8).
 **Criterion 2 is not met as written.** Order stability is met (F16: 5 builds, more
 than one entry point, both bundlers). The Playwright screenshots are not: the layered
 build fails 38 e2e tests and changes 94 story renders (F17). Only in a simulation do
@@ -1407,18 +1681,20 @@ intended (2026-10-28, 2026-11-03). Criterion 2 is met when the source fixes land
 baselines are regenerated, and the full e2e suite passes on both bundlers (condition
 4). Criterion 3 is answered for every spec requirement: granularity (F14, F17),
 parent/child variants (F10, F11, F13), consumer migration (F12, F15) and consumer
-overrides (F19, 15 mechanisms × 6 targets). The one part left is scan completeness
-(E8), descoped as a named risk. It limits the build-time cycle check and `depth`
-tiering; that it does not change the choice between approaches is **Assumed** (see
-"Untested and caveats").
+overrides (F19, 15 mechanisms × 6 targets). Scan completeness (E8) was
+run after all (F18). It confirms the choice (Measured): the style scan misses 12 of 66
+runtime edges, and `styleedge` orders all 12 correctly while 4-tier `depth` does not.
+It finds no style cycle, adds 8 flips in interaction states to decide (condition 4),
+and shows that the cycle check alone cannot guard the order (condition 2).
 
 **Against the charter's two clauses**, the answer is **partly**. No hand-ordering per
 variant relationship: yes, the generator orders from style edges (F13), apart from one
 hand-maintained `NOT_COLLIDING` exemption. No redeclaring variants in every child:
 not in every child, but not in none either. Condition 4 re-declares `input-group`'s
-read-only rules in two children, and the three icon fixes are specificity bumps
-(02 path #1). That is 5 known relationships, and more may be hidden by the incomplete
-scan.
+state rules (`[data-read-only]`, `[data-no-border]`) in two children, and the three icon
+fixes are specificity bumps (02 path #1). That is 5 known relationships. F18 finds 22
+specificity flips in all, including 8 in `:active` and `:hover` states, so more may need
+the same treatment once decided (condition 4).
 
 Per-folder layers solve the reported problem and their known blocker is
 fixable, on the evidence so far:
@@ -1427,7 +1703,7 @@ fixable, on the evidence so far:
 | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
 | Deterministic style order        | **Yes, for every measured pair.** Layers make source order irrelevant: F8's broken source order is still there on the layered build, but the parent wins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | F8, F9            |
 | Parent/child variant inheritance | **Blocker is real but narrow and fixable.** Layers break a parent's override wherever the order puts the child later (F10). 1 real case in 206 cross-folder className overrides (207 style edges in all, F13), inside an import cycle. Ordering from style edges fixes it in the generator and keeps F9                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | F10, F11, F13     |
-| Granularity                      | **Per-folder is not required for the scanned edges, but the scan is incomplete.** 4 tiers derived from style-edge depth match it on every scanned edge; a hand-picked base/components split leaves 61 edges to source order and fails a hostile order. On the full e2e stories `depth` breaks the modal close button on 44 renders where `styleedge` does not (F17), so `styleedge` is the safer default                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | F14               |
+| Granularity                      | **Per-folder (`styleedge`) is the default; tiers are viable only from a complete edge set.** Tiers built from the style scan alone break: `depth` (4 tiers) breaks the modal close button on 44 renders (F17) and leaves 4 runtime conflicts to source order (F18). With the 12 edges the runtime check adds, 5 tiers render all 519 stories exactly like `styleedge` (F18). The tier count follows the edge set (completing it added a tier), so tiers need the runtime check as their edge source; per-folder layers degrade gracefully when an edge is missed, because the import-graph tiebreak ordered all 12 missed edges correctly. A hand-picked base/components split leaves 61 edges to source order and fails a hostile order (F14)                                                                                                                                                                                                                   | F14, F17, F18     |
 | Consumer migration path          | **One requirement, stricter than the documented setup.** Import the theme stylesheet as a bundled import in the outermost layout that renders any library component. A nested-layout import or a CDN `<link>` silently falls back to load order (F15). Several themes and runtime switching are fine. **App overrides give the same result as a single-layer build for every documented route and every common one measured** (unlayered CSS, `@layer main`, `!important`, inline style, tokens, CSS Modules, Tailwind v4, runtime CSS-in-JS: 92 of 96 applicable cells, F19). The exception is CSS written into the library's own layers (`@layer fds.<folder>`), which changes result and becomes load-order dependent. Per-folder layer names must stay private and be documented as such. Moving the library from rules directly in `fds` (alpha.14) into sublayers already changes `@layer fds { }` and `@layer fds.* { }` overrides, with one sublayer too | F5, F12, F15, F19 |
 
 Conditions for adopting:
@@ -1436,10 +1712,20 @@ Conditions for adopting:
    passes a class to whom, so cycle members are ordered by styling direction
    (F10, F11), and it must declare every styled folder, not only those reachable
    from `src/index.ts` (F13). Built and measured in the spike generator (F13).
-2. **Fail the build on a style cycle.** With the order generated from the edges, a
-   new override can only break it by closing a cycle. The spike generator fails the
-   build then (F13). The production version needs a reviewed exemption list for
-   false positives, since the scan works at folder level.
+2. **Fail the build on a style cycle, and check rendered conflicts in CI.** A cycle is
+   one way a new override can break the order; a specificity flip is another, and it
+   happens on edges that point the right way. In one layer the child's more specific
+   rule won; under layers the parent's later layer wins (22 pairs today, 8 of them in
+   `:active`/`:hover` states no story reaches, F18). The cycle check cannot see flips,
+   and a static specificity rule flags about 29,000 rule pairs to find 22 (F18). So the
+   production version needs:
+   (a) the cycle check over the style edges, with a reviewed exemption list (no cycle
+   today, including the 12 runtime edges, F18);
+   (b) a rendered conflict check (the E8 runtime scan) over the stories, failing on a
+   new cross-folder pair whose `flat` and layered winners differ, unless it is listed
+   with a decision, and on a conflicting folder pair with no style edge;
+   (c) a style scan that reads every module calling `css` and parses JSX, which would
+   have found 11 of the 12 missed edges (F18, Read from the causes; not built).
 3. **The order statement must load first** in consumer apps (E0, F12, F15). The
    documented setup is not enough on its own: the theme has to be a bundled import
    in the outermost layout that renders library components, and a CDN `<link>`
@@ -1450,16 +1736,26 @@ Conditions for adopting:
 4. **Resolve the five layering changes before shipping.** Layering resolves specificity
    differently from one layer. Against a single-layer build it changes 4 styles on the
    stories (94 of 2,076 e2e story renders) and fails 38 e2e tests (F17): the banner and
-   navbar icons grow, the OTP and unit-number read-only inputs gain padding or margin. A
+   navbar icons grow, the OTP's editable inputs gain padding (F18 correction 1: not the
+   read-only input, as first recorded) and the unit-number read-only divider gains margin. A
    fifth, the navbar's mobile submenu chevron (18px to 20px), shows only with the drawer
    open. Decided 2026-10-28 and 2026-11-03: the three icon sizes are intended, so those
    components must win in both builds and 16 e2e baselines are regenerated; the read-only
    inputs are regressions, fixed by re-declaring `input-group`'s state rules in the
-   component. Simulated on built CSS (webpack), this leaves 0 layering renders and, on
+   component. **The OTP half of that decision needs re-deciding**: it was made about the
+   read-only input, and F18 shows the change is on the editable inputs, which carry
+   `[data-no-border]`. The simulated fix re-declared both attributes, so its pixel result
+   should stand (Assumed, F18). Simulated on built CSS (webpack), this leaves 0 layering renders and, on
    the 5 spec folders the fixes touch, no e2e test failing on only one build (F17,
-   simulated fixes). The source fixes, a full e2e run and a Turbopack run are still owed. `depth` additionally breaks the modal close
-   button where the edge scan is incomplete; the scan must read every style file and
-   descendant selectors (F17) before `depth` can be trusted.
+   simulated fixes). The source fixes, a full e2e run and a Turbopack run are still owed.
+   **F18 adds candidates to decide the same way**: 8 flips in interaction states the
+   stories never reach (`:active` on `filter`'s button, on links in `footer`, `menu` and
+   `notification-banner`, and on `fullscreen-image-carousel` controls; the `:hover`
+   cursor on a disabled `masked-input`), where layering loses the pressed or
+   disabled-hover feedback; plus two at rest that change no pixel seen so far
+   (`time-slot-bar`'s icon height, and navbar's `.csth4gk` on the same page loads as
+   the menu icon). These are predicted from the cascade rules, not rendered in their
+   state.
 5. **Layer names stay private.** Consumers must not write into `fds` or `fds.<folder>`
    (F19): on per-folder layers such rules tie with the library and are decided by load
    order, and a folder rename silently flips them. Document this in the troubleshooting
@@ -1467,10 +1763,13 @@ Conditions for adopting:
 
 Named risks the decision owner accepts with this verdict:
 
--   **Incomplete scan (E8 descoped).** The style-edge scan is a regex lower bound
-    (207 edges, 205 after exemptions) and no runtime flip scan exists. A missed edge can hide a cycle from the
-    build check (condition 2) or leave an override to the generated order, as F10 did
-    before F11. Mitigated by the follow-up scanner ticket.
+-   **Scan coverage after E8.** The runtime check (F18) covers the 519 stories at rest,
+    and the `:hover`, `:active` and focus rules of elements present at rest, in the
+    light scheme, on webpack. It does not see elements that only exist after a click
+    (closed menus, popovers, unopened modals, error states), theme attributes the
+    stories do not set, consumer content, or Turbopack. A conflict there can still
+    flip or depend on the import-graph tiebreak, which F10 shows can point the wrong
+    way inside an import cycle. Mitigated by condition 2's CI checks.
 -   **Probe coverage.** 7 probes, 6 real collisions, one hostile-order pair, Chromium
     only, Next 16.3.6 only (see "Untested and caveats").
 -   **Rare reordering.** 5 builds per library (F16) cannot rule out a
@@ -1484,7 +1783,7 @@ Rejected alternatives to this verdict:
 -   _Redeclare variants in every child_ (spec option 1): not needed as the general
     approach, since the generated order handles every scanned variant relationship
     but one. It is still needed in places: condition 4 re-declares `input-group`'s
-    read-only rules in two children (F17), so a component that composes `input-group`
+    state rules in two children (F17, F18), so a component that composes `input-group`
     and overrides its padding or margin needs the same.
 -   _Hand-ordered layers per variant_ (spec option 3): not needed either; one move
     fixed the only real case. The generator does the ordering.
@@ -1525,7 +1824,10 @@ Still open:
 
 ## Follow-up tickets
 
-**Resolve the five layering changes (F17), on the bug ticket.** Decided 2026-10-28
+**Resolve the five layering changes (F17), on the bug ticket, and decide F18's 8 state
+flips.** The OTP decision below was made about the wrong element and needs re-deciding
+(F18 correction 1). The 8 flips in `:active` and `:hover` states are listed in F18 Q2 and
+condition 4; each needs the same "intended or regression" call. **Earlier text:** Decided 2026-10-28
 (chevron 2026-11-03), replacing the 2026-10-27 decision that the first four were
 regressions: the consuming component's icon size is intended, and the read-only inputs
 keep today's rendering. Each is a pair of rules where the child's more specific rule
@@ -1536,13 +1838,13 @@ the layered build, with the 16 icon baselines regenerated (38 failures before th
 6 BookingSG logo baselines (navbar 4, footer 2) are stale against the remote logo and
 fail on both builds; they need regenerating too, but are not layering.
 
-| Change                                              | Rule that should win                                                                             | Fix (simulated in F17)                                                     |
-| --------------------------------------------------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
-| Smart-app-banner dismiss icon 18px became 20px      | `src/smart-app-banner/smart-app-banner.styles.ts:59` `cross` 1.25rem (intended)                  | beat `ClickableIcon`'s `svg` rule in one layer too; regenerate 7 baselines |
-| Navbar menu icon 18px became 24px                   | `src/navbar/navbar.styles.ts:96` `mobileMenuIcon` 1.5rem (intended)                              | same; regenerate 5 baselines                                               |
-| Navbar mobile submenu chevron 18px became 20px      | `src/navbar/navbar-items.styles.ts:165` `chevronIcon` 1.25rem (intended)                         | same, scoped to `expandCollapseButton`; regenerate 4 baselines             |
-| Read-only OTP input gains 16px side padding         | `src/input-group/input-group.styles.ts:14`, `:33` `[data-read-only] { padding: 0 }` (regression) | re-declare it on both OTP inputs                                           |
-| Read-only unit-number divider margin 4px became 8px | `src/input-group/input-group.styles.ts:61` `[data-read-only] { margin-right: 4px }` (regression) | re-declare it, and the right-position margins, on the hash container       |
+| Change                                                                                               | Rule that should win                                                                                                                                                                             | Fix (simulated in F17)                                                     |
+| ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| Smart-app-banner dismiss icon 18px became 20px                                                       | `src/smart-app-banner/smart-app-banner.styles.ts:59` `cross` 1.25rem (intended)                                                                                                                  | beat `ClickableIcon`'s `svg` rule in one layer too; regenerate 7 baselines |
+| Navbar menu icon 18px became 24px                                                                    | `src/navbar/navbar.styles.ts:96` `mobileMenuIcon` 1.5rem (intended)                                                                                                                              | same; regenerate 5 baselines                                               |
+| Navbar mobile submenu chevron 18px became 20px                                                       | `src/navbar/navbar-items.styles.ts:165` `chevronIcon` 1.25rem (intended)                                                                                                                         | same, scoped to `expandCollapseButton`; regenerate 4 baselines             |
+| OTP editable inputs gain 16px side padding (F18 correction 1; first recorded as the read-only input) | `src/input-group/input-group.styles.ts:14`, `:33` `[data-no-border]`, `[data-read-only] { padding: 0 }` (decided as a regression for the read-only input; **re-decide** for the editable inputs) | re-declare both on both OTP inputs                                         |
+| Read-only unit-number divider margin 4px became 8px                                                  | `src/input-group/input-group.styles.ts:61` `[data-read-only] { margin-right: 4px }` (regression)                                                                                                 | re-declare it, and the right-position margins, on the hash container       |
 
 Evidence: `sweep/traces-f17.txt` (competing rules and computed values per build),
 `sweep/cmp/` (side-by-side images), `sweep/e2e-results/` (reports; diff images are
@@ -1551,13 +1853,14 @@ regenerated by `run-e2e.sh`), and for the fixes `sweep/simulate-fixes.mjs`,
 
 **Other follow-ups** (estimates are rough, for planning):
 
-| Ticket                                      | Scope                                                                                                                                                                                                            | Done when                                                                                                           | Rough size |
-| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ---------- |
-| Style-edge generator in the build           | Rewrite F13's generator for production: order `fds.<folder>` layers from style edges, declare every styled folder, fail the build on a style cycle with a reviewed exemption list (conditions 1, 2)              | Build emits the order statement; a new cycle fails CI                                                               | 3-5 days   |
-| Complete style-edge scanner (E8 follow-up)  | Parse every style file, multi-line `clsx(...)`, classes passed through props and descendant selectors, instead of the regex; add a runtime check for flips in drawer/menu states                                 | Scanner finds the known miss (`error-display -> typography`) and the edge behind the modal close-button break (F17) | 3-5 days   |
-| Order statement loads first                 | Hard requirement in the setup docs, plus a dev-mode warning when a component layer appears before the order statement (condition 3, F12, F15)                                                                    | Warning fires on F12's `theme-late` page                                                                            | 1-2 days   |
-| Consumer override guidance                  | Add the "Overriding component styles" section to `stories/getting-started/troubleshooting.mdx`, from the proposal in `experiments/e2/E9-FINDING.md`; state that `fds` layer names are private (condition 5, F19) | Docs merged; Tailwind combined-statement case measured or marked untested                                           | 1 day      |
-| Ship `cssChunking: "graph"` workaround docs | 02 path #5, independent of the layer work                                                                                                                                                                        | Docs merged                                                                                                         | 0.5 day    |
+| Ticket                                       | Scope                                                                                                                                                                                                                                                                 | Done when                                                                   | Rough size                                         |
+| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | -------------------------------------------------- |
+| Style-edge generator in the build            | Rewrite F13's generator for production: order `fds.<folder>` layers from style edges, declare every styled folder, fail the build on a style cycle with a reviewed exemption list (conditions 1, 2)                                                                   | Build emits the order statement; a new cycle fails CI                       | 3-5 days                                           |
+| Complete style-edge scanner (condition 2c)   | Read every module that calls `css` and parse JSX, instead of the regex: classes through variables and function returns, mixins, cross-folder style imports used in `className`, `className` forwarding (F18 Q1 causes)                                                | Scanner finds 11 of F18's 12 missed edges (all but `masked-input -> input`) | 3-5 days                                           |
+| Rendered conflict check in CI (condition 2b) | Productionise the idea, not the code, of F18's `conflict-scan.mjs`: load every story on the layered build, fail on a new cross-folder pair whose `flat` and layered winners differ unless listed with a decision, and on a conflicting folder pair with no style edge | Finds F18's 7 ground-truth cases and 22 flips; a new unlisted flip fails CI | not sized (the spike scan runs in about 6 minutes) |
+| Order statement loads first                  | Hard requirement in the setup docs, plus a dev-mode warning when a component layer appears before the order statement (condition 3, F12, F15)                                                                                                                         | Warning fires on F12's `theme-late` page                                    | 1-2 days                                           |
+| Consumer override guidance                   | Add the "Overriding component styles" section to `stories/getting-started/troubleshooting.mdx`, from the proposal in `experiments/e2/E9-FINDING.md`; state that `fds` layer names are private (condition 5, F19)                                                      | Docs merged; Tailwind combined-statement case measured or marked untested   | 1 day                                              |
+| Ship `cssChunking: "graph"` workaround docs  | 02 path #5, independent of the layer work                                                                                                                                                                                                                             | Docs merged                                                                 | 0.5 day                                            |
 
 Production work is a rewrite, not a promotion of the
 `rl/css-layers` spike code. That includes the spike generator in

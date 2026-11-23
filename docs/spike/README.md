@@ -58,10 +58,10 @@ condition below is hit:
 **Final findings, verdict and proposal: [FINDINGS.md](FINDINGS.md).** The numbered docs
 below are the working records it cites.
 
-| #   | Spike                                                             | Doc                                                | Status  | Verdict                                                                                                                                                                               |
-| --- | ----------------------------------------------------------------- | -------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 01  | Native CSS layers (granularity, parent/child variants, migration) | [01-css-layers.md](01-css-layers.md)               | Done    | Adopt `styleedge` per-folder layers, with 5 conditions and named risks (scan completeness, E8, descoped; exit criterion 2 met only in simulation; "no redeclaring" holds only partly) |
-| 02  | Alternative paths (shortlist and ordering)                        | [02-alternative-paths.md](02-alternative-paths.md) | Dropped | Not run: layers were viable; #5 kept as a workaround ticket                                                                                                                           |
+| #   | Spike                                                             | Doc                                                | Status  | Verdict                                                                                                                                                                                                                          |
+| --- | ----------------------------------------------------------------- | -------------------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 01  | Native CSS layers (granularity, parent/child variants, migration) | [01-css-layers.md](01-css-layers.md)               | Done    | Adopt `styleedge` per-folder layers, with 5 conditions and named risks (exit criterion 2 met only in simulation; "no redeclaring" holds only partly; E8 run as F18: 8 state flips to decide, CI needs a rendered conflict check) |
+| 02  | Alternative paths (shortlist and ordering)                        | [02-alternative-paths.md](02-alternative-paths.md) | Dropped | Not run: layers were viable; #5 kept as a workaround ticket                                                                                                                                                                      |
 
 ## Conventions
 
