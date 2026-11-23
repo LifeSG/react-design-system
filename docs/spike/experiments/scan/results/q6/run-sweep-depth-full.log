@@ -1,0 +1,14 @@
+[depth-full] building (0m00s elapsed)
+[depth-full] screenshots light desktop (0m14s elapsed)
+519/519 screenshots in shots/depth-full/light-desktop, 0 failed
+done in 2m22s
+exit 0
+[depth-full] building (0m00s elapsed)
+[depth-full] screenshots light mobile (0m14s elapsed)
+519/519 screenshots in shots/depth-full/light-mobile, 0 failed
+[depth-full] screenshots dark desktop (2m23s elapsed)
+519/519 screenshots in shots/depth-full/dark-desktop, 0 failed
+[depth-full] screenshots dark mobile (4m32s elapsed)
+519/519 screenshots in shots/depth-full/dark-mobile, 0 failed
+done in 6m33s
+exit 0

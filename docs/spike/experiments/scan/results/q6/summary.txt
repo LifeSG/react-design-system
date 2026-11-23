@@ -1,0 +1,26 @@
+
+results-flat-vs-depthfull.jsonl: 118 of 2076 renders differ
+  F17 layering flip | navbar: 34 renders (dark-mobile,light-mobile), max 456px; action-button-only, compress, custom-action-button, custom-link, default, hide-branding ...
+  F17 layering flip | otp-verification: 24 renders (dark-desktop,dark-mobile,light-desktop,light-mobile), max 22309px; email-interactive, email-otp-state, email-variants, phone-number-interactive, phone-number-otp-state, phone-number-variants
+  F17 layering flip | smart-app-banner: 24 renders (dark-desktop,dark-mobile,light-desktop,light-mobile), max 1410px; default, no-message, star-rating-full, star-rating-none, star-rating-partial, star-rating-zero
+  F17 layering flip | unit-number: 12 renders (dark-desktop,dark-mobile,light-desktop,light-mobile), max 334px; all-variants, prefilled, standalone-variants
+  UNEXPLAINED | language-switcher: 8 renders (dark-desktop,dark-mobile,light-desktop,light-mobile), max 33px; link-default, link-preselected
+  noise (F17) | countdown-timer: 1 renders (light-desktop), max 5525px; left-aligned
+  noise (F17) | timetable: 3 renders (dark-desktop,dark-mobile,light-mobile), max 488px; loading
+  noise (F17) | toast: 12 renders (dark-desktop,dark-mobile,light-desktop,light-mobile), max 27583px; fixed-positioning, custom-content, variants, with-action-button, with-sublabel
+
+results-styleedge-vs-depthfull.jsonl: 26 of 2076 renders differ
+  UNEXPLAINED | language-switcher: 8 renders (dark-desktop,dark-mobile,light-desktop,light-mobile), max 33px; link-default, link-preselected
+  noise (F17) | animations: 1 renders (dark-desktop), max 24px; loading-dots-spinner-custom-colour
+  noise (F17) | countdown-timer: 2 renders (light-desktop), max 5525px; left-aligned, right-aligned
+  noise (F17) | fullscreen-image-carousel: 1 renders (dark-mobile), max 225px; custom-actions
+  noise (F17) | timetable: 3 renders (dark-desktop,dark-mobile,light-desktop), max 523px; loading
+  noise (F17) | toast: 11 renders (dark-desktop,dark-mobile,light-desktop,light-mobile), max 22111px; fixed-positioning, custom-content, variants, with-action-button, with-sublabel
+
+results-depth-vs-depthfull.jsonl: 71 of 2076 renders differ
+  UNEXPLAINED | language-switcher: 8 renders (dark-desktop,dark-mobile,light-desktop,light-mobile), max 33px; link-default, link-preselected
+  modal-v2 | modal-v2: 44 renders (dark-desktop,dark-mobile,light-desktop,light-mobile), max 58615px; custom-styling, default, fullscreen, header-close-button-left, header-close-button-only, header-default ...
+  noise (F17) | countdown-timer: 3 renders (dark-desktop,light-desktop), max 44748px; left-aligned, right-aligned
+  noise (F17) | fullscreen-image-carousel: 1 renders (light-mobile), max 225px; default
+  noise (F17) | timetable: 3 renders (dark-desktop,dark-mobile,light-mobile), max 1566px; loading
+  noise (F17) | toast: 12 renders (dark-desktop,dark-mobile,light-desktop,light-mobile), max 16962px; fixed-positioning, custom-content, variants, with-action-button, with-sublabel

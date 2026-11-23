@@ -1,2 +1,3 @@
 build-*.log
 serve-*.log
+results/q6-smoke/full-*.json
