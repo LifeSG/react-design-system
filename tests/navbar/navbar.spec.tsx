@@ -200,6 +200,21 @@ describe("Navbar", () => {
                 screen.queryByTestId("main__brand-addon")
             ).not.toBeInTheDocument();
         });
+
+        it("should not render the header brand and addon if hideNavBranding is set", () => {
+            render(
+                <Navbar
+                    items={{ desktop: MOCK_ITEMS() }}
+                    headerBrandAddon={<a href="/">Back to Home</a>}
+                    hideNavBranding
+                />
+            );
+
+            expect(screen.queryByTestId("main__brand")).not.toBeInTheDocument();
+            expect(
+                screen.queryByTestId("main__brand-addon")
+            ).not.toBeInTheDocument();
+        });
     });
 
     describe("Drawer brand addon", () => {
