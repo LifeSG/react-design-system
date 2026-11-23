@@ -717,6 +717,19 @@ export const DrawerBrandAddon: StoryObj<Component> = {
     },
 };
 
+export const HiddenBranding: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Navbar
+                items={{ desktop: navItems }}
+                selectedId="home"
+                fixed={false}
+                hideNavBranding
+            />
+        );
+    },
+};
+
 export const HiddenMasthead: StoryObj<Component> = {
     render: (_args) => {
         return (
@@ -759,19 +772,6 @@ export const StretchedLayout: StoryObj<Component> = {
                 selectedId="home"
                 fixed={false}
                 layout={"stretch"}
-            />
-        );
-    },
-};
-
-export const HiddenBranding: StoryObj<Component> = {
-    render: (_args) => {
-        return (
-            <Navbar
-                items={{ desktop: navItems }}
-                selectedId="home"
-                fixed={false}
-                hideNavBranding
             />
         );
     },
