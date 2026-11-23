@@ -165,7 +165,7 @@ const Component = (
         }
     };
 
-    const commitInputPage = () => {
+    const handleInputCommit = () => {
         const page = parseInt(inputText);
         if (isNaN(page)) {
             setInputValue(activePage);
@@ -178,7 +178,7 @@ const Component = (
 
     const handleInputSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        commitInputPage();
+        handleInputCommit();
     };
 
     const onHoverRightButton = () => {
@@ -333,7 +333,7 @@ const Component = (
                     value={inputText}
                     onChange={handleInput}
                     // iOS keyboard "Done" fires blur, not form submit
-                    onBlur={commitInputPage}
+                    onBlur={handleInputCommit}
                     autoComplete="off"
                     type="text"
                     inputMode="numeric"
