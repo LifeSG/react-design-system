@@ -28,7 +28,7 @@ class StoryPage extends AbstractStoryPage {
             closeButton: Locator;
             drawer: Locator;
             drawerBrand: Locator;
-            drawerHeaderContent: Locator;
+            drawerBrandAddon: Locator;
             brandAddon: Locator;
             brand: Locator;
             navLink: (index: number) => Locator;
@@ -63,7 +63,7 @@ class StoryPage extends AbstractStoryPage {
                 }),
                 drawer: page.getByTestId("drawer"),
                 drawerBrand: page.getByTestId("drawer__brand"),
-                drawerHeaderContent: page.getByTestId("drawer__header-content"),
+                drawerBrandAddon: page.getByTestId("drawer__brand-addon"),
                 brandAddon: page.getByTestId("main__brand-addon"),
                 brand: page.getByTestId("main__brand"),
                 navLink: (index: number) => page.getByTestId(`link__${index}`),
@@ -374,38 +374,16 @@ test.describe("Navbar", () => {
 
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
-                await story.init("drawer-header", { size: "mobile" });
+                await story.init("drawer-brand-addon", { size: "mobile" });
             });
 
-            test("Drawer header", async ({ story }) => {
+            test("Drawer brand addon", async ({ story }) => {
                 await story.openMobileDrawer();
                 await story.page.mouse.move(0, 0);
 
                 await expect(story.locators.internal.drawerBrand).toBeVisible();
                 await expect(
-                    story.locators.internal.drawerHeaderContent
-                ).toBeVisible();
-                await compareScreenshot(story, "open", { fullscreen: true });
-            });
-        });
-
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("hide-drawer-branding", { size: "mobile" });
-            });
-
-            test("Hide drawer branding", async ({ story }) => {
-                await story.waitForMasthead(story.page);
-                await expect(story.locators.internal.brand).toBeVisible();
-
-                await story.openMobileDrawer();
-                await story.page.mouse.move(0, 0);
-
-                await expect(
-                    story.locators.internal.drawerBrand
-                ).not.toBeAttached();
-                await expect(
-                    story.locators.internal.drawerHeaderContent
+                    story.locators.internal.drawerBrandAddon
                 ).toBeVisible();
                 await compareScreenshot(story, "open", { fullscreen: true });
             });

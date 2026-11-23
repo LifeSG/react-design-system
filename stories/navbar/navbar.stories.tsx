@@ -700,36 +700,18 @@ export const HeaderBrandAddon: StoryObj<Component> = {
     },
 };
 
-export const DrawerHeader: StoryObj<Component> = {
+export const DrawerBrandAddon: StoryObj<Component> = {
     render: (_args) => {
         return (
             <Navbar
                 items={{ desktop: navItems }}
                 selectedId="home"
                 fixed={false}
-                drawerHeader={
+                drawerBrandAddon={
                     <Typography.LinkMD href="#" weight="semibold">
                         Go to Home
                     </Typography.LinkMD>
                 }
-            />
-        );
-    },
-};
-
-export const HiddenDrawerBranding: StoryObj<Component> = {
-    render: (_args) => {
-        return (
-            <Navbar
-                items={{ desktop: navItems }}
-                selectedId="home"
-                fixed={false}
-                drawerHeader={
-                    <Typography.LinkMD href="#" weight="semibold">
-                        Go to Home
-                    </Typography.LinkMD>
-                }
-                hideDrawerBranding
             />
         );
     },

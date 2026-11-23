@@ -8,13 +8,12 @@ import styles from "./navbar.module.css";
 export default function Story() {
     return (
         <Navbar
-            data-testid="navbar-hide-drawer-branding"
+            data-testid="navbar-drawer-brand-addon"
             selectedId="home"
             items={{ desktop: navItems }}
-            drawerHeader={
+            drawerBrandAddon={
                 <div className={styles["custom-element"]}>Go to Home</div>
             }
-            hideDrawerBranding
         />
     );
 }

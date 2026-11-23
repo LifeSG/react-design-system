@@ -90,7 +90,7 @@ export const closeButton = css`
     }
 `;
 
-export const headerContent = css`
+export const brandAddonContainer = css`
     display: flex;
     flex-direction: row;
     align-items: center;

@@ -28,8 +28,7 @@ const Component = (
         onBrandClick,
         drawerLabel = "Mobile navigation menu",
         mobileMenuRef,
-        headerContent,
-        hideDrawerBranding,
+        brandAddon,
     } = props;
     const [viewHeight, setViewHeight] = useState<number>(0);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -135,11 +134,18 @@ const Component = (
                         />
                     </>
                 )}
+                {brandAddon && (
+                    <div
+                        className={styles.brandAddonContainer}
+                        data-testid="drawer__brand-addon"
+                    >
+                        <NavSeparator compress />
+                        {brandAddon}
+                    </div>
+                )}
             </>
         );
     };
-
-    const showBrand = !hideNavBranding && !hideDrawerBranding;
 
     const renderTopBar = () => (
         <div className={styles.topBar}>
@@ -151,16 +157,7 @@ const Component = (
                 )}
                 data-id="drawer-brand-container"
             >
-                {showBrand && renderBrand()}
-                {headerContent && (
-                    <div
-                        className={styles.headerContent}
-                        data-testid="drawer__header-content"
-                    >
-                        {showBrand && <NavSeparator compress />}
-                        {headerContent}
-                    </div>
-                )}
+                {!hideNavBranding && renderBrand()}
             </div>
             <ClickableIcon
                 className={styles.closeButton}

@@ -99,22 +99,15 @@ mobile viewports.
 
 <Canvas of={NavbarStories.HeaderBrandAddon} />
 
-## Drawer header
+## Drawer brand addon
 
-Use `drawerHeader` to render a custom component after the brand logos in the
-mobile drawer header (e.g. a "Go to Home" link). The close button is retained.
+Use `drawerBrandAddon` to render a custom component after the brand logos in
+the mobile drawer header, separated by a divider (e.g. a "Go to Home" link). The
+close button is retained. It is hidden if `hideNavBranding` is set.
 
 > **Note**: Clicking on this component will not dismiss the drawer automatically. Use the `dismissDrawer` method on the `Navbar` ref if needed. You will need to view this in a mobile or tablet viewport to see the drawer
 
-<Canvas of={NavbarStories.DrawerHeader} />
-
-## Hide drawer branding
-
-Use `hideDrawerBranding` to hide the brand logos in the mobile drawer only,
-leaving the desktop branding intact. `hideNavBranding` takes precedence and
-hides the branding everywhere.
-
-<Canvas of={NavbarStories.HiddenDrawerBranding} />
+<Canvas of={NavbarStories.DrawerBrandAddon} />
 
 ## Hidden masthead
 
