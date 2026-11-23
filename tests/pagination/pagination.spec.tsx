@@ -559,7 +559,7 @@ describe("Pagination", () => {
 
             beforeEach(() => {
                 mockOnPageChange.mockClear();
-                (useMediaQuery as jest.Mock).mockReturnValue(true);
+                jest.mocked(useMaxWidthMediaQuery).mockReturnValue(true);
             });
 
             const renderPagination = () =>
