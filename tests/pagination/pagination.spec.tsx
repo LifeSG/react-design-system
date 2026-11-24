@@ -471,73 +471,125 @@ describe("Pagination", () => {
             );
         });
 
-        describe("variant", () => {
-            it("should render the default variant on mobile", async () => {
-                (useMediaQuery as jest.Mock).mockReturnValue(true);
+        describe("onPageSizeChange", () => {
+            it("should return active page and new page size if current page is within the new range", async () => {
+                const user = userEvent.setup();
+                const mockOnPageSizeChange = jest.fn();
 
                 render(
                     <Pagination
-                        totalItems={30}
-                        activePage={2}
+                        totalItems={100}
+                        activePage={1}
                         showPageSizeChanger
+                        onPageSizeChange={mockOnPageSizeChange}
                     />
                 );
 
-                expect(
-                    screen.getByRole("spinbutton", { name: "Page 2 of 3" })
-                ).toBeInTheDocument();
-                expect(
-                    screen.queryByTestId(SELECTOR_TESTID)
-                ).not.toBeInTheDocument();
+                await act(async () => {
+                    await user.click(screen.getByTestId(SELECTOR_TESTID));
+                });
+
+                await waitFor(() => {
+                    expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+                });
+
+                await user.click(screen.getByText("20 per page"));
+
+                expect(mockOnPageSizeChange).toHaveBeenCalledWith(1, 20);
             });
 
-            it("should render the full variant on mobile", async () => {
-                (useMediaQuery as jest.Mock).mockReturnValue(true);
+            it("should return last page and new page size if current page is outside of the new range", async () => {
+                const user = userEvent.setup();
+                const mockOnPageSizeChange = jest.fn();
 
                 render(
                     <Pagination
-                        totalItems={30}
-                        activePage={2}
+                        totalItems={100}
+                        activePage={10}
                         showPageSizeChanger
-                        variant="full"
+                        onPageSizeChange={mockOnPageSizeChange}
                     />
                 );
 
-                expect(
-                    screen.getByRole("button", { name: "page 1 of 3" })
-                ).toBeInTheDocument();
-                expect(screen.getByTestId(SELECTOR_TESTID)).toBeInTheDocument();
-                expect(
-                    screen.queryByRole("spinbutton", { name: "Page 2 of 3" })
-                ).not.toBeInTheDocument();
-            });
+                await act(async () => {
+                    await user.click(screen.getByTestId(SELECTOR_TESTID));
+                });
 
-            it("should render the compact variant on desktop", async () => {
-                (useMediaQuery as jest.Mock).mockReturnValue(false);
+                await waitFor(() => {
+                    expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+                });
 
-                render(
-                    <Pagination
-                        totalItems={30}
-                        activePage={2}
-                        showPageSizeChanger
-                        variant="compact"
-                    />
-                );
+                await user.click(screen.getByText("20 per page"));
 
-                expect(
-                    screen.getByRole("spinbutton", { name: "Page 2 of 3" })
-                ).toBeInTheDocument();
-                expect(
-                    screen.queryByTestId(SELECTOR_TESTID)
-                ).not.toBeInTheDocument();
+                expect(mockOnPageSizeChange).toHaveBeenCalledWith(5, 20);
             });
         });
+    });
 
-        describe("mobile input", () => {
+    describe("mobile", () => {
+        beforeEach(() => {
+            (useMediaQuery as jest.Mock).mockReturnValue(true);
+        });
+
+        it("should render the default variant on mobile", async () => {
+            render(
+                <Pagination
+                    totalItems={30}
+                    activePage={2}
+                    showPageSizeChanger
+                />
+            );
+
+            expect(
+                screen.getByRole("spinbutton", { name: "Page 2 of 3" })
+            ).toBeInTheDocument();
+            expect(
+                screen.queryByTestId(SELECTOR_TESTID)
+            ).not.toBeInTheDocument();
+        });
+
+        it("should render the full variant on mobile", async () => {
+            render(
+                <Pagination
+                    totalItems={30}
+                    activePage={2}
+                    showPageSizeChanger
+                    variant="full"
+                />
+            );
+
+            expect(
+                screen.getByRole("button", { name: "page 1 of 3" })
+            ).toBeInTheDocument();
+            expect(screen.getByTestId(SELECTOR_TESTID)).toBeInTheDocument();
+            expect(
+                screen.queryByRole("spinbutton", { name: "Page 2 of 3" })
+            ).not.toBeInTheDocument();
+        });
+
+        it("should render the compact variant on desktop", async () => {
+            (useMediaQuery as jest.Mock).mockReturnValue(false);
+
+            render(
+                <Pagination
+                    totalItems={30}
+                    activePage={2}
+                    showPageSizeChanger
+                    variant="compact"
+                />
+            );
+
+            expect(
+                screen.getByRole("spinbutton", { name: "Page 2 of 3" })
+            ).toBeInTheDocument();
+            expect(
+                screen.queryByTestId(SELECTOR_TESTID)
+            ).not.toBeInTheDocument();
+        });
+
+        describe("onPageChange", () => {
             it("should sanitize input and submit the current page", async () => {
                 const mockOnPageChange = jest.fn();
-                (useMediaQuery as jest.Mock).mockReturnValue(true);
-
                 render(
                     <Pagination
                         totalItems={30}
@@ -571,13 +623,12 @@ describe("Pagination", () => {
             });
         });
 
-        describe("compact input", () => {
+        describe("onPageChange (via input)", () => {
             const INPUT_TESTID = "pagination-input";
             const mockOnPageChange = jest.fn();
 
             beforeEach(() => {
                 mockOnPageChange.mockClear();
-                (useMediaQuery as jest.Mock).mockReturnValue(true);
             });
 
             const renderPagination = () =>
@@ -658,60 +709,6 @@ describe("Pagination", () => {
                     "inputmode",
                     "numeric"
                 );
-            });
-        });
-
-        describe("onPageSizeChange", () => {
-            it("should return active page and new page size if current page is within the new range", async () => {
-                const user = userEvent.setup();
-                const mockOnPageSizeChange = jest.fn();
-
-                render(
-                    <Pagination
-                        totalItems={100}
-                        activePage={1}
-                        showPageSizeChanger
-                        onPageSizeChange={mockOnPageSizeChange}
-                    />
-                );
-
-                await act(async () => {
-                    await user.click(screen.getByTestId(SELECTOR_TESTID));
-                });
-
-                await waitFor(() => {
-                    expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
-                });
-
-                await user.click(screen.getByText("20 per page"));
-
-                expect(mockOnPageSizeChange).toHaveBeenCalledWith(1, 20);
-            });
-
-            it("should return last page and new page size if current page is outside of the new range", async () => {
-                const user = userEvent.setup();
-                const mockOnPageSizeChange = jest.fn();
-
-                render(
-                    <Pagination
-                        totalItems={100}
-                        activePage={10}
-                        showPageSizeChanger
-                        onPageSizeChange={mockOnPageSizeChange}
-                    />
-                );
-
-                await act(async () => {
-                    await user.click(screen.getByTestId(SELECTOR_TESTID));
-                });
-
-                await waitFor(() => {
-                    expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
-                });
-
-                await user.click(screen.getByText("20 per page"));
-
-                expect(mockOnPageSizeChange).toHaveBeenCalledWith(5, 20);
             });
         });
     });
