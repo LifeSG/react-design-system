@@ -1,5 +1,6 @@
 import { Canvas, Meta } from "@storybook/addon-docs/blocks";
 import * as NavbarStories from "./navbar.stories";
+import { DocInfo } from "../storybook-common";
 import { PropsTable } from "./props-table";
 
 <Meta of={NavbarStories} />
@@ -89,32 +90,35 @@ In this example, a co-brand is displayed next to the primary brand.
 
 <Canvas of={NavbarStories.SecondaryBranding} />
 
-## Header brand addon
+## Brand addon
 
-Use `headerBrandAddon` to render a custom component after the brand on desktop,
-separated by a divider (e.g. a "Back to Home" link). It is hidden in tablet and
-mobile viewports.
+### Header
 
-> **Note**: You will need to view this in a desktop viewport (above 1200px) to see the addon
+Use `headerBrandAddon` to render a custom component after the branding on
+desktop. It is hidden in tablet and mobile viewports.
+
+> **Note**: View this story in a desktop viewport to see the addon
 
 <Canvas of={NavbarStories.HeaderBrandAddon} />
 
-## Drawer header
+### Drawer
 
-Use `drawerHeader` to render a custom component after the brand logos in the
-mobile drawer header (e.g. a "Go to Home" link). The close button is retained.
+Use `drawerBrandAddon` for the drawer header in tablet and mobile viewports.
 
-> **Note**: Clicking on this component will not dismiss the drawer automatically. Use the `dismissDrawer` method on the `Navbar` ref if needed. You will need to view this in a mobile or tablet viewport to see the drawer
+> **Note**: View this story in a mobile or tablet viewport to see the drawer addon.
 
-<Canvas of={NavbarStories.DrawerHeader} />
+<DocInfo>
+    Clicking on this component will not close the drawer automatically. Use
+    `dismissDrawer()` to programmatically dismiss the drawer.
+</DocInfo>
 
-## Hide drawer branding
+<Canvas of={NavbarStories.DrawerBrandAddon} />
 
-Use `hideDrawerBranding` to hide the brand logos in the mobile drawer only,
-leaving the desktop branding intact. `hideNavBranding` takes precedence and
-hides the branding everywhere.
+## Hide branding
 
-<Canvas of={NavbarStories.HiddenDrawerBranding} />
+When the branding elements are hidden, navigation items will be aligned to the left on desktop.
+
+<Canvas of={NavbarStories.HiddenBranding} />
 
 ## Hidden masthead
 
@@ -128,12 +132,6 @@ In this example, the content of the navbar (and masthead, if applicable) is
 stretched to the full width of the screen with a fixed padding.
 
 <Canvas of={NavbarStories.StretchedLayout} />
-
-## Hide branding
-
-When the branding elements are hidden, navigation items will be aligned to the left on desktop.
-
-<Canvas of={NavbarStories.HiddenBranding} />
 
 ## Hide link indicator
 

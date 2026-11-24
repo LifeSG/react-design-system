@@ -4,11 +4,11 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { mergeRefs } from "../util";
 import { Brand } from "./brand";
 import {
+    BrandAddonContainer,
     CloseButton,
     CloseIcon,
     Container,
     Content,
-    HeaderContent,
     TopBar,
     Wrapper,
 } from "./drawer.styles";
@@ -31,8 +31,7 @@ const Component = (
         onBrandClick,
         drawerLabel = "Mobile navigation menu",
         mobileMenuRef,
-        headerContent,
-        hideDrawerBranding,
+        brandAddon,
     } = props;
     const [viewHeight, setViewHeight] = useState<number>(0);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -132,22 +131,20 @@ const Component = (
                         />
                     </>
                 )}
+                {brandAddon && (
+                    <BrandAddonContainer data-testid="drawer__brand-addon">
+                        <NavSeparator />
+                        {brandAddon}
+                    </BrandAddonContainer>
+                )}
             </>
         );
     };
 
-    const showBrand = !hideNavBranding && !hideDrawerBranding;
-
     const renderTopBar = () => (
         <TopBar>
             <NavBrandContainer data-id="drawer-brand-container">
-                {showBrand && renderBrand()}
-                {headerContent && (
-                    <HeaderContent data-testid="drawer__header-content">
-                        {showBrand && <NavSeparator />}
-                        {headerContent}
-                    </HeaderContent>
-                )}
+                {!hideNavBranding && renderBrand()}
             </NavBrandContainer>
             <CloseButton
                 onClick={onClose}

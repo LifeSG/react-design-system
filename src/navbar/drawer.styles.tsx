@@ -90,7 +90,7 @@ export const TopBar = styled.div`
         ${Spacing["spacing-32"]};
 `;
 
-export const HeaderContent = styled.div`
+export const BrandAddonContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;

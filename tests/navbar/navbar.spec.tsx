@@ -179,7 +179,7 @@ describe("Navbar", () => {
         });
     });
 
-    describe("Brand addon and drawer header", () => {
+    describe("Header brand addon", () => {
         it("should render the brand addon after the brand", () => {
             render(
                 <Navbar
@@ -193,63 +193,72 @@ describe("Navbar", () => {
             );
         });
 
-        it("should render the drawer header after the drawer brand", () => {
+        it("should not render the brand addon if headerBrandAddon is not given", () => {
+            render(<Navbar items={{ desktop: MOCK_ITEMS() }} />);
+
+            expect(
+                screen.queryByTestId("main__brand-addon")
+            ).not.toBeInTheDocument();
+        });
+
+        it("should not render the header brand and addon if hideNavBranding is set", () => {
             render(
                 <Navbar
                     items={{ desktop: MOCK_ITEMS() }}
-                    drawerHeader={<a href="/">Go to Home</a>}
+                    headerBrandAddon={<a href="/">Back to Home</a>}
+                    hideNavBranding
+                />
+            );
+
+            expect(screen.queryByTestId("main__brand")).not.toBeInTheDocument();
+            expect(
+                screen.queryByTestId("main__brand-addon")
+            ).not.toBeInTheDocument();
+        });
+    });
+
+    describe("Drawer brand addon", () => {
+        it("should render the drawer brand addon after the drawer brand", () => {
+            render(
+                <Navbar
+                    items={{ desktop: MOCK_ITEMS() }}
+                    drawerBrandAddon={<a href="/">Go to Home</a>}
                 />
             );
 
             const brand = screen.getByTestId("drawer__brand");
-            const header = screen.getByTestId("drawer__header-content");
+            const addon = screen.getByTestId("drawer__brand-addon");
 
-            expect(header).toHaveTextContent("Go to Home");
+            expect(addon).toHaveTextContent("Go to Home");
             expect(
-                brand.compareDocumentPosition(header) &
+                brand.compareDocumentPosition(addon) &
                     Node.DOCUMENT_POSITION_FOLLOWING
             ).toBeTruthy();
         });
 
-        it("should hide only the drawer brand if hideDrawerBranding is set", () => {
-            render(
-                <Navbar
-                    items={{ desktop: MOCK_ITEMS() }}
-                    drawerHeader={<a href="/">Go to Home</a>}
-                    hideDrawerBranding
-                />
-            );
-
-            expect(
-                screen.queryByTestId("drawer__brand")
-            ).not.toBeInTheDocument();
-            expect(screen.getByTestId("main__brand")).toBeInTheDocument();
-            expect(screen.getByText("Go to Home")).toBeInTheDocument();
-        });
-
-        it("should hide all branding if hideNavBranding is set regardless of hideDrawerBranding", () => {
-            render(
-                <Navbar
-                    items={{ desktop: MOCK_ITEMS() }}
-                    drawerHeader={<a href="/">Go to Home</a>}
-                    hideNavBranding
-                    hideDrawerBranding={false}
-                />
-            );
-
-            expect(
-                screen.queryByTestId("drawer__brand")
-            ).not.toBeInTheDocument();
-            expect(screen.queryByTestId("main__brand")).not.toBeInTheDocument();
-            expect(screen.getByText("Go to Home")).toBeInTheDocument();
-        });
-
-        it("should render the drawer brand when no drawer header is given", () => {
+        it("should not render the drawer brand addon if drawerBrandAddon is not given", () => {
             render(<Navbar items={{ desktop: MOCK_ITEMS() }} />);
 
             expect(screen.getByTestId("drawer__brand")).toBeInTheDocument();
             expect(
-                screen.queryByTestId("main__brand-addon")
+                screen.queryByTestId("drawer__brand-addon")
+            ).not.toBeInTheDocument();
+        });
+
+        it("should not render the drawer brand and addon if hideNavBranding is set", () => {
+            render(
+                <Navbar
+                    items={{ desktop: MOCK_ITEMS() }}
+                    drawerBrandAddon={<a href="/">Go to Home</a>}
+                    hideNavBranding
+                />
+            );
+
+            expect(
+                screen.queryByTestId("drawer__brand")
+            ).not.toBeInTheDocument();
+            expect(
+                screen.queryByTestId("drawer__brand-addon")
             ).not.toBeInTheDocument();
         });
     });

@@ -61,8 +61,7 @@ const Component = <T,>(
         headerLabel = "Main navigation menu",
         drawerLabel,
         headerBrandAddon,
-        drawerHeader,
-        hideDrawerBranding = false,
+        drawerBrandAddon,
         ...otherProps
     }: NavbarProps<T>,
     ref: React.Ref<NavbarDrawerHandle>
@@ -236,8 +235,7 @@ const Component = <T,>(
                 hideNavBranding={hideNavBranding}
                 mobileMenuRef={mobileMenuRef}
                 drawerLabel={drawerLabel}
-                headerContent={drawerHeader}
-                hideDrawerBranding={hideDrawerBranding}
+                brandAddon={drawerBrandAddon}
             >
                 <NavbarItems
                     items={items.mobile || items.desktop}

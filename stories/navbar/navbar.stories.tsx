@@ -702,14 +702,14 @@ export const HeaderBrandAddon: StoryObj<Component> = {
     },
 };
 
-export const DrawerHeader: StoryObj<Component> = {
+export const DrawerBrandAddon: StoryObj<Component> = {
     render: (_args) => {
         return (
             <Navbar
                 items={{ desktop: navItems }}
                 selectedId="home"
                 fixed={false}
-                drawerHeader={
+                drawerBrandAddon={
                     <Typography.LinkMD href="#" weight="semibold">
                         Go to Home
                     </Typography.LinkMD>
@@ -719,19 +719,14 @@ export const DrawerHeader: StoryObj<Component> = {
     },
 };
 
-export const HiddenDrawerBranding: StoryObj<Component> = {
+export const HiddenBranding: StoryObj<Component> = {
     render: (_args) => {
         return (
             <Navbar
                 items={{ desktop: navItems }}
                 selectedId="home"
                 fixed={false}
-                drawerHeader={
-                    <Typography.LinkMD href="#" weight="semibold">
-                        Go to Home
-                    </Typography.LinkMD>
-                }
-                hideDrawerBranding
+                hideNavBranding
             />
         );
     },
@@ -779,19 +774,6 @@ export const StretchedLayout: StoryObj<Component> = {
                 selectedId="home"
                 fixed={false}
                 layout={"stretch"}
-            />
-        );
-    },
-};
-
-export const HiddenBranding: StoryObj<Component> = {
-    render: (_args) => {
-        return (
-            <Navbar
-                items={{ desktop: navItems }}
-                selectedId="home"
-                fixed={false}
-                hideNavBranding
             />
         );
     },
