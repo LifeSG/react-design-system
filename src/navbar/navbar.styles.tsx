@@ -114,10 +114,6 @@ export const HeaderBrandAddonContainer = styled.div`
     flex-direction: row;
     align-items: center;
     height: 100%;
-
-    ${MediaQuery.MaxWidth.lg} {
-        display: none;
-    }
 `;
 
 export const NavSeparator = styled.div<StyleProps>`
