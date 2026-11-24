@@ -1,4 +1,11 @@
-import { act, render, screen, waitFor, within } from "@testing-library/react";
+import {
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor,
+    within,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Pagination } from "src/pagination";
 import { useMaxWidthMediaQuery } from "src/theme";
@@ -623,7 +630,7 @@ describe("Pagination", () => {
                 screen.getByRole("button", { name: NEXT_PAGE_LABEL })
             ).toBeInTheDocument();
             expect(
-                screen.getByRole("textbox", { name: "Page 2 of 3" })
+                screen.getByRole("spinbutton", { name: "Page 2 of 3" })
             ).toBeInTheDocument();
         });
 
@@ -642,7 +649,7 @@ describe("Pagination", () => {
             ).toBeInTheDocument();
             expect(screen.getByTestId(SELECTOR_TESTID)).toBeInTheDocument();
             expect(
-                screen.queryByRole("textbox", { name: "Page 2 of 3" })
+                screen.queryByRole("spinbutton", { name: "Page 2 of 3" })
             ).not.toBeInTheDocument();
         });
 
@@ -663,7 +670,7 @@ describe("Pagination", () => {
             ).toBeInTheDocument();
             expect(screen.getByTestId(SELECTOR_TESTID)).toBeInTheDocument();
             expect(
-                screen.queryByRole("textbox", { name: "Page 2 of 3" })
+                screen.queryByRole("spinbutton", { name: "Page 2 of 3" })
             ).not.toBeInTheDocument();
         });
 
@@ -727,7 +734,7 @@ describe("Pagination", () => {
             );
 
             expect(
-                screen.getByRole("textbox", { name: "Page 2 of 3" })
+                screen.getByRole("spinbutton", { name: "Page 2 of 3" })
             ).toBeInTheDocument();
             expect(
                 screen.queryByRole("button", { name: "page 1 of 3" })
@@ -789,11 +796,12 @@ describe("Pagination", () => {
                     />
                 );
 
-                await user.type(screen.getByRole("textbox"), "3");
+                await user.type(screen.getByRole("spinbutton"), "3");
 
                 expect(mockOnPageChange).not.toHaveBeenCalled();
 
-                await user.type(screen.getByRole("textbox"), "{enter}");
+                // user-event does not implicitly submit forms from number inputs on Enter
+                fireEvent.submit(screen.getByRole("spinbutton"));
 
                 expect(mockOnPageChange).toHaveBeenCalledWith(3);
             });
@@ -850,16 +858,18 @@ describe("Pagination", () => {
                 await user.tab();
 
                 expect(mockOnPageChange).not.toHaveBeenCalled();
-                expect(input).toHaveValue("1");
+                expect(input).toHaveValue(1);
             });
 
-            it("should commit once on Enter and not again on subsequent blur", async () => {
+            it("should commit once on submit and not again on subsequent blur", async () => {
                 const user = userEvent.setup();
                 const { rerender } = renderPagination();
                 const input = screen.getByTestId(INPUT_TESTID);
 
                 await user.clear(input);
-                await user.type(input, "3{Enter}");
+                await user.type(input, "3");
+                // user-event does not implicitly submit forms from number inputs on Enter
+                fireEvent.submit(input);
 
                 expect(mockOnPageChange).toHaveBeenCalledTimes(1);
                 expect(mockOnPageChange).toHaveBeenCalledWith(3);

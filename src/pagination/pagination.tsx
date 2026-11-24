@@ -336,7 +336,7 @@ const Component = (
                     // iOS keyboard "Done" fires blur, not form submit
                     onBlur={handleInputCommit}
                     autoComplete="off"
-                    type="text"
+                    type="number"
                     inputMode="numeric"
                     pattern="[0-9]*"
                     id={(id || "pagination") + "-input"}
