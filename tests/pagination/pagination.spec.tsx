@@ -471,6 +471,196 @@ describe("Pagination", () => {
             );
         });
 
+        describe("variant", () => {
+            it("should render the default variant on mobile", async () => {
+                (useMediaQuery as jest.Mock).mockReturnValue(true);
+
+                render(
+                    <Pagination
+                        totalItems={30}
+                        activePage={2}
+                        showPageSizeChanger
+                    />
+                );
+
+                expect(
+                    screen.getByRole("spinbutton", { name: "Page 2 of 3" })
+                ).toBeInTheDocument();
+                expect(
+                    screen.queryByTestId(SELECTOR_TESTID)
+                ).not.toBeInTheDocument();
+            });
+
+            it("should render the full variant on mobile", async () => {
+                (useMediaQuery as jest.Mock).mockReturnValue(true);
+
+                render(
+                    <Pagination
+                        totalItems={30}
+                        activePage={2}
+                        showPageSizeChanger
+                        variant="full"
+                    />
+                );
+
+                expect(
+                    screen.getByRole("button", { name: "page 1 of 3" })
+                ).toBeInTheDocument();
+                expect(screen.getByTestId(SELECTOR_TESTID)).toBeInTheDocument();
+                expect(
+                    screen.queryByRole("spinbutton", { name: "Page 2 of 3" })
+                ).not.toBeInTheDocument();
+            });
+
+            it("should render the compact variant on desktop", async () => {
+                (useMediaQuery as jest.Mock).mockReturnValue(false);
+
+                render(
+                    <Pagination
+                        totalItems={30}
+                        activePage={2}
+                        showPageSizeChanger
+                        variant="compact"
+                    />
+                );
+
+                expect(
+                    screen.getByRole("spinbutton", { name: "Page 2 of 3" })
+                ).toBeInTheDocument();
+                expect(
+                    screen.queryByTestId(SELECTOR_TESTID)
+                ).not.toBeInTheDocument();
+            });
+        });
+
+        describe("mobile input", () => {
+            it("should sanitize input and submit the current page", async () => {
+                const mockOnPageChange = jest.fn();
+                (useMediaQuery as jest.Mock).mockReturnValue(true);
+
+                render(
+                    <Pagination
+                        totalItems={30}
+                        activePage={2}
+                        onPageChange={mockOnPageChange}
+                    />
+                );
+
+                const input = screen.getByRole("spinbutton", {
+                    name: "Page 2 of 3",
+                });
+                const form = input.closest("form");
+
+                if (!form) {
+                    throw new Error("Expected pagination form");
+                }
+
+                fireEvent.change(input, {
+                    target: { value: "" },
+                });
+                expect(input).toHaveValue(null);
+
+                fireEvent.change(input, {
+                    target: { value: "99" },
+                });
+                expect(input).toHaveValue(3);
+
+                fireEvent.submit(form);
+
+                expect(mockOnPageChange).toHaveBeenCalledWith(3);
+            });
+
+            describe("onPageChange (via input)", () => {
+                const INPUT_TESTID = "pagination-input";
+                const mockOnPageChange = jest.fn();
+
+                beforeEach(() => {
+                    mockOnPageChange.mockClear();
+                    (useMediaQuery as jest.Mock).mockReturnValue(true);
+                });
+
+                const renderPagination = () =>
+                    render(
+                        <Pagination
+                            totalItems={100}
+                            activePage={1}
+                            onPageChange={mockOnPageChange}
+                        />
+                    );
+
+                it("should commit the typed page on blur", async () => {
+                    const user = userEvent.setup();
+                    renderPagination();
+                    const input = screen.getByTestId(INPUT_TESTID);
+
+                    await user.clear(input);
+                    await user.type(input, "3");
+                    await user.tab();
+
+                    expect(mockOnPageChange).toHaveBeenCalledTimes(1);
+                    expect(mockOnPageChange).toHaveBeenCalledWith(3);
+                });
+
+                it("should not call onPageChange on blur if the active page is typed", async () => {
+                    const user = userEvent.setup();
+                    renderPagination();
+                    const input = screen.getByTestId(INPUT_TESTID);
+
+                    await user.clear(input);
+                    await user.type(input, "1");
+                    await user.tab();
+
+                    expect(mockOnPageChange).not.toHaveBeenCalled();
+                });
+
+                it("should restore the active page on blur if the input is empty", async () => {
+                    const user = userEvent.setup();
+                    renderPagination();
+                    const input = screen.getByTestId(INPUT_TESTID);
+
+                    await user.clear(input);
+                    await user.tab();
+
+                    expect(mockOnPageChange).not.toHaveBeenCalled();
+                    expect(input).toHaveValue(1);
+                });
+
+                it("should commit once on submit and not again on subsequent blur", async () => {
+                    const user = userEvent.setup();
+                    const { rerender } = renderPagination();
+                    const input = screen.getByTestId(INPUT_TESTID);
+
+                    await user.clear(input);
+                    await user.type(input, "3");
+                    // user-event does not implicitly submit forms from number inputs on Enter
+                    fireEvent.submit(input);
+
+                    expect(mockOnPageChange).toHaveBeenCalledTimes(1);
+                    expect(mockOnPageChange).toHaveBeenCalledWith(3);
+
+                    rerender(
+                        <Pagination
+                            totalItems={100}
+                            activePage={3}
+                            onPageChange={mockOnPageChange}
+                        />
+                    );
+                    await user.tab();
+
+                    expect(mockOnPageChange).toHaveBeenCalledTimes(1);
+                });
+
+                it("should use the numeric input mode", () => {
+                    renderPagination();
+
+                    expect(screen.getByTestId(INPUT_TESTID)).toHaveAttribute(
+                        "inputmode",
+                        "numeric"
+                    );
+                });
+            });
+        });
+
         describe("onPageSizeChange", () => {
             it("should return active page and new page size if current page is within the new range", async () => {
                 const user = userEvent.setup();
@@ -522,193 +712,6 @@ describe("Pagination", () => {
                 await user.click(screen.getByText("20 per page"));
 
                 expect(mockOnPageSizeChange).toHaveBeenCalledWith(5, 20);
-            });
-        });
-    });
-
-    describe("mobile", () => {
-        beforeEach(() => {
-            (useMediaQuery as jest.Mock).mockReturnValue(true);
-        });
-
-        it("should render the default variant on mobile", async () => {
-            render(
-                <Pagination
-                    totalItems={30}
-                    activePage={2}
-                    showPageSizeChanger
-                />
-            );
-
-            expect(
-                screen.getByRole("spinbutton", { name: "Page 2 of 3" })
-            ).toBeInTheDocument();
-            expect(
-                screen.queryByTestId(SELECTOR_TESTID)
-            ).not.toBeInTheDocument();
-        });
-
-        it("should render the full variant on mobile", async () => {
-            render(
-                <Pagination
-                    totalItems={30}
-                    activePage={2}
-                    showPageSizeChanger
-                    variant="full"
-                />
-            );
-
-            expect(
-                screen.getByRole("button", { name: "page 1 of 3" })
-            ).toBeInTheDocument();
-            expect(screen.getByTestId(SELECTOR_TESTID)).toBeInTheDocument();
-            expect(
-                screen.queryByRole("spinbutton", { name: "Page 2 of 3" })
-            ).not.toBeInTheDocument();
-        });
-
-        it("should render the compact variant on desktop", async () => {
-            (useMediaQuery as jest.Mock).mockReturnValue(false);
-
-            render(
-                <Pagination
-                    totalItems={30}
-                    activePage={2}
-                    showPageSizeChanger
-                    variant="compact"
-                />
-            );
-
-            expect(
-                screen.getByRole("spinbutton", { name: "Page 2 of 3" })
-            ).toBeInTheDocument();
-            expect(
-                screen.queryByTestId(SELECTOR_TESTID)
-            ).not.toBeInTheDocument();
-        });
-
-        describe("onPageChange", () => {
-            it("should sanitize input and submit the current page", async () => {
-                const mockOnPageChange = jest.fn();
-                render(
-                    <Pagination
-                        totalItems={30}
-                        activePage={2}
-                        onPageChange={mockOnPageChange}
-                    />
-                );
-
-                const input = screen.getByRole("spinbutton", {
-                    name: "Page 2 of 3",
-                });
-                const form = input.closest("form");
-
-                if (!form) {
-                    throw new Error("Expected pagination form");
-                }
-
-                fireEvent.change(input, {
-                    target: { value: "" },
-                });
-                expect(input).toHaveValue(null);
-
-                fireEvent.change(input, {
-                    target: { value: "99" },
-                });
-                expect(input).toHaveValue(3);
-
-                fireEvent.submit(form);
-
-                expect(mockOnPageChange).toHaveBeenCalledWith(3);
-            });
-        });
-
-        describe("onPageChange (via input)", () => {
-            const INPUT_TESTID = "pagination-input";
-            const mockOnPageChange = jest.fn();
-
-            beforeEach(() => {
-                mockOnPageChange.mockClear();
-            });
-
-            const renderPagination = () =>
-                render(
-                    <Pagination
-                        totalItems={100}
-                        activePage={1}
-                        onPageChange={mockOnPageChange}
-                    />
-                );
-
-            it("should commit the typed page on blur", async () => {
-                const user = userEvent.setup();
-                renderPagination();
-                const input = screen.getByTestId(INPUT_TESTID);
-
-                await user.clear(input);
-                await user.type(input, "3");
-                await user.tab();
-
-                expect(mockOnPageChange).toHaveBeenCalledTimes(1);
-                expect(mockOnPageChange).toHaveBeenCalledWith(3);
-            });
-
-            it("should not call onPageChange on blur if the active page is typed", async () => {
-                const user = userEvent.setup();
-                renderPagination();
-                const input = screen.getByTestId(INPUT_TESTID);
-
-                await user.clear(input);
-                await user.type(input, "1");
-                await user.tab();
-
-                expect(mockOnPageChange).not.toHaveBeenCalled();
-            });
-
-            it("should restore the active page on blur if the input is empty", async () => {
-                const user = userEvent.setup();
-                renderPagination();
-                const input = screen.getByTestId(INPUT_TESTID);
-
-                await user.clear(input);
-                await user.tab();
-
-                expect(mockOnPageChange).not.toHaveBeenCalled();
-                expect(input).toHaveValue(1);
-            });
-
-            it("should commit once on submit and not again on subsequent blur", async () => {
-                const user = userEvent.setup();
-                const { rerender } = renderPagination();
-                const input = screen.getByTestId(INPUT_TESTID);
-
-                await user.clear(input);
-                await user.type(input, "3");
-                // user-event does not implicitly submit forms from number inputs on Enter
-                fireEvent.submit(input);
-
-                expect(mockOnPageChange).toHaveBeenCalledTimes(1);
-                expect(mockOnPageChange).toHaveBeenCalledWith(3);
-
-                rerender(
-                    <Pagination
-                        totalItems={100}
-                        activePage={3}
-                        onPageChange={mockOnPageChange}
-                    />
-                );
-                await user.tab();
-
-                expect(mockOnPageChange).toHaveBeenCalledTimes(1);
-            });
-
-            it("should use the numeric input mode", () => {
-                renderPagination();
-
-                expect(screen.getByTestId(INPUT_TESTID)).toHaveAttribute(
-                    "inputmode",
-                    "numeric"
-                );
             });
         });
     });
