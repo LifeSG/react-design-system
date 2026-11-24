@@ -140,10 +140,8 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         Custom content rendered after the brand logos in the
-                        navbar, separated by a divider (e.g. a &quot;Back to
-                        Home&quot; link). Shown in all viewports. Use{" "}
-                        <code>drawerBrandAddon</code> to show content in the
-                        mobile drawer header
+                        header, separated by a divider, for all viewports. Use{" "}
+                        <code>drawerBrandAddon</code> for the mobile drawer
                     </>
                 ),
                 propTypes: ["JSX.Element"],
