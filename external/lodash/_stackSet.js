@@ -1,0 +1,2 @@
+import{__require as r}from"./_ListCache.js";import{__require as i}from"./_Map.js";import{__require as e}from"./_MapCache.js";var t,_;function s(){if(_)return t;_=1;var s=r(),a=i(),n=e();return t=function(r,i){var e=this.__data__;if(e instanceof s){var t=e.__data__;if(!a||t.length<199)return t.push([r,i]),this.size=++e.size,this;e=this.__data__=new n(t)}return e.set(r,i),this.size=e.size,this}}export{s as __require};
+//# sourceMappingURL=_stackSet.js.map

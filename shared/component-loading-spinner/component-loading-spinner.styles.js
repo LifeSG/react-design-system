@@ -1,0 +1,2 @@
+import"./component-loading-spinner.styles_15eq02i.css";const o={rootSize:"--fds-internal-componentLoadingSpinner-root-size",rootColour:"--fds-internal-componentLoadingSpinner-root-colour"},n="oqwr3hs",i="i5p5ltp",r="i1trawld",t="iav978u",e="i1fnvvih";export{i as innerRing,r as innerRing2,t as innerRing3,e as innerRing4,n as outerRing,o as tokens};
+//# sourceMappingURL=component-loading-spinner.styles.js.map

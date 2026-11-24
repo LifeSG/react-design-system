@@ -1,0 +1,2 @@
+"use strict";var e,r=require("../../_virtual/isBuffer.js"),u=require("./_root.js"),o=require("./stubFalse.js");r.__module.exports,exports.__require=function(){return e||(e=1,function(e,r){var _=u.__require(),s=o.__require(),i=r&&!r.nodeType&&r,t=i&&e&&!e.nodeType&&e,d=t&&t.exports===i?_.Buffer:void 0,f=(d?d.isBuffer:void 0)||s;e.exports=f}(r.__module,r.__module.exports)),r.__module.exports};
+//# sourceMappingURL=isBuffer.js.map

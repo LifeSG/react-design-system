@@ -1,0 +1,2 @@
+"use strict";var r,e,i=require("./_Stack.js"),u=require("./_baseIsEqual.js");exports.__require=function(){if(e)return r;e=1;var n=i.__require(),t=u.__require();return r=function(r,e,i,u){var f=i.length,a=f,v=!u;if(null==r)return!a;for(r=Object(r);f--;){var s=i[f];if(v&&s[2]?s[1]!==r[s[0]]:!(s[0]in r))return!1}for(;++f<a;){var _=(s=i[f])[0],o=r[_],q=s[1];if(v&&s[2]){if(void 0===o&&!(_ in r))return!1}else{var c=new n;if(u)var l=u(o,q,_,r,e,c);if(!(void 0===l?t(q,o,3,u,c):l))return!1}}return!0}};
+//# sourceMappingURL=_baseIsMatch.js.map

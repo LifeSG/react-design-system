@@ -1,0 +1,2 @@
+"use strict";require("./fade-wrapper.styles_16iug7l.css");exports.content="cv4qfjc",exports.fade="f4ndmik",exports.fadeIndicatorButton="fgwhr72",exports.fadeLeft="f10r53jk",exports.fadeRight="f1mdli9d",exports.indicatorLeft="i135a9q0",exports.indicatorRight="i18cgy8z",exports.tokens={backgroundColor:"--fds-internal-fadeWrapper-fade-backgroundColor"},exports.wrapper="wslc1qs";
+//# sourceMappingURL=fade-wrapper.styles.js.map

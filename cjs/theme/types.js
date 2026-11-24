@@ -1,0 +1,2 @@
+"use strict";exports.BREAKPOINT_SIZES=["xxs","xs","sm","md","lg","xl","xxl"],exports.THEME_FONT_PRESETS=["wise-public","wise-admin","sportsg-gms"],exports.THEME_TYPES=["a11y-playground","bookingsg","careercompass","ccube","imda","lifesg","lta","mylegacy","oneservice","pa","rbs","sgw-digital-lobby","smgs","spf","sportsg-orange","supportgowhere","tote-board","vica","websg","wise","wogaa"];
+//# sourceMappingURL=types.js.map

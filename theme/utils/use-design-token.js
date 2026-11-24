@@ -1,0 +1,2 @@
+import{useState as o,useEffect as e}from"react";import{useTheme as r}from"../theme-provider/hooks.js";import{parseCSSVariableValue as t}from"./css-variable.js";const m=o=>null==o||""===o,i=m=>{const{theme:i,mode:s,themeElement:n}=r(),[l,a]=o(void 0);return e((()=>{n&&a(t(m,n))}),[i,s,n,m]),l},s=o=>{const{value:e,fallback:r,isToken:t,normalizeCustom:s}=o,n=t(e),l=i(n?e:void 0),a=t(r),c=i(a?r:void 0);return n&&!m(l)?l:n||m(e)?a&&!m(c)?c:s(r):s(e)};export{i as useDesignToken,s as useResolvedTokenValue};
+//# sourceMappingURL=use-design-token.js.map

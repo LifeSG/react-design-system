@@ -1,0 +1,2 @@
+"use strict";require("./file-list-item.styles_x3a500.css");exports.box="bivlkvo",exports.contentSection="c1jm950n",exports.dragHandleIcon="d1wv8fjl",exports.editContentSection="eqb8x5u",exports.editDetailsSection="eddx9rr",exports.editFileNameText="ek38w4a",exports.editFileSizeText="elwke9e",exports.editItem="e18pxk0j",exports.editNameSection="e1dhzflv",exports.item="i14h64yt";
+//# sourceMappingURL=file-list-item.styles.js.map

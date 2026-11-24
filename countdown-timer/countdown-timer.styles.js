@@ -1,0 +1,2 @@
+import"./countdown-timer.styles_ipn1b0.css";const t={fixedCountdown:{top:"--fds-internal-countdownTimer-fixedCountdown-top",left:"--fds-internal-countdownTimer-fixedCountdown-left",right:"--fds-internal-countdownTimer-fixedCountdown-right"}},n="wav7a6b",o="c1ji5mw9",i="csdqyky",d="cibq1kp",e="c1ehax2j",r="t6f42l5",w="t19x1azi",c="t1pvvziw";export{o as countdown,e as countdownFixed,i as countdownHidden,d as countdownInline,r as timeLeft,w as timer,c as timerIcon,t as tokens,n as wrapper};
+//# sourceMappingURL=countdown-timer.styles.js.map

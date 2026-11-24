@@ -1,0 +1,2 @@
+import{__require as r}from"./debounce.js";import{__require as i}from"./isObject.js";var e,n;function t(){if(n)return e;n=1;var t=r(),a=i();return e=function(r,i,e){var n=!0,o=!0;if("function"!=typeof r)throw new TypeError("Expected a function");return a(e)&&(n="leading"in e?!!e.leading:n,o="trailing"in e?!!e.trailing:o),t(r,i,{leading:n,maxWait:i,trailing:o})}}export{t as __require};
+//# sourceMappingURL=throttle.js.map

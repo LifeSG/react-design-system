@@ -1,0 +1,2 @@
+import{__require as r}from"./_baseTrim.js";import{__require as e}from"./isObject.js";import{__require as t}from"./isSymbol.js";var i,f;function s(){if(f)return i;f=1;var s=r(),u=e(),a=t(),n=/^[-+]0x[0-9a-f]+$/i,o=/^0b[01]+$/i,m=/^0o[0-7]+$/i,_=parseInt;return i=function(r){if("number"==typeof r)return r;if(a(r))return NaN;if(u(r)){var e="function"==typeof r.valueOf?r.valueOf():r;r=u(e)?e+"":e}if("string"!=typeof r)return 0===r?r:+r;r=s(r);var t=o.test(r);return t||m.test(r)?_(r.slice(2),t?2:8):n.test(r)?NaN:+r}}export{s as __require};
+//# sourceMappingURL=toNumber.js.map

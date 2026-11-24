@@ -1,0 +1,2 @@
+import{__module as r}from"../../_virtual/index5.js";import{__require as e}from"./external/react-is/index.js";import{__require as t}from"./factoryWithTypeCheckers.js";import{__require as i}from"./factoryWithThrowingShims.js";var o;function s(){if(o)return r.exports;if(o=1,"production"!==process.env.NODE_ENV){var s=e();r.exports=t()(s.isElement,true)}else r.exports=i()();return r.exports}export{s as __require};
+//# sourceMappingURL=index.js.map

@@ -1,0 +1,2 @@
+import"./drawer.styles_1rrobnx.css";const r={container:{viewHeight:"--fds-internal-navbar-drawer-viewHeight"}},c="w13l2hkd",e="c1dn2jn3",t="cc2efvs",n="c9clmba",a="c1yr3tbf",s="tkfa6sy",i="csth4gk",b="c4lb5hz",h="b1a4hn54";export{h as brandAddonContainer,b as closeButton,i as closeIcon,e as container,n as containerHidden,t as containerShown,a as content,r as tokens,s as topBar,c as wrapper};
+//# sourceMappingURL=drawer.styles.js.map

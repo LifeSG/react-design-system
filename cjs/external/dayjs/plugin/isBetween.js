@@ -1,0 +1,2 @@
+"use strict";var e,t=require("../../../_virtual/isBetween2.js");t.__module.exports;exports.__require=function(){return e||(e=1,t.__module.exports=function(e,t,i){t.prototype.isBetween=function(e,t,r,s){var o=i(e),u=i(t),f="("===(s=s||"()")[0],n=")"===s[1];return(f?this.isAfter(o,r):!this.isBefore(o,r))&&(n?this.isBefore(u,r):!this.isAfter(u,r))||(f?this.isBefore(o,r):!this.isAfter(o,r))&&(n?this.isAfter(u,r):!this.isBefore(u,r))}}),t.__module.exports};
+//# sourceMappingURL=isBetween.js.map

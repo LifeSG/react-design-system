@@ -1,0 +1,2 @@
+"use strict";var r,e,u=require("./_memoizeCapped.js");exports.__require=function(){if(e)return r;e=1;var t=u.__require(),i=/[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g,n=/\\(\\)?/g,a=t((function(r){var e=[];return 46===r.charCodeAt(0)&&e.push(""),r.replace(i,(function(r,u,t,i){e.push(t?i.replace(n,"$1"):u||r)})),e}));return r=a};
+//# sourceMappingURL=_stringToPath.js.map

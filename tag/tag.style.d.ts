@@ -1,0 +1,17 @@
+export declare const wrapper: import("@linaria/core").LinariaClassName;
+export declare const wrapperInteractive: import("@linaria/core").LinariaClassName;
+export declare const wrapperSolidGrey: import("@linaria/core").LinariaClassName;
+export declare const wrapperSolidGreen: import("@linaria/core").LinariaClassName;
+export declare const wrapperSolidYellow: import("@linaria/core").LinariaClassName;
+export declare const wrapperSolidRed: import("@linaria/core").LinariaClassName;
+export declare const wrapperSolidBlue: import("@linaria/core").LinariaClassName;
+export declare const wrapperSolidPrimary: import("@linaria/core").LinariaClassName;
+export declare const wrapperSolidBlack: import("@linaria/core").LinariaClassName;
+export declare const wrapperOutlineGrey: import("@linaria/core").LinariaClassName;
+export declare const wrapperOutlineGreen: import("@linaria/core").LinariaClassName;
+export declare const wrapperOutlineYellow: import("@linaria/core").LinariaClassName;
+export declare const wrapperOutlineRed: import("@linaria/core").LinariaClassName;
+export declare const wrapperOutlineBlue: import("@linaria/core").LinariaClassName;
+export declare const wrapperOutlinePrimary: import("@linaria/core").LinariaClassName;
+export declare const wrapperOutlineBlack: import("@linaria/core").LinariaClassName;
+export declare const label: import("@linaria/core").LinariaClassName;

@@ -1,0 +1,14 @@
+export declare const signatureArea: import("@linaria/core").LinariaClassName;
+export declare const addSignatureButton: import("@linaria/core").LinariaClassName;
+export declare const editSignatureButton: import("@linaria/core").LinariaClassName;
+export declare const signaturePreviewImage: import("@linaria/core").LinariaClassName;
+export declare const progressBox: import("@linaria/core").LinariaClassName;
+export declare const instructions: import("@linaria/core").LinariaClassName;
+export declare const modalCard: import("@linaria/core").LinariaClassName;
+export declare const modalContent: import("@linaria/core").LinariaClassName;
+export declare const eSignatureContainer: import("@linaria/core").LinariaClassName;
+export declare const eSignatureDrawable: import("@linaria/core").LinariaClassName;
+export declare const signatureLine: import("@linaria/core").LinariaClassName;
+export declare const modalButtons: import("@linaria/core").LinariaClassName;
+export declare const signatureCanvasContainer: import("@linaria/core").LinariaClassName;
+export declare const signatureCanvas: import("@linaria/core").LinariaClassName;

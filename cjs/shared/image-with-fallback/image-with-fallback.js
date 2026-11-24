@@ -1,0 +1,2 @@
+"use strict";var r=require("react/jsx-runtime"),e=require("react"),t=require("./default.png.js");exports.ImageWithFallback=({src:a,alt:s,className:l,"data-testid":u})=>{const c=e.useRef(null);e.useEffect((()=>{const r=c.current;r&&r.complete&&0===r.naturalHeight&&0===r.naturalWidth&&(r.onerror=null,r.src=t.default)}),[a]);return r.jsx("img",{ref:c,src:a,alt:s||"",className:l,"data-testid":u,onError:r=>{const e=r.target;e.onerror=null,e.src=t.default}})};
+//# sourceMappingURL=image-with-fallback.js.map

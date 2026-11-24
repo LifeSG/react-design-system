@@ -1,0 +1,2 @@
+import{__require as r}from"./_asciiWords.js";import{__require as i}from"./_hasUnicodeWord.js";import{__require as o}from"./toString.js";import{__require as e}from"./_unicodeWords.js";var s,t;function _(){if(t)return s;t=1;var _=r(),u=i(),a=o(),n=e();return s=function(r,i,o){return r=a(r),void 0===(i=o?void 0:i)?u(r)?n(r):_(r):r.match(i)||[]}}export{_ as __require};
+//# sourceMappingURL=words.js.map

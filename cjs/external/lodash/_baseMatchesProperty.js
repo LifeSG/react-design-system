@@ -1,0 +1,2 @@
+"use strict";var r,e,i=require("./_baseIsEqual.js"),u=require("./get.js"),_=require("./hasIn.js"),t=require("./_isKey.js"),q=require("./_isStrictComparable.js"),s=require("./_matchesStrictComparable.js"),a=require("./_toKey.js");exports.__require=function(){if(e)return r;e=1;var n=i.__require(),o=u.__require(),c=_.__require(),j=t.__require(),f=q.__require(),v=s.__require(),b=a.__require();return r=function(r,e){return j(r)&&f(e)?v(b(r),e):function(i){var u=o(i,r);return void 0===u&&u===e?c(i,r):n(e,u,3)}}};
+//# sourceMappingURL=_baseMatchesProperty.js.map

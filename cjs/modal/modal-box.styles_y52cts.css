@@ -1,0 +1,11 @@
+@layer fds{.b14nv3ev{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;width:40rem;max-height:70%;background:var(--fds-colour-bg);box-shadow:var(--fds-shadow-lg-strong);border-radius:var(--fds-radius-lg);overflow:hidden;}:where(body.fds-breakpoint-md-max) .b14nv3ev{width:90%;max-height:70%;}
+.ccgs01o{position:absolute;top:var(
+        --fds-internal-modal-closeButton-topInset,
+        var(--fds-spacing-16)
+    );right:var(
+        --fds-internal-modal-closeButton-rightInset,
+        var(--fds-spacing-16)
+    );padding:0;color:var(--fds-colour-icon);}.ccgs01o svg{height:2rem;width:2rem;}:where(body.fds-breakpoint-sm-max) .ccgs01o{right:var(
+            --fds-internal-modal-closeButton-rightInset,
+            var(--fds-spacing-20)
+        );}}

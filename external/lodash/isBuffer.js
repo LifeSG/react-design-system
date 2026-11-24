@@ -1,0 +1,2 @@
+import{__module as r}from"../../_virtual/isBuffer.js";import{__require as e}from"./_root.js";import{__require as o}from"./stubFalse.js";var s;function t(){return s||(s=1,function(r,s){var t=e(),i=o(),u=s&&!s.nodeType&&s,f=u&&r&&!r.nodeType&&r,p=f&&f.exports===u?t.Buffer:void 0,_=(p?p.isBuffer:void 0)||i;r.exports=_}(r,r.exports)),r.exports}r.exports;export{t as __require};
+//# sourceMappingURL=isBuffer.js.map

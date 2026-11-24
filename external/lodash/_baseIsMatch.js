@@ -1,0 +1,2 @@
+import{__require as r}from"./_Stack.js";import{__require as e}from"./_baseIsEqual.js";var i,n;function t(){if(n)return i;n=1;var t=r(),u=e();return i=function(r,e,i,n){var a=i.length,f=a,o=!n;if(null==r)return!f;for(r=Object(r);a--;){var v=i[a];if(o&&v[2]?v[1]!==r[v[0]]:!(v[0]in r))return!1}for(;++a<f;){var s=(v=i[a])[0],_=r[s],l=v[1];if(o&&v[2]){if(void 0===_&&!(s in r))return!1}else{var c=new t;if(n)var m=n(_,l,s,r,e,c);if(!(void 0===m?u(l,_,3,n,c):m))return!1}}return!0}}export{t as __require};
+//# sourceMappingURL=_baseIsMatch.js.map

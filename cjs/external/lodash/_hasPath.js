@@ -1,0 +1,2 @@
+"use strict";var r,e,i=require("./_castPath.js"),u=require("./isArguments.js"),_=require("./isArray.js"),s=require("./_isIndex.js"),t=require("./isLength.js"),n=require("./_toKey.js");exports.__require=function(){if(e)return r;e=1;var q=i.__require(),a=u.__require(),j=_.__require(),l=s.__require(),f=t.__require(),o=n.__require();return r=function(r,e,i){for(var u=-1,_=(e=q(e,r)).length,s=!1;++u<_;){var t=o(e[u]);if(!(s=null!=r&&i(r,t)))break;r=r[t]}return s||++u!=_?s:!!(_=null==r?0:r.length)&&f(_)&&l(t,_)&&(j(r)||a(r))}};
+//# sourceMappingURL=_hasPath.js.map

@@ -1,0 +1,13 @@
+export declare const root: import("@linaria/core").LinariaClassName;
+export declare const container: import("@linaria/core").LinariaClassName;
+export declare const inputSection: import("@linaria/core").LinariaClassName;
+export declare const controlSection: import("@linaria/core").LinariaClassName;
+export declare const hourMinuteSection: import("@linaria/core").LinariaClassName;
+export declare const timePeriodSection: import("@linaria/core").LinariaClassName;
+export declare const inputContainer: import("@linaria/core").LinariaClassName;
+export declare const switchButton: import("@linaria/core").LinariaClassName;
+export declare const dividerLabel: import("@linaria/core").LinariaClassName;
+export declare const timeInputBox: import("@linaria/core").LinariaClassName;
+export declare const timeInput: import("@linaria/core").LinariaClassName;
+export declare const timePeriodToggle: import("@linaria/core").LinariaClassName;
+export declare const controlButton: import("@linaria/core").LinariaClassName;

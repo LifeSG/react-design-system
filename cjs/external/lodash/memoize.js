@@ -1,0 +1,2 @@
+"use strict";var e,r,t=require("./_MapCache.js");exports.__require=function(){if(r)return e;r=1;var n=t.__require();function c(e,r){if("function"!=typeof e||null!=r&&"function"!=typeof r)throw new TypeError("Expected a function");var t=function(){var n=arguments,c=r?r.apply(this,n):n[0],a=t.cache;if(a.has(c))return a.get(c);var u=e.apply(this,n);return t.cache=a.set(c,u)||a,u};return t.cache=new(c.Cache||n),t}return c.Cache=n,e=c};
+//# sourceMappingURL=memoize.js.map

@@ -1,0 +1,2 @@
+"use strict";var e,r=require("../../_virtual/_nodeUtil.js"),t=require("./_freeGlobal.js");r.__module.exports,exports.__require=function(){return e||(e=1,u=r.__module,i=r.__module.exports,o=t.__require(),_=i&&!i.nodeType&&i,n=_&&u&&!u.nodeType&&u,s=n&&n.exports===_&&o.process,l=function(){try{var e=n&&n.require&&n.require("util").types;return e||s&&s.binding&&s.binding("util")}catch(e){}}(),u.exports=l),r.__module.exports;var u,i,o,_,n,s,l};
+//# sourceMappingURL=_nodeUtil.js.map

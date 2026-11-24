@@ -1,0 +1,2 @@
+"use strict";var r,e,i=require("./_baseIteratee.js"),u=require("./isArrayLike.js"),t=require("./keys.js");exports.__require=function(){if(e)return r;e=1;var n=i.__require(),s=u.__require(),_=t.__require();return r=function(r){return function(e,i,u){var t=Object(e);if(!s(e)){var a=n(i,3);e=_(e),i=function(r){return a(t[r],r,t)}}var q=r(e,i,u);return q>-1?t[a?e[q]:q]:void 0}}};
+//# sourceMappingURL=_createFind.js.map

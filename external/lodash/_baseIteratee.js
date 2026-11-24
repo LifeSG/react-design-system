@@ -1,0 +1,2 @@
+import{__require as r}from"./_baseMatches.js";import{__require as e}from"./_baseMatchesProperty.js";import{__require as t}from"./identity.js";import{__require as o}from"./isArray.js";import{__require as i}from"./property.js";var s,_;function a(){if(_)return s;_=1;var a=r(),u=e(),f=t(),n=o(),p=i();return s=function(r){return"function"==typeof r?r:null==r?f:"object"==typeof r?n(r)?u(r[0],r[1]):a(r):p(r)}}export{a as __require};
+//# sourceMappingURL=_baseIteratee.js.map

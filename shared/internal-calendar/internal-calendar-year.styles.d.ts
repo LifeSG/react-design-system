@@ -1,0 +1,9 @@
+export declare const wrapper: import("@linaria/core").LinariaClassName;
+export declare const yearCell: import("@linaria/core").LinariaClassName;
+export declare const yearCellDisabledDisplay: import("@linaria/core").LinariaClassName;
+export declare const yearCellInteractive: import("@linaria/core").LinariaClassName;
+export declare const yearCellOtherDecade: import("@linaria/core").LinariaClassName;
+export declare const yearCellCurrentYear: import("@linaria/core").LinariaClassName;
+export declare const yearCellSelectedYear: import("@linaria/core").LinariaClassName;
+export declare const yearCellDefaultHover: import("@linaria/core").LinariaClassName;
+export declare const yearCellSelectedHover: import("@linaria/core").LinariaClassName;
