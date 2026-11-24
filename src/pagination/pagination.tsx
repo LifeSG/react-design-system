@@ -153,11 +153,20 @@ const Component = (
         }
     };
 
+    const handleInputCommit = () => {
+        const page = parseInt(inputText);
+        if (isNaN(page)) {
+            setInputValue(activePage);
+            return;
+        }
+        if (page !== activePage) {
+            onPageChange?.(page);
+        }
+    };
+
     const handleInputSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        if (inputText) {
-            onPageChange?.(parseInt(inputText));
-        }
+        handleInputCommit();
     };
 
     const onHoverRightButton = () => {
@@ -324,8 +333,12 @@ const Component = (
                     className={styles.inputView}
                     value={inputText}
                     onChange={handleInput}
+                    // iOS keyboard "Done" fires blur, not form submit
+                    onBlur={handleInputCommit}
                     autoComplete="off"
-                    type="numeric"
+                    type="number"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     id={(id || "pagination") + "-input"}
                     data-testid={(dataTestId || "pagination") + "-input"}
                     aria-label={`Page ${activePage} of ${totalPages}`}
