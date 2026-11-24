@@ -4,6 +4,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { mergeRefs } from "../util";
 import { Brand } from "./brand";
 import {
+    BrandAddonContainer,
     CloseButton,
     CloseIcon,
     Container,
@@ -30,6 +31,7 @@ const Component = (
         onBrandClick,
         drawerLabel = "Mobile navigation menu",
         mobileMenuRef,
+        brandAddon,
     } = props;
     const [viewHeight, setViewHeight] = useState<number>(0);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -128,6 +130,12 @@ const Component = (
                             type="secondary"
                         />
                     </>
+                )}
+                {brandAddon && (
+                    <BrandAddonContainer data-testid="drawer__brand-addon">
+                        <NavSeparator />
+                        {brandAddon}
+                    </BrandAddonContainer>
                 )}
             </>
         );

@@ -108,6 +108,8 @@ export interface NavbarDrawerProps extends NavbarSharedProps {
     drawerLabel?: string | undefined;
     /** Ref to the mobile menu button for focus management */
     mobileMenuRef?: React.RefObject<HTMLButtonElement> | undefined;
+    /** Custom content rendered after the brand logos in the drawer header */
+    brandAddon?: JSX.Element | undefined;
 }
 
 export type BrandType = "primary" | "secondary";
@@ -145,4 +147,15 @@ export interface NavbarProps<T = void> extends NavbarSharedProps {
     headerLabel?: string | undefined;
     /** Custom aria-label for the mobile navigation drawer */
     drawerLabel?: string | undefined;
+    /**
+     * Custom content rendered after the brand logos in the header, separated
+     * by a divider, for all viewports. Use `drawerBrandAddon` for the mobile drawer.
+     */
+    headerBrandAddon?: JSX.Element | undefined;
+    /**
+     * Custom content rendered after the brand logos in the mobile drawer
+     * header, separated by a divider (e.g. a "Go to Home" link). The close
+     * button is retained.
+     */
+    drawerBrandAddon?: JSX.Element | undefined;
 }

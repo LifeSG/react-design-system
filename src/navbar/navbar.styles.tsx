@@ -109,6 +109,13 @@ export const NavBrandContainer = styled.div<StyleProps>`
     }
 `;
 
+export const HeaderBrandAddonContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+`;
+
 export const NavSeparator = styled.div<StyleProps>`
     display: flex;
     background-color: ${Colour.border};
