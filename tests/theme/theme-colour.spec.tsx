@@ -195,11 +195,6 @@ describe("Colour mode", () => {
 });
 
 describe("System Preference Detection", () => {
-    beforeEach(() => {
-        // Clean up any existing matchMedia mock
-        delete (window as any).matchMedia;
-    });
-
     afterEach(() => {
         // Restore original matchMedia if it existed
         jest.restoreAllMocks();
