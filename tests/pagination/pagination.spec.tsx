@@ -553,94 +553,6 @@ describe("Pagination", () => {
             expect(combobox).toHaveTextContent("20 per page (updated)");
         });
 
-        describe("compact input", () => {
-            const INPUT_TESTID = "pagination-input";
-            const mockOnPageChange = jest.fn();
-
-            beforeEach(() => {
-                mockOnPageChange.mockClear();
-                jest.mocked(useMaxWidthMediaQuery).mockReturnValue(true);
-            });
-
-            const renderPagination = () =>
-                render(
-                    <Pagination
-                        totalItems={100}
-                        activePage={1}
-                        onPageChange={mockOnPageChange}
-                    />
-                );
-
-            it("should commit the typed page on blur", async () => {
-                const user = userEvent.setup();
-                renderPagination();
-                const input = screen.getByTestId(INPUT_TESTID);
-
-                await user.clear(input);
-                await user.type(input, "3");
-                await user.tab();
-
-                expect(mockOnPageChange).toHaveBeenCalledTimes(1);
-                expect(mockOnPageChange).toHaveBeenCalledWith(3);
-            });
-
-            it("should not call onPageChange on blur if the active page is typed", async () => {
-                const user = userEvent.setup();
-                renderPagination();
-                const input = screen.getByTestId(INPUT_TESTID);
-
-                await user.clear(input);
-                await user.type(input, "1");
-                await user.tab();
-
-                expect(mockOnPageChange).not.toHaveBeenCalled();
-            });
-
-            it("should restore the active page on blur if the input is empty", async () => {
-                const user = userEvent.setup();
-                renderPagination();
-                const input = screen.getByTestId(INPUT_TESTID);
-
-                await user.clear(input);
-                await user.tab();
-
-                expect(mockOnPageChange).not.toHaveBeenCalled();
-                expect(input).toHaveValue("1");
-            });
-
-            it("should commit once on Enter and not again on subsequent blur", async () => {
-                const user = userEvent.setup();
-                const { rerender } = renderPagination();
-                const input = screen.getByTestId(INPUT_TESTID);
-
-                await user.clear(input);
-                await user.type(input, "3{Enter}");
-
-                expect(mockOnPageChange).toHaveBeenCalledTimes(1);
-                expect(mockOnPageChange).toHaveBeenCalledWith(3);
-
-                rerender(
-                    <Pagination
-                        totalItems={100}
-                        activePage={3}
-                        onPageChange={mockOnPageChange}
-                    />
-                );
-                await user.tab();
-
-                expect(mockOnPageChange).toHaveBeenCalledTimes(1);
-            });
-
-            it("should use the numeric input mode", () => {
-                renderPagination();
-
-                expect(screen.getByTestId(INPUT_TESTID)).toHaveAttribute(
-                    "inputmode",
-                    "numeric"
-                );
-            });
-        });
-
         describe("onPageSizeChange", () => {
             it("should return active page and new page size if current page is within the new range", async () => {
                 const user = userEvent.setup();
@@ -884,6 +796,93 @@ describe("Pagination", () => {
                 await user.type(screen.getByRole("textbox"), "{enter}");
 
                 expect(mockOnPageChange).toHaveBeenCalledWith(3);
+            });
+        });
+
+        describe("onPageChange (via input)", () => {
+            const INPUT_TESTID = "pagination-input";
+            const mockOnPageChange = jest.fn();
+
+            beforeEach(() => {
+                mockOnPageChange.mockClear();
+            });
+
+            const renderPagination = () =>
+                render(
+                    <Pagination
+                        totalItems={100}
+                        activePage={1}
+                        onPageChange={mockOnPageChange}
+                    />
+                );
+
+            it("should commit the typed page on blur", async () => {
+                const user = userEvent.setup();
+                renderPagination();
+                const input = screen.getByTestId(INPUT_TESTID);
+
+                await user.clear(input);
+                await user.type(input, "3");
+                await user.tab();
+
+                expect(mockOnPageChange).toHaveBeenCalledTimes(1);
+                expect(mockOnPageChange).toHaveBeenCalledWith(3);
+            });
+
+            it("should not call onPageChange on blur if the active page is typed", async () => {
+                const user = userEvent.setup();
+                renderPagination();
+                const input = screen.getByTestId(INPUT_TESTID);
+
+                await user.clear(input);
+                await user.type(input, "1");
+                await user.tab();
+
+                expect(mockOnPageChange).not.toHaveBeenCalled();
+            });
+
+            it("should restore the active page on blur if the input is empty", async () => {
+                const user = userEvent.setup();
+                renderPagination();
+                const input = screen.getByTestId(INPUT_TESTID);
+
+                await user.clear(input);
+                await user.tab();
+
+                expect(mockOnPageChange).not.toHaveBeenCalled();
+                expect(input).toHaveValue("1");
+            });
+
+            it("should commit once on Enter and not again on subsequent blur", async () => {
+                const user = userEvent.setup();
+                const { rerender } = renderPagination();
+                const input = screen.getByTestId(INPUT_TESTID);
+
+                await user.clear(input);
+                await user.type(input, "3{Enter}");
+
+                expect(mockOnPageChange).toHaveBeenCalledTimes(1);
+                expect(mockOnPageChange).toHaveBeenCalledWith(3);
+
+                rerender(
+                    <Pagination
+                        totalItems={100}
+                        activePage={3}
+                        onPageChange={mockOnPageChange}
+                    />
+                );
+                await user.tab();
+
+                expect(mockOnPageChange).toHaveBeenCalledTimes(1);
+            });
+
+            it("should use the numeric input mode", () => {
+                renderPagination();
+
+                expect(screen.getByTestId(INPUT_TESTID)).toHaveAttribute(
+                    "inputmode",
+                    "numeric"
+                );
             });
         });
     });
