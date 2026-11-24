@@ -484,7 +484,7 @@ describe("Pagination", () => {
                 );
 
                 expect(
-                    screen.getByRole("textbox", { name: "Page 2 of 3" })
+                    screen.getByRole("spinbutton", { name: "Page 2 of 3" })
                 ).toBeInTheDocument();
                 expect(
                     screen.queryByTestId(SELECTOR_TESTID)
@@ -508,7 +508,7 @@ describe("Pagination", () => {
                 ).toBeInTheDocument();
                 expect(screen.getByTestId(SELECTOR_TESTID)).toBeInTheDocument();
                 expect(
-                    screen.queryByRole("textbox", { name: "Page 2 of 3" })
+                    screen.queryByRole("spinbutton", { name: "Page 2 of 3" })
                 ).not.toBeInTheDocument();
             });
 
@@ -525,7 +525,7 @@ describe("Pagination", () => {
                 );
 
                 expect(
-                    screen.getByRole("textbox", { name: "Page 2 of 3" })
+                    screen.getByRole("spinbutton", { name: "Page 2 of 3" })
                 ).toBeInTheDocument();
                 expect(
                     screen.queryByTestId(SELECTOR_TESTID)
@@ -546,7 +546,7 @@ describe("Pagination", () => {
                     />
                 );
 
-                const input = screen.getByRole("textbox", {
+                const input = screen.getByRole("spinbutton", {
                     name: "Page 2 of 3",
                 });
                 const form = input.closest("form");
@@ -558,17 +558,12 @@ describe("Pagination", () => {
                 fireEvent.change(input, {
                     target: { value: "" },
                 });
-                expect(input).toHaveValue("");
-
-                fireEvent.change(input, {
-                    target: { value: "12a" },
-                });
-                expect(input).toHaveValue("12");
+                expect(input).toHaveValue(null);
 
                 fireEvent.change(input, {
                     target: { value: "99" },
                 });
-                expect(input).toHaveValue("3");
+                expect(input).toHaveValue(3);
 
                 fireEvent.submit(form);
 
@@ -628,16 +623,18 @@ describe("Pagination", () => {
                 await user.tab();
 
                 expect(mockOnPageChange).not.toHaveBeenCalled();
-                expect(input).toHaveValue("1");
+                expect(input).toHaveValue(1);
             });
 
-            it("should commit once on Enter and not again on subsequent blur", async () => {
+            it("should commit once on submit and not again on subsequent blur", async () => {
                 const user = userEvent.setup();
                 const { rerender } = renderPagination();
                 const input = screen.getByTestId(INPUT_TESTID);
 
                 await user.clear(input);
-                await user.type(input, "3{Enter}");
+                await user.type(input, "3");
+                // user-event does not implicitly submit forms from number inputs on Enter
+                fireEvent.submit(input);
 
                 expect(mockOnPageChange).toHaveBeenCalledTimes(1);
                 expect(mockOnPageChange).toHaveBeenCalledWith(3);
