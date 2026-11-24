@@ -349,9 +349,8 @@ export interface NavbarProps<T = void> extends NavbarSharedProps {
      */
     drawerLabel?: string | undefined;
     /**
-     * Custom content rendered after the brand logos on desktop, separated by
-     * a divider (e.g. a "Back to Home" link). Hidden in tablet and mobile
-     * viewports.
+     * Custom content rendered after the brand logos in the header, separated
+     * by a divider, for all viewports. Use `drawerBrandAddon` for the mobile drawer.
      */
     headerBrandAddon?: JSX.Element | undefined;
     /**

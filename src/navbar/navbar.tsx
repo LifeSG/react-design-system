@@ -295,7 +295,7 @@ const Component = <T,>(
                     className={styles.headerBrandAddonContainer}
                     data-testid="main__brand-addon"
                 >
-                    <NavSeparator compress={compress} responsive={false} />
+                    <NavSeparator compress={compress} />
                     {headerBrandAddon}
                 </div>
             )}

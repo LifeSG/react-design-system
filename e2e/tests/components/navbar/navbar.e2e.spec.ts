@@ -367,7 +367,7 @@ test.describe("Navbar", () => {
             });
 
             test("Header brand addon", async ({ story }) => {
-                await expect(story.locators.internal.brandAddon).toBeHidden();
+                await expect(story.locators.internal.brandAddon).toBeVisible();
                 await compareScreenshot(story, "mount");
             });
         });
