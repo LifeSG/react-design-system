@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { DateNavigator } from "src";
 
-import { setupCommonDomMocks } from "../_common";
+import { setupCommonDomMocks, waitForElementToBeRemoved } from "../_common";
 
 describe("DateNavigator", () => {
     const today = "2024-09-05";
@@ -386,10 +386,8 @@ describe("DateNavigator", () => {
 
             expect(screen.getByTestId("after")).toHaveFocus();
 
-            await waitFor(() =>
-                expect(
-                    screen.queryByTestId(CALENDAR_DROPDOWN_TESTID)
-                ).not.toBeInTheDocument()
+            await waitForElementToBeRemoved(() =>
+                screen.queryByTestId(CALENDAR_DROPDOWN_TESTID)
             );
         });
 
@@ -418,10 +416,8 @@ describe("DateNavigator", () => {
 
             await user.keyboard("{Escape}");
 
-            await waitFor(() =>
-                expect(
-                    screen.queryByTestId(CALENDAR_DROPDOWN_TESTID)
-                ).not.toBeInTheDocument()
+            await waitForElementToBeRemoved(() =>
+                screen.queryByTestId(CALENDAR_DROPDOWN_TESTID)
             );
 
             expect(screen.queryByTestId(DATE_TEXT_TESTID)).toHaveFocus();
