@@ -1,11 +1,4 @@
-import {
-    act,
-    render,
-    screen,
-    waitFor,
-    waitForElementToBeRemoved,
-    within,
-} from "@testing-library/react";
+import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { L1OptionProps } from "src";
 import { InputNestedMultiSelect } from "src";
@@ -14,7 +7,7 @@ import {
     getSelectedSubItems,
 } from "src/input-nested-multi-select/helpers";
 
-import { setupCommonDomMocks } from "../_common";
+import { setupCommonDomMocks, waitForElementToBeRemoved } from "../_common";
 
 jest.mock("react-resize-detector");
 
