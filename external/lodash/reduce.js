@@ -1,0 +1,2 @@
+import{__require as r}from"./_arrayReduce.js";import{__require as e}from"./_baseEach.js";import{__require as a}from"./_baseIteratee.js";import{__require as _}from"./_baseReduce.js";import{__require as i}from"./isArray.js";var s,t;function o(){if(t)return s;t=1;var o=r(),u=e(),m=a(),f=_(),n=i();return s=function(r,e,a){var _=n(r)?o:f,i=arguments.length<3;return _(r,m(e,4),a,i,u)},s}export{o as __require};
+//# sourceMappingURL=reduce.js.map

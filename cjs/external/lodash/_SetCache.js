@@ -1,0 +1,2 @@
+"use strict";var e,r,t=require("./_MapCache.js"),_=require("./_setCacheAdd.js"),u=require("./_setCacheHas.js");exports.__require=function(){if(r)return e;r=1;var a=t.__require(),i=_.__require(),s=u.__require();function o(e){var r=-1,t=null==e?0:e.length;for(this.__data__=new a;++r<t;)this.add(e[r])}return o.prototype.add=o.prototype.push=i,o.prototype.has=s,e=o};
+//# sourceMappingURL=_SetCache.js.map

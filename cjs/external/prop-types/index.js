@@ -1,0 +1,2 @@
+"use strict";var e,r=require("../../_virtual/index3.js"),i=require("./external/react-is/index.js"),t=require("./factoryWithTypeCheckers.js"),u=require("./factoryWithThrowingShims.js");exports.__require=function(){if(e)return r.__module.exports;if(e=1,"production"!==process.env.NODE_ENV){var s=i.__require();r.__module.exports=t.__require()(s.isElement,true)}else r.__module.exports=u.__require()();return r.__module.exports};
+//# sourceMappingURL=index.js.map

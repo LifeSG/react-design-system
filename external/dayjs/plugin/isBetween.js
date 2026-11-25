@@ -1,0 +1,2 @@
+import{__module as e}from"../../../_virtual/isBetween2.js";var t;e.exports;function i(){return t||(t=1,e.exports=function(e,t,i){t.prototype.isBetween=function(e,t,r,s){var o=i(e),f=i(t),n="("===(s=s||"()")[0],h=")"===s[1];return(n?this.isAfter(o,r):!this.isBefore(o,r))&&(h?this.isBefore(f,r):!this.isAfter(f,r))||(n?this.isBefore(o,r):!this.isAfter(o,r))&&(h?this.isAfter(f,r):!this.isBefore(f,r))}}),e.exports}export{i as __require};
+//# sourceMappingURL=isBetween.js.map

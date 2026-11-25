@@ -1,0 +1,2 @@
+import{__require as r}from"./isArray.js";import{__require as e}from"./isSymbol.js";var t,n;function i(){if(n)return t;n=1;var i=r(),o=e(),u=/\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,s=/^\w*$/;return t=function(r,e){if(i(r))return!1;var t=typeof r;return!("number"!=t&&"symbol"!=t&&"boolean"!=t&&null!=r&&!o(r))||(s.test(r)||!u.test(r)||null!=e&&r in Object(e))}}export{i as __require};
+//# sourceMappingURL=_isKey.js.map

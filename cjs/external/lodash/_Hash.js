@@ -1,0 +1,2 @@
+"use strict";var e,r,t=require("./_hashClear.js"),s=require("./_hashDelete.js"),i=require("./_hashGet.js"),u=require("./_hashHas.js"),_=require("./_hashSet.js");exports.__require=function(){if(r)return e;r=1;var a=t.__require(),h=s.__require(),o=i.__require(),p=u.__require(),q=_.__require();function l(e){var r=-1,t=null==e?0:e.length;for(this.clear();++r<t;){var s=e[r];this.set(s[0],s[1])}}return l.prototype.clear=a,l.prototype.delete=h,l.prototype.get=o,l.prototype.has=p,l.prototype.set=q,e=l};
+//# sourceMappingURL=_Hash.js.map

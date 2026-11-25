@@ -1,0 +1,2 @@
+import { InputRangeSliderProps } from "./types";
+export declare const InputRangeSlider: ({ id, value, min, max, step, minRange, numOfThumbs, colors, disabled, readOnly, showSliderLabels, sliderLabelPrefix, sliderLabelSuffix, showIndicatorLabel, indicatorLabelPrefix, indicatorLabelSuffix, ariaLabels, ariaDescriptions, "aria-invalid": ariaInvalid, "aria-labelledby": ariaLabelledBy, "aria-describedby": ariaDescribedBy, renderSliderLabel, onChange, onChangeEnd, ...otherProps }: InputRangeSliderProps) => import("react/jsx-runtime").JSX.Element;

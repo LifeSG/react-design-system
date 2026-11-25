@@ -1,0 +1,2 @@
+"use strict";var r,e,i=require("./debounce.js"),n=require("./isObject.js");exports.__require=function(){if(e)return r;e=1;var t=i.__require(),u=n.__require();return r=function(r,e,i){var n=!0,a=!0;if("function"!=typeof r)throw new TypeError("Expected a function");return u(i)&&(n="leading"in i?!!i.leading:n,a="trailing"in i?!!i.trailing:a),t(r,e,{leading:n,maxWait:e,trailing:a})}};
+//# sourceMappingURL=throttle.js.map

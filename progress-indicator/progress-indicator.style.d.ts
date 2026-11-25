@@ -1,0 +1,31 @@
+export declare const INDICATOR_BAR_MARGIN_RIGHT_TABLET = 0.5;
+interface IndicatorProps {
+    $highlighted: boolean;
+}
+export declare const Wrapper: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components").FastOmit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, never> & Partial<Pick<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, never>>> & string;
+export declare const Content: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components").FastOmit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, never> & Partial<Pick<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, never>>> & string;
+export declare const IndicatorBar: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components").FastOmit<import("styled-components").FastOmit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "$highlighted"> & IndicatorProps, never> & Partial<Pick<import("styled-components").FastOmit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "$highlighted"> & IndicatorProps, never>>> & string;
+export declare const IndicatorTitleDesktop: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components").FastOmit<import("styled-components").FastOmit<import("..").TypographyProps & {
+    ref?: import("react").RefObject<HTMLParagraphElement> | undefined;
+} & {
+    as?: import("styled-components").WebTarget | undefined;
+    forwardedAs?: import("styled-components").WebTarget | undefined;
+}, "$highlighted"> & IndicatorProps, never> & Partial<Pick<import("styled-components").FastOmit<import("..").TypographyProps & {
+    ref?: import("react").RefObject<HTMLParagraphElement> | undefined;
+} & {
+    as?: import("styled-components").WebTarget | undefined;
+    forwardedAs?: import("styled-components").WebTarget | undefined;
+}, "$highlighted"> & IndicatorProps, never>>> & string;
+export declare const IndicatorTitleTablet: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components").FastOmit<import("..").TypographyProps & {
+    ref?: import("react").RefObject<HTMLParagraphElement> | undefined;
+} & {
+    as?: import("styled-components").WebTarget | undefined;
+    forwardedAs?: import("styled-components").WebTarget | undefined;
+}, never> & Partial<Pick<import("..").TypographyProps & {
+    ref?: import("react").RefObject<HTMLParagraphElement> | undefined;
+} & {
+    as?: import("styled-components").WebTarget | undefined;
+    forwardedAs?: import("styled-components").WebTarget | undefined;
+}, never>>> & string;
+export declare const Indicator: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components").FastOmit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, never> & Partial<Pick<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, never>>> & string;
+export {};

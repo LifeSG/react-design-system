@@ -1,0 +1,2 @@
+import{__require as r}from"./_memoizeCapped.js";var e,u;function a(){if(u)return e;u=1;var a=r(),n=/[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g,t=/\\(\\)?/g,i=a(function(r){var e=[];return 46===r.charCodeAt(0)&&e.push(""),r.replace(n,function(r,u,a,n){e.push(a?n.replace(t,"$1"):u||r)}),e});return e=i}export{a as __require};
+//# sourceMappingURL=_stringToPath.js.map

@@ -1,0 +1,2 @@
+"use strict";var e,r,u=require("./_arrayReduce.js"),i=require("./_baseEach.js"),_=require("./_baseIteratee.js"),s=require("./_baseReduce.js"),a=require("./isArray.js");exports.__require=function(){if(r)return e;r=1;var q=u.__require(),t=i.__require(),n=_.__require(),c=s.__require(),j=a.__require();return e=function(e,r,u){var i=j(e)?q:c,_=arguments.length<3;return i(e,n(r,4),u,_,t)}};
+//# sourceMappingURL=reduce.js.map

@@ -1,0 +1,2 @@
+"use strict";var e=require("../_virtual/_tslib.js"),r=require("react/jsx-runtime"),t=require("react"),i=require("./pill.style.js");function l(e){return e&&"object"==typeof e&&"default"in e?e:{default:e}}var c=l(t);exports.Pill=t=>{var{type:l,colorType:n="black",children:a,icon:s}=t,o=e.__rest(t,["type","colorType","children","icon"]);return r.jsxs(i.Wrapper,Object.assign({$type:l,$color:n},o,{children:[s&&c.default.cloneElement(s,{"aria-hidden":!0}),r.jsx(i.Label,{children:a})]}))};
+//# sourceMappingURL=pill.js.map

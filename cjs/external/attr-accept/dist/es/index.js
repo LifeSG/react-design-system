@@ -1,0 +1,2 @@
+"use strict";var e,r=require("../../../../_virtual/index5.js");exports.__require=function(){return e||(e=1,r.__exports.__esModule=!0,r.__exports.default=function(e,r){if(e&&r){var t=Array.isArray(r)?r:r.split(","),s=e.name||"",o=(e.type||"").toLowerCase(),a=o.replace(/\/.*$/,"");return t.some(function(e){var r=e.trim().toLowerCase();return"."===r.charAt(0)?s.toLowerCase().endsWith(r):r.endsWith("/*")?a===r.replace(/\/.*$/,""):o===r})}return!0}),r.__exports};
+//# sourceMappingURL=index.js.map

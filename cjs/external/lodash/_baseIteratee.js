@@ -1,0 +1,2 @@
+"use strict";var r,e,i=require("./_baseMatches.js"),u=require("./_baseMatchesProperty.js"),t=require("./identity.js"),_=require("./isArray.js"),s=require("./property.js");exports.__require=function(){if(e)return r;e=1;var n=i.__require(),q=u.__require(),o=t.__require(),a=_.__require(),c=s.__require();return r=function(r){return"function"==typeof r?r:null==r?o:"object"==typeof r?a(r)?q(r[0],r[1]):n(r):c(r)}};
+//# sourceMappingURL=_baseIteratee.js.map

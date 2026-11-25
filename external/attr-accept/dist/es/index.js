@@ -1,0 +1,2 @@
+import{__exports as r}from"../../../../_virtual/index5.js";var e;function t(){return e||(e=1,r.__esModule=!0,r.default=function(r,e){if(r&&e){var t=Array.isArray(e)?e:e.split(","),a=r.name||"",o=(r.type||"").toLowerCase(),n=o.replace(/\/.*$/,"");return t.some(function(r){var e=r.trim().toLowerCase();return"."===e.charAt(0)?a.toLowerCase().endsWith(e):e.endsWith("/*")?n===e.replace(/\/.*$/,""):o===e})}return!0}),r}export{t as __require};
+//# sourceMappingURL=index.js.map

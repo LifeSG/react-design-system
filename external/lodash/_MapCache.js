@@ -1,0 +1,2 @@
+import{__require as e}from"./_mapCacheClear.js";import{__require as r}from"./_mapCacheDelete.js";import{__require as t}from"./_mapCacheGet.js";import{__require as a}from"./_mapCacheHas.js";import{__require as o}from"./_mapCacheSet.js";var p,s;function _(){if(s)return p;s=1;var _=e(),i=r(),m=t(),u=a(),c=o();function f(e){var r=-1,t=null==e?0:e.length;for(this.clear();++r<t;){var a=e[r];this.set(a[0],a[1])}}return f.prototype.clear=_,f.prototype.delete=i,f.prototype.get=m,f.prototype.has=u,f.prototype.set=c,p=f}export{_ as __require};
+//# sourceMappingURL=_MapCache.js.map
