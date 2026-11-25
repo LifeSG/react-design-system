@@ -11,6 +11,13 @@ import {
 } from "../shared/dropdown-list/types";
 import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
+/**
+ * How the selected options are shown in the trigger.
+ * - `"count"`: a summary such as "3 selected".
+ * - `"tag"`: one tag per selected option.
+ */
+export type InputMultiSelectDisplayVariantType = "count" | "tag";
+
 export interface InputMultiSelectProps<T, V>
     extends React.HTMLAttributes<HTMLElement>,
         InputSelectOptionsProps<T>,
@@ -35,6 +42,12 @@ export interface InputMultiSelectProps<T, V>
      * the dropdown may not be visible. Specify the parent element here instead
      */
     dropdownRootNode?: RefObject<HTMLElement> | undefined;
+    /**
+     * How the selected options are displayed.
+     *
+     * @default "count"
+     */
+    displayVariant?: InputMultiSelectDisplayVariantType | undefined;
 }
 
 /** To be exposed for Form component inheritance */

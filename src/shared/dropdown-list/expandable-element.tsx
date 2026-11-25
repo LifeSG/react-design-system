@@ -1,15 +1,36 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { AriaAttributes, Ref, forwardRef } from "react";
-import { IconContainer, Selector } from "./expandable-element.styles";
+import {
+    ComboboxButton,
+    Content,
+    IconContainer,
+    Selector,
+} from "./expandable-element.styles";
 import { DropdownVariantType } from "./types";
 
 export interface ExpandableElementProps
     extends Pick<
         AriaAttributes,
-        "aria-labelledby" | "aria-describedby" | "aria-invalid"
+        "aria-label" | "aria-labelledby" | "aria-describedby" | "aria-invalid"
     > {
+    /**
+     * The current value, rendered inside the combobox and announced as its
+     * content. Must be phrasing content (no divs, no interactive elements)
+     */
     children: React.ReactNode;
+    /**
+     * Content rendered alongside the combobox, e.g. interactive tags, since
+     * buttons cannot be nested. The combobox is then laid over the selector,
+     * and `children` should be visually hidden if they duplicate the content.
+     * Decorative parts of the content should be `aria-hidden`
+     */
+    content?: React.ReactNode | undefined;
     disabled: boolean | undefined;
+    /**
+     * Uses a min-height instead of a fixed height, so that the selector can
+     * grow over multiple lines
+     */
+    dynamicHeight?: boolean | undefined;
     expanded: boolean | undefined;
     listboxId: string;
     popupRole: AriaAttributes["aria-haspopup"];
@@ -20,40 +41,82 @@ export interface ExpandableElementProps
 export const Component = (
     {
         children,
+        content,
         disabled,
+        dynamicHeight,
         expanded,
         listboxId,
         popupRole,
         readOnly,
         variant,
+        "aria-label": ariaLabel,
+        "aria-labelledby": ariaLabelledBy,
         ...otherProps
     }: ExpandableElementProps,
     ref: Ref<HTMLButtonElement>
 ) => {
     // =============================================================================
+    // CONST
+    // =============================================================================
+    const comboboxProps = {
+        role: "combobox",
+        "aria-controls": expanded ? listboxId : undefined, // only apply when dropdown is mounted
+        "aria-disabled": disabled,
+        "aria-expanded": expanded,
+        "aria-haspopup": popupRole,
+        "aria-readonly": readOnly,
+        "data-testid": "selector",
+        ...otherProps,
+    };
+
+    // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
+    const icon = !readOnly && (
+        <IconContainer $expanded={expanded} $variant={variant}>
+            <ChevronDownIcon aria-hidden />
+        </IconContainer>
+    );
+
+    if (content) {
+        // clicks bubble up to the reference element of the dropdown wrapper,
+        // so neither the selector nor the combobox needs a click handler
+        return (
+            <Selector
+                as="div"
+                $variant={variant}
+                $readOnly={readOnly}
+                $dynamicHeight={dynamicHeight}
+                $hasContent
+            >
+                <ComboboxButton
+                    ref={ref}
+                    type="button"
+                    aria-label={ariaLabel}
+                    aria-labelledby={ariaLabelledBy}
+                    {...comboboxProps}
+                >
+                    {children}
+                </ComboboxButton>
+                <Content>{content}</Content>
+                {icon}
+            </Selector>
+        );
+    }
+
     return (
         <Selector
             ref={ref}
             type="button"
-            role="combobox"
-            aria-expanded={expanded}
-            aria-haspopup={popupRole}
-            aria-controls={expanded ? listboxId : undefined} // only apply when dropdown is mounted
-            data-testid="selector"
-            aria-disabled={disabled}
-            aria-readonly={readOnly}
             $variant={variant}
             $readOnly={readOnly}
-            {...otherProps}
+            $dynamicHeight={dynamicHeight}
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledBy}
+            {...comboboxProps}
         >
             {children}
-            {!readOnly && (
-                <IconContainer $expanded={expanded} $variant={variant}>
-                    <ChevronDownIcon aria-hidden />
-                </IconContainer>
-            )}
+            {icon}
         </Selector>
     );
 };

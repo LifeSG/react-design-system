@@ -86,14 +86,16 @@ export const StoryDecorator: (options?: {
 const StoryViewModeContainer = styled.div<StoryStyleProps>`
     min-width: min(500px, calc(100vw - 32px));
     width: fit-content;
-    ${(props) => props.$maxWidth && "max-width: 500px;"}
+    ${(props) =>
+        props.$maxWidth && "max-width: min(500px, calc(100vw - 32px));"}
     margin: auto;
 `;
 
 const DocsViewModeContainer = styled.div<StoryStyleProps>`
     min-width: 500px;
     width: fit-content;
-    ${(props) => props.$maxWidth && "max-width: 500px;"}
+    ${(props) =>
+        props.$maxWidth && "max-width: min(500px, calc(100vw - 32px));"}
     margin: auto;
 
     @media screen and (max-width: 600px) {

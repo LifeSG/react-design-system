@@ -29,11 +29,6 @@ export const StyledExpandableElement = styled(ExpandableElement)`
             color: ${Colour["text-selected"]};
         }
     }
-
-    &:focus-visible {
-        outline: 2px solid ${Colour["focus-ring"]};
-        outline-offset: -2px;
-    }
 `;
 
 const IconWrapper = css`

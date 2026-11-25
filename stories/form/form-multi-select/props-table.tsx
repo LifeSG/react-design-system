@@ -60,6 +60,13 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "displayVariant",
+                description:
+                    "How the selected options are displayed. `count` shows a summary such as `2 selected`, while `tag` shows each selected option as a removable tag using the `listExtractor` output. Tags collapse into an `and X more` indicator after four rows",
+                propTypes: [`"count"`, `"tag"`],
+                defaultValue: `"count"`,
+            },
+            {
                 name: "optionsLoadState",
                 description:
                     "The visual state to represent the progress when options are loaded asynchronously",
