@@ -23,7 +23,6 @@ export const Tag = styled.div<StyleProps>`
     display: flex;
     align-items: center;
     gap: ${Spacing["spacing-4"]};
-    box-sizing: border-box;
     min-width: 0;
     max-width: 100%;
     padding: 2px ${Spacing["spacing-8"]};

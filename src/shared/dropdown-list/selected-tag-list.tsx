@@ -38,9 +38,9 @@ export const SelectedTagList = ({
     // CONST, STATE, REF
     // =============================================================================
     const containerRef = useRef<HTMLDivElement>(null);
-    const { width = 0 } = useResizeDetector({
+    const { width = 0, height = 0 } = useResizeDetector({
         targetRef: containerRef,
-        handleHeight: false,
+        handleHeight: true,
     });
     // `null` renders every tag so that the rows can be measured
     const [visibleCount, setVisibleCount] = useState<number | null>(null);
@@ -69,7 +69,7 @@ export const SelectedTagList = ({
             return;
         }
 
-        const signature = `${itemsSignature}|${Math.round(width)}|${maxRows}`;
+        const signature = [itemsSignature, width, height, maxRows].join("|");
         if (measuredSignatureRef.current !== signature) {
             measuredSignatureRef.current = signature;
 
@@ -102,7 +102,7 @@ export const SelectedTagList = ({
             // the "and X more" tag does not fit in the last row
             setVisibleCount(visibleCount - 1);
         }
-    }, [visibleCount, itemsSignature, width, maxRows]);
+    }, [visibleCount, itemsSignature, width, maxRows, height]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -125,9 +125,7 @@ export const SelectedTagList = ({
         <Container ref={containerRef} data-testid="selected-tag-list">
             {visibleItems.map(({ key, label, onRemove }) => (
                 <Tag key={key} $inactive={!removable}>
-                    <TagLabel title={label} aria-hidden>
-                        {label}
-                    </TagLabel>
+                    <TagLabel aria-hidden>{label}</TagLabel>
                     {removable && (
                         <RemoveButton
                             type="button"
