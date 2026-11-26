@@ -33,17 +33,17 @@ export const HistogramSliderDropdownContainer = styled.div`
     }
 `;
 
-export const Label = styled.div`
+export const Label = styled.span`
     display: flex;
     align-items: baseline;
 `;
 
-export const Separator = styled.div`
+export const Separator = styled.span`
     margin: 0 0.5rem;
     color: ${Colour["text"]};
 `;
 
-export const ValueLabel = styled.div<ValueLabelStyleProps>`
+export const ValueLabel = styled.span<ValueLabelStyleProps>`
     ${(props) =>
         props.$variant === "small"
             ? Font["body-md-regular"]

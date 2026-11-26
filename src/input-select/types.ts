@@ -55,7 +55,11 @@ export interface InputSelectProps<T, V>
     displayValueExtractor?: ((option: T) => string) | undefined;
     /** Function to convert value into a string */
     valueToStringFunction?: ((value: V) => string) | undefined;
-    /** Function to render selected custom component */
+    /**
+     * Function to render selected custom component.
+     * It is rendered inside the combobox button, so it must be phrasing
+     * content (e.g. `span` or `img`) with no interactive elements.
+     */
     renderCustomSelectedOption?: ((option: T) => JSX.Element) | undefined;
     onBlur?: (() => void) | undefined;
     variant?: DropdownVariantType | undefined;

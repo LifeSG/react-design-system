@@ -61,7 +61,7 @@ export const SelectHistogram = ({
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const selectorRef = useRef<HTMLButtonElement>(null);
-    const labelContainerRef = useRef<HTMLDivElement>(null);
+    const labelContainerRef = useRef<HTMLSpanElement>(null);
 
     const testId = otherProps["data-testid"] || "select-histogram";
     // =========================================================================
@@ -133,7 +133,7 @@ export const SelectHistogram = ({
         }
 
         return (
-            <Typography.BodyBL>
+            <Typography.BodyBL inline>
                 {rangeLabelPrefix}
                 {value}
                 {rangeLabelSuffix}

@@ -45,7 +45,7 @@ export const Wrapper = styled.div<SelectorStyleProps>`
     }}
 `;
 
-export const LabelContainer = styled.div<LabelContainerStyleProps>`
+export const LabelContainer = styled.span<LabelContainerStyleProps>`
     display: flex;
     flex: 1;
     word-break: break-all;
@@ -58,7 +58,8 @@ export const LabelContainer = styled.div<LabelContainerStyleProps>`
     }}
 `;
 
-export const ValueLabel = styled.div<ValueLabelStyleProps>`
+export const ValueLabel = styled.span<ValueLabelStyleProps>`
+    display: block;
     ${(props) =>
         props.$variant === "small"
             ? Font["body-md-regular"]
